@@ -62,11 +62,11 @@
             // 
             // pnlFooter
             // 
-            this.pnlFooter.Location = new System.Drawing.Point(0, 269);
+            this.pnlFooter.Location = new System.Drawing.Point(0, 220);
             // 
             // btnConsultar
             // 
-            this.btnConsultar.Location = new System.Drawing.Point(51, 171);
+            this.btnConsultar.Location = new System.Drawing.Point(121, 158);
             this.btnConsultar.Name = "btnConsultar";
             this.btnConsultar.Size = new System.Drawing.Size(75, 23);
             this.btnConsultar.TabIndex = 103;
@@ -114,7 +114,7 @@
             // 
             this.pnlAcciones.Controls.Add(this.btnBloquear);
             this.pnlAcciones.Controls.Add(this.btnReponer);
-            this.pnlAcciones.Location = new System.Drawing.Point(174, 171);
+            this.pnlAcciones.Location = new System.Drawing.Point(202, 146);
             this.pnlAcciones.Name = "pnlAcciones";
             this.pnlAcciones.Size = new System.Drawing.Size(214, 48);
             this.pnlAcciones.TabIndex = 108;
@@ -129,7 +129,7 @@
             // frmSeguridad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.ClientSize = new System.Drawing.Size(428, 292);
+            this.ClientSize = new System.Drawing.Size(428, 243);
             this.Controls.Add(this.txtNuevoQR);
             this.Controls.Add(this.btnConsultar);
             this.Controls.Add(this.pnlAcciones);
