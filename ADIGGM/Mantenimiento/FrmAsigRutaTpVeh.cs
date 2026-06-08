@@ -12,6 +12,8 @@ namespace ADIGGM.Mantenimiento
     public partial class FrmAsigRutaTpVeh : FrmMantenimiento
     {
         int selectedIndex;
+        // Agrega esta variable a nivel de clase (fuera de tus métodos, junto a selectedIndex)
+        private bool ordenRutaAscendente = true;
         public FrmAsigRutaTpVeh()
         {
             InitializeComponent();
@@ -24,12 +26,38 @@ namespace ADIGGM.Mantenimiento
 
         private void FrmAsigRutaTpVeh_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsTransporteAdiggm.TR_TipoVehiculos' Puede moverla o quitarla según sea necesario.
             this.tR_TipoVehiculosTableAdapter.Fill(this.dsTransporteAdiggm.TR_TipoVehiculos);
-            // TODO: esta línea de código carga datos en la tabla 'dsTransporteAdiggm.TR_AsigRutaTipoVeh' Puede moverla o quitarla según sea necesario.
             this.tR_AsigRutaTipoVehTableAdapter.Fill(this.dsTransporteAdiggm.TR_AsigRutaTipoVeh);
             this.tR_RutasFiltradasTableAdapter.FillByN(this.dsTransporteAdiggm.TR_RutasFiltradas);
             lblFooter.Text = "RUTAS ASIGNADAS AL VEHÍCULO - CANTIDAD DE REGISTROS: " + dgvRutaTpVeh.RowCount;
+
+            for (int i = this.dsTransporteAdiggm.TR_AsigRutaTipoVeh.ParentRelations.Count - 1; i >= 0; i--)
+            {
+                DataRelation relacionOriginal = this.dsTransporteAdiggm.TR_AsigRutaTipoVeh.ParentRelations[i];
+
+                if (relacionOriginal.ChildColumns.Length > 0 && relacionOriginal.ChildColumns[0].ColumnName == "IdRuta")
+                {
+                    this.dsTransporteAdiggm.Relations.Remove(relacionOriginal);
+                }
+            }
+
+            if (!this.dsTransporteAdiggm.Relations.Contains("RelacionTemporalRutas"))
+            {
+                this.dsTransporteAdiggm.Relations.Add(
+                    "RelacionTemporalRutas",
+                    this.dsTransporteAdiggm.TR_RutasFiltradas.Columns["IdRuta"], // Padre
+                    this.dsTransporteAdiggm.TR_AsigRutaTipoVeh.Columns["IdRuta"], // Hija
+                    false // evita que lance errores por restricciones de base de datos
+                );
+            }
+
+            // CREAR LA COLUMNA VIRTUAL ---
+            if (!this.dsTransporteAdiggm.TR_AsigRutaTipoVeh.Columns.Contains("RutaDescriptiva"))
+            {
+                DataColumn colVirtual = new DataColumn("RutaDescriptiva", typeof(string));
+                colVirtual.Expression = "Parent(RelacionTemporalRutas).Ruta";
+                this.dsTransporteAdiggm.TR_AsigRutaTipoVeh.Columns.Add(colVirtual);
+            }
 
         }
 
@@ -135,12 +163,24 @@ namespace ADIGGM.Mantenimiento
         
         private void dgvRutaTpVeh_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
         {
-            var dgv = (DataGridView)sender;
-            string value1 = dgv.Rows[e.RowIndex1].Cells[e.Column.Index].FormattedValue.ToString();
-            string value2 = dgv.Rows[e.RowIndex2].Cells[e.Column.Index].FormattedValue.ToString();
 
-            e.SortResult = System.String.Compare(value1, value2);
-            e.Handled = true;
+        }
+        private void dgvRutaTpVeh_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            // Verificamos si hicieron clic en la columna del ComboBox (idRuta)
+            if (dgvRutaTpVeh.Columns[e.ColumnIndex].Name == "idRuta")
+            {
+                // Ordenamos usando la columna virtual que creamos en el Load
+                string direccion = ordenRutaAscendente ? "ASC" : "DESC";
+                fKTRAsigRutaTipoVehTRTipoVehiculosBindingSource.Sort = $"RutaDescriptiva {direccion}";
+
+                // Alternamos el estado
+                ordenRutaAscendente = !ordenRutaAscendente;
+
+                // Ponemos la flechita gráfica
+                dgvRutaTpVeh.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection =
+                    ordenRutaAscendente ? SortOrder.Descending : SortOrder.Ascending;
+            }
         }
     }
 }

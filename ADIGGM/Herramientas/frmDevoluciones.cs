@@ -9,8 +9,8 @@ namespace ADIGGM.Herramientas
 {
     public partial class frmDevoluciones : FrmPrincipal
     {
-        string cadenaConexion = @"Initial Catalog=covibase;Data Source=ADIGGM.granjasmarinas.hn;Persist Security Info=True;User ID=sa;Password=ADIGGM*2016+";
-        string cadenaConexionCA = @"Initial Catalog=CA;Data Source=ADIGGM.granjasmarinas.hn;Persist Security Info=True;User ID=sa;Password=ADIGGM*2016+";
+        string cadenaConexion = ADIGGM.CapaDatos.Conexion.Cadena("Covibase");
+        string cadenaConexionCA = ADIGGM.CapaDatos.Conexion.Cadena("CA");
         public frmDevoluciones()
         {
             InitializeComponent();

@@ -1,12 +1,13 @@
-﻿using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 using System;
-using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace ADIGGM.HE
 {
     public partial class frmCerrarPeriodo : FrmPrincipal
     {
+        private readonly RepositorioAsistencias _repo = new RepositorioAsistencias();
+
         public frmCerrarPeriodo()
         {
             InitializeComponent();
@@ -28,33 +29,17 @@ namespace ADIGGM.HE
 
             if (MessageBox.Show(advertencia, "Confirmación Requerida", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                // El usuario confirmó, procedemos a cerrar
-                string query = @"
-                    UPDATE dbo.HE_RegistrosAsistencia
-                    SET EstaCerrado = 1
-                    WHERE Fecha BETWEEN @FechaInicio AND @FechaFin
-                    AND EstaCerrado = 0"; // Solo actualiza los que no estén ya cerrados
-
-                int registrosAfectados = 0;
-
-                using (SqlConnection conn = DbManager.GetConnection())
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                try
                 {
-                    cmd.Parameters.AddWithValue("@FechaInicio", fechaInicio);
-                    cmd.Parameters.AddWithValue("@FechaFin", fechaFin);
+                    // El usuario confirmó, procedemos a cerrar (solo los que no estén ya cerrados)
+                    int registrosAfectados = _repo.CerrarPeriodo(fechaInicio, fechaFin);
 
-                    try
-                    {
-                        conn.Open();
-                        registrosAfectados = cmd.ExecuteNonQuery();
-
-                        MessageBox.Show($"¡Período cerrado exitosamente!\n\nSe bloquearon {registrosAfectados} registros de asistencia.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error al ejecutar el cierre: " + ex.Message, "Error de SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show($"¡Período cerrado exitosamente!\n\nSe bloquearon {registrosAfectados} registros de asistencia.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al ejecutar el cierre: " + ex.Message, "Error de SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else

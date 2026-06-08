@@ -2848,10 +2848,6 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="PagaISV">
-          <DataField>PagaISV</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
         <Field Name="CodVehiculo">
           <DataField>CodVehiculo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -2876,10 +2872,14 @@
           <DataField>Total</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="PagaISV">
+          <DataField>PagaISV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DsTransporteAdiggm</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\jportillo\source\repos\TransporteADIGGM\TransporteAdiggm\DataSets\DsTransporteAdiggm.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\jportillo\Dropbox\Desarrollo ADI (DEV)\ADIPROJECTS\ADIGGM\DataSets\DsTransporteAdiggm.xsd</rd:SchemaPath>
         <rd:TableName>PR_R_DetalleCta</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

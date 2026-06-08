@@ -21,13 +21,14 @@ namespace ADIGGM.Transaccionales
         //campos usados para editar viajes
         int IdViaje = 0, IdViajeR = 0, IdCliente = 0, IdRetrero = 0, IdFinca = 0, IdLaguna = 0, IdClaseTrabajo = 0, IdTipoVehiculo = Convert.ToInt32(Clases.VarGlobales.consultasTrans.TR_SelectIdRetro()), 
             IdVehiculo = 0, Editar = 0;
-        double Tarifa = 0, TISV = 0, SubTotal = 0, Total = 0, HrInicial = 0, HrFinal = 0, HrTrabajadas = 0, HrGPS = 0;
+        decimal Tarifa = 0, TISV = 0, SubTotal = 0, Total = 0;
+        double HrInicial = 0, HrFinal = 0, HrTrabajadas = 0, HrGPS = 0;
         bool PermitirHrI = true, PermitirHrF = true, PermitirHrGPS = true;
         string Prefijo = "", CodBoleta = "", Observaciones = "", Usuario = Clases.VarGlobales.Usuario;
         DateTime Fecha = DateTime.Now;
 
         public FrmViajesRetro(int IdViaje, int IdViajeR, string Prefijo, string CodBoleta, DateTime Fecha, int IdCliente, int IdClaseTrabajo,
-                            int IdVehiculo, double Tarifa, double TISV, double SubTotal, double Total, string Observaciones, int Editar,
+                            int IdVehiculo, decimal Tarifa, decimal TISV, decimal SubTotal, decimal Total, string Observaciones, int Editar,
                             int IdRetrero, int IdFinca, int IdLaguna, double HrInicial, double HrFinal, double HrTrabajadas, double HrGPS)
         {
             InitializeComponent();
@@ -68,7 +69,7 @@ namespace ADIGGM.Transaccionales
                 cboClientes.SelectedIndex = -1;
                 CargarVeh();
                 cboCodMaq.SelectedIndex = -1;
-                Tarifa = Convert.ToDouble(Clases.VarGlobales.consultasTrans.TR_SelectTarifaRetro());
+                Tarifa = Convert.ToDecimal(Clases.VarGlobales.consultasTrans.TR_SelectTarifaRetro());
                 txtHrInicial.Text = $"{0:n}";
                 txtHrFinal.Text = $"{0:n}";
                 txtHrTrabajadas.Text = $"{0:n}";

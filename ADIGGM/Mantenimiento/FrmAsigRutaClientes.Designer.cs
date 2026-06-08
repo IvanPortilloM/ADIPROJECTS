@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAsigRutaClientes));
             this.cboClientes = new System.Windows.Forms.ComboBox();
             this.tRClientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -167,6 +169,8 @@
             // rutaDataGridViewTextBoxColumn
             // 
             this.rutaDataGridViewTextBoxColumn.DataPropertyName = "Ruta";
+            dataGridViewCellStyle1.Format = "N4";
+            this.rutaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.rutaDataGridViewTextBoxColumn.HeaderText = "Ruta";
             this.rutaDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.rutaDataGridViewTextBoxColumn.Name = "rutaDataGridViewTextBoxColumn";
@@ -217,6 +221,8 @@
             // rutaDataGridViewTextBoxColumn1
             // 
             this.rutaDataGridViewTextBoxColumn1.DataPropertyName = "Ruta";
+            dataGridViewCellStyle2.Format = "N4";
+            this.rutaDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
             this.rutaDataGridViewTextBoxColumn1.HeaderText = "Ruta";
             this.rutaDataGridViewTextBoxColumn1.MinimumWidth = 6;
             this.rutaDataGridViewTextBoxColumn1.Name = "rutaDataGridViewTextBoxColumn1";
@@ -244,7 +250,7 @@
             this.lblClientes.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClientes.Location = new System.Drawing.Point(218, 54);
             this.lblClientes.Name = "lblClientes";
-            this.lblClientes.Size = new System.Drawing.Size(64, 16);
+            this.lblClientes.Size = new System.Drawing.Size(63, 16);
             this.lblClientes.TabIndex = 5;
             this.lblClientes.Text = "Clientes:";
             // 
@@ -254,7 +260,7 @@
             this.lblRutasAsig.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRutasAsig.Location = new System.Drawing.Point(591, 120);
             this.lblRutasAsig.Name = "lblRutasAsig";
-            this.lblRutasAsig.Size = new System.Drawing.Size(117, 16);
+            this.lblRutasAsig.Size = new System.Drawing.Size(116, 16);
             this.lblRutasAsig.TabIndex = 6;
             this.lblRutasAsig.Text = "Rutas Asignadas";
             // 
@@ -264,7 +270,7 @@
             this.lblRutasNoAsig.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRutasNoAsig.Location = new System.Drawing.Point(128, 109);
             this.lblRutasNoAsig.Name = "lblRutasNoAsig";
-            this.lblRutasNoAsig.Size = new System.Drawing.Size(139, 16);
+            this.lblRutasNoAsig.Size = new System.Drawing.Size(138, 16);
             this.lblRutasNoAsig.TabIndex = 7;
             this.lblRutasNoAsig.Text = "Rutas No Asignadas";
             // 
@@ -293,7 +299,7 @@
             this.lblBuscar1.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBuscar1.Location = new System.Drawing.Point(12, 140);
             this.lblBuscar1.Name = "lblBuscar1";
-            this.lblBuscar1.Size = new System.Drawing.Size(95, 16);
+            this.lblBuscar1.Size = new System.Drawing.Size(94, 16);
             this.lblBuscar1.TabIndex = 10;
             this.lblBuscar1.Text = "Buscar Rutas:";
             // 
@@ -303,7 +309,7 @@
             this.lblRutas2.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRutas2.Location = new System.Drawing.Point(440, 140);
             this.lblRutas2.Name = "lblRutas2";
-            this.lblRutas2.Size = new System.Drawing.Size(95, 16);
+            this.lblRutas2.Size = new System.Drawing.Size(94, 16);
             this.lblRutas2.TabIndex = 11;
             this.lblRutas2.Text = "Buscar Rutas:";
             // 
@@ -443,11 +449,11 @@
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnEliminarTodo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idRuta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn rutaDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewLinkColumn Eliminar;
         private System.Windows.Forms.DataGridViewTextBoxColumn idRutaNoAsig;
         private System.Windows.Forms.DataGridViewTextBoxColumn rutaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Seleccionar;
-        }
+        private System.Windows.Forms.DataGridViewTextBoxColumn idRuta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rutaDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewLinkColumn Eliminar;
+    }
 }

@@ -1,45 +1,37 @@
-﻿using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
+using ADIGGM.CapaModelo;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ADIGGM.HE
 {
     public partial class frmTiposAsistencia : FrmPrincipal
     {
+        private readonly RepositorioTiposAsistencia _repo = new RepositorioTiposAsistencia();
         private int _idEnEdicion = 0;
+
         public frmTiposAsistencia()
         {
             InitializeComponent();
         }
+
         private void frmTiposAsistencia_Load(object sender, EventArgs e)
         {
             CargarTipos();
             dgvTipos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
             dgvTipos.Columns["Descripcion"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
+
         private void CargarTipos()
         {
-            using (SqlConnection conn = DbManager.GetConnection())
+            try
             {
-                try
-                {
-                    conn.Open();
-                    string query = "SELECT TipoAsistenciaID, Codigo, Descripcion, RequiereTiempos FROM dbo.HE_TiposAsistencia ORDER BY Codigo";
-                    SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-                    DataTable dt = new DataTable();
-                    adapter.Fill(dt);
-                    dgvTipos.DataSource = dt;
-                    if (dgvTipos.Columns["TipoAsistenciaID"] != null)
-                        dgvTipos.Columns["TipoAsistenciaID"].Visible = false;
-                }
-                catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
+                // BindingSource: genera las columnas a partir del tipo aunque la tabla esté vacía.
+                dgvTipos.DataSource = new BindingSource { DataSource = _repo.Listar() };
+                if (dgvTipos.Columns["TipoAsistenciaID"] != null)
+                    dgvTipos.Columns["TipoAsistenciaID"].Visible = false;
             }
+            catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -50,62 +42,46 @@ namespace ADIGGM.HE
                 return;
             }
 
-            using (SqlConnection conn = DbManager.GetConnection())
+            try
             {
-                try
+                TipoAsistencia tipo = new TipoAsistencia
                 {
-                    conn.Open();
-                    string query = "";
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.Connection = conn;
+                    Codigo = txtCodigo.Text.Trim().ToUpper(),
+                    Descripcion = txtDescripcion.Text.Trim(),
+                    RequiereTiempos = chkRequiereTiempos.Checked
+                };
 
-                    // --- LÓGICA DE DECISIÓN ---
-                    if (_idEnEdicion == 0)
+                if (_idEnEdicion == 0)
+                {
+                    // MODO INSERTAR (Nuevo): validar duplicado primero
+                    if (_repo.ExisteCodigo(txtCodigo.Text.Trim()))
                     {
-                        // MODO INSERTAR (Nuevo)
-                        // Primero validamos duplicados solo si es nuevo
-                        string check = "SELECT COUNT(*) FROM dbo.HE_TiposAsistencia WHERE Codigo = @Cod";
-                        SqlCommand checkCmd = new SqlCommand(check, conn);
-                        checkCmd.Parameters.AddWithValue("@Cod", txtCodigo.Text.Trim());
-                        if ((int)checkCmd.ExecuteScalar() > 0) { MessageBox.Show("El código ya existe."); return; }
-
-                        query = @"INSERT INTO dbo.HE_TiposAsistencia (Codigo, Descripcion, RequiereTiempos) 
-                          VALUES (@Cod, @Desc, @Req)";
+                        MessageBox.Show("El código ya existe.");
+                        return;
                     }
-                    else
-                    {
-                        // MODO ACTUALIZAR (Editar)
-                        query = @"UPDATE dbo.HE_TiposAsistencia 
-                          SET Codigo = @Cod, 
-                              Descripcion = @Desc, 
-                              RequiereTiempos = @Req 
-                          WHERE TipoAsistenciaID = @ID";
-                        cmd.Parameters.AddWithValue("@ID", _idEnEdicion);
-                    }
-
-                    // Parámetros comunes
-                    cmd.CommandText = query;
-                    cmd.Parameters.AddWithValue("@Cod", txtCodigo.Text.Trim().ToUpper());
-                    cmd.Parameters.AddWithValue("@Desc", txtDescripcion.Text.Trim());
-                    cmd.Parameters.AddWithValue("@Req", chkRequiereTiempos.Checked);
-
-                    cmd.ExecuteNonQuery();
-
-                    MessageBox.Show(_idEnEdicion == 0 ? "Agregado correctamente." : "Actualizado correctamente.");
-
-                    LimpiarFormulario(); // Usamos un método para limpiar
-                    CargarTipos();
+                    _repo.Insertar(tipo);
+                    MessageBox.Show("Agregado correctamente.");
                 }
-                catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
+                else
+                {
+                    // MODO ACTUALIZAR (Editar)
+                    tipo.TipoAsistenciaID = _idEnEdicion;
+                    _repo.Actualizar(tipo);
+                    MessageBox.Show("Actualizado correctamente.");
+                }
+
+                LimpiarFormulario();
+                CargarTipos();
             }
+            catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
         }
-        // Agrega este método auxiliar para no repetir código
+
         private void LimpiarFormulario()
         {
             txtCodigo.Clear();
             txtDescripcion.Clear();
             chkRequiereTiempos.Checked = false;
-            _idEnEdicion = 0; 
+            _idEnEdicion = 0;
             btnGuardar.Text = "Guardar";
         }
 
@@ -116,19 +92,12 @@ namespace ADIGGM.HE
             if (MessageBox.Show("¿Eliminar este tipo?", "Confirmar", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 int id = Convert.ToInt32(dgvTipos.SelectedRows[0].Cells["TipoAsistenciaID"].Value);
-                using (SqlConnection conn = DbManager.GetConnection())
+                try
                 {
-                    try
-                    {
-                        conn.Open();
-                        string query = "DELETE FROM dbo.HE_TiposAsistencia WHERE TipoAsistenciaID = @ID";
-                        SqlCommand cmd = new SqlCommand(query, conn);
-                        cmd.Parameters.AddWithValue("@ID", id);
-                        cmd.ExecuteNonQuery();
-                        CargarTipos();
-                    }
-                    catch (Exception ex) { MessageBox.Show("Error al eliminar (puede estar en uso): " + ex.Message); }
+                    _repo.Eliminar(id);
+                    CargarTipos();
                 }
+                catch (Exception ex) { MessageBox.Show("Error al eliminar (puede estar en uso): " + ex.Message); }
             }
         }
 
@@ -144,7 +113,7 @@ namespace ADIGGM.HE
                 txtDescripcion.Text = dgvTipos.Rows[e.RowIndex].Cells["Descripcion"].Value.ToString();
                 chkRequiereTiempos.Checked = Convert.ToBoolean(dgvTipos.Rows[e.RowIndex].Cells["RequiereTiempos"].Value);
 
-                // 3. (Opcional) Cambiar el texto del botón para dar feedback visual
+                // 3. Feedback visual
                 btnGuardar.Text = "Actualizar";
             }
         }

@@ -1,8 +1,9 @@
 ﻿namespace ADIGGM.Mantenimiento
 {
+    using ADIGGM.CapaDatos;
+    using Clases;
     using System;
     using System.Windows.Forms;
-    using Clases;
     public partial class FrmAsigTarifas : FrmPrincipal
     {
         int selectedIndex;
@@ -30,6 +31,7 @@
             btnAgregarTodo.Enabled = false;
             btnEliminar.Enabled = false;
             btnEliminarTodo.Enabled = false;
+            dgvRutasAsignadas.Columns["TarifaReal"].DefaultCellStyle.Format = "N4";
         }
 
         private void CargarDgv()
@@ -148,47 +150,97 @@
         }
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            Clases.VarGlobales.consultasTrans.PR_TarifaRutasAsigInsert(int.Parse(cboTipoVehiculo.SelectedValue.ToString()), 
-                                                                        int.Parse(cboClaseTrabajo.SelectedValue.ToString()), 
-                                                                        int.Parse(dgvRutasNoAsignadas.CurrentRow.Cells["idRutaNoAsig"].Value.ToString()),
-                                                                        decimal.Parse(dgvRutasNoAsignadas.CurrentRow.Cells["Tarifa"].Value.ToString()),
-                                                                        int.Parse(cboClientes.SelectedValue.ToString()));
-
-            if (dgvRutasNoAsignadas.Rows.Count > 0 && dgvRutasNoAsignadas.FirstDisplayedCell != null)
+            try
             {
-                selectedIndex = dgvRutasNoAsignadas.CurrentRow.Index;
+                using (System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection(Conexion.TransporteADI))
+                {
+                    conn.Open();
+                    using (System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PR_TarifaRutasAsigInsert", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@IdTipoVehiculo", System.Data.SqlDbType.Int).Value = int.Parse(cboTipoVehiculo.SelectedValue.ToString());
+                        cmd.Parameters.Add("@IdClaseTrabajo", System.Data.SqlDbType.Int).Value = int.Parse(cboClaseTrabajo.SelectedValue.ToString());
+                        cmd.Parameters.Add("@IdRuta", System.Data.SqlDbType.Int).Value = int.Parse(dgvRutasNoAsignadas.CurrentRow.Cells["idRutaNoAsig"].Value.ToString());
+                        cmd.Parameters.Add("@IdCliente", System.Data.SqlDbType.Int).Value = int.Parse(cboClientes.SelectedValue.ToString());
+
+                        System.Data.SqlClient.SqlParameter paramTarifa = new System.Data.SqlClient.SqlParameter();
+                        paramTarifa.ParameterName = "@Tarifa";
+                        paramTarifa.SqlDbType = System.Data.SqlDbType.Decimal;
+                        paramTarifa.Precision = 10;
+                        paramTarifa.Scale = 4;
+                        paramTarifa.Value = Convert.ToDecimal(dgvRutasNoAsignadas.CurrentRow.Cells["Tarifa"].Value, System.Globalization.CultureInfo.InvariantCulture);
+                        cmd.Parameters.Add(paramTarifa);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                if (dgvRutasNoAsignadas.Rows.Count > 0 && dgvRutasNoAsignadas.FirstDisplayedCell != null)
+                {
+                    selectedIndex = dgvRutasNoAsignadas.CurrentRow.Index;
+                    CargarDgv();
+
+                    if (selectedIndex < dgvRutasNoAsignadas.RowCount)
+                        dgvRutasNoAsignadas.CurrentCell = dgvRutasNoAsignadas.Rows[selectedIndex].Cells[1];
+                    else if (dgvRutasNoAsignadas.RowCount > 0)
+                        dgvRutasNoAsignadas.CurrentCell = dgvRutasNoAsignadas.Rows[dgvRutasNoAsignadas.RowCount - 1].Cells[1];
+                }
+
+                btnAgregar.Enabled = dgvRutasNoAsignadas.RowCount > 0;
+                btnAgregarTodo.Enabled = dgvRutasNoAsignadas.RowCount > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnAgregarTodo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection(Conexion.TransporteADI))
+                {
+                    conn.Open();
+                    foreach (DataGridViewRow row in dgvRutasNoAsignadas.Rows)
+                    {
+                        using (System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PR_TarifaRutasAsigInsert", conn))
+                        {
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add("@IdTipoVehiculo", System.Data.SqlDbType.Int).Value = int.Parse(cboTipoVehiculo.SelectedValue.ToString());
+                            cmd.Parameters.Add("@IdClaseTrabajo", System.Data.SqlDbType.Int).Value = int.Parse(cboClaseTrabajo.SelectedValue.ToString());
+                            cmd.Parameters.Add("@IdRuta", System.Data.SqlDbType.Int).Value = int.Parse(row.Cells["idRutaNoAsig"].Value.ToString());
+                            cmd.Parameters.Add("@IdCliente", System.Data.SqlDbType.Int).Value = int.Parse(cboClientes.SelectedValue.ToString());
+
+                            System.Data.SqlClient.SqlParameter paramTarifa = new System.Data.SqlClient.SqlParameter();
+                            paramTarifa.ParameterName = "@Tarifa";
+                            paramTarifa.SqlDbType = System.Data.SqlDbType.Decimal;
+                            paramTarifa.Precision = 10;
+                            paramTarifa.Scale = 4;
+                            paramTarifa.Value = Convert.ToDecimal(row.Cells["Tarifa"].Value, System.Globalization.CultureInfo.InvariantCulture);
+                            cmd.Parameters.Add(paramTarifa);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
                 CargarDgv();
-
-                if (selectedIndex < dgvRutasNoAsignadas.RowCount)
-                {
-                    dgvRutasNoAsignadas.CurrentCell = dgvRutasNoAsignadas.Rows[selectedIndex].Cells[1];
-                }
-                else if (dgvRutasNoAsignadas.RowCount == 0)
-                {
-                    //dgvRutasNoAsignadas.CurrentCell = dgvRutasNoAsignadas.Rows[dgvRutasNoAsignadas.RowCount - 1].Cells[1];
-                }
-                else
-                {
-                    dgvRutasNoAsignadas.CurrentCell = dgvRutasNoAsignadas.Rows[dgvRutasNoAsignadas.RowCount - 1].Cells[1];
-                }
-                
-            }
-            //this.dgvRutasAsignadas.ClearSelection();
-            if (dgvRutasNoAsignadas.RowCount > 0)
-            {
-                btnAgregar.Enabled = true;
-                btnAgregarTodo.Enabled = true;
-            }
-            else
-            {
+                this.dgvRutasAsignadas.ClearSelection();
                 btnAgregar.Enabled = false;
                 btnAgregarTodo.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            Clases.VarGlobales.consultasTrans.PR_TarifaRutasAsigDel(int.Parse(dgvRutasAsignadas.CurrentRow.Cells["IdTarifaRuta"].Value.ToString()));
+            VarGlobales.consultasTrans.PR_TarifaRutasAsigDel(int.Parse(dgvRutasAsignadas.CurrentRow.Cells["IdTarifaRuta"].Value.ToString()));
 
             if (dgvRutasAsignadas.Rows.Count > 0 && dgvRutasAsignadas.FirstDisplayedCell != null)
             {
@@ -221,30 +273,14 @@
             }
         }
 
-        private void btnAgregarTodo_Click(object sender, EventArgs e)
-        {
-            foreach (DataGridViewRow row in dgvRutasNoAsignadas.Rows)
-            {
-                Clases.VarGlobales.consultasTrans.PR_TarifaRutasAsigInsert(int.Parse(cboTipoVehiculo.SelectedValue.ToString()),
-                                                                        int.Parse(cboClaseTrabajo.SelectedValue.ToString()),
-                                                                        int.Parse(row.Cells["idRutaNoAsig"].Value.ToString()),
-                                                                        decimal.Parse(row.Cells["Tarifa"].Value.ToString()),
-                                                                        int.Parse(cboClientes.SelectedValue.ToString()));
-            }
-            CargarDgv();
-            this.dgvRutasAsignadas.ClearSelection();
-            btnAgregar.Enabled = false;
-            btnAgregarTodo.Enabled = false;
-        }
-
         private void btnEliminarTodo_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Se eliminaran todas la rutas asignadas ¿Desea Continuar?", Clases.VarGlobales.nombreSistema, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dialogResult = MessageBox.Show("Se eliminaran todas la rutas asignadas ¿Desea Continuar?", VarGlobales.nombreSistema, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogResult == DialogResult.Yes)
             {
                 foreach (DataGridViewRow row in dgvRutasAsignadas.Rows)
                 {
-                    Clases.VarGlobales.consultasTrans.PR_TarifaRutasAsigDel(int.Parse(row.Cells["IdTarifaRuta"].Value.ToString()));
+                    VarGlobales.consultasTrans.PR_TarifaRutasAsigDel(int.Parse(row.Cells["IdTarifaRuta"].Value.ToString()));
                 }
                 CargarDgv();
                 this.dgvRutasNoAsignadas.ClearSelection();
@@ -255,8 +291,44 @@
 
         private void dgvRutasAsignadas_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            Clases.VarGlobales.consultasTrans.PR_TarifaRutasAsigUpdate(int.Parse(dgvRutasAsignadas.CurrentRow.Cells["IdTarifaRuta"].Value.ToString()),
-                                                                       decimal.Parse(dgvRutasAsignadas.CurrentRow.Cells["TarifaReal"].Value.ToString()));
+            if (dgvRutasAsignadas.Columns[e.ColumnIndex].Name != "TarifaReal") return;
+
+            try
+            {
+                int idTarifaRuta = int.Parse(
+                    dgvRutasAsignadas.CurrentRow.Cells["IdTarifaRuta"].Value.ToString());
+
+                decimal tarifa = Convert.ToDecimal(
+                    dgvRutasAsignadas.CurrentRow.Cells["TarifaReal"].Value,
+                    System.Globalization.CultureInfo.InvariantCulture);
+
+                using (System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection(Conexion.TransporteADI))
+                {
+                    conn.Open();
+                    using (System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand("PR_TarifaRutasAsigUpdate", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@IdTarifaRuta", System.Data.SqlDbType.Int).Value = idTarifaRuta;
+
+                        // ✅ Forzar precisión 10,4 explícitamente
+                        System.Data.SqlClient.SqlParameter paramTarifa = new System.Data.SqlClient.SqlParameter();
+                        paramTarifa.ParameterName = "@Tarifa";
+                        paramTarifa.SqlDbType = System.Data.SqlDbType.Decimal;
+                        paramTarifa.Precision = 10;
+                        paramTarifa.Scale = 4;
+                        paramTarifa.Value = tarifa;
+                        cmd.Parameters.Add(paramTarifa);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, VarGlobales.nombreSistema,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void cboClientes_SelectedValueChanged(object sender, EventArgs e)

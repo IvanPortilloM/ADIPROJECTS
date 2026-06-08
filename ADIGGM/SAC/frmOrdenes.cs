@@ -15,7 +15,7 @@ namespace ADIGGM.SAC
     public partial class frmOrdenes : FrmPrincipal
     {
         bool PermitirMonto = true;
-        private readonly string cadenaConexionSQL = @"Initial Catalog=TransporteAdiggm;Data Source=ADIGGM.granjasmarinas.hn;Persist Security Info=True;User ID=sa;Password=ADIGGM*2016+";
+        private readonly string cadenaConexionSQL = ADIGGM.CapaDatos.Conexion.Cadena("TransporteAdiggm");
         public frmOrdenes()
         {
             InitializeComponent();

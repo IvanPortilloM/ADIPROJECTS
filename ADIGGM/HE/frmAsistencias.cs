@@ -1,8 +1,9 @@
-﻿using ADIGGM.Clases;
+using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
+using ADIGGM.CapaModelo;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
@@ -11,6 +12,10 @@ namespace ADIGGM.HE
 {
     public partial class frmAsistencias : FrmPrincipal
     {
+        private readonly RepositorioFeriados _repoFeriados = new RepositorioFeriados();
+        private readonly RepositorioPoliticas _repoPoliticas = new RepositorioPoliticas();
+        private readonly RepositorioAsistencias _repoAsistencias = new RepositorioAsistencias();
+
         private int _filaActual = 0;
         private int _columnaActual = 0;
         private int _filaSuperiorVisible = 0;
@@ -43,35 +48,17 @@ namespace ADIGGM.HE
 
         private void CargarFeriadosDelMes()
         {
-            // IGNORAMOS los parámetros 'anio' y 'mes' viejos y usamos el rango real
-            _feriadosDelMes.Clear();
-
+            // Traemos solo los feriados que caen DENTRO del rango seleccionado
             DateTime inicio = dtpInicio.Value.Date;
             DateTime fin = dtpFin.Value.Date;
 
-            using (SqlConnection conn = DbManager.GetConnection())
+            try
             {
-                try
-                {
-                    conn.Open();
-                    // Traemos solo los feriados que caen DENTRO del rango seleccionado
-                    string query = "SELECT Fecha FROM dbo.HE_DiasFeriados WHERE Fecha BETWEEN @Inicio AND @Fin";
-
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@Inicio", inicio);
-                    cmd.Parameters.AddWithValue("@Fin", fin);
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        // Guardamos la fecha pura (sin horas)
-                        _feriadosDelMes.Add(reader.GetDateTime(0).Date);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error cargando feriados: " + ex.Message);
-                }
+                _feriadosDelMes = _repoFeriados.ListarFechasEntre(inicio, fin);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error cargando feriados: " + ex.Message);
             }
         }
         public class StatsAsistencia
@@ -79,7 +66,7 @@ namespace ADIGGM.HE
             public int DiasICP { get; set; }
             public int DiasLibres { get; set; }
             public int DiasSDT { get; set; }
-            public int DiasFeriadosTrabajados { get; set; } 
+            public int DiasFeriadosTrabajados { get; set; }
             public int DomingosTrabajados { get; set; }
         }
         private void CargarDatosAsistencia()
@@ -102,218 +89,180 @@ namespace ADIGGM.HE
             CargarFeriadosDelMes();
             CargarObservacionesDelMes();
 
-            using (SqlConnection conn = DbManager.GetConnection())
+            try
             {
-                try
+                DataTable dt = _repoAsistencias.ObtenerAsistencia(fechaInicio, fechaFin, mostrarInactivos, mostrarSubs, politicaID);
+
+                // --- CONSTRUIR GRID ---
+                dgvAsistencia.DataSource = null;
+                dgvAsistencia.Columns.Clear();
+                dgvAsistencia.Rows.Clear();
+
+                // Columnas Fijas
+                dgvAsistencia.Columns.Add("IdMotorista", "Id");
+                dgvAsistencia.Columns["IdMotorista"].Visible = false;
+                dgvAsistencia.Columns.Add("Motorista", "Motorista");
+                dgvAsistencia.Columns["Motorista"].Frozen = true;
+                dgvAsistencia.Columns["Motorista"].Width = 200;
+
+                // Columnas Días
+                for (DateTime dia = fechaInicio; dia <= fechaFin; dia = dia.AddDays(1))
                 {
-                    conn.Open();
+                    string colName = $"Dia_{dia:yyyyMMdd}";
+                    string header = $"{dia:ddd dd}".ToUpper();
+                    int idx = dgvAsistencia.Columns.Add(colName, header);
+                    dgvAsistencia.Columns[idx].Width = 40;
+                    dgvAsistencia.Columns[idx].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-                    // SQL: Agregamos m.PoliticaID por si necesitas filtrar lógica específica por política
-                    string query = @"
-                SELECT 
-                    m.IdMotorista, 
-                    m.Motorista, 
-                    ra.Fecha,
-                    ta.Codigo,
-                    ta.RequiereTiempos,
-                    (SELECT SUM(DATEDIFF(MINUTE, rt.HoraInicio, rt.HoraFin))/60.0 
-                     FROM dbo.HE_RegistrosTiempos rt 
-                     WHERE rt.RegistroAsistenciaID = ra.RegistroAsistenciaID) as HorasCalculadas
-                FROM dbo.TR_Motoristas m
-                LEFT JOIN dbo.HE_RegistrosAsistencia ra 
-                    ON m.IdMotorista = ra.IdMotorista 
-                    AND ra.Fecha BETWEEN @Inicio AND @Fin
-                LEFT JOIN dbo.HE_TiposAsistencia ta 
-                    ON ra.TipoAsistenciaID = ta.TipoAsistenciaID
-                WHERE 
-                    (@MostrarInactivos = 1 OR m.Activo = 1)
-                    AND (@MostrarSubs = 1 OR m.EsEmpleado = 1)
-                    AND (@PoliticaID = 0 OR m.PoliticaID = @PoliticaID)
-                ORDER BY 
-                    m.Activo DESC, m.EsEmpleado DESC, m.Motorista ASC, ra.Fecha ASC";
-
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@Inicio", fechaInicio);
-                    cmd.Parameters.AddWithValue("@Fin", fechaFin);
-                    cmd.Parameters.AddWithValue("@MostrarInactivos", mostrarInactivos);
-                    cmd.Parameters.AddWithValue("@MostrarSubs", mostrarSubs);
-                    cmd.Parameters.AddWithValue("@PoliticaID", politicaID);
-
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-                    adapter.Fill(dt);
-
-                    // --- CONSTRUIR GRID ---
-                    dgvAsistencia.DataSource = null;
-                    dgvAsistencia.Columns.Clear();
-                    dgvAsistencia.Rows.Clear();
-
-                    // Columnas Fijas
-                    dgvAsistencia.Columns.Add("IdMotorista", "Id");
-                    dgvAsistencia.Columns["IdMotorista"].Visible = false;
-                    dgvAsistencia.Columns.Add("Motorista", "Motorista");
-                    dgvAsistencia.Columns["Motorista"].Frozen = true;
-                    dgvAsistencia.Columns["Motorista"].Width = 200;
-
-                    // Columnas Días
-                    for (DateTime dia = fechaInicio; dia <= fechaFin; dia = dia.AddDays(1))
+                    if (dia.DayOfWeek == DayOfWeek.Sunday)
                     {
-                        string colName = $"Dia_{dia:yyyyMMdd}";
-                        string header = $"{dia:ddd dd}".ToUpper();
-                        int idx = dgvAsistencia.Columns.Add(colName, header);
-                        dgvAsistencia.Columns[idx].Width = 40;
-                        dgvAsistencia.Columns[idx].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                        dgvAsistencia.Columns[idx].HeaderCell.Style.ForeColor = Color.Red;
+                        dgvAsistencia.Columns[idx].HeaderCell.Style.Font = new Font(dgvAsistencia.Font, FontStyle.Bold);
+                    }
+                }
 
-                        if (dia.DayOfWeek == DayOfWeek.Sunday)
-                        {
-                            dgvAsistencia.Columns[idx].HeaderCell.Style.ForeColor = Color.Red;
-                            dgvAsistencia.Columns[idx].HeaderCell.Style.Font = new Font(dgvAsistencia.Font, FontStyle.Bold);
-                        }
+                // --- COLUMNAS DE TOTALES (Agregamos las nuevas) ---
+
+                // 1. ICP
+                int idxICP = dgvAsistencia.Columns.Add("TotalICP", "ICP");
+                dgvAsistencia.Columns[idxICP].Width = 40;
+                dgvAsistencia.Columns[idxICP].DefaultCellStyle.BackColor = Color.Turquoise;
+                dgvAsistencia.Columns[idxICP].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                // 2. CAMBIO #1: SDT (Septimo Dia Trabajado)
+                int idxSDT = dgvAsistencia.Columns.Add("TotalSDT", "SDT");
+                dgvAsistencia.Columns[idxSDT].Width = 40;
+                dgvAsistencia.Columns[idxSDT].DefaultCellStyle.BackColor = Color.LightBlue; // Color distintivo
+                dgvAsistencia.Columns[idxSDT].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                // 3. CAMBIO #3: Feriados Trabajados
+                int idxFer = dgvAsistencia.Columns.Add("TotalFer", "Fer.Trab");
+                dgvAsistencia.Columns[idxFer].Width = 55;
+                dgvAsistencia.Columns[idxFer].DefaultCellStyle.BackColor = Color.Pink;
+                dgvAsistencia.Columns[idxFer].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                // 4. Domingos Trabajados
+                int idxDom = dgvAsistencia.Columns.Add("TotalDom", "Dom.Trab");
+                dgvAsistencia.Columns[idxDom].Width = 60;
+                dgvAsistencia.Columns[idxDom].DefaultCellStyle.BackColor = Color.Lavender;
+                dgvAsistencia.Columns[idxDom].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                // 5. Libres
+                int idxL = dgvAsistencia.Columns.Add("TotalL", "Libres");
+                dgvAsistencia.Columns[idxL].Width = 45;
+                dgvAsistencia.Columns[idxL].DefaultCellStyle.BackColor = Color.LightCyan;
+                dgvAsistencia.Columns[idxL].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+                // --- PROCESAMIENTO ---
+                Dictionary<int, int> mapaFilas = new Dictionary<int, int>();
+                Dictionary<int, StatsAsistencia> mapaStats = new Dictionary<int, StatsAsistencia>();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    int idMoto = Convert.ToInt32(row["IdMotorista"]);
+                    string nombre = row["Motorista"].ToString();
+
+                    if (!mapaFilas.ContainsKey(idMoto))
+                    {
+                        int rowIndex = dgvAsistencia.Rows.Add();
+                        dgvAsistencia.Rows[rowIndex].Cells["IdMotorista"].Value = idMoto;
+                        dgvAsistencia.Rows[rowIndex].Cells["Motorista"].Value = nombre;
+                        mapaFilas[idMoto] = rowIndex;
+                        mapaStats[idMoto] = new StatsAsistencia();
                     }
 
-                    // --- COLUMNAS DE TOTALES (Agregamos las nuevas) ---
-
-                    // 1. ICP
-                    int idxICP = dgvAsistencia.Columns.Add("TotalICP", "ICP");
-                    dgvAsistencia.Columns[idxICP].Width = 40;
-                    dgvAsistencia.Columns[idxICP].DefaultCellStyle.BackColor = Color.Turquoise;
-                    dgvAsistencia.Columns[idxICP].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-                    // 2. CAMBIO #1: SDT (Septimo Dia Trabajado)
-                    int idxSDT = dgvAsistencia.Columns.Add("TotalSDT", "SDT");
-                    dgvAsistencia.Columns[idxSDT].Width = 40;
-                    dgvAsistencia.Columns[idxSDT].DefaultCellStyle.BackColor = Color.LightBlue; // Color distintivo
-                    dgvAsistencia.Columns[idxSDT].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-                    // 3. CAMBIO #3: Feriados Trabajados
-                    int idxFer = dgvAsistencia.Columns.Add("TotalFer", "Fer.Trab");
-                    dgvAsistencia.Columns[idxFer].Width = 55;
-                    dgvAsistencia.Columns[idxFer].DefaultCellStyle.BackColor = Color.Pink;
-                    dgvAsistencia.Columns[idxFer].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-                    // 4. Domingos Trabajados
-                    int idxDom = dgvAsistencia.Columns.Add("TotalDom", "Dom.Trab");
-                    dgvAsistencia.Columns[idxDom].Width = 60;
-                    dgvAsistencia.Columns[idxDom].DefaultCellStyle.BackColor = Color.Lavender;
-                    dgvAsistencia.Columns[idxDom].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-                    // 5. Libres
-                    int idxL = dgvAsistencia.Columns.Add("TotalL", "Libres");
-                    dgvAsistencia.Columns[idxL].Width = 45;
-                    dgvAsistencia.Columns[idxL].DefaultCellStyle.BackColor = Color.LightCyan;
-                    dgvAsistencia.Columns[idxL].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-                    // --- PROCESAMIENTO ---
-                    Dictionary<int, int> mapaFilas = new Dictionary<int, int>();
-                    Dictionary<int, StatsAsistencia> mapaStats = new Dictionary<int, StatsAsistencia>();
-
-                    foreach (DataRow row in dt.Rows)
+                    if (row["Fecha"] != DBNull.Value)
                     {
-                        int idMoto = Convert.ToInt32(row["IdMotorista"]);
-                        string nombre = row["Motorista"].ToString();
+                        DateTime fecha = Convert.ToDateTime(row["Fecha"]);
+                        string colName = $"Dia_{fecha:yyyyMMdd}";
 
-                        if (!mapaFilas.ContainsKey(idMoto))
+                        if (dgvAsistencia.Columns.Contains(colName))
                         {
-                            int rowIndex = dgvAsistencia.Rows.Add();
-                            dgvAsistencia.Rows[rowIndex].Cells["IdMotorista"].Value = idMoto;
-                            dgvAsistencia.Rows[rowIndex].Cells["Motorista"].Value = nombre;
-                            mapaFilas[idMoto] = rowIndex;
-                            mapaStats[idMoto] = new StatsAsistencia();
-                        }
+                            int rowIndex = mapaFilas[idMoto];
+                            var stats = mapaStats[idMoto];
 
-                        if (row["Fecha"] != DBNull.Value)
-                        {
-                            DateTime fecha = Convert.ToDateTime(row["Fecha"]);
-                            string colName = $"Dia_{fecha:yyyyMMdd}";
+                            DataGridViewCell celda = dgvAsistencia.Rows[rowIndex].Cells[colName];
 
-                            if (dgvAsistencia.Columns.Contains(colName))
+                            string codigo = row["Codigo"] != DBNull.Value ? row["Codigo"].ToString() : "";
+                            bool requiereTiempos = row["RequiereTiempos"] != DBNull.Value && Convert.ToBoolean(row["RequiereTiempos"]);
+                            decimal horas = row["HorasCalculadas"] != DBNull.Value ? Convert.ToDecimal(row["HorasCalculadas"]) : 0;
+
+                            celda.Tag = codigo;
+
+                            // Visualización en celda
+                            //if (requiereTiempos && horas > 0)
+                            //    dgvAsistencia.Rows[rowIndex].Cells[colName].Value = horas.ToString("0.##");
+                            //else
+                            //    dgvAsistencia.Rows[rowIndex].Cells[colName].Value = codigo;
+                            if (requiereTiempos && horas > 0)
                             {
-                                int rowIndex = mapaFilas[idMoto];
-                                var stats = mapaStats[idMoto];
+                                celda.Value = horas.ToString("0.##"); // Muestra el número (ej. 8.00)
+                            }
+                            else
+                            {
+                                celda.Value = codigo; // Muestra el texto (ej. L)
+                            }
 
-                                DataGridViewCell celda = dgvAsistencia.Rows[rowIndex].Cells[colName];
+                            // --- LÓGICA DE CONTADORES (TUS 4 CAMBIOS) ---
 
-                                string codigo = row["Codigo"] != DBNull.Value ? row["Codigo"].ToString() : "";
-                                bool requiereTiempos = row["RequiereTiempos"] != DBNull.Value && Convert.ToBoolean(row["RequiereTiempos"]);
-                                decimal horas = row["HorasCalculadas"] != DBNull.Value ? Convert.ToDecimal(row["HorasCalculadas"]) : 0;
+                            // A. ICP (Igual que antes)
+                            if (codigo == "ICP") stats.DiasICP++;
 
-                                celda.Tag = codigo;
+                            // B. CAMBIO #1: Contar SDT
+                            if (codigo == "SDT") stats.DiasSDT++;
 
-                                // Visualización en celda
-                                //if (requiereTiempos && horas > 0)
-                                //    dgvAsistencia.Rows[rowIndex].Cells[colName].Value = horas.ToString("0.##");
-                                //else
-                                //    dgvAsistencia.Rows[rowIndex].Cells[colName].Value = codigo;
-                                if (requiereTiempos && horas > 0)
+                            // C. CAMBIO #4: Libres (NO contar Domingos)
+                            if (codigo == "L" && fecha.DayOfWeek != DayOfWeek.Sunday)
+                            {
+                                stats.DiasLibres++;
+                            }
+
+                            // D. CAMBIO #2: Domingos Trabajados
+                            // Regla: Es Domingo Y tiene horario ingresado (Horas > 0). Ignora códigos.
+                            if (fecha.DayOfWeek == DayOfWeek.Sunday)
+                            {
+                                if (horas > 0)
                                 {
-                                    celda.Value = horas.ToString("0.##"); // Muestra el número (ej. 8.00)
+                                    stats.DomingosTrabajados++;
                                 }
-                                else
+                            }
+
+                            // E. CAMBIO #3: Feriados Trabajados
+                            // Regla: Es Feriado Y tiene horario ingresado (Horas > 0).
+                            if (_feriadosDelMes.Contains(fecha.Date))
+                            {
+                                if (horas > 0)
                                 {
-                                    celda.Value = codigo; // Muestra el texto (ej. L)
-                                }
-
-                                // --- LÓGICA DE CONTADORES (TUS 4 CAMBIOS) ---
-
-                                // A. ICP (Igual que antes)
-                                if (codigo == "ICP") stats.DiasICP++;
-
-                                // B. CAMBIO #1: Contar SDT
-                                if (codigo == "SDT") stats.DiasSDT++;
-
-                                // C. CAMBIO #4: Libres (NO contar Domingos)
-                                if (codigo == "L" && fecha.DayOfWeek != DayOfWeek.Sunday)
-                                {
-                                    stats.DiasLibres++;
-                                }
-
-                                // D. CAMBIO #2: Domingos Trabajados 
-                                // Regla: Es Domingo Y tiene horario ingresado (Horas > 0). Ignora códigos.
-                                if (fecha.DayOfWeek == DayOfWeek.Sunday)
-                                {
-                                    if (horas > 0)
-                                    {
-                                        stats.DomingosTrabajados++;
-                                    }
-                                }
-
-                                // E. CAMBIO #3: Feriados Trabajados
-                                // Regla: Es Feriado Y tiene horario ingresado (Horas > 0).
-                                if (_feriadosDelMes.Contains(fecha.Date))
-                                {
-                                    if (horas > 0)
-                                    {
-                                        stats.DiasFeriadosTrabajados++;
-                                    }
+                                    stats.DiasFeriadosTrabajados++;
                                 }
                             }
                         }
                     }
-
-                    // --- MOSTRAR TOTALES ---
-                    foreach (var kvp in mapaFilas)
-                    {
-                        int id = kvp.Key;
-                        int rowIndex = kvp.Value;
-                        var stats = mapaStats[id];
-
-                        // Asignar valores (si es 0 dejar vacío para limpieza visual)
-                        dgvAsistencia.Rows[rowIndex].Cells["TotalICP"].Value = stats.DiasICP > 0 ? stats.DiasICP.ToString() : "";
-
-                        dgvAsistencia.Rows[rowIndex].Cells["TotalSDT"].Value = stats.DiasSDT > 0 ? stats.DiasSDT.ToString() : "";
-
-                        dgvAsistencia.Rows[rowIndex].Cells["TotalFer"].Value = stats.DiasFeriadosTrabajados > 0 ? stats.DiasFeriadosTrabajados.ToString() : "";
-
-                        dgvAsistencia.Rows[rowIndex].Cells["TotalL"].Value = stats.DiasLibres > 0 ? stats.DiasLibres.ToString() : "";
-
-                        dgvAsistencia.Rows[rowIndex].Cells["TotalDom"].Value = stats.DomingosTrabajados > 0 ? stats.DomingosTrabajados.ToString() : "";
-                    }
-
                 }
-                catch (Exception ex)
+
+                // --- MOSTRAR TOTALES ---
+                foreach (var kvp in mapaFilas)
                 {
-                    MessageBox.Show("Error al cargar la asistencia: " + ex.Message);
+                    int id = kvp.Key;
+                    int rowIndex = kvp.Value;
+                    var stats = mapaStats[id];
+
+                    // Asignar valores (si es 0 dejar vacío para limpieza visual)
+                    dgvAsistencia.Rows[rowIndex].Cells["TotalICP"].Value = stats.DiasICP > 0 ? stats.DiasICP.ToString() : "";
+
+                    dgvAsistencia.Rows[rowIndex].Cells["TotalSDT"].Value = stats.DiasSDT > 0 ? stats.DiasSDT.ToString() : "";
+
+                    dgvAsistencia.Rows[rowIndex].Cells["TotalFer"].Value = stats.DiasFeriadosTrabajados > 0 ? stats.DiasFeriadosTrabajados.ToString() : "";
+
+                    dgvAsistencia.Rows[rowIndex].Cells["TotalL"].Value = stats.DiasLibres > 0 ? stats.DiasLibres.ToString() : "";
+
+                    dgvAsistencia.Rows[rowIndex].Cells["TotalDom"].Value = stats.DomingosTrabajados > 0 ? stats.DomingosTrabajados.ToString() : "";
                 }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar la asistencia: " + ex.Message);
             }
         }
 
@@ -336,7 +285,7 @@ namespace ADIGGM.HE
                 }
 
                 // 2. Obtener la Fecha desde el nombre de la columna
-                // El formato es "Dia_yyyyMMdd" (Ej: Dia_20251207). 
+                // El formato es "Dia_yyyyMMdd" (Ej: Dia_20251207).
                 // Cortamos los primeros 4 caracteres ("Dia_") y parseamos el resto.
                 string fechaString = colName.Substring(4); // Queda "20251207"
                 DateTime fechaSeleccionada = DateTime.ParseExact(fechaString, "yyyyMMdd", CultureInfo.InvariantCulture);
@@ -446,10 +395,10 @@ namespace ADIGGM.HE
             string valorCelda = e.Value?.ToString().Trim().ToUpper() ?? "";
             decimal horas;
             bool esNumero = decimal.TryParse(valorCelda, out horas);
-           
+
             if (codigoOculto == "ICP" || codigoOculto == "IC")
             {
-                e.CellStyle.BackColor = Color.Turquoise; 
+                e.CellStyle.BackColor = Color.Turquoise;
             }
             // Prioridad #1: Días Trabajados en DOMINGO o FERIADO
             else if (esNumero && horas > 0 && (fechaCelda.DayOfWeek == DayOfWeek.Sunday || _feriadosDelMes.Contains(fechaCelda.Date)))
@@ -508,33 +457,22 @@ namespace ADIGGM.HE
         }
         private void CargarFiltroPoliticas()
         {
-            using (SqlConnection conn = DbManager.GetConnection())
+            try
             {
-                try
-                {
-                    conn.Open();
-                    string query = "SELECT PoliticaID, NombrePolitica FROM dbo.HE_PoliticasPago ORDER BY NombrePolitica";
-                    SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-                    DataTable dt = new DataTable();
-                    adapter.Fill(dt);
+                var lista = _repoPoliticas.Listar();
+                // Agregamos la opción "(Todas)" al inicio
+                lista.Insert(0, new PoliticaPago { PoliticaID = 0, NombrePolitica = "(Todas)" });
 
-                    // Agregamos la opción "(Todas)" al inicio
-                    DataRow rowTodas = dt.NewRow();
-                    rowTodas["PoliticaID"] = 0;
-                    rowTodas["NombrePolitica"] = "(Todas)";
-                    dt.Rows.InsertAt(rowTodas, 0);
+                cboFiltroPolitica.DisplayMember = "NombrePolitica";
+                cboFiltroPolitica.ValueMember = "PoliticaID";
+                cboFiltroPolitica.DataSource = lista;
 
-                    cboFiltroPolitica.DisplayMember = "NombrePolitica";
-                    cboFiltroPolitica.ValueMember = "PoliticaID";
-                    cboFiltroPolitica.DataSource = dt;
-
-                    // Suscribimos al evento aquí para evitar que se dispare mientras carga
-                    cboFiltroPolitica.SelectedIndexChanged += cboFiltroPolitica_SelectedIndexChanged;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al cargar políticas: " + ex.Message);
-                }
+                // Suscribimos al evento aquí para evitar que se dispare mientras carga
+                cboFiltroPolitica.SelectedIndexChanged += cboFiltroPolitica_SelectedIndexChanged;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar políticas: " + ex.Message);
             }
         }
 
@@ -544,40 +482,22 @@ namespace ADIGGM.HE
             DateTime inicio = dtpInicio.Value.Date;
             DateTime fin = dtpFin.Value.Date;
 
-            string query = @"
-            SELECT IdMotorista, Fecha, Observaciones 
-            FROM dbo.HE_RegistrosAsistencia 
-            WHERE Fecha BETWEEN @Inicio AND @Fin
-            AND Observaciones IS NOT NULL AND LEN(Observaciones) > 0";
-
-            using (SqlConnection conn = DbManager.GetConnection())
-            using (SqlCommand cmd = new SqlCommand(query, conn))
+            try
             {
-                cmd.Parameters.AddWithValue("@Inicio", inicio);
-                cmd.Parameters.AddWithValue("@Fin", fin);
-                try
+                foreach (ObservacionDia obs in _repoAsistencias.ListarObservaciones(inicio, fin))
                 {
-                    conn.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    // CLAVE ÚNICA: ID_yyyMMdd (Ej: 10_20251207)
+                    string clave = $"{obs.IdMotorista}_{obs.Fecha:yyyyMMdd}";
+
+                    if (!_observacionesCache.ContainsKey(clave))
                     {
-                        int idMoto = reader.GetInt32(0);
-                        DateTime fecha = reader.GetDateTime(1);
-                        string obs = reader.GetString(2);
-
-                        // CLAVE ÚNICA: ID_yyyMMdd (Ej: 10_20251207)
-                        string clave = $"{idMoto}_{fecha:yyyyMMdd}";
-
-                        if (!_observacionesCache.ContainsKey(clave))
-                        {
-                            _observacionesCache.Add(clave, obs);
-                        }
+                        _observacionesCache.Add(clave, obs.Observaciones);
                     }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error observaciones: " + ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error observaciones: " + ex.Message);
             }
         }
         private void btnCerrarPeriodo_Click(object sender, EventArgs e)
@@ -616,11 +536,17 @@ namespace ADIGGM.HE
             frm.ShowDialog();
         }
 
+        private void btnGestionSalarios_Click(object sender, EventArgs e)
+        {
+            frmHistorialSalarios frm = new frmHistorialSalarios();
+            frm.ShowDialog();
+        }
+
         private void btnPoliticas_Click(object sender, EventArgs e)
         {
             frmPoliticas frm = new frmPoliticas();
             frm.ShowDialog();
-            
+
             CargarFiltroPoliticas();
         }
 

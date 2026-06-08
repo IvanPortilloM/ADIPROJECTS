@@ -9,7 +9,7 @@ namespace ADIGGM.SAC
     public partial class frmFechasCorte : FrmPrincipal
     {
         // 1. CONFIGURA TU CONEXIÓN AQUÍ
-        string connectionString = "Data Source=ADIGGM;Initial Catalog=TransporteAdiggm;Persist Security Info=True;User ID=SA;Password=ADIGGM*2016+";
+        string connectionString = ADIGGM.CapaDatos.Conexion.Cadena("TransporteAdiggm");
 
         // Variable para controlar si editamos (0 = Nuevo, >0 = ID a Editar)
         private int idRegistroEditar = 0;

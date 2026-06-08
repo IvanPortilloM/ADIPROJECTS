@@ -19,8 +19,8 @@ namespace ADIGGM.INV.Visores
     {
         bool PermitirMonto = true;
 
-        string connectionString = @"Initial Catalog=covipruebas;Data Source=ADIGGM.granjasmarinas.hn;Persist Security Info=True;User ID=sa;Password=ADIGGM*2016+";
-        string connectionString2 = @"Initial Catalog=TransporteAdiggm;Data Source=ADIGGM.granjasmarinas.hn;Persist Security Info=True;User ID=sa;Password=ADIGGM*2016+";
+        string connectionString = ADIGGM.CapaDatos.Conexion.Cadena("Covipruebas");
+        string connectionString2 = ADIGGM.CapaDatos.Conexion.Cadena("TransporteAdiggm");
 
         private Dictionary<string, cotipasien> registros = new Dictionary<string, cotipasien>();
         public frmVisorInventarioSync()

@@ -1,5 +1,6 @@
 ﻿namespace ADIGGM.Transaccionales
 {
+    using ADIGGM.CapaDatos;
     using System;
     using System.ComponentModel;
     using System.Drawing;
@@ -14,14 +15,14 @@
         
         //campos usados para editar viajes
         int IdViaje = 0, IdCliente = 0, IdClaseTrabajo = 0, IdTipoVehiculo = 0, IdRuta = 0, IdVehiculo = 0, Editar = 0;
-        double Tarifa = 0, Cantidad = 0, TISV = 0, SubTotal = 0, Total = 0;
+        decimal Tarifa = 0, Cantidad = 0, TISV = 0, SubTotal = 0, Total = 0;
         bool PermitirCant = true;
         string Prefijo = "", CodBoleta = "", Observaciones = "", Usuario = Clases.VarGlobales.Usuario;
         DateTime Fecha = DateTime.Now;
 
         public FrmViajes(int IdViaje, string Prefijo, string CodBoleta, DateTime Fecha, int IdCliente, int IdClaseTrabajo,
-                            int IdTipoVehiculo, int IdRuta, int IdVehiculo, double Tarifa, double Cantidad,
-                            double TISV, double SubTotal, double Total, string Observaciones, int Editar)
+                            int IdTipoVehiculo, int IdRuta, int IdVehiculo, decimal Tarifa, decimal Cantidad,
+                            decimal TISV, decimal SubTotal, decimal Total, string Observaciones, int Editar)
         {
             InitializeComponent();
 
@@ -75,12 +76,12 @@
                 CboTipoVehiculos.SelectedValue = IdTipoVehiculo;
                 CboRutas.SelectedValue = IdRuta;
                 CboVehiculo.SelectedValue = IdVehiculo;
-                txtTarifa.Text = $"{Tarifa:n}";
+                txtTarifa.Text = $"{Tarifa:n4}";
                 txtCantidad.Text = $"{Cantidad:n}";
                 txtISV.Text = $"{(TISV / SubTotal):0%}";
-                txtTISV.Text = $"{TISV:n}";
-                txtSubtotal.Text = $"{SubTotal:n}";
-                txtTotal.Text = $"{Total:n}";
+                txtTISV.Text = $"{TISV:n4}";
+                txtSubtotal.Text = $"{SubTotal:n4}";
+                txtTotal.Text = $"{Total:n4}";
                 txtObservaciones.Text = Observaciones;
                 ptbInfoCliente.Visible = true;
                 ptbIndCliente.Visible = true;
@@ -128,19 +129,20 @@
         {
             try
             {
-                double TotalISV, Subtotal, Total;
-
                 if (txtCantidad.Text != "" && txtTarifa.Text != "")
                 {
-                    Subtotal = Convert.ToDouble(txtCantidad.Text) * Convert.ToDouble(txtTarifa.Text);
-                    TotalISV = Subtotal * (ISV / 100);
-                    Total = Subtotal + TotalISV;
+                    decimal cantidad = decimal.Parse(txtCantidad.Text, NumberStyles.Number, CultureInfo.CurrentCulture);
+                    decimal tarifa = decimal.Parse(txtTarifa.Text, NumberStyles.Number, CultureInfo.CurrentCulture);
 
-                    txtTISV.Text = $"{TotalISV:n}";
-                    txtSubtotal.Text = $"{Subtotal:n}";
-                    txtTotal.Text = $"{Total:n}";
+                    decimal subtotal = cantidad * tarifa;
+                    decimal totalISV = subtotal * (Convert.ToDecimal(ISV) / 100);
+                    decimal total = subtotal + totalISV;
+
+                    txtTISV.Text = $"{totalISV:n4}";
+                    txtSubtotal.Text = $"{subtotal:n4}";
+                    txtTotal.Text = $"{total:n4}";
                 }
-                else if (txtCantidad.Text == "" || txtTarifa.Text == "")
+                else
                 {
                     txtTISV.Text = $"{0:n}";
                     txtSubtotal.Text = $"{0:n}";
@@ -202,84 +204,117 @@
             int validar = ValidarCampos();
 
             if (validar == 1)
-            {                
+            {
                 DateTime Fecha = DateTime.ParseExact(mskFecha.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                string Prefijo = Convert.ToString(cboPrefijos.Text).ToString(),
-                    NumBoleta = Convert.ToString(mskNumBoleta.Text.Trim()),
-                    Observaciones = Convert.ToString(txtObservaciones.Text);
-                int IdCliente = Convert.ToInt32(CboClientes.SelectedValue.ToString()),
-                    IdClaseTrabajo = Convert.ToInt32(CboClaseTrabajos.SelectedValue.ToString()),
-                    IdTipoVeh = Convert.ToInt32(CboTipoVehiculos.SelectedValue.ToString()),
-                    IdVehiculo = Convert.ToInt32(CboVehiculo.SelectedValue.ToString()),
+                string Prefijo = cboPrefijos.Text.ToString(),
+                       NumBoleta = mskNumBoleta.Text.Trim(),
+                       Observaciones = txtObservaciones.Text;
+                int IdCliente = Convert.ToInt32(CboClientes.SelectedValue),
+                    IdClaseTrabajo = Convert.ToInt32(CboClaseTrabajos.SelectedValue),
+                    IdTipoVeh = Convert.ToInt32(CboTipoVehiculos.SelectedValue),
+                    IdVehiculo = Convert.ToInt32(CboVehiculo.SelectedValue),
                     IdMotorista = Convert.ToInt32(Clases.VarGlobales.consultasTrans.TR_SeleccionarIdMotorista(IdVehiculo)),
-                    IdRuta = Convert.ToInt32(CboRutas.SelectedValue.ToString()),
+                    IdRuta = Convert.ToInt32(CboRutas.SelectedValue),
                     IdCierre = Convert.ToInt32(Clases.VarGlobales.consultasTrans.PR_CierresExisteId(Fecha));
-                    ISV = Convert.ToInt32(Clases.VarGlobales.consultasTrans.TR_ISV(IdTipoVeh,IdCliente));
-                decimal Cantidad = Convert.ToDecimal(txtCantidad.Text),
-                    Tarifa = Convert.ToDecimal(txtTarifa.Text),
-                    SubTotal = Convert.ToDecimal(txtCantidad.Text) * Convert.ToDecimal(txtTarifa.Text),
-                    TISV = SubTotal * (Convert.ToDecimal(ISV) / 100),
-                    Total = SubTotal + TISV;
+                ISV = Convert.ToInt32(Clases.VarGlobales.consultasTrans.TR_ISV(IdTipoVeh, IdCliente));
 
-                if (Editar == 0)
+                decimal Cantidad = decimal.Parse(txtCantidad.Text, System.Globalization.NumberStyles.Number, CultureInfo.CurrentCulture),
+                        Tarifa = decimal.Parse(txtTarifa.Text, System.Globalization.NumberStyles.Number, CultureInfo.CurrentCulture),
+                        Subtotal = Cantidad * Tarifa,
+                        TotalISV = Subtotal * (Convert.ToDecimal(ISV) / 100),
+                        Total = Subtotal + TotalISV;
+
+                try
                 {
-                    try
+                    using (System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection(Conexion.TransporteADI))
                     {
-                        Clases.VarGlobales.consultasTrans.PR_ViajesInsert(Fecha, Prefijo, NumBoleta, IdCliente, IdClaseTrabajo, IdTipoVeh, IdVehiculo, IdMotorista, IdRuta, Cantidad, Tarifa, TISV, SubTotal, Total, Observaciones, Usuario,IdCierre);
+                        conn.Open();
+                        string spName = Editar == 0 ? "PR_ViajesInsert" : "PR_ViajesUpdate";
 
+                        using (System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand(spName, conn))
+                        {
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                            // Parámetros comunes a Insert y Update
+                            cmd.Parameters.Add("@Fecha", System.Data.SqlDbType.Date).Value = Fecha;
+                            cmd.Parameters.Add("@Prefijo", System.Data.SqlDbType.VarChar, 10).Value = Prefijo;
+                            cmd.Parameters.Add("@NumBoleta", System.Data.SqlDbType.VarChar, 10).Value = NumBoleta;
+                            cmd.Parameters.Add("@IdCliente", System.Data.SqlDbType.Int).Value = IdCliente;
+                            cmd.Parameters.Add("@IdClaseTrabajo", System.Data.SqlDbType.Int).Value = IdClaseTrabajo;
+                            cmd.Parameters.Add("@IdTipoVeh", System.Data.SqlDbType.Int).Value = IdTipoVeh;
+                            cmd.Parameters.Add("@IdVehiculo", System.Data.SqlDbType.Int).Value = IdVehiculo;
+                            cmd.Parameters.Add("@IdMotorista", System.Data.SqlDbType.Int).Value = IdMotorista;
+                            cmd.Parameters.Add("@IdRuta", System.Data.SqlDbType.Int).Value = IdRuta;
+                            cmd.Parameters.Add("@Observaciones", System.Data.SqlDbType.VarChar, 200).Value = Observaciones;
+                            cmd.Parameters.Add("@Usuario", System.Data.SqlDbType.VarChar, 50).Value = Usuario;
+                            cmd.Parameters.Add("@IdCierre", System.Data.SqlDbType.Int).Value = IdCierre;
+
+                            // @Cantidad es NUMERIC(8,2) en el SP
+                            var pCantidad = new System.Data.SqlClient.SqlParameter();
+                            pCantidad.ParameterName = "@Cantidad";
+                            pCantidad.SqlDbType = System.Data.SqlDbType.Decimal;
+                            pCantidad.Precision = 8;
+                            pCantidad.Scale = 2;
+                            pCantidad.Value = Cantidad;
+                            cmd.Parameters.Add(pCantidad);
+
+                            // Parámetros NUMERIC(10,4)
+                            foreach (var (nombre, valor) in new (string, decimal)[]
+                            {
+                        ("@Tarifa",   Tarifa),
+                        ("@ISV",      TotalISV),   // ✅ @ISV, no @TISV
+                        ("@Subtotal", Subtotal),   // ✅ @Subtotal, no @SubTotal
+                        ("@Total",    Total)
+                            })
+                            {
+                                var p = new System.Data.SqlClient.SqlParameter();
+                                p.ParameterName = nombre;
+                                p.SqlDbType = System.Data.SqlDbType.Decimal;
+                                p.Precision = 10;
+                                p.Scale = 4;
+                                p.Value = valor;
+                                cmd.Parameters.Add(p);
+                            }
+
+                            // @IdViaje solo en Update
+                            if (Editar == 1)
+                                cmd.Parameters.Add("@IdViaje", System.Data.SqlDbType.Int).Value = IdViaje;
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (Editar == 0)
+                    {
                         Limpiar();
-
                         lblFooter.Text = "Datos Guardados Exitosamente";
                         mskNumBoleta.Focus();
-
                         Timer timer1 = new Timer();
                         timer1.Interval = 10000;
-
-                        timer1.Tick += (s, a) => {
-                            ((Timer)s).Stop();
-                            lblFooter.Text = "";
-                        };
-
+                        timer1.Tick += (s, a) => { ((Timer)s).Stop(); lblFooter.Text = ""; };
                         timer1.Start();
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show(ex.Message, Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else if (Editar == 1)
-                {
-                    try
-                    {
-                        Clases.VarGlobales.consultasTrans.PR_ViajesUpdate(Fecha, Prefijo, NumBoleta, IdCliente, IdClaseTrabajo, IdTipoVeh, IdVehiculo, IdMotorista, IdRuta, Cantidad, Tarifa, TISV, SubTotal, Total, Observaciones, Usuario, IdViaje, IdCierre);
-
                         Limpiar();
-
-                        MessageBox.Show("Datos Actualizados Exitosamente", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                        MessageBox.Show("Datos Actualizados Exitosamente", Clases.VarGlobales.nombreSistema,
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.DialogResult = DialogResult.OK;
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else if (validar == 2)
-            {
                 MessageBox.Show("Ingrese un código de boleta", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                mskNumBoleta.Focus();
-            }
             else if (validar == 3)
-            {
                 MessageBox.Show("Ingrese una fecha", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             else if (validar == 4)
                 MessageBox.Show("La fecha de ingreso no puede ser mayor a la fecha actual", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
             else if (validar == 5)
-            {
                 MessageBox.Show("La fecha de ingreso no está dentro del rango de cierre", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             else if (validar == 6)
                 MessageBox.Show("Ingrese un cliente", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
             else if (validar == 7)
@@ -291,33 +326,20 @@
             else if (validar == 10)
                 MessageBox.Show("Ingrese un código de vehículo", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
             else if (validar == 11)
-            {
                 MessageBox.Show("Ingrese un valor mayor a cero", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtCantidad.Focus();
-            }
             else if (validar == 12)
             {
                 MessageBox.Show("Ingrese un valor mayor a cero", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtCantidad.Focus();
             }
             else if (validar == 13)
-            {
                 MessageBox.Show("El campo debe contener un valor numérico de 6 dígitos", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //txtCantidad.Focus();
-            }
             else if (validar == 14)
-            {
                 MessageBox.Show("La boleta ya está ingresada", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //txtCantidad.Focus();
-            }
             else if (validar == 15)
-            {
                 MessageBox.Show("No existe un periodo de cierre ingresado que sea válido", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             else if (validar == 16)
-            {
                 MessageBox.Show("Ya se produjo el cierre para este cliente y tipo de vehículo", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
         private void cboPrefijos_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -327,14 +349,13 @@
         {
             if (Convert.ToInt32(CboVehiculo.SelectedValue) > 0)
             {
-                double Tarifa;
                 int IdClaseTrabajo = Convert.ToInt32(CboClaseTrabajos.SelectedValue),
                     IdTipoVehiculo = Convert.ToInt32(CboTipoVehiculos.SelectedValue),
                     IdRuta = Convert.ToInt32(CboRutas.SelectedValue),
                     IdCliente = Convert.ToInt32(CboClientes.SelectedValue);
 
-                Tarifa = Convert.ToDouble(Clases.VarGlobales.consultasTrans.PR_SelectTarifa(IdClaseTrabajo, IdTipoVehiculo, IdRuta, IdCliente));
-                txtTarifa.Text = $"{Tarifa:n}";
+                decimal tarifa = Convert.ToDecimal(Clases.VarGlobales.consultasTrans.PR_SelectTarifa(IdClaseTrabajo, IdTipoVehiculo, IdRuta, IdCliente));
+                txtTarifa.Text = $"{tarifa:n4}";
             }
             else
             {

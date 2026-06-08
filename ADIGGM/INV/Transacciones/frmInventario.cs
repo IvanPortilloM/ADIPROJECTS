@@ -101,23 +101,41 @@ namespace ADIGGM.INV.Transacciones
             if (dtpFecha.Value.Date <= DateTime.Now)
             {
                 int IdKardexHeader;
-                DateTime fechaConHoraActual = dtpFecha.Value.Date.Add(DateTime.Now.TimeOfDay);
+                DateTime fechaPicker = dtpFecha.Value;
+                DateTime ahora = DateTime.Now;
 
-                IdKardexHeader = Convert.ToInt32(VarGlobales.consultasInv.IN_KardexHeaderInsert(fechaConHoraActual, txtObservacion.Text, VarGlobales.Usuario));
-                
+                DateTime fechaConHoraActual = new DateTime(
+                    fechaPicker.Year,
+                    fechaPicker.Month,
+                    fechaPicker.Day,
+                    ahora.Hour,
+                    ahora.Minute,
+                    ahora.Second
+                );
+
+                IdKardexHeader = Convert.ToInt32(
+                    VarGlobales.consultasInv.IN_KardexHeaderInsert(
+                        fechaConHoraActual,
+                        txtObservacion.Text,
+                        VarGlobales.Usuario
+                    )
+                );
+
                 foreach (DataGridViewRow row in dgvInventario.Rows)
                 {
-                    VarGlobales.consultasInv.IN_KardexUpdate(int.Parse(cboBodega.SelectedValue.ToString()),
-                                                                    int.Parse(row.Cells["idProducto"].Value.ToString()),
-                                                                    decimal.Parse(row.Cells["cantidad"].Value.ToString()),
-                                                                    int.Parse(row.Cells["idVehiculo"].Value.ToString()),
-                                                                    IdKardexHeader, 
-                                                                    int.Parse(cboTipoOperacion.SelectedValue.ToString()),
-                                                                    fechaConHoraActual,
-                                                                    decimal.Parse(row.Cells["precio"].Value.ToString()),
-                                                                    Convert.ToBoolean(row.Cells["aplicaISV"].Value));
+                    VarGlobales.consultasInv.IN_KardexUpdate(
+                        int.Parse(cboBodega.SelectedValue.ToString()),
+                        int.Parse(row.Cells["idProducto"].Value.ToString()),
+                        decimal.Parse(row.Cells["cantidad"].Value.ToString()),
+                        int.Parse(row.Cells["idVehiculo"].Value.ToString()),
+                        IdKardexHeader,
+                        int.Parse(cboTipoOperacion.SelectedValue.ToString()),
+                        fechaConHoraActual,
+                        decimal.Parse(row.Cells["precio"].Value.ToString()),
+                        Convert.ToBoolean(row.Cells["aplicaISV"].Value)
+                    );
                 }
-                 
+
                 VisualizarReporte reporte = new VisualizarReporte(-3, "", "", 0,0, "", "", "", IdKardexHeader, 0, "", true);
                 reporte.ShowDialog();
                 dgvInventario.Rows.Clear();

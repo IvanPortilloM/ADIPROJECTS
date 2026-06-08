@@ -15,7 +15,7 @@ namespace ADIGGM.OC.Transacciones
         int TipoOC = 0, Actualizar = 0, IdTipoOC = 0, IdProveedor = 0, MaxItems = 0;
         bool permitir = true;
         decimal ISVP = 0;
-        string connectionString = ConfigurationManager.ConnectionStrings["ADIGGM.Properties.Settings.TransporteAdiggmConnectionString"].ToString();
+        string connectionString = ADIGGM.CapaDatos.Conexion.Cadena(ADIGGM.CapaDatos.Conexion.TRANSPORTE);
 
         public TranOrdenCompra(int Actualizar)
         {

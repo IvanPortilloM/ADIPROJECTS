@@ -16,7 +16,7 @@ namespace ADIGGM.Herramientas
         private bool todasLasFilasValidas = true, filaValida = true;
         private readonly string nombreHoja = "Hoja1";
         private string cadenaConexionExcel = "";
-        private readonly string cadenaConexionSQL = @"Initial Catalog=covibase;Data Source=ADIGGM.granjasmarinas.hn;Persist Security Info=True;User ID=sa;Password=ADIGGM*2016+";
+        private readonly string cadenaConexionSQL = ADIGGM.CapaDatos.Conexion.Cadena("Covibase");
         private readonly string consultaInsertar =
             "INSERT INTO baestabanc  (cctabancar,ctipodocum,nnumdocume,nmontomovi,dfechacrea,nigualadoc,ccontadorr,cstatusmov,cdescripci,nmesconcil,nanoconcil,dFechaIncl) " +
                                  "VALUES (@valor1, @valor2, @valor3, @valor4, @valor5, @valor6, @valor7, @valor8, @valor9, @valor10, @valor11, @valor12)";

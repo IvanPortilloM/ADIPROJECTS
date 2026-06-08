@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cboTipoVeh = new System.Windows.Forms.ComboBox();
             this.tRTipoVehiculosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dsTransporteAdiggm = new ADIGGM.DataSets.DsTransporteAdiggm();
@@ -172,7 +173,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(104, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(97, 16);
+            this.label1.Size = new System.Drawing.Size(96, 16);
             this.label1.TabIndex = 104;
             this.label1.Text = "Tipo de Vehículo";
             // 
@@ -194,9 +195,9 @@
             this.dgvRutaTpVeh.ReadOnly = true;
             this.dgvRutaTpVeh.Size = new System.Drawing.Size(600, 257);
             this.dgvRutaTpVeh.TabIndex = 105;
+            this.dgvRutaTpVeh.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvRutaTpVeh_ColumnHeaderMouseClick);
             this.dgvRutaTpVeh.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvRutaTpVeh_DataError);
             this.dgvRutaTpVeh.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvRutaTpVeh_RowsAdded);
-            this.dgvRutaTpVeh.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.dgvRutaTpVeh_SortCompare);
             // 
             // idAsigRutaTipoVeh
             // 
@@ -219,6 +220,8 @@
             this.idRuta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.idRuta.DataPropertyName = "IdRuta";
             this.idRuta.DataSource = this.tRRutasFiltradasBindingSource;
+            dataGridViewCellStyle1.NullValue = null;
+            this.idRuta.DefaultCellStyle = dataGridViewCellStyle1;
             this.idRuta.DisplayMember = "Ruta";
             this.idRuta.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
             this.idRuta.HeaderText = "Ruta";
@@ -226,7 +229,7 @@
             this.idRuta.Name = "idRuta";
             this.idRuta.ReadOnly = true;
             this.idRuta.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.idRuta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.idRuta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.idRuta.ValueMember = "IdRuta";
             // 
             // tRRutasFiltradasBindingSource
@@ -237,9 +240,9 @@
             // Tarifa
             // 
             this.Tarifa.DataPropertyName = "Tarifa";
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = null;
-            this.Tarifa.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Format = "N4";
+            dataGridViewCellStyle2.NullValue = null;
+            this.Tarifa.DefaultCellStyle = dataGridViewCellStyle2;
             this.Tarifa.HeaderText = "Tarifa";
             this.Tarifa.Name = "Tarifa";
             this.Tarifa.ReadOnly = true;

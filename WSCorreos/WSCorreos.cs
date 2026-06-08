@@ -146,7 +146,7 @@ namespace WSCorreos
 
             // TODO: Add your code here to query the database and send emails
             // Define your connection string
-            string connectionString = "Initial Catalog=TransporteAdiggm;Data Source=ADIGGM.granjasmarinas.hn;Persist Security Info=True;User ID=sa;Password=ADIGGM*2016+";
+            string connectionString = ADIGGM.CapaDatos.Conexion.Cadena("TransporteAdiggm");
 
             // Define your query or stored procedure
             string query = "SELECT Correlativo Consecutivo, CodVehiculo + ' - ' + Placa Unidad, CONVERT (varchar(10), Fecha, 103) [Fecha Ingreso], CONVERT (varchar(10), FechaEstimada, 103) [Fecha Estimada], DATEDIFF (DAY, GETDATE(), FechaEstimada) [Dif. de Días], DescripcionServicio Descripción " +
@@ -203,7 +203,7 @@ namespace WSCorreos
             monthlyTimer.Stop(); // stop the timer while we are running the task
 
             // Define your connection string
-            string connectionString = "Initial Catalog=TransporteAdiggm;Data Source=ADIGGM.granjasmarinas.hn;Persist Security Info=True;User ID=sa;Password=ADIGGM*2016+";
+            string connectionString = ADIGGM.CapaDatos.Conexion.Cadena("TransporteAdiggm");
 
             // Define your query or stored procedure
             // This is just a placeholder, replace with your actual query

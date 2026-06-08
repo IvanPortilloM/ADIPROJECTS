@@ -11,7 +11,7 @@ namespace ADIGGM.SAC.Visores
 {
     public partial class frmVisorOrdenesSAC : FrmPrincipal
     {
-        string cadenaConexion = @"Initial Catalog=TransporteAdiggm;Data Source=ADIGGM.granjasmarinas.hn;Persist Security Info=True;User ID=sa;Password=ADIGGM*2016+";
+        string cadenaConexion = ADIGGM.CapaDatos.Conexion.Cadena("TransporteAdiggm");
         public frmVisorOrdenesSAC()
         {
             InitializeComponent();

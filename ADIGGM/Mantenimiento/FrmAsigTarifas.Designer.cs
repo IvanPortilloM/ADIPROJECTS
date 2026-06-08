@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAsigTarifas));
             this.dgvRutasNoAsignadas = new System.Windows.Forms.DataGridView();
             this.idRutaNoAsig = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -160,12 +159,11 @@
             // 
             this.Tarifa.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.Tarifa.DataPropertyName = "Tarifa";
-            dataGridViewCellStyle1.Format = "N2";
             dataGridViewCellStyle1.NullValue = null;
             this.Tarifa.DefaultCellStyle = dataGridViewCellStyle1;
             this.Tarifa.HeaderText = "Tarifa";
             this.Tarifa.Name = "Tarifa";
-            this.Tarifa.Width = 62;
+            this.Tarifa.Width = 61;
             // 
             // pRTarifaRutasNoAsigBindingSource
             // 
@@ -225,11 +223,9 @@
             // 
             this.TarifaReal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.TarifaReal.DataPropertyName = "Tarifa";
-            dataGridViewCellStyle2.Format = "N2";
-            this.TarifaReal.DefaultCellStyle = dataGridViewCellStyle2;
             this.TarifaReal.HeaderText = "Tarifa";
             this.TarifaReal.Name = "TarifaReal";
-            this.TarifaReal.Width = 62;
+            this.TarifaReal.Width = 61;
             // 
             // pRTarifaRutasAsigBindingSource
             // 
@@ -292,7 +288,7 @@
             this.lblTipoVehiculo.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTipoVehiculo.Location = new System.Drawing.Point(12, 58);
             this.lblTipoVehiculo.Name = "lblTipoVehiculo";
-            this.lblTipoVehiculo.Size = new System.Drawing.Size(121, 16);
+            this.lblTipoVehiculo.Size = new System.Drawing.Size(120, 16);
             this.lblTipoVehiculo.TabIndex = 22;
             this.lblTipoVehiculo.Text = "Tipo de Vehiculo:";
             // 
@@ -302,7 +298,7 @@
             this.lblClaseTrabajo.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClaseTrabajo.Location = new System.Drawing.Point(7, 54);
             this.lblClaseTrabajo.Name = "lblClaseTrabajo";
-            this.lblClaseTrabajo.Size = new System.Drawing.Size(124, 16);
+            this.lblClaseTrabajo.Size = new System.Drawing.Size(123, 16);
             this.lblClaseTrabajo.TabIndex = 23;
             this.lblClaseTrabajo.Text = "Clase de Trabajo:";
             // 
@@ -359,7 +355,7 @@
             this.lblRutas2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lblRutas2.Location = new System.Drawing.Point(10, 103);
             this.lblRutas2.Name = "lblRutas2";
-            this.lblRutas2.Size = new System.Drawing.Size(95, 16);
+            this.lblRutas2.Size = new System.Drawing.Size(94, 16);
             this.lblRutas2.TabIndex = 31;
             this.lblRutas2.Text = "Buscar Rutas:";
             // 
@@ -370,7 +366,7 @@
             this.lblBuscar1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lblBuscar1.Location = new System.Drawing.Point(12, 103);
             this.lblBuscar1.Name = "lblBuscar1";
-            this.lblBuscar1.Size = new System.Drawing.Size(95, 16);
+            this.lblBuscar1.Size = new System.Drawing.Size(94, 16);
             this.lblBuscar1.TabIndex = 30;
             this.lblBuscar1.Text = "Buscar Rutas:";
             // 
@@ -400,7 +396,7 @@
             this.lblRutasAsig.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lblRutasAsig.Location = new System.Drawing.Point(134, 83);
             this.lblRutasAsig.Name = "lblRutasAsig";
-            this.lblRutasAsig.Size = new System.Drawing.Size(112, 16);
+            this.lblRutasAsig.Size = new System.Drawing.Size(111, 16);
             this.lblRutasAsig.TabIndex = 26;
             this.lblRutasAsig.Text = "Rutas con Tarifa";
             // 
@@ -438,7 +434,7 @@
             this.lblClientes.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblClientes.Location = new System.Drawing.Point(12, 25);
             this.lblClientes.Name = "lblClientes";
-            this.lblClientes.Size = new System.Drawing.Size(64, 16);
+            this.lblClientes.Size = new System.Drawing.Size(63, 16);
             this.lblClientes.TabIndex = 32;
             this.lblClientes.Text = "Clientes:";
             // 

@@ -179,11 +179,11 @@ namespace ADIGGM.Formularios_Base.Visores
             int IdTipoVeh = int.Parse(dgvVisorViajes.CurrentRow.Cells["idTipoVeh"].Value.ToString());
             int IdRuta = int.Parse(dgvVisorViajes.CurrentRow.Cells["idRuta"].Value.ToString());
             int IdVehiculo = int.Parse(dgvVisorViajes.CurrentRow.Cells["idVehiculo"].Value.ToString());
-            double Cantidad = double.Parse(dgvVisorViajes.CurrentRow.Cells["cantidad"].Value.ToString());
-            double Tarifa = double.Parse(dgvVisorViajes.CurrentRow.Cells["tarifa"].Value.ToString());
-            double ISV = double.Parse(dgvVisorViajes.CurrentRow.Cells["iSV"].Value.ToString());
-            double SubTotal = double.Parse(dgvVisorViajes.CurrentRow.Cells["subtotal"].Value.ToString());
-            double Total = double.Parse(dgvVisorViajes.CurrentRow.Cells["total"].Value.ToString());
+            decimal Cantidad = decimal.Parse(dgvVisorViajes.CurrentRow.Cells["cantidad"].Value.ToString());
+            decimal Tarifa = decimal.Parse(dgvVisorViajes.CurrentRow.Cells["tarifa"].Value.ToString());
+            decimal ISV = decimal.Parse(dgvVisorViajes.CurrentRow.Cells["iSV"].Value.ToString());
+            decimal SubTotal = decimal.Parse(dgvVisorViajes.CurrentRow.Cells["subtotal"].Value.ToString());
+            decimal Total = decimal.Parse(dgvVisorViajes.CurrentRow.Cells["total"].Value.ToString());
             string Observaciones = dgvVisorViajes.CurrentRow.Cells["observaciones"].Value.ToString();
 
             if(IdTipoVeh == IdTipoVehiculo)
@@ -310,11 +310,11 @@ namespace ADIGGM.Formularios_Base.Visores
             int IdTipoVeh = int.Parse(dgvVisorViajes.CurrentRow.Cells["idTipoVeh"].Value.ToString());
             int IdRuta = int.Parse(dgvVisorViajes.CurrentRow.Cells["idRuta"].Value.ToString());
             int IdVehiculo = int.Parse(dgvVisorViajes.CurrentRow.Cells["idVehiculo"].Value.ToString());
-            double Cantidad = double.Parse(dgvVisorViajes.CurrentRow.Cells["cantidad"].Value.ToString());
-            double Tarifa = double.Parse(dgvVisorViajes.CurrentRow.Cells["tarifa"].Value.ToString());
-            double ISV = double.Parse(dgvVisorViajes.CurrentRow.Cells["iSV"].Value.ToString());
-            double SubTotal = double.Parse(dgvVisorViajes.CurrentRow.Cells["subtotal"].Value.ToString());
-            double Total = double.Parse(dgvVisorViajes.CurrentRow.Cells["total"].Value.ToString());
+            decimal Cantidad = decimal.Parse(dgvVisorViajes.CurrentRow.Cells["cantidad"].Value.ToString());
+            decimal Tarifa = decimal.Parse(dgvVisorViajes.CurrentRow.Cells["tarifa"].Value.ToString());
+            decimal ISV = decimal.Parse(dgvVisorViajes.CurrentRow.Cells["iSV"].Value.ToString());
+            decimal SubTotal = decimal.Parse(dgvVisorViajes.CurrentRow.Cells["subtotal"].Value.ToString());
+            decimal Total = decimal.Parse(dgvVisorViajes.CurrentRow.Cells["total"].Value.ToString());
             string Observaciones = dgvVisorViajes.CurrentRow.Cells["observaciones"].Value.ToString();
 
             if (IdTipoVeh == IdTipoVehiculo)

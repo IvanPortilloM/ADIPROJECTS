@@ -13,6 +13,8 @@ namespace ADIGGM.Clases
     /// </summary>
     public class PoliticaPago
     {
+        public int PoliticaID { get; set; }
+        public string NombrePolitica { get; set; }
         public bool PagaExtrasDiarias { get; set; } // Si es false, las extras 25/50/75 se pagan como horas normales.
         public bool PagaDomingos { get; set; }      // Si es true, el Domingo se paga al 100%. Si es false, se paga normal.
         public bool PagaFeriados { get; set; }      // Si es true, el Feriado se paga al 100%.

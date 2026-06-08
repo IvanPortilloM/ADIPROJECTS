@@ -1,8 +1,7 @@
 ﻿using ADIGGM.Clases;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
+using ADIGGM.CapaDatos;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -17,6 +16,8 @@ namespace ADIGGM.HE
         private DateTime _fechaActual;     // Fecha que estamos editando
         private DateTime _fechaMinima;     // Inicio del periodo global
         private DateTime _fechaMaxima;     // Fin del periodo global
+
+        private readonly RepositorioMotoristas _repoMotoristas = new RepositorioMotoristas();
 
         // Constructor actualizado
         public frmCopiarAsistencia(int idMotoristaOrigen, DateTime fechaActual, DateTime fechaMin, DateTime fechaMax)
@@ -80,37 +81,27 @@ namespace ADIGGM.HE
 
         private void CargarMotoristas()
         {
-            using (SqlConnection conn = DbManager.GetConnection())
+            try
             {
-                try
+                // 3. Traemos TODOS los activos (incluyendo al origen)
+                dgvMotoristas.DataSource = _repoMotoristas.ListarEmpleadosActivos();
+
+                // 4. Marcar y "Bloquear" al Motorista Origen
+                foreach (DataGridViewRow row in dgvMotoristas.Rows)
                 {
-                    conn.Open();
-                    // 3. Traemos TODOS los activos (incluyendo al origen)
-                    string query = "SELECT IdMotorista, Motorista FROM dbo.TR_Motoristas WHERE Activo = 1 AND EsEmpleado = 1 ORDER BY Motorista";
-
-                    SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-                    DataTable dt = new DataTable();
-                    adapter.Fill(dt);
-
-                    dgvMotoristas.DataSource = dt;
-
-                    // 4. Marcar y "Bloquear" al Motorista Origen
-                    foreach (DataGridViewRow row in dgvMotoristas.Rows)
+                    int id = Convert.ToInt32(row.Cells["colId"].Value);
+                    if (id == _idMotoristaOrigen)
                     {
-                        int id = Convert.ToInt32(row.Cells["colId"].Value);
-                        if (id == _idMotoristaOrigen)
-                        {
-                            row.Cells["colCheck"].Value = true; // Marcado por defecto
-                            row.DefaultCellStyle.BackColor = Color.LightGray; // Visualmente deshabilitado
-                            row.DefaultCellStyle.ForeColor = Color.Gray;
-                            row.ReadOnly = true; // Bloquea edición normal
-                        }
+                        row.Cells["colCheck"].Value = true; // Marcado por defecto
+                        row.DefaultCellStyle.BackColor = Color.LightGray; // Visualmente deshabilitado
+                        row.DefaultCellStyle.ForeColor = Color.Gray;
+                        row.ReadOnly = true; // Bloquea edición normal
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
             }
         }
 

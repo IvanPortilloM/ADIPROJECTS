@@ -163,7 +163,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(396, 67);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 16);
+            this.label6.Size = new System.Drawing.Size(64, 16);
             this.label6.TabIndex = 14;
             this.label6.Text = "Cantidad:";
             // 
@@ -194,7 +194,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(46, 67);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(61, 16);
+            this.label5.Size = new System.Drawing.Size(60, 16);
             this.label5.TabIndex = 12;
             this.label5.Text = "Producto:";
             // 
@@ -250,7 +250,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(402, 38);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 16);
+            this.label4.Size = new System.Drawing.Size(58, 16);
             this.label4.TabIndex = 8;
             this.label4.Text = "Proforma:";
             // 
@@ -259,7 +259,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 38);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(101, 16);
+            this.label2.Size = new System.Drawing.Size(100, 16);
             this.label2.TabIndex = 7;
             this.label2.Text = "Tipo Facturación:";
             // 
@@ -268,7 +268,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(412, 10);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 16);
+            this.label1.Size = new System.Drawing.Size(48, 16);
             this.label1.TabIndex = 6;
             this.label1.Text = "Cliente:";
             // 
@@ -295,7 +295,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(6, 10);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(101, 16);
+            this.label3.Size = new System.Drawing.Size(100, 16);
             this.label3.TabIndex = 4;
             this.label3.Text = "Calendarización:";
             // 

@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmVisorViajes));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gboFiltro = new System.Windows.Forms.GroupBox();
             this.mskNumBolHasta = new System.Windows.Forms.MaskedTextBox();
             this.mskNumBolDesde = new System.Windows.Forms.MaskedTextBox();
@@ -456,7 +457,7 @@
             this.idViaje.Name = "idViaje";
             this.idViaje.ReadOnly = true;
             this.idViaje.Visible = false;
-            this.idViaje.Width = 64;
+            this.idViaje.Width = 69;
             // 
             // IdViajeR
             // 
@@ -465,7 +466,7 @@
             this.IdViajeR.Name = "IdViajeR";
             this.IdViajeR.ReadOnly = true;
             this.IdViajeR.Visible = false;
-            this.IdViajeR.Width = 72;
+            this.IdViajeR.Width = 76;
             // 
             // idCliente
             // 
@@ -474,7 +475,7 @@
             this.idCliente.Name = "idCliente";
             this.idCliente.ReadOnly = true;
             this.idCliente.Visible = false;
-            this.idCliente.Width = 73;
+            this.idCliente.Width = 81;
             // 
             // idClaseTrabajo
             // 
@@ -483,7 +484,7 @@
             this.idClaseTrabajo.Name = "idClaseTrabajo";
             this.idClaseTrabajo.ReadOnly = true;
             this.idClaseTrabajo.Visible = false;
-            this.idClaseTrabajo.Width = 103;
+            this.idClaseTrabajo.Width = 114;
             // 
             // idTipoVeh
             // 
@@ -492,7 +493,7 @@
             this.idTipoVeh.Name = "idTipoVeh";
             this.idTipoVeh.ReadOnly = true;
             this.idTipoVeh.Visible = false;
-            this.idTipoVeh.Width = 81;
+            this.idTipoVeh.Width = 86;
             // 
             // idRuta
             // 
@@ -501,7 +502,7 @@
             this.idRuta.Name = "idRuta";
             this.idRuta.ReadOnly = true;
             this.idRuta.Visible = false;
-            this.idRuta.Width = 64;
+            this.idRuta.Width = 69;
             // 
             // idVehiculo
             // 
@@ -510,7 +511,7 @@
             this.idVehiculo.Name = "idVehiculo";
             this.idVehiculo.ReadOnly = true;
             this.idVehiculo.Visible = false;
-            this.idVehiculo.Width = 82;
+            this.idVehiculo.Width = 89;
             // 
             // idMotorista
             // 
@@ -519,7 +520,7 @@
             this.idMotorista.Name = "idMotorista";
             this.idMotorista.ReadOnly = true;
             this.idMotorista.Visible = false;
-            this.idMotorista.Width = 84;
+            this.idMotorista.Width = 93;
             // 
             // IdLaguna
             // 
@@ -528,7 +529,7 @@
             this.IdLaguna.Name = "IdLaguna";
             this.IdLaguna.ReadOnly = true;
             this.IdLaguna.Visible = false;
-            this.IdLaguna.Width = 77;
+            this.IdLaguna.Width = 85;
             // 
             // HrInicial
             // 
@@ -537,7 +538,7 @@
             this.HrInicial.Name = "HrInicial";
             this.HrInicial.ReadOnly = true;
             this.HrInicial.Visible = false;
-            this.HrInicial.Width = 70;
+            this.HrInicial.Width = 74;
             // 
             // HrFinal
             // 
@@ -546,7 +547,7 @@
             this.HrFinal.Name = "HrFinal";
             this.HrFinal.ReadOnly = true;
             this.HrFinal.Visible = false;
-            this.HrFinal.Width = 65;
+            this.HrFinal.Width = 67;
             // 
             // HrTrabajadas
             // 
@@ -555,7 +556,7 @@
             this.HrTrabajadas.Name = "HrTrabajadas";
             this.HrTrabajadas.ReadOnly = true;
             this.HrTrabajadas.Visible = false;
-            this.HrTrabajadas.Width = 96;
+            this.HrTrabajadas.Width = 105;
             // 
             // HrGPS
             // 
@@ -564,7 +565,7 @@
             this.HrGPS.Name = "HrGPS";
             this.HrGPS.ReadOnly = true;
             this.HrGPS.Visible = false;
-            this.HrGPS.Width = 65;
+            this.HrGPS.Width = 66;
             // 
             // fecha
             // 
@@ -627,7 +628,7 @@
             this.codVehiculo.Name = "codVehiculo";
             this.codVehiculo.ReadOnly = true;
             this.codVehiculo.Visible = false;
-            this.codVehiculo.Width = 92;
+            this.codVehiculo.Width = 102;
             // 
             // motorista
             // 
@@ -636,7 +637,7 @@
             this.motorista.Name = "motorista";
             this.motorista.ReadOnly = true;
             this.motorista.Visible = false;
-            this.motorista.Width = 75;
+            this.motorista.Width = 82;
             // 
             // cantidad
             // 
@@ -645,16 +646,19 @@
             this.cantidad.Name = "cantidad";
             this.cantidad.ReadOnly = true;
             this.cantidad.Visible = false;
-            this.cantidad.Width = 74;
+            this.cantidad.Width = 86;
             // 
             // tarifa
             // 
             this.tarifa.DataPropertyName = "Tarifa";
+            dataGridViewCellStyle1.Format = "N4";
+            dataGridViewCellStyle1.NullValue = null;
+            this.tarifa.DefaultCellStyle = dataGridViewCellStyle1;
             this.tarifa.HeaderText = "Tarifa";
             this.tarifa.Name = "tarifa";
             this.tarifa.ReadOnly = true;
             this.tarifa.Visible = false;
-            this.tarifa.Width = 59;
+            this.tarifa.Width = 61;
             // 
             // iSV
             // 
@@ -663,7 +667,7 @@
             this.iSV.Name = "iSV";
             this.iSV.ReadOnly = true;
             this.iSV.Visible = false;
-            this.iSV.Width = 49;
+            this.iSV.Width = 48;
             // 
             // subtotal
             // 
@@ -672,7 +676,7 @@
             this.subtotal.Name = "subtotal";
             this.subtotal.ReadOnly = true;
             this.subtotal.Visible = false;
-            this.subtotal.Width = 71;
+            this.subtotal.Width = 78;
             // 
             // total
             // 
@@ -681,7 +685,7 @@
             this.total.Name = "total";
             this.total.ReadOnly = true;
             this.total.Visible = false;
-            this.total.Width = 56;
+            this.total.Width = 58;
             // 
             // observaciones
             // 
@@ -690,7 +694,7 @@
             this.observaciones.Name = "observaciones";
             this.observaciones.ReadOnly = true;
             this.observaciones.Visible = false;
-            this.observaciones.Width = 103;
+            this.observaciones.Width = 114;
             // 
             // Anulado
             // 
@@ -707,7 +711,7 @@
             this.codBoleta.Name = "codBoleta";
             this.codBoleta.ReadOnly = true;
             this.codBoleta.Visible = false;
-            this.codBoleta.Width = 81;
+            this.codBoleta.Width = 90;
             // 
             // prefijo
             // 
@@ -716,7 +720,7 @@
             this.prefijo.Name = "prefijo";
             this.prefijo.ReadOnly = true;
             this.prefijo.Visible = false;
-            this.prefijo.Width = 61;
+            this.prefijo.Width = 63;
             // 
             // CmsOpciones
             // 
@@ -1149,6 +1153,17 @@
         private System.Windows.Forms.RadioButton RdbCodigo;
         private System.Windows.Forms.MaskedTextBox mskNumBolHasta;
         private System.Windows.Forms.MaskedTextBox mskNumBolDesde;
+        private System.Windows.Forms.GroupBox gboDetHr;
+        private System.Windows.Forms.TextBox txtHrInical;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.GroupBox gboDatosPago;
+        private System.Windows.Forms.GroupBox gboDatosGrales;
+        private System.Windows.Forms.TextBox txtHrGPS;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtHrTrabajadas;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txtHrFinal;
+        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.DataGridViewTextBoxColumn idViaje;
         private System.Windows.Forms.DataGridViewTextBoxColumn IdViajeR;
         private System.Windows.Forms.DataGridViewTextBoxColumn idCliente;
@@ -1179,16 +1194,5 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn Anulado;
         private System.Windows.Forms.DataGridViewTextBoxColumn codBoleta;
         private System.Windows.Forms.DataGridViewTextBoxColumn prefijo;
-        private System.Windows.Forms.GroupBox gboDetHr;
-        private System.Windows.Forms.TextBox txtHrInical;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.GroupBox gboDatosPago;
-        private System.Windows.Forms.GroupBox gboDatosGrales;
-        private System.Windows.Forms.TextBox txtHrGPS;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox txtHrTrabajadas;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox txtHrFinal;
-        private System.Windows.Forms.Label label15;
     }
 }

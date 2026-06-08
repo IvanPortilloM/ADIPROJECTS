@@ -16,7 +16,7 @@ namespace ADIGGM.Herramientas
     public partial class frmDifImpuestos : ADIGGM.FrmPrincipal
     {
         // Cadena de conexión a la base de datos
-        string cadenaConexion = @"Initial Catalog=covibase;Data Source=ADIGGM.granjasmarinas.hn;Persist Security Info=True;User ID=sa;Password=ADIGGM*2016+";
+        string cadenaConexion = ADIGGM.CapaDatos.Conexion.Cadena("Covibase");
 
         public frmDifImpuestos()
         {

@@ -92,7 +92,7 @@
             this.btnMax.FlatAppearance.BorderSize = 0;
             this.btnMax.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnMax.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnMax.Location = new System.Drawing.Point(3226, 0);
+            this.btnMax.Location = new System.Drawing.Point(573, 0);
             this.btnMax.Margin = new System.Windows.Forms.Padding(32, 15, 32, 15);
             // 
             // btnMin
@@ -101,7 +101,7 @@
             this.btnMin.FlatAppearance.BorderSize = 0;
             this.btnMin.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnMin.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnMin.Location = new System.Drawing.Point(3186, 0);
+            this.btnMin.Location = new System.Drawing.Point(533, 0);
             this.btnMin.Margin = new System.Windows.Forms.Padding(32, 15, 32, 15);
             // 
             // btnCerrar
@@ -110,18 +110,18 @@
             this.btnCerrar.FlatAppearance.BorderSize = 0;
             this.btnCerrar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnCerrar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
-            this.btnCerrar.Location = new System.Drawing.Point(3266, 0);
+            this.btnCerrar.Location = new System.Drawing.Point(613, 0);
             this.btnCerrar.Margin = new System.Windows.Forms.Padding(32, 15, 32, 15);
             // 
             // pgbProcesos
             // 
-            this.pgbProcesos.Location = new System.Drawing.Point(3126, 0);
+            this.pgbProcesos.Location = new System.Drawing.Point(473, 0);
             this.pgbProcesos.Margin = new System.Windows.Forms.Padding(48, 22, 48, 22);
             // 
             // pnlFooter
             // 
-            this.pnlFooter.Location = new System.Drawing.Point(0, 1077);
-            this.pnlFooter.Size = new System.Drawing.Size(3306, 23);
+            this.pnlFooter.Location = new System.Drawing.Point(0, 477);
+            this.pnlFooter.Size = new System.Drawing.Size(653, 23);
             // 
             // dgvRutasNoAsignadas
             // 
@@ -164,7 +164,7 @@
             this.Tarifa.DataPropertyName = "Tarifa";
             this.Tarifa.HeaderText = "Tarifa";
             this.Tarifa.Name = "Tarifa";
-            this.Tarifa.Width = 62;
+            this.Tarifa.Width = 61;
             // 
             // pRTarifaRutasNoAsigBindingSource
             // 
@@ -188,11 +188,11 @@
             this.rutaDataGridViewTextBoxColumn1,
             this.TarifaReal});
             this.dgvRutasAsignadas.DataSource = this.pRTarifaRutasAsigBindingSource;
-            this.dgvRutasAsignadas.Location = new System.Drawing.Point(6848, 1263);
+            this.dgvRutasAsignadas.Location = new System.Drawing.Point(21, 61);
             this.dgvRutasAsignadas.Margin = new System.Windows.Forms.Padding(48, 22, 48, 22);
             this.dgvRutasAsignadas.Name = "dgvRutasAsignadas";
             this.dgvRutasAsignadas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvRutasAsignadas.Size = new System.Drawing.Size(5920, 2577);
+            this.dgvRutasAsignadas.Size = new System.Drawing.Size(592, 257);
             this.dgvRutasAsignadas.TabIndex = 3;
             this.dgvRutasAsignadas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRutasAsignadas_CellClick);
             this.dgvRutasAsignadas.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRutasAsignadas_CellEndEdit);
@@ -227,7 +227,7 @@
             this.TarifaReal.DataPropertyName = "Tarifa";
             this.TarifaReal.HeaderText = "Tarifa";
             this.TarifaReal.Name = "TarifaReal";
-            this.TarifaReal.Width = 62;
+            this.TarifaReal.Width = 61;
             // 
             // pRTarifaRutasAsigBindingSource
             // 
@@ -292,10 +292,10 @@
             // 
             this.lblTipoVehiculo.AutoSize = true;
             this.lblTipoVehiculo.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTipoVehiculo.Location = new System.Drawing.Point(160, 207);
+            this.lblTipoVehiculo.Location = new System.Drawing.Point(18, 81);
             this.lblTipoVehiculo.Margin = new System.Windows.Forms.Padding(48, 0, 48, 0);
             this.lblTipoVehiculo.Name = "lblTipoVehiculo";
-            this.lblTipoVehiculo.Size = new System.Drawing.Size(121, 16);
+            this.lblTipoVehiculo.Size = new System.Drawing.Size(120, 16);
             this.lblTipoVehiculo.TabIndex = 22;
             this.lblTipoVehiculo.Text = "Tipo de Vehiculo:";
             // 
@@ -303,10 +303,10 @@
             // 
             this.lblClaseTrabajo.AutoSize = true;
             this.lblClaseTrabajo.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClaseTrabajo.Location = new System.Drawing.Point(112, 399);
+            this.lblClaseTrabajo.Location = new System.Drawing.Point(18, 113);
             this.lblClaseTrabajo.Margin = new System.Windows.Forms.Padding(48, 0, 48, 0);
             this.lblClaseTrabajo.Name = "lblClaseTrabajo";
-            this.lblClaseTrabajo.Size = new System.Drawing.Size(124, 16);
+            this.lblClaseTrabajo.Size = new System.Drawing.Size(123, 16);
             this.lblClaseTrabajo.TabIndex = 23;
             this.lblClaseTrabajo.Text = "Clase de Trabajo:";
             // 
@@ -358,10 +358,10 @@
             this.lblRutas2.BackColor = System.Drawing.Color.Transparent;
             this.lblRutas2.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRutas2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblRutas2.Location = new System.Drawing.Point(160, 761);
+            this.lblRutas2.Location = new System.Drawing.Point(18, 35);
             this.lblRutas2.Margin = new System.Windows.Forms.Padding(48, 0, 48, 0);
             this.lblRutas2.Name = "lblRutas2";
-            this.lblRutas2.Size = new System.Drawing.Size(95, 16);
+            this.lblRutas2.Size = new System.Drawing.Size(94, 16);
             this.lblRutas2.TabIndex = 31;
             this.lblRutas2.Text = "Buscar Rutas:";
             // 
@@ -370,10 +370,10 @@
             this.lblBuscar1.AutoSize = true;
             this.lblBuscar1.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBuscar1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblBuscar1.Location = new System.Drawing.Point(192, 761);
+            this.lblBuscar1.Location = new System.Drawing.Point(132, 26);
             this.lblBuscar1.Margin = new System.Windows.Forms.Padding(48, 0, 48, 0);
             this.lblBuscar1.Name = "lblBuscar1";
-            this.lblBuscar1.Size = new System.Drawing.Size(95, 16);
+            this.lblBuscar1.Size = new System.Drawing.Size(94, 16);
             this.lblBuscar1.TabIndex = 30;
             this.lblBuscar1.Text = "Buscar Rutas:";
             // 
@@ -390,10 +390,10 @@
             // txtRuta1
             // 
             this.txtRuta1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.txtRuta1.Location = new System.Drawing.Point(1808, 753);
+            this.txtRuta1.Location = new System.Drawing.Point(135, 52);
             this.txtRuta1.Margin = new System.Windows.Forms.Padding(48, 22, 48, 22);
             this.txtRuta1.Name = "txtRuta1";
-            this.txtRuta1.Size = new System.Drawing.Size(3460, 20);
+            this.txtRuta1.Size = new System.Drawing.Size(346, 20);
             this.txtRuta1.TabIndex = 28;
             this.txtRuta1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRuta1_KeyPress);
             // 
@@ -406,7 +406,7 @@
             this.lblRutasAsig.Location = new System.Drawing.Point(2144, 613);
             this.lblRutasAsig.Margin = new System.Windows.Forms.Padding(48, 0, 48, 0);
             this.lblRutasAsig.Name = "lblRutasAsig";
-            this.lblRutasAsig.Size = new System.Drawing.Size(112, 16);
+            this.lblRutasAsig.Size = new System.Drawing.Size(111, 16);
             this.lblRutasAsig.TabIndex = 26;
             this.lblRutasAsig.Text = "Rutas con Tarifa";
             // 
@@ -439,10 +439,10 @@
             this.cboClientes.DisplayMember = "Cliente";
             this.cboClientes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboClientes.FormattingEnabled = true;
-            this.cboClientes.Location = new System.Drawing.Point(1808, 295);
+            this.cboClientes.Location = new System.Drawing.Point(720, 57);
             this.cboClientes.Margin = new System.Windows.Forms.Padding(48, 22, 48, 22);
             this.cboClientes.Name = "cboClientes";
-            this.cboClientes.Size = new System.Drawing.Size(3460, 21);
+            this.cboClientes.Size = new System.Drawing.Size(321, 21);
             this.cboClientes.TabIndex = 34;
             this.cboClientes.ValueMember = "IdCliente";
             this.cboClientes.SelectedValueChanged += new System.EventHandler(this.cboClientes_SelectedValueChanged);
@@ -451,10 +451,10 @@
             // 
             this.lblClientes.AutoSize = true;
             this.lblClientes.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClientes.Location = new System.Drawing.Point(688, 303);
+            this.lblClientes.Location = new System.Drawing.Point(18, 26);
             this.lblClientes.Margin = new System.Windows.Forms.Padding(48, 0, 48, 0);
             this.lblClientes.Name = "lblClientes";
-            this.lblClientes.Size = new System.Drawing.Size(64, 16);
+            this.lblClientes.Size = new System.Drawing.Size(63, 16);
             this.lblClientes.TabIndex = 32;
             this.lblClientes.Text = "Clientes:";
             // 
@@ -469,13 +469,14 @@
             this.groupBox1.Controls.Add(this.lblClientes);
             this.groupBox1.Controls.Add(this.lblBuscar1);
             this.groupBox1.Controls.Add(this.txtRuta1);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.groupBox1.Location = new System.Drawing.Point(0, 295);
+            this.groupBox1.Location = new System.Drawing.Point(0, 35);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(48, 22, 48, 22);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(48, 22, 48, 22);
-            this.groupBox1.Size = new System.Drawing.Size(5920, 967);
+            this.groupBox1.Size = new System.Drawing.Size(653, 116);
             this.groupBox1.TabIndex = 38;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtrar por Clientes";
@@ -489,14 +490,16 @@
             this.groupBox2.Controls.Add(this.cboClaseTrabajo);
             this.groupBox2.Controls.Add(this.txtRuta2);
             this.groupBox2.Controls.Add(this.cboTipoVehiculo);
+            this.groupBox2.Controls.Add(this.dgvRutasAsignadas);
             this.groupBox2.Controls.Add(this.lblRutasAsig);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.groupBox2.Location = new System.Drawing.Point(6848, 295);
+            this.groupBox2.Location = new System.Drawing.Point(0, 151);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(48, 22, 48, 22);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(48, 22, 48, 22);
-            this.groupBox2.Size = new System.Drawing.Size(5920, 967);
+            this.groupBox2.Size = new System.Drawing.Size(653, 326);
             this.groupBox2.TabIndex = 39;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Rutas Asignadas por Tipo de Vehiculo y Clase de Trabajo";
@@ -506,21 +509,19 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(3306, 1100);
+            this.ClientSize = new System.Drawing.Size(653, 500);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnEliminarTodo);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnAgregarTodo);
-            this.Controls.Add(this.dgvRutasAsignadas);
             this.Controls.Add(this.dgvRutasNoAsignadas);
             this.Margin = new System.Windows.Forms.Padding(48, 22, 48, 22);
             this.Name = "FrmTarifaRutas";
             this.Load += new System.EventHandler(this.FrmTarifaRutas_Load);
             this.Controls.SetChildIndex(this.pnlFooter, 0);
             this.Controls.SetChildIndex(this.dgvRutasNoAsignadas, 0);
-            this.Controls.SetChildIndex(this.dgvRutasAsignadas, 0);
             this.Controls.SetChildIndex(this.btnAgregarTodo, 0);
             this.Controls.SetChildIndex(this.btnEliminar, 0);
             this.Controls.SetChildIndex(this.btnAgregar, 0);

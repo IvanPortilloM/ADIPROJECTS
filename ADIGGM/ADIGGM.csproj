@@ -30,7 +30,7 @@
     <MinimumRequiredVersion>1.0.0.3</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>56</ApplicationRevision>
+    <ApplicationRevision>66</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -115,6 +115,11 @@
     </Reference>
     <Reference Include="ClosedXML.Report, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b5435ca1fa2ab9d6, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.Report.0.2.12\lib\netstandard2.0\ClosedXML.Report.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Dapper.2.1.66\lib\net461\Dapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
@@ -277,6 +282,7 @@
       <HintPath>..\packages\SixLabors.Fonts.1.0.1\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="netstandard" />
     <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
     </Reference>
@@ -407,16 +413,31 @@
   <ItemGroup>
     <Compile Include="CapaDatos\CD_Usuario.cs" />
     <Compile Include="CapaDatos\Conexion.cs" />
+    <Compile Include="CapaDatos\RepositorioBase.cs" />
+    <Compile Include="CapaDatos\RepositorioTiposAsistencia.cs" />
+    <Compile Include="CapaDatos\RepositorioFeriados.cs" />
+    <Compile Include="CapaDatos\RepositorioMotoristas.cs" />
+    <Compile Include="CapaDatos\RepositorioPoliticas.cs" />
+    <Compile Include="CapaDatos\RepositorioHistorialSalarios.cs" />
+    <Compile Include="CapaDatos\RepositorioAsistencias.cs" />
+    <Compile Include="CapaDatos\RepositorioReporteHoras.cs" />
     <Compile Include="CapaModelo\SubMenuNieto.cs" />
     <Compile Include="CapaModelo\Menu.cs" />
     <Compile Include="CapaModelo\SubMenu.cs" />
+    <Compile Include="CapaModelo\TipoAsistencia.cs" />
+    <Compile Include="CapaModelo\DiaFeriado.cs" />
+    <Compile Include="CapaModelo\MotoristaItem.cs" />
+    <Compile Include="CapaModelo\HistorialSalario.cs" />
+    <Compile Include="CapaModelo\TipoAsistenciaCombo.cs" />
+    <Compile Include="CapaModelo\RegistroAsistenciaCab.cs" />
+    <Compile Include="CapaModelo\TiempoTrabajado.cs" />
+    <Compile Include="CapaModelo\ObservacionDia.cs" />
     <Compile Include="CCBoxItem1.cs" />
     <Compile Include="CheckedComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Clases\CalculadoraHoras.cs" />
     <Compile Include="Clases\CustomReportCredentials.cs" />
-    <Compile Include="Clases\DbManager.cs" />
     <Compile Include="Clases\IContract.cs" />
     <Compile Include="Clases\Numalet.cs" />
     <Compile Include="DataSetsWeb\DsOCWeb.Designer.cs">
@@ -591,6 +612,12 @@
     </Compile>
     <Compile Include="HE\frmFeriados.Designer.cs">
       <DependentUpon>frmFeriados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HE\frmHistorialSalarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HE\frmHistorialSalarios.Designer.cs">
+      <DependentUpon>frmHistorialSalarios.cs</DependentUpon>
     </Compile>
     <Compile Include="HE\frmPoliticas.cs">
       <SubType>Form</SubType>
@@ -1443,6 +1470,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HE\frmFeriados.resx">
       <DependentUpon>frmFeriados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HE\frmHistorialSalarios.resx">
+      <DependentUpon>frmHistorialSalarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HE\frmPoliticas.resx">
       <DependentUpon>frmPoliticas.cs</DependentUpon>

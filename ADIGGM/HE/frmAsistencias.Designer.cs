@@ -42,6 +42,7 @@
             this.dtpFin = new System.Windows.Forms.DateTimePicker();
             this.dtpInicio = new System.Windows.Forms.DateTimePicker();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnGestionSalarios = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnPoliticas = new System.Windows.Forms.Button();
             this.btnTiposAsistencia = new System.Windows.Forms.Button();
@@ -239,6 +240,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnGestionSalarios);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.btnPoliticas);
             this.panel2.Controls.Add(this.btnTiposAsistencia);
@@ -250,6 +252,21 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1198, 47);
             this.panel2.TabIndex = 114;
+            // 
+            // btnGestionSalarios
+            // 
+            this.btnGestionSalarios.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnGestionSalarios.FlatAppearance.BorderColor = System.Drawing.Color.LightSteelBlue;
+            this.btnGestionSalarios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGestionSalarios.Image = ((System.Drawing.Image)(resources.GetObject("btnGestionSalarios.Image")));
+            this.btnGestionSalarios.Location = new System.Drawing.Point(529, 0);
+            this.btnGestionSalarios.Name = "btnGestionSalarios";
+            this.btnGestionSalarios.Size = new System.Drawing.Size(118, 47);
+            this.btnGestionSalarios.TabIndex = 114;
+            this.btnGestionSalarios.Text = "Gestión de Salarios";
+            this.btnGestionSalarios.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnGestionSalarios.UseVisualStyleBackColor = true;
+            this.btnGestionSalarios.Click += new System.EventHandler(this.btnGestionSalarios_Click);
             // 
             // button1
             // 
@@ -336,5 +353,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DateTimePicker dtpFin;
         private System.Windows.Forms.DateTimePicker dtpInicio;
+        private System.Windows.Forms.Button btnGestionSalarios;
     }
 }

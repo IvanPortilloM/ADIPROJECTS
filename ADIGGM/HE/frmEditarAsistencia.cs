@@ -1,18 +1,16 @@
-﻿using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
+using ADIGGM.CapaModelo;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using ADIGGM.Clases;
-using System.Data.SqlClient;
 
 namespace ADIGGM.HE
 {
     public partial class frmEditarAsistencia : FrmPrincipal
     {
+        private readonly RepositorioAsistencias _repo = new RepositorioAsistencias();
+
         // Variables para guardar lo que recibimos
         private int _idMotorista;
         private DateTime _fecha;
@@ -36,6 +34,7 @@ namespace ADIGGM.HE
             // Mostramos la info en la etiqueta
             lblInfo.Text = $"Motorista: {nombreMotorista}\nFecha: {_fecha.ToShortDateString()}";
         }
+
         private void frmEditarAsistencia_Load(object sender, EventArgs e)
         {
             // 1. Cargar el ComboBox con los tipos de asistencia (T, L, F...)
@@ -47,219 +46,96 @@ namespace ADIGGM.HE
             // Asegura que la fecha "Hasta" inicie con el mismo valor que la fecha "Desde"
             dtpHasta.Value = _fecha;
         }
-        /// <summary>
-        /// Contiene la lógica para guardar la asistencia (Cabecera y Tiempos) para UN SOLO DÍA.
-        /// Debe ser llamado dentro de una transacción.
-        /// </summary>
-        private void GuardarDiaUnico(int idMotoristaTarget, DateTime dia, int tipoAsistenciaID, bool requiereTiempos, string observaciones, SqlConnection conn, SqlTransaction trans)
-        {
-            int registroIDDelDia = 0;
 
-            // --- PASO A: VERIFICAR SI EL DÍA YA EXISTE ---
-            string queryCheck = "SELECT RegistroAsistenciaID FROM dbo.HE_RegistrosAsistencia WHERE IdMotorista = @IdMotorista AND Fecha = @Fecha";
-            using (SqlCommand cmdCheck = new SqlCommand(queryCheck, conn, trans))
-            {
-                cmdCheck.Parameters.AddWithValue("@IdMotorista", idMotoristaTarget);
-                cmdCheck.Parameters.AddWithValue("@Fecha", dia.Date);
-
-                object result = cmdCheck.ExecuteScalar();
-                if (result != null && result != DBNull.Value)
-                {
-                    registroIDDelDia = Convert.ToInt32(result);
-                }
-            }
-
-            // --- PASO B: INSERTAR O ACTUALIZAR LA CABECERA (HE_RegistrosAsistencia) ---
-            string queryCabecera;
-            if (registroIDDelDia == 0) // Es un NUEVO registro para este día
-            {
-                queryCabecera = @"
-            INSERT INTO dbo.HE_RegistrosAsistencia (IdMotorista, Fecha, TipoAsistenciaID, Observaciones)
-            VALUES (@IdMotorista, @Fecha, @TipoAsistenciaID, @Observaciones);
-            SELECT SCOPE_IDENTITY();";
-            }
-            else // Es una ACTUALIZACIÓN
-            {
-                queryCabecera = @"
-            UPDATE dbo.HE_RegistrosAsistencia
-            SET TipoAsistenciaID = @TipoAsistenciaID,
-            Observaciones = @Observaciones
-            WHERE RegistroAsistenciaID = @RegistroID;";
-            }
-
-            using (SqlCommand cmdCabecera = new SqlCommand(queryCabecera, conn, trans))
-            {
-                cmdCabecera.Parameters.AddWithValue("@IdMotorista", idMotoristaTarget);
-                cmdCabecera.Parameters.AddWithValue("@Fecha", dia.Date);
-                cmdCabecera.Parameters.AddWithValue("@TipoAsistenciaID", tipoAsistenciaID);
-                if (string.IsNullOrWhiteSpace(observaciones))
-                    cmdCabecera.Parameters.AddWithValue("@Observaciones", DBNull.Value);
-                else
-                    cmdCabecera.Parameters.AddWithValue("@Observaciones", observaciones.Trim());
-                if (registroIDDelDia == 0)
-                {
-                    registroIDDelDia = Convert.ToInt32(cmdCabecera.ExecuteScalar()); // Obtenemos el nuevo ID
-                }
-                else
-                {
-                    cmdCabecera.Parameters.AddWithValue("@RegistroID", registroIDDelDia);
-                    cmdCabecera.ExecuteNonQuery();
-                }
-            }
-
-            // --- PASO C: LIMPIAR SIEMPRE LOS TIEMPOS ANTIGUOS ---
-            string queryLimpieza = "DELETE FROM dbo.HE_RegistrosTiempos WHERE RegistroAsistenciaID = @RegistroID";
-            using (SqlCommand cmdLimpieza = new SqlCommand(queryLimpieza, conn, trans))
-            {
-                cmdLimpieza.Parameters.AddWithValue("@RegistroID", registroIDDelDia);
-                cmdLimpieza.ExecuteNonQuery();
-            }
-
-            // --- PASO D: INSERTAR NUEVOS TIEMPOS (SÓLO SI SE REQUIERE) ---
-            if (requiereTiempos)
-            {
-                string queryTiempo = @"INSERT INTO dbo.HE_RegistrosTiempos (RegistroAsistenciaID, HoraInicio, HoraFin) VALUES (@RegistroID, @Inicio, @Fin)";
-
-                foreach (DataGridViewRow row in dgvTiempos.Rows)
-                {
-                    if (row.IsNewRow) continue;
-
-                    DateTime horaInicio = dia.Date + DateTime.Parse(row.Cells["colInicio"].Value.ToString()).TimeOfDay;
-                    DateTime horaFin = dia.Date + DateTime.Parse(row.Cells["colFin"].Value.ToString()).TimeOfDay;
-
-                    if (horaFin <= horaInicio)
-                    {
-                        horaFin = horaFin.AddDays(1);
-                    }
-
-                    using (SqlCommand cmdTiempo = new SqlCommand(queryTiempo, conn, trans))
-                    {
-                        cmdTiempo.Parameters.AddWithValue("@RegistroID", registroIDDelDia);
-                        cmdTiempo.Parameters.AddWithValue("@Inicio", horaInicio);
-                        cmdTiempo.Parameters.AddWithValue("@Fin", horaFin);
-                        cmdTiempo.ExecuteNonQuery();
-                    }
-                }
-            }
-        }
         private void CargarTiposAsistencia()
         {
-            using (SqlConnection conn = DbManager.GetConnection())
+            try
             {
-                try
-                {
-                    conn.Open();
-                    string query = "SELECT TipoAsistenciaID, Codigo + ' - ' + Descripcion AS Texto, RequiereTiempos FROM dbo.HE_TiposAsistencia";
-                    SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-                    DataTable dt = new DataTable();
-                    adapter.Fill(dt);
-
-                    cboTipoAsistencia.DisplayMember = "Texto";
-                    cboTipoAsistencia.ValueMember = "TipoAsistenciaID";
-                    cboTipoAsistencia.DataSource = dt;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al cargar tipos: " + ex.Message);
-                }
+                cboTipoAsistencia.DisplayMember = "Texto";
+                cboTipoAsistencia.ValueMember = "TipoAsistenciaID";
+                cboTipoAsistencia.DataSource = _repo.ListarTiposCombo();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar tipos: " + ex.Message);
             }
         }
 
         private void CargarDatosExistentes()
         {
-            using (SqlConnection conn = DbManager.GetConnection())
+            try
             {
-                try
+                RegistroAsistenciaCab registro = _repo.ObtenerRegistro(_idMotorista, _fecha);
+
+                // Si no hay registro, el formulario queda "limpio" y listo para un INSERT.
+                if (registro == null) return;
+
+                // ¡Encontramos un registro!
+                _registroAsistenciaID = registro.RegistroAsistenciaID;
+                cboTipoAsistencia.SelectedValue = registro.TipoAsistenciaID;
+                txtObservaciones.Text = registro.Observaciones ?? "";
+
+                // --- LÓGICA DE BLOQUEO ---
+                if (registro.EstaCerrado)
                 {
-                    conn.Open();
-                    // --- MODIFICADO: Ahora traemos la nueva columna 'EstaCerrado' ---
-                    string queryCabecera = "SELECT RegistroAsistenciaID, TipoAsistenciaID, EstaCerrado, Observaciones FROM dbo.HE_RegistrosAsistencia WHERE IdMotorista = @IdMotorista AND Fecha = @Fecha";
+                    // Si el registro está cerrado, bloqueamos todo
+                    lblInfo.Text += "\n\n*** PERÍODO CERRADO - NO SE PERMITEN CAMBIOS ***";
+                    lblInfo.ForeColor = Color.Red;
 
-                    SqlCommand cmd = new SqlCommand(queryCabecera, conn);
-                    cmd.Parameters.AddWithValue("@IdMotorista", _idMotorista);
-                    cmd.Parameters.AddWithValue("@Fecha", _fecha);
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
+                    cboTipoAsistencia.Enabled = false;
+                    chkAplicarRango.Enabled = false;
+                    dtpHasta.Enabled = false;
+                    dgvTiempos.ReadOnly = true;
+                    btnGuardar.Enabled = false;
+                }
+                else
+                {
+                    // Si no está cerrado, cargamos los tiempos (lógica normal)
+                    if (pnlTiempos.Visible)
                     {
-                        // ¡Encontramos un registro!
-                        _registroAsistenciaID = reader.GetInt32(0); // Guardamos el ID
-                        int tipoAsistenciaID = reader.GetInt32(1);
-                        bool esCerrado = reader.GetBoolean(2); // Leemos el estado de bloqueo
-
-                        // Seleccionamos el valor en el ComboBox
-                        cboTipoAsistencia.SelectedValue = tipoAsistenciaID;
-
-                        if (!reader.IsDBNull(3)) // El índice 3 es Observaciones
+                        foreach (TiempoTrabajado t in _repo.ListarTiempos(_registroAsistenciaID))
                         {
-                            txtObservaciones.Text = reader.GetString(3);
-                        }
-                        else
-                        {
-                            txtObservaciones.Text = "";
-                        }
-
-                        reader.Close();
-
-                        // --- ¡NUEVA LÓGICA DE BLOQUEO! ---
-                        if (esCerrado)
-                        {
-                            // Si el registro está cerrado, bloqueamos todo
-                            lblInfo.Text += "\n\n*** PERÍODO CERRADO - NO SE PERMITEN CAMBIOS ***";
-                            lblInfo.ForeColor = Color.Red;
-
-                            // Deshabilitamos todos los controles
-                            cboTipoAsistencia.Enabled = false;
-                            chkAplicarRango.Enabled = false;
-                            dtpHasta.Enabled = false;
-                            dgvTiempos.ReadOnly = true; // El grid de tiempos
-                            btnGuardar.Enabled = false; // El botón de guardar
-                        }
-                        else
-                        {
-                            // Si no está cerrado, cargamos los tiempos (lógica normal)
-                            if (pnlTiempos.Visible)
-                            {
-                                string queryTiempos = "SELECT HoraInicio, HoraFin FROM dbo.HE_RegistrosTiempos WHERE RegistroAsistenciaID = @RegistroID";
-                                SqlCommand cmdTiempos = new SqlCommand(queryTiempos, conn);
-                                cmdTiempos.Parameters.AddWithValue("@RegistroID", _registroAsistenciaID);
-
-                                SqlDataReader readerTiempos = cmdTiempos.ExecuteReader();
-                                while (readerTiempos.Read())
-                                {
-                                    DateTime inicio = readerTiempos.GetDateTime(0);
-                                    DateTime fin = readerTiempos.GetDateTime(1);
-                                    dgvTiempos.Rows.Add(inicio.ToString("HH:mm"), fin.ToString("HH:mm"));
-                                }
-                                readerTiempos.Close();
-                            }
+                            dgvTiempos.Rows.Add(t.HoraInicio.ToString("HH:mm"), t.HoraFin.ToString("HH:mm"));
                         }
                     }
-                    // Si reader.Read() es falso (no hay registro), el formulario
-                    // se queda "limpio" y listo para un INSERT, lo cual es correcto.
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al cargar datos existentes: " + ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar datos existentes: " + ex.Message);
             }
         }
+
         private void cboTipoAsistencia_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboTipoAsistencia.SelectedItem != null)
+            // El item enlazado ahora es un POCO (antes era un DataRowView)
+            if (cboTipoAsistencia.SelectedItem is TipoAsistenciaCombo tipo)
             {
-                // Obtenemos la fila seleccionada del DataTable que está enlazado al ComboBox
-                DataRowView row = (DataRowView)cboTipoAsistencia.SelectedItem;
-                bool requiereTiempos = Convert.ToBoolean(row["RequiereTiempos"]);
-
                 // Mostramos u ocultamos el panel de tiempos según corresponda
-                pnlTiempos.Visible = requiereTiempos;
+                pnlTiempos.Visible = tipo.RequiereTiempos;
             }
+        }
+
+        /// <summary>Extrae los bloques de tiempo (hora de inicio/fin) del grid de tiempos.</summary>
+        private List<(TimeSpan Inicio, TimeSpan Fin)> ExtraerTiempos(bool requiereTiempos)
+        {
+            var tiempos = new List<(TimeSpan Inicio, TimeSpan Fin)>();
+            if (!requiereTiempos) return tiempos;
+
+            foreach (DataGridViewRow row in dgvTiempos.Rows)
+            {
+                if (row.IsNewRow) continue;
+                tiempos.Add((
+                    DateTime.Parse(row.Cells["colInicio"].Value.ToString()).TimeOfDay,
+                    DateTime.Parse(row.Cells["colFin"].Value.ToString()).TimeOfDay
+                ));
+            }
+            return tiempos;
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            // 1. Validaciones (son las mismas de antes)
+            // 1. Validaciones
             if (cboTipoAsistencia.SelectedValue == null)
             {
                 MessageBox.Show("Por favor, seleccione un tipo de asistencia.");
@@ -281,7 +157,7 @@ namespace ADIGGM.HE
                 }
             }
 
-            // --- NUEVA LÓGICA DE RANGO ---
+            // --- LÓGICA DE RANGO ---
             // 2. Definir el rango de fechas a procesar
             DateTime fechaInicio = _fecha.Date; // El día original que se abrió
             DateTime fechaFin = _fecha.Date;    // Por defecto, es el mismo día
@@ -299,37 +175,25 @@ namespace ADIGGM.HE
 
             string obs = txtObservaciones.Text;
 
-            // 3. Guardar en la Base de Datos (La transacción AHORA envuelve el bucle)
-            using (SqlConnection conn = DbManager.GetConnection())
+            // 3. Guardar (la transacción la maneja el repositorio: atómico para todo el rango)
+            try
             {
-                conn.Open();
-                SqlTransaction transaction = conn.BeginTransaction();
-                try
+                List<DateTime> dias = new List<DateTime>();
+                for (DateTime dia = fechaInicio; dia <= fechaFin; dia = dia.AddDays(1))
                 {
-                    // --- INICIO DEL BUCLE ---
-                    // Este bucle se ejecutará 1 vez (si no hay rango) o N veces (si hay rango)
-                    for (DateTime dia = fechaInicio; dia <= fechaFin; dia = dia.AddDays(1))
-                    {
-                        // Opcional: Ignorar Domingos si tu regla de negocio lo pide
-                        // if (dia.DayOfWeek == DayOfWeek.Sunday) continue;
-
-                        // Llamamos a nuestro nuevo método para CADA día en el bucle
-                        GuardarDiaUnico(_idMotorista, dia, tipoAsistenciaID, requiereTiempos, obs, conn, transaction);
-                    }
-                    // --- FIN DEL BUCLE ---
-
-                    // Si el bucle terminó sin errores, confirmamos TODO
-                    transaction.Commit();
-                    MessageBox.Show($"Registros guardados correctamente desde {fechaInicio.ToShortDateString()} hasta {fechaFin.ToShortDateString()}.", "Éxito");
-
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
+                    dias.Add(dia);
                 }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    MessageBox.Show("Error al guardar en base de datos: " + ex.Message);
-                }
+
+                _repo.GuardarDias(new[] { _idMotorista }, dias, tipoAsistenciaID, requiereTiempos, obs, ExtraerTiempos(requiereTiempos));
+
+                MessageBox.Show($"Registros guardados correctamente desde {fechaInicio.ToShortDateString()} hasta {fechaFin.ToShortDateString()}.", "Éxito");
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar en base de datos: " + ex.Message);
             }
         }
 
@@ -353,7 +217,6 @@ namespace ADIGGM.HE
             if (requiereTiempos)
             {
                 if (dgvTiempos.Rows.Count <= 1 && dgvTiempos.Rows[0].IsNewRow) { MessageBox.Show("Ingrese horas."); return; }
-                // Agregar validaciones de formato de horas aquí si las tienes...
             }
 
             // 2. Abrir Popup (Pasando los 4 parámetros nuevos)
@@ -364,41 +227,21 @@ namespace ADIGGM.HE
                 List<int> listaMotoristas = frm.IdsMotoristasSeleccionados; // Incluye al original
                 List<DateTime> listaFechas = frm.FechasSeleccionadas;       // Incluye la fecha original
 
-                // 3. Guardado Masivo Unificado
-                using (SqlConnection conn = DbManager.GetConnection())
+                // 3. Guardado Masivo Unificado (transacción en el repositorio)
+                try
                 {
-                    conn.Open();
-                    SqlTransaction transaction = conn.BeginTransaction();
-                    try
-                    {
-                        int contador = 0;
+                    int contador = _repo.GuardarDias(listaMotoristas, listaFechas, tipoAsistenciaID, requiereTiempos, obs, ExtraerTiempos(requiereTiempos));
 
-                        // Bucle Sencillo: Recorremos todo lo que vino del popup
-                        // Como el usuario ya no puede desmarcar al original ni borrar la fecha actual,
-                        // esto garantiza que SIEMPRE se guarda el registro actual + las copias.
-                        foreach (int idMoto in listaMotoristas)
-                        {
-                            foreach (DateTime dia in listaFechas)
-                            {
-                                GuardarDiaUnico(idMoto, dia, tipoAsistenciaID, requiereTiempos, obs, conn, transaction);
-                                contador++;
-                            }
-                        }
+                    MessageBox.Show($"Proceso completado. Se procesaron {contador} registros.", "Éxito");
 
-                        transaction.Commit();
-
-                        MessageBox.Show($"Proceso completado. Se procesaron {contador} registros.", "Éxito");
-
-                        this.DialogResult = DialogResult.OK; // Para refrescar el Grid principal
-                        this.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        MessageBox.Show("Error en copiado masivo: " + ex.Message);
-                    }
+                    this.DialogResult = DialogResult.OK; // Para refrescar el Grid principal
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error en copiado masivo: " + ex.Message);
                 }
             }
         }
-    } 
+    }
 }

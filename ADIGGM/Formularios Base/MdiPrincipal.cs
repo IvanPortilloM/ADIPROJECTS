@@ -399,7 +399,7 @@ namespace ADIGGM.Formularios_Base
             var messages = new List<string>();
             string nombreAsociado = "Desconocido";
 
-            using (var connection = new SqlConnection("Initial Catalog=TransporteAdiggm;Data Source=ADIGGM.granjasmarinas.hn;Persist Security Info=True;User ID=sa;Password=ADIGGM*2016+"))
+            using (var connection = new SqlConnection(ADIGGM.CapaDatos.Conexion.Cadena("TransporteAdiggm")))
             {
                 try
                 {
