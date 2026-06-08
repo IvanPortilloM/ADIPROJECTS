@@ -1085,20 +1085,9 @@ private void btnExportar_Click(object sender, EventArgs e)
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //var accountSid = "***REMOVED***";
-            //var authToken = "***REMOVED***";
-            //TwilioClient.Init(accountSid, authToken);
-
-            //var messageOptions = new CreateMessageOptions(
-            //  new PhoneNumber("whatsapp:+50498784279"));
-            //messageOptions.From = new PhoneNumber("whatsapp:+14155238886");
-            //messageOptions.Body = "Esta es una prueba";
-
-            //var message = MessageResource.Create(messageOptions);
-            //Console.WriteLine(message.Body);
-
-            var accountSid = "***REMOVED***";
-            var authToken = "***REMOVED***";
+            // Credenciales de Twilio: ahora se leen de App.config (<appSettings>), NO se hardcodean.
+            var accountSid = System.Configuration.ConfigurationManager.AppSettings["TwilioAccountSid"];
+            var authToken = System.Configuration.ConfigurationManager.AppSettings["TwilioAuthToken"];
             TwilioClient.Init(accountSid, authToken);
 
             var messageOptions = new CreateMessageOptions(
