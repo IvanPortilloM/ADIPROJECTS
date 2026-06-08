@@ -27,7 +27,7 @@ namespace ADIGGM.HE
                 cboMotoristas.DisplayMember = "Motorista";
                 cboMotoristas.ValueMember = "IdMotorista";
                 cboMotoristas.DataSource = _repoMotoristas.ListarEmpleadosActivos();
-                cboMotoristas.SelectedIndex = -1; // Iniciar vacío
+                cboMotoristas.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
