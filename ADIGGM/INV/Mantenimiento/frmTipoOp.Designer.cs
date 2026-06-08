@@ -34,12 +34,9 @@ namespace ADIGGM.INV.Mantenimiento
             this.idTipoOperacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombreOperacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iNTipoOperacionesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsInventarioAdiggm = new ADIGGM.DataSets.DsInventarioAdiggm();
-            this.iN_TipoOperacionesTableAdapter = new ADIGGM.DataSets.DsInventarioAdiggmTableAdapters.IN_TipoOperacionesTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTipoOp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNTipoOperacionesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsInventarioAdiggm)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSalir
@@ -144,21 +141,7 @@ namespace ADIGGM.INV.Mantenimiento
             this.nombreOperacion.DataPropertyName = "NombreOperacion";
             this.nombreOperacion.HeaderText = "Operación";
             this.nombreOperacion.Name = "nombreOperacion";
-            // 
-            // iNTipoOperacionesBindingSource
-            // 
-            this.iNTipoOperacionesBindingSource.DataMember = "IN_TipoOperaciones";
-            this.iNTipoOperacionesBindingSource.DataSource = this.dsInventarioAdiggm;
-            // 
-            // dsInventarioAdiggm
-            // 
-            this.dsInventarioAdiggm.DataSetName = "DsInventarioAdiggm";
-            this.dsInventarioAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // iN_TipoOperacionesTableAdapter
-            // 
-            this.iN_TipoOperacionesTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // frmTipoOp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -174,7 +157,6 @@ namespace ADIGGM.INV.Mantenimiento
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTipoOp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNTipoOperacionesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsInventarioAdiggm)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -182,9 +164,7 @@ namespace ADIGGM.INV.Mantenimiento
         #endregion
 
         private System.Windows.Forms.DataGridView dgvTipoOp;
-        private DataSets.DsInventarioAdiggm dsInventarioAdiggm;
         private System.Windows.Forms.BindingSource iNTipoOperacionesBindingSource;
-        private DataSets.DsInventarioAdiggmTableAdapters.IN_TipoOperacionesTableAdapter iN_TipoOperacionesTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn idTipoOperacion;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreOperacion;
     }

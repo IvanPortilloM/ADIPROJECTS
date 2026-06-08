@@ -1,3 +1,4 @@
+using System;
 using Dapper;
 using System.Collections.Generic;
 using System.Data;
@@ -91,6 +92,66 @@ namespace ADIGGM.CapaDatos
                     return tabla;
                 }
             }
+        }
+
+        /// <summary>
+        /// Persiste los cambios de un DataTable (filas Agregadas/Modificadas/Eliminadas) usando
+        /// los SQL indicados, todo dentro de UNA transacción. Reemplaza a TableAdapter.Update()
+        /// para los formularios de mantenimiento con grilla editable. Reutilizable.
+        /// Los nombres de parámetros en el SQL deben coincidir con los nombres de columna
+        /// (p. ej. @IdTipoOperacion, @NombreOperacion).
+        /// </summary>
+        protected int GuardarCambios(DataTable tabla, string sqlInsert, string sqlUpdate, string sqlDelete)
+        {
+            using (DbConnection con = CrearConexion())
+            {
+                con.Open();
+                using (IDbTransaction trans = con.BeginTransaction())
+                {
+                    try
+                    {
+                        int afectadas = 0;
+                        foreach (DataRow fila in tabla.Rows)
+                        {
+                            switch (fila.RowState)
+                            {
+                                case DataRowState.Deleted:
+                                    if (!string.IsNullOrEmpty(sqlDelete))
+                                        afectadas += con.Execute(sqlDelete, ParametrosDeFila(tabla, fila, DataRowVersion.Original), trans);
+                                    break;
+                                case DataRowState.Added:
+                                    if (!string.IsNullOrEmpty(sqlInsert))
+                                        afectadas += con.Execute(sqlInsert, ParametrosDeFila(tabla, fila, DataRowVersion.Current), trans);
+                                    break;
+                                case DataRowState.Modified:
+                                    if (!string.IsNullOrEmpty(sqlUpdate))
+                                        afectadas += con.Execute(sqlUpdate, ParametrosDeFila(tabla, fila, DataRowVersion.Current), trans);
+                                    break;
+                            }
+                        }
+                        trans.Commit();
+                        tabla.AcceptChanges();
+                        return afectadas;
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        /// <summary>Construye los parámetros Dapper a partir de las columnas de una fila (versión indicada).</summary>
+        private static DynamicParameters ParametrosDeFila(DataTable tabla, DataRow fila, DataRowVersion version)
+        {
+            DynamicParameters p = new DynamicParameters();
+            foreach (DataColumn col in tabla.Columns)
+            {
+                object valor = fila[col, version];
+                p.Add(col.ColumnName, valor == DBNull.Value ? null : valor);
+            }
+            return p;
         }
     }
 }

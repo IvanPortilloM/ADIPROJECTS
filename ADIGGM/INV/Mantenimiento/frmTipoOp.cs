@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Formularios_Base;
 using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.INV.Mantenimiento
 {
     public partial class frmTipoOp : FrmMantenimiento
     {
+        private readonly RepositorioInventario _repo = new RepositorioInventario();
+        private DataTable _dtTipoOp;
         int selectedIndex;
+
         public frmTipoOp()
         {
             InitializeComponent();
@@ -31,10 +29,17 @@ namespace ADIGGM.INV.Mantenimiento
             btnCancelar.Enabled = false;
         }
 
+        /// <summary>Carga la tabla vía Dapper (DataTable) y la enlaza al BindingSource del grid.</summary>
+        private void CargarTipoOp()
+        {
+            _dtTipoOp = _repo.ListarTiposOperacion();
+            iNTipoOperacionesBindingSource.DataMember = "";
+            iNTipoOperacionesBindingSource.DataSource = _dtTipoOp;
+        }
+
         private void frmTipoOp_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsInventarioAdiggm.IN_TipoOperaciones' Puede moverla o quitarla según sea necesario.
-            this.iN_TipoOperacionesTableAdapter.Fill(this.dsInventarioAdiggm.IN_TipoOperaciones);
+            CargarTipoOp();
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -75,8 +80,16 @@ namespace ADIGGM.INV.Mantenimiento
                 {
                     selectedIndex = dgvTipoOp.CurrentRow.Index;
                     dgvTipoOp.EndEdit();
-                    this.iN_TipoOperacionesTableAdapter.Update(this.dsInventarioAdiggm.IN_TipoOperaciones);
-                    dgvTipoOp.CurrentCell = dgvTipoOp.Rows[selectedIndex].Cells[1];
+                    iNTipoOperacionesBindingSource.EndEdit();
+
+                    // Persiste altas/cambios del DataTable con Dapper (reemplaza TableAdapter.Update)
+                    _repo.GuardarTiposOperacion(_dtTipoOp);
+
+                    // Recargar para reflejar los IDs identity recién generados
+                    CargarTipoOp();
+                    if (selectedIndex >= 0 && selectedIndex < dgvTipoOp.Rows.Count)
+                        dgvTipoOp.CurrentCell = dgvTipoOp.Rows[selectedIndex].Cells[1];
+
                     dgvTipoOp.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
@@ -117,12 +130,13 @@ namespace ADIGGM.INV.Mantenimiento
             if (dgvTipoOp.Rows.Count > 0 && dgvTipoOp.FirstDisplayedCell != null && dgvTipoOp.CurrentRow.IsNewRow == false)
             {
                 selectedIndex = dgvTipoOp.CurrentRow.Index;
-                this.iN_TipoOperacionesTableAdapter.Fill(this.dsInventarioAdiggm.IN_TipoOperaciones);
-                dgvTipoOp.CurrentCell = dgvTipoOp.Rows[selectedIndex].Cells[1];
+                CargarTipoOp();
+                if (selectedIndex >= 0 && selectedIndex < dgvTipoOp.Rows.Count)
+                    dgvTipoOp.CurrentCell = dgvTipoOp.Rows[selectedIndex].Cells[1];
             }
             else
             {
-                this.iN_TipoOperacionesTableAdapter.Fill(this.dsInventarioAdiggm.IN_TipoOperaciones);
+                CargarTipoOp();
             }
 
             dgvTipoOp.AllowUserToAddRows = false;
