@@ -3,6 +3,14 @@
 > Documento de handoff para continuar el refactor en una sesión nueva de Claude Code.
 > Para retomar: pídele al agente **"Lee CONTEXTO-REFACTOR.md y continúa con la tarea inmediata"**.
 
+## 0. Directiva de eficiencia (GASTAR POCOS TOKENS — prioridad)
+- Responde **breve**, sin preámbulos ni repetir el plan; ve directo a la acción.
+- Lee SOLO lo necesario: usa **Grep/Glob** para ubicar y **Read con offset/limit** en regiones puntuales. NO leas archivos completos ni los releas; NO re-leas un archivo que acabas de editar (el harness ya rastrea el estado).
+- Ediciones **quirúrgicas** con Edit; NO reescribas archivos enteros ni pegues código grande en el chat (referencia `archivo:línea`).
+- Build siempre con `/clp:ErrorsOnly` y `| Select-Object -Last 20` (no vuelques logs enormes). No repitas builds innecesarios.
+- Trabaja **UN formulario/módulo por turno**: build verde → commit → y actualiza §6/§9/§13 de ESTE archivo. Así el contexto del chat se mantiene corto y el progreso queda fuera del chat.
+- No abras chats largos: cuando el contexto crezca, deja todo committeado + este archivo actualizado y continúa en una sesión nueva.
+
 ## 1. Proyecto
 - WinForms **.NET Framework 4.6.2**, proyecto **NO-SDK** (packages.config). C# 7+ (hay tuplas/ValueTuple).
 - Raíz: `C:\Users\jportillo\Dropbox\Desarrollo ADI (DEV)\ADIPROJECTS` | Solución: `ADIPROJECTS.sln`
