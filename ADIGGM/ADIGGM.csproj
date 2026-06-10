@@ -480,11 +480,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DsOC.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DataSets\DsPermisos.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DsPermisos.xsd</DependentUpon>
-    </Compile>
     <Compile Include="DataSets\DsPresupuesto.cs">
       <DependentUpon>DsPresupuesto.xsd</DependentUpon>
     </Compile>
@@ -1956,17 +1951,6 @@
     </None>
     <None Include="DataSets\DsOC.xss">
       <DependentUpon>DsOC.xsd</DependentUpon>
-    </None>
-    <None Include="DataSets\DsPermisos.xsc">
-      <DependentUpon>DsPermisos.xsd</DependentUpon>
-    </None>
-    <None Include="DataSets\DsPermisos.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DsPermisos.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="DataSets\DsPermisos.xss">
-      <DependentUpon>DsPermisos.xsd</DependentUpon>
     </None>
     <None Include="DataSets\DsPresupuesto.xsc">
       <DependentUpon>DsPresupuesto.xsd</DependentUpon>
