@@ -43,5 +43,22 @@ namespace ADIGGM.CapaDatos
             const string delete = "DELETE FROM dbo.SubMenu WHERE IdSubMenu = @IdSubMenu";
             return GuardarCambios(tabla, insert, update, delete);
         }
+
+        // ===== DetSubMenu (mantenimiento de menús nietos; FK IdSubMenu) =====
+
+        public DataTable ListarDetSubMenus()
+        {
+            const string sql = "SELECT IdDetSubMenu, IdSubMenu, Nombre, NombreFormulario, NombreMenu FROM dbo.DetSubMenu";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Persiste altas/cambios hechos en la grilla (IdDetSubMenu es identity).</summary>
+        public int GuardarDetSubMenus(DataTable tabla)
+        {
+            const string insert = "INSERT INTO dbo.DetSubMenu (IdSubMenu, Nombre, NombreFormulario, NombreMenu) VALUES (@IdSubMenu, @Nombre, @NombreFormulario, @NombreMenu)";
+            const string update = "UPDATE dbo.DetSubMenu SET IdSubMenu = @IdSubMenu, Nombre = @Nombre, NombreFormulario = @NombreFormulario, NombreMenu = @NombreMenu WHERE IdDetSubMenu = @IdDetSubMenu";
+            const string delete = "DELETE FROM dbo.DetSubMenu WHERE IdDetSubMenu = @IdDetSubMenu";
+            return GuardarCambios(tabla, insert, update, delete);
+        }
     }
 }

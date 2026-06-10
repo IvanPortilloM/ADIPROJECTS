@@ -8,11 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Formularios_Base;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.Seguridad
 {
     public partial class frmDetSubMenu : FrmMantenimiento
     {
+        private readonly RepositorioPermisos _repo = new RepositorioPermisos();
+        private DataSet _dsMenus;
         int selectedIndex;
         public frmDetSubMenu()
         {
@@ -30,14 +33,46 @@ namespace ADIGGM.Seguridad
             btnCancelar.Enabled = false;
         }
 
+        /// <summary>Carga Menu+SubMenu+DetSubMenu con sus relaciones FK y enlaza la cadena de combos y el grid.</summary>
+        private void CargarDatos()
+        {
+            object idMenuSeleccionado = cboMenuPadre.SelectedValue;
+            object idSubMenuSeleccionado = comboBox1.SelectedValue;
+
+            _dsMenus = new DataSet();
+            DataTable menus = _repo.ListarMenus();
+            menus.TableName = "Menu";
+            DataTable subMenus = _repo.ListarSubMenus();
+            subMenus.TableName = "SubMenu";
+            DataTable detSubMenus = _repo.ListarDetSubMenus();
+            detSubMenus.TableName = "DetSubMenu";
+            _dsMenus.Tables.Add(menus);
+            _dsMenus.Tables.Add(subMenus);
+            _dsMenus.Tables.Add(detSubMenus);
+            _dsMenus.Relations.Add("FK_SubMenu_Menu",
+                menus.Columns["IdMenu"], subMenus.Columns["IdMenu"], false);
+            _dsMenus.Relations.Add("FK_DetSubMenu_SubMenu",
+                subMenus.Columns["IdSubMenu"], detSubMenus.Columns["IdSubMenu"], false);
+
+            menuBindingSource.DataMember = "Menu";
+            menuBindingSource.DataSource = _dsMenus;
+            fKSubMenuMenuBindingSource.DataSource = menuBindingSource;
+            fKSubMenuMenuBindingSource.DataMember = "FK_SubMenu_Menu";
+            fKDetSubMenuSubMenuBindingSource.DataSource = fKSubMenuMenuBindingSource;
+            fKDetSubMenuSubMenuBindingSource.DataMember = "FK_DetSubMenu_SubMenu";
+            // El DataSource se asigna aquí y NO en el Designer: si el grid queda enlazado en
+            // diseño, el diseñador de VS borra las columnas al no poder resolver el esquema.
+            dgvdetSubMenu.DataSource = fKDetSubMenuSubMenuBindingSource;
+
+            if (idMenuSeleccionado != null)
+                cboMenuPadre.SelectedValue = idMenuSeleccionado;
+            if (idSubMenuSeleccionado != null)
+                comboBox1.SelectedValue = idSubMenuSeleccionado;
+        }
+
         private void frmDetSubMenu_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsPermisos.DetSubMenu' Puede moverla o quitarla según sea necesario.
-            this.detSubMenuTableAdapter.Fill(this.dsPermisos.DetSubMenu);
-            // TODO: esta línea de código carga datos en la tabla 'dsPermisos.SubMenu' Puede moverla o quitarla según sea necesario.
-            this.subMenuTableAdapter.Fill(this.dsPermisos.SubMenu);
-            // TODO: esta línea de código carga datos en la tabla 'dsPermisos.Menu' Puede moverla o quitarla según sea necesario.
-            this.menuTableAdapter.Fill(this.dsPermisos.Menu);
+            CargarDatos();
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -61,8 +96,11 @@ namespace ADIGGM.Seguridad
                 {
                     selectedIndex = dgvdetSubMenu.CurrentRow.Index;
                     dgvdetSubMenu.EndEdit();
-                    this.detSubMenuTableAdapter.Update(this.dsPermisos.DetSubMenu);
-                    dgvdetSubMenu.CurrentCell = dgvdetSubMenu.Rows[selectedIndex].Cells[2];
+                    fKDetSubMenuSubMenuBindingSource.EndEdit();
+                    _repo.GuardarDetSubMenus(_dsMenus.Tables["DetSubMenu"]);
+                    CargarDatos();
+                    if (selectedIndex >= 0 && selectedIndex < dgvdetSubMenu.Rows.Count)
+                        dgvdetSubMenu.CurrentCell = dgvdetSubMenu.Rows[selectedIndex].Cells[2];
                     dgvdetSubMenu.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
@@ -105,8 +143,9 @@ namespace ADIGGM.Seguridad
             {
                 selectedIndex = dgvdetSubMenu.CurrentRow.Index;
 
-                this.detSubMenuTableAdapter.Fill(this.dsPermisos.DetSubMenu);
-                dgvdetSubMenu.CurrentCell = dgvdetSubMenu.Rows[selectedIndex].Cells[2];
+                CargarDatos();
+                if (selectedIndex >= 0 && selectedIndex < dgvdetSubMenu.Rows.Count)
+                    dgvdetSubMenu.CurrentCell = dgvdetSubMenu.Rows[selectedIndex].Cells[2];
                 dgvdetSubMenu.AllowUserToAddRows = false;
 
                 dgvdetSubMenu.ReadOnly = true;
