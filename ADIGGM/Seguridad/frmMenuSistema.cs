@@ -1,11 +1,15 @@
 ﻿using Formularios_Base;
 using System;
+using System.Data;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.Seguridad
 {
     public partial class frmMenuSistema : FrmMantenimiento
     {
+        private readonly RepositorioPermisos _repo = new RepositorioPermisos();
+        private DataTable _dtMenus;
         int selectedIndex;
         public frmMenuSistema()
         {
@@ -43,8 +47,11 @@ namespace ADIGGM.Seguridad
                 {
                     selectedIndex = dgvMenuSistema.CurrentRow.Index;
                     dgvMenuSistema.EndEdit();
-                    this.menuTableAdapter.Update(this.dsPermisos.Menu);
-                    dgvMenuSistema.CurrentCell = dgvMenuSistema.Rows[selectedIndex].Cells[1];
+                    menuBindingSource.EndEdit();
+                    _repo.GuardarMenus(_dtMenus);
+                    CargarMenus();
+                    if (selectedIndex >= 0 && selectedIndex < dgvMenuSistema.Rows.Count)
+                        dgvMenuSistema.CurrentCell = dgvMenuSistema.Rows[selectedIndex].Cells[1];
                     dgvMenuSistema.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
@@ -86,8 +93,9 @@ namespace ADIGGM.Seguridad
             {
                 selectedIndex = dgvMenuSistema.CurrentRow.Index;
 
-                this.menuTableAdapter.Fill(this.dsPermisos.Menu);
-                dgvMenuSistema.CurrentCell = dgvMenuSistema.Rows[selectedIndex].Cells[1];
+                CargarMenus();
+                if (selectedIndex >= 0 && selectedIndex < dgvMenuSistema.Rows.Count)
+                    dgvMenuSistema.CurrentCell = dgvMenuSistema.Rows[selectedIndex].Cells[1];
                 dgvMenuSistema.AllowUserToAddRows = false;
 
                 dgvMenuSistema.ReadOnly = true;
@@ -119,11 +127,20 @@ namespace ADIGGM.Seguridad
 
         }
 
+        /// <summary>Carga la tabla vía Dapper (DataTable) y la enlaza al BindingSource del grid.</summary>
+        private void CargarMenus()
+        {
+            _dtMenus = _repo.ListarMenus();
+            menuBindingSource.DataMember = "";
+            menuBindingSource.DataSource = _dtMenus;
+            // El DataSource se asigna aquí y NO en el Designer: si el grid queda enlazado en
+            // diseño, el diseñador de VS borra las columnas al no poder resolver el esquema.
+            dgvMenuSistema.DataSource = menuBindingSource;
+        }
+
         private void frmMenuSistema_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsPermisos.Menu' Puede moverla o quitarla según sea necesario.
-            this.menuTableAdapter.Fill(this.dsPermisos.Menu);
-
+            CargarMenus();
         }
     }
 }

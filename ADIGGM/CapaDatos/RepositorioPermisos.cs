@@ -1,0 +1,30 @@
+using System.Data;
+
+namespace ADIGGM.CapaDatos
+{
+    /// <summary>
+    /// Repositorio del módulo de Seguridad (BD DB_Permisos: Menu, SubMenu, DetSubMenu, permisos).
+    /// Reemplaza al DataSet tipado DsPermisos de forma incremental (un formulario a la vez).
+    /// </summary>
+    public class RepositorioPermisos : RepositorioBase
+    {
+        public RepositorioPermisos() : base(Conexion.PERMISOS) { }
+
+        // ===== Menu (mantenimiento del menú raíz del sistema) =====
+
+        public DataTable ListarMenus()
+        {
+            const string sql = "SELECT IdMenu, Nombre, NombreFormulario, NombreMenu, Icono FROM dbo.Menu";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Persiste altas/cambios hechos en la grilla (IdMenu es identity).</summary>
+        public int GuardarMenus(DataTable tabla)
+        {
+            const string insert = "INSERT INTO dbo.Menu (Nombre, NombreFormulario, NombreMenu, Icono) VALUES (@Nombre, @NombreFormulario, @NombreMenu, @Icono)";
+            const string update = "UPDATE dbo.Menu SET Nombre = @Nombre, NombreFormulario = @NombreFormulario, NombreMenu = @NombreMenu, Icono = @Icono WHERE IdMenu = @IdMenu";
+            const string delete = "DELETE FROM dbo.Menu WHERE IdMenu = @IdMenu";
+            return GuardarCambios(tabla, insert, update, delete);
+        }
+    }
+}

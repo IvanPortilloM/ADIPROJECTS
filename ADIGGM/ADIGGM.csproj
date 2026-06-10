@@ -422,6 +422,7 @@
     <Compile Include="CapaDatos\RepositorioAsistencias.cs" />
     <Compile Include="CapaDatos\RepositorioReporteHoras.cs" />
     <Compile Include="CapaDatos\RepositorioInventario.cs" />
+    <Compile Include="CapaDatos\RepositorioPermisos.cs" />
     <Compile Include="CapaModelo\SubMenuNieto.cs" />
     <Compile Include="CapaModelo\Menu.cs" />
     <Compile Include="CapaModelo\SubMenu.cs" />
