@@ -9,11 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ADIGGM.OC.Reportes;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.INV.Transacciones
 {
     public partial class frmInventario : FrmPrincipal
     {
+        private readonly RepositorioInventario _repo = new RepositorioInventario();
         bool permitir = true;
         decimal ISVP = 0;
         public frmInventario()
@@ -22,13 +24,18 @@ namespace ADIGGM.INV.Transacciones
         }
         private void frmInventario_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsOC.OC_ProductosCategorias' Puede moverla o quitarla según sea necesario.
-            this.oC_ProductosCategoriasTableAdapter.FillByInv(this.dsOC.OC_ProductosCategorias);
-            this.tR_VehiculosTableAdapter.Fill(this.dsOC.TR_Vehiculos);
-            this.iN_BodegasTableAdapter.Fill(this.dsInventarioAdiggm.IN_Bodegas);
-            ISVP = decimal.Parse(VarGlobales.consultasOC.OC_ISVObtener().ToString());
-            this.iN_TipoOperacionesTableAdapter.Fill(this.dsInventarioAdiggm.IN_TipoOperaciones);
-            this.oC_ProductosTableAdapter.FillByActivos(this.dsOC.OC_Productos, int.Parse(cboCategoria.SelectedValue.ToString()));
+            // Mismo orden de llenado que los antiguos Fill: la cascada de SelectedValueChanged depende de él
+            oCProductosCategoriasBindingSource.DataMember = "";
+            oCProductosCategoriasBindingSource.DataSource = _repo.ListarCategoriasProductosInv();
+            tRVehiculosBindingSource.DataMember = "";
+            tRVehiculosBindingSource.DataSource = _repo.ListarVehiculosActivos();
+            iNBodegasBindingSource.DataMember = "";
+            iNBodegasBindingSource.DataSource = _repo.ListarBodegas();
+            ISVP = _repo.ObtenerIsvPorcentaje();
+            iNTipoOperacionesBindingSource.DataMember = "";
+            iNTipoOperacionesBindingSource.DataSource = _repo.ListarTiposOperacion();
+            oCProductosBindingSource.DataMember = "";
+            oCProductosBindingSource.DataSource = _repo.ListarProductosActivosPorCategoria(int.Parse(cboCategoria.SelectedValue.ToString()));
 
             if (chkVehiculo.Checked == true)
                 cboVehiculo.Enabled = true;
@@ -113,17 +120,15 @@ namespace ADIGGM.INV.Transacciones
                     ahora.Second
                 );
 
-                IdKardexHeader = Convert.ToInt32(
-                    VarGlobales.consultasInv.IN_KardexHeaderInsert(
-                        fechaConHoraActual,
-                        txtObservacion.Text,
-                        VarGlobales.Usuario
-                    )
+                IdKardexHeader = _repo.InsertarKardexHeader(
+                    fechaConHoraActual,
+                    txtObservacion.Text,
+                    VarGlobales.Usuario
                 );
 
                 foreach (DataGridViewRow row in dgvInventario.Rows)
                 {
-                    VarGlobales.consultasInv.IN_KardexUpdate(
+                    _repo.ActualizarKardex(
                         int.Parse(cboBodega.SelectedValue.ToString()),
                         int.Parse(row.Cells["idProducto"].Value.ToString()),
                         decimal.Parse(row.Cells["cantidad"].Value.ToString()),
@@ -220,9 +225,9 @@ namespace ADIGGM.INV.Transacciones
         {
             if (cboBodega.SelectedIndex > -1 && cboProducto.SelectedIndex > -1)
             {
-                lblExistencia.Text = Convert.ToString(VarGlobales.consultasInv.IN_KardexObtener(int.Parse(cboBodega.SelectedValue.ToString()), int.Parse(cboProducto.SelectedValue.ToString())));
+                lblExistencia.Text = Convert.ToString(_repo.ObtenerExistenciaKardex(int.Parse(cboBodega.SelectedValue.ToString()), int.Parse(cboProducto.SelectedValue.ToString())));
 
-                bool AplicaISV = Convert.ToBoolean(VarGlobales.consultasInv.IN_KardexISVObtener(Convert.ToInt32(cboBodega.SelectedValue.ToString()), Convert.ToInt32(cboProducto.SelectedValue.ToString())));
+                bool AplicaISV = Convert.ToBoolean(_repo.ObtenerAplicaIsvKardex(Convert.ToInt32(cboBodega.SelectedValue.ToString()), Convert.ToInt32(cboProducto.SelectedValue.ToString())));
 
                 chkAplicaISV.Checked = AplicaISV;
 
@@ -230,7 +235,7 @@ namespace ADIGGM.INV.Transacciones
                 {
                     txtPrecio.Enabled = true;
 
-                    decimal precio = Convert.ToDecimal(VarGlobales.consultasOC.OC_UltimoPrecio(int.Parse(cboProducto.SelectedValue.ToString())));
+                    decimal precio = _repo.ObtenerUltimoPrecioCompra(int.Parse(cboProducto.SelectedValue.ToString()));
 
                     if (precio == 0)
                     {
@@ -249,23 +254,23 @@ namespace ADIGGM.INV.Transacciones
         private void cboCategoria_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cboCategoria.SelectedIndex > -1)
-                this.oC_ProductosTableAdapter.FillByActivos(dsOC.OC_Productos, int.Parse(cboCategoria.SelectedValue.ToString()));
+                oCProductosBindingSource.DataSource = _repo.ListarProductosActivosPorCategoria(int.Parse(cboCategoria.SelectedValue.ToString()));
             if (cboProducto.SelectedIndex > -1 && cboBodega.SelectedIndex > -1)
             {
-                bool AplicaISV = Convert.ToBoolean(VarGlobales.consultasInv.IN_KardexISVObtener(Convert.ToInt32(cboBodega.SelectedValue.ToString()), Convert.ToInt32(cboProducto.SelectedValue.ToString())));
+                bool AplicaISV = Convert.ToBoolean(_repo.ObtenerAplicaIsvKardex(Convert.ToInt32(cboBodega.SelectedValue.ToString()), Convert.ToInt32(cboProducto.SelectedValue.ToString())));
 
                 chkAplicaISV.Checked = AplicaISV;
-            }            
+            }
         }
         private void cboTipoOperacion_SelectedValueChanged(object sender, EventArgs e)
         {
             decimal precio = 1;
             if (cboProducto.SelectedIndex > -1 && cboBodega.SelectedIndex > -1)
             {
-                bool AplicaISV = Convert.ToBoolean(VarGlobales.consultasInv.IN_KardexISVObtener(Convert.ToInt32(cboBodega.SelectedValue.ToString()), Convert.ToInt32(cboProducto.SelectedValue.ToString())));
+                bool AplicaISV = Convert.ToBoolean(_repo.ObtenerAplicaIsvKardex(Convert.ToInt32(cboBodega.SelectedValue.ToString()), Convert.ToInt32(cboProducto.SelectedValue.ToString())));
 
                 chkAplicaISV.Checked = AplicaISV;
-                precio = Convert.ToDecimal(VarGlobales.consultasOC.OC_UltimoPrecio(int.Parse(cboProducto.SelectedValue.ToString())));
+                precio = _repo.ObtenerUltimoPrecioCompra(int.Parse(cboProducto.SelectedValue.ToString()));
             }
 
             if (cboTipoOperacion.Text == "ENTRADA")
@@ -301,7 +306,7 @@ namespace ADIGGM.INV.Transacciones
         {
             if (cboProducto.SelectedIndex > -1 && cboBodega.SelectedIndex > -1)
             {
-                bool AplicaISV = Convert.ToBoolean(VarGlobales.consultasInv.IN_KardexISVObtener(Convert.ToInt32(cboBodega.SelectedValue.ToString()), Convert.ToInt32(cboProducto.SelectedValue.ToString())));
+                bool AplicaISV = Convert.ToBoolean(_repo.ObtenerAplicaIsvKardex(Convert.ToInt32(cboBodega.SelectedValue.ToString()), Convert.ToInt32(cboProducto.SelectedValue.ToString())));
 
                 chkAplicaISV.Checked = AplicaISV;
             }

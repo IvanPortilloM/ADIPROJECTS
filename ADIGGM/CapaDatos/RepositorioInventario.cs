@@ -87,5 +87,75 @@ ORDER BY Producto";
                 new { IdCatProducto = idCatProducto, IdProducto = idProducto, MostrarTodo = mostrarTodo, FechaDesde = fechaDesde, FechaHasta = fechaHasta },
                 CommandType.StoredProcedure);
         }
+
+        // ===== Transacciones de inventario (kardex) =====
+
+        /// <summary>Categorías visibles en el módulo de inventario (filtro fijo heredado del DataSet).</summary>
+        public DataTable ListarCategoriasProductosInv()
+        {
+            const string sql = @"SELECT IdCatProducto, Codigo, Categoria, Activo, Usuario, NombreEquipo
+FROM OC_ProductosCategorias
+WHERE IdCatProducto IN (12, 21, 7, 18, 10, 20)
+ORDER BY Categoria";
+            return ConsultarTabla(sql);
+        }
+
+        public DataTable ListarProductosActivosPorCategoria(int idCategoria)
+        {
+            const string sql = @"SELECT Activo, CodProducto, IdCatProducto, IdProducto, NombreEquipo, Producto, Usuario
+FROM OC_Productos
+WHERE IdCatProducto = @IdCategoria AND Activo = 1";
+            return ConsultarTabla(sql, new { IdCategoria = idCategoria });
+        }
+
+        /// <summary>Existencia actual del producto en la bodega (SP escalar; null si no hay kardex).</summary>
+        public object ObtenerExistenciaKardex(int idBodega, int idProducto)
+        {
+            return Escalar<object>("dbo.IN_KardexObtener",
+                new { IdBodega = idBodega, IdProducto = idProducto }, CommandType.StoredProcedure);
+        }
+
+        public object ObtenerAplicaIsvKardex(int idBodega, int idProducto)
+        {
+            return Escalar<object>("dbo.IN_KardexISVObtener",
+                new { IdBodega = idBodega, IdProducto = idProducto }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Inserta el encabezado del kardex y devuelve su Id.</summary>
+        public int InsertarKardexHeader(DateTime fecha, string observacion, string usuario)
+        {
+            return Convert.ToInt32(Escalar<object>("dbo.IN_KardexHeaderInsert",
+                new { Fecha = fecha, Observacion = observacion, Usuario = usuario }, CommandType.StoredProcedure));
+        }
+
+        public void ActualizarKardex(int idBodega, int idProducto, decimal cantidad, int idVehiculo,
+            int idKardexHeader, int idTipoOperacion, DateTime fecha, decimal precioEntrada, bool aplicaIsv)
+        {
+            Ejecutar("dbo.IN_KardexUpdate", new
+            {
+                IdBodega = idBodega,
+                IdProducto = idProducto,
+                Cantidad = cantidad,
+                IdVehiculo = idVehiculo,
+                IdKardexHeader = idKardexHeader,
+                IdTipoOperacion = idTipoOperacion,
+                Fecha = fecha,
+                PrecioEntrada = precioEntrada,
+                AplicaISV = aplicaIsv
+            }, CommandType.StoredProcedure);
+        }
+
+        // SPs OC_* que usa el módulo de inventario (se reubicarán al migrar el módulo OC)
+
+        public decimal ObtenerIsvPorcentaje()
+        {
+            return Convert.ToDecimal(Escalar<object>("dbo.OC_ISVObtener", null, CommandType.StoredProcedure));
+        }
+
+        public decimal ObtenerUltimoPrecioCompra(int idProducto)
+        {
+            return Convert.ToDecimal(Escalar<object>("dbo.OC_UltimoPrecio",
+                new { IdProducto = idProducto }, CommandType.StoredProcedure));
+        }
     }
 }

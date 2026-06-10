@@ -50,7 +50,6 @@ namespace ADIGGM.INV.Transacciones
             this.label1 = new System.Windows.Forms.Label();
             this.cboTipoOperacion = new System.Windows.Forms.ComboBox();
             this.iNTipoOperacionesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsInventarioAdiggm = new ADIGGM.DataSets.DsInventarioAdiggm();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.txtObservacion = new System.Windows.Forms.TextBox();
@@ -62,7 +61,6 @@ namespace ADIGGM.INV.Transacciones
             this.label7 = new System.Windows.Forms.Label();
             this.cboCategoria = new System.Windows.Forms.ComboBox();
             this.oCProductosCategoriasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsOC = new ADIGGM.DataSets.DsOC();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.cboBodega = new System.Windows.Forms.ComboBox();
@@ -76,18 +74,11 @@ namespace ADIGGM.INV.Transacciones
             this.cboVehiculo = new System.Windows.Forms.ComboBox();
             this.tRVehiculosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnAgregar = new System.Windows.Forms.Button();
-            this.iN_TipoOperacionesTableAdapter = new ADIGGM.DataSets.DsInventarioAdiggmTableAdapters.IN_TipoOperacionesTableAdapter();
-            this.iN_BodegasTableAdapter = new ADIGGM.DataSets.DsInventarioAdiggmTableAdapters.IN_BodegasTableAdapter();
-            this.oC_ProductosTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ProductosTableAdapter();
-            this.tR_VehiculosTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.TR_VehiculosTableAdapter();
-            this.oC_ProductosCategoriasTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ProductosCategoriasTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNTipoOperacionesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsInventarioAdiggm)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosCategoriasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNBodegasBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRVehiculosBindingSource)).BeginInit();
@@ -255,17 +246,7 @@ namespace ADIGGM.INV.Transacciones
             this.cboTipoOperacion.TabIndex = 107;
             this.cboTipoOperacion.ValueMember = "IdTipoOperacion";
             this.cboTipoOperacion.SelectedValueChanged += new System.EventHandler(this.cboTipoOperacion_SelectedValueChanged);
-            // 
-            // iNTipoOperacionesBindingSource
-            // 
-            this.iNTipoOperacionesBindingSource.DataMember = "IN_TipoOperaciones";
-            this.iNTipoOperacionesBindingSource.DataSource = this.dsInventarioAdiggm;
-            // 
-            // dsInventarioAdiggm
-            // 
-            this.dsInventarioAdiggm.DataSetName = "DsInventarioAdiggm";
-            this.dsInventarioAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // panel1
             // 
             this.panel1.Controls.Add(this.label8);
@@ -387,17 +368,7 @@ namespace ADIGGM.INV.Transacciones
             this.cboCategoria.TabIndex = 118;
             this.cboCategoria.ValueMember = "IdCatProducto";
             this.cboCategoria.SelectedValueChanged += new System.EventHandler(this.cboCategoria_SelectedValueChanged);
-            // 
-            // oCProductosCategoriasBindingSource
-            // 
-            this.oCProductosCategoriasBindingSource.DataMember = "OC_ProductosCategorias";
-            this.oCProductosCategoriasBindingSource.DataSource = this.dsOC;
-            // 
-            // dsOC
-            // 
-            this.dsOC.DataSetName = "DsOC";
-            this.dsOC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // btnGuardar
             // 
             this.btnGuardar.Image = ((System.Drawing.Image)(resources.GetObject("btnGuardar.Image")));
@@ -431,12 +402,7 @@ namespace ADIGGM.INV.Transacciones
             this.cboBodega.TabIndex = 115;
             this.cboBodega.ValueMember = "IdBodega";
             this.cboBodega.SelectedValueChanged += new System.EventHandler(this.cboBodega_SelectedValueChanged);
-            // 
-            // iNBodegasBindingSource
-            // 
-            this.iNBodegasBindingSource.DataMember = "IN_Bodegas";
-            this.iNBodegasBindingSource.DataSource = this.dsInventarioAdiggm;
-            // 
+            //
             // label5
             // 
             this.label5.AutoSize = true;
@@ -489,12 +455,7 @@ namespace ADIGGM.INV.Transacciones
             this.cboProducto.TabIndex = 110;
             this.cboProducto.ValueMember = "IdProducto";
             this.cboProducto.SelectedValueChanged += new System.EventHandler(this.cboProducto_SelectedValueChanged);
-            // 
-            // oCProductosBindingSource
-            // 
-            this.oCProductosBindingSource.DataMember = "OC_Productos";
-            this.oCProductosBindingSource.DataSource = this.dsOC;
-            // 
+            //
             // cboVehiculo
             // 
             this.cboVehiculo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -507,12 +468,7 @@ namespace ADIGGM.INV.Transacciones
             this.cboVehiculo.Size = new System.Drawing.Size(170, 24);
             this.cboVehiculo.TabIndex = 109;
             this.cboVehiculo.ValueMember = "IdVehiculo";
-            // 
-            // tRVehiculosBindingSource
-            // 
-            this.tRVehiculosBindingSource.DataMember = "TR_Vehiculos";
-            this.tRVehiculosBindingSource.DataSource = this.dsOC;
-            // 
+            //
             // btnAgregar
             // 
             this.btnAgregar.Image = ((System.Drawing.Image)(resources.GetObject("btnAgregar.Image")));
@@ -524,27 +480,7 @@ namespace ADIGGM.INV.Transacciones
             this.btnAgregar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnAgregar.UseVisualStyleBackColor = true;
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
-            // 
-            // iN_TipoOperacionesTableAdapter
-            // 
-            this.iN_TipoOperacionesTableAdapter.ClearBeforeFill = true;
-            // 
-            // iN_BodegasTableAdapter
-            // 
-            this.iN_BodegasTableAdapter.ClearBeforeFill = true;
-            // 
-            // oC_ProductosTableAdapter
-            // 
-            this.oC_ProductosTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_VehiculosTableAdapter
-            // 
-            this.tR_VehiculosTableAdapter.ClearBeforeFill = true;
-            // 
-            // oC_ProductosCategoriasTableAdapter
-            // 
-            this.oC_ProductosCategoriasTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // frmInventario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -562,11 +498,9 @@ namespace ADIGGM.INV.Transacciones
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNTipoOperacionesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsInventarioAdiggm)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosCategoriasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNBodegasBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRVehiculosBindingSource)).EndInit();
@@ -591,20 +525,13 @@ namespace ADIGGM.INV.Transacciones
         private System.Windows.Forms.ComboBox cboVehiculo;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnGuardar;
-        private DataSets.DsInventarioAdiggm dsInventarioAdiggm;
         private System.Windows.Forms.BindingSource iNTipoOperacionesBindingSource;
-        private DataSets.DsInventarioAdiggmTableAdapters.IN_TipoOperacionesTableAdapter iN_TipoOperacionesTableAdapter;
         private System.Windows.Forms.BindingSource iNBodegasBindingSource;
-        private DataSets.DsInventarioAdiggmTableAdapters.IN_BodegasTableAdapter iN_BodegasTableAdapter;
         private System.Windows.Forms.BindingSource oCProductosBindingSource;
-        private DataSets.DsOC dsOC;
-        private DataSets.DsOCTableAdapters.OC_ProductosTableAdapter oC_ProductosTableAdapter;
         private System.Windows.Forms.BindingSource tRVehiculosBindingSource;
-        private DataSets.DsOCTableAdapters.TR_VehiculosTableAdapter tR_VehiculosTableAdapter;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cboCategoria;
         private System.Windows.Forms.BindingSource oCProductosCategoriasBindingSource;
-        private DataSets.DsOCTableAdapters.OC_ProductosCategoriasTableAdapter oC_ProductosCategoriasTableAdapter;
         private System.Windows.Forms.CheckBox chkVehiculo;
         private System.Windows.Forms.Label lblExistencia;
         private System.Windows.Forms.Label label2;
