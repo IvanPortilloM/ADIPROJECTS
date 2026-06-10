@@ -26,5 +26,22 @@ namespace ADIGGM.CapaDatos
             const string delete = "DELETE FROM dbo.IN_TipoOperaciones WHERE IdTipoOperacion = @IdTipoOperacion";
             return GuardarCambios(tabla, insert, update, delete);
         }
+
+        // ===== IN_Bodegas (mantenimiento de bodegas) =====
+
+        public DataTable ListarBodegas()
+        {
+            const string sql = "SELECT IdBodega, NombreBodega, Activo FROM dbo.IN_Bodegas";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Persiste altas/cambios hechos en la grilla (IdBodega es identity).</summary>
+        public int GuardarBodegas(DataTable tabla)
+        {
+            const string insert = "INSERT INTO dbo.IN_Bodegas (NombreBodega, Activo) VALUES (@NombreBodega, @Activo)";
+            const string update = "UPDATE dbo.IN_Bodegas SET NombreBodega = @NombreBodega, Activo = @Activo WHERE IdBodega = @IdBodega";
+            const string delete = "DELETE FROM dbo.IN_Bodegas WHERE IdBodega = @IdBodega";
+            return GuardarCambios(tabla, insert, update, delete);
+        }
     }
 }

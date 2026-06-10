@@ -35,12 +35,9 @@ namespace ADIGGM.INV.Mantenimiento
             this.nombreBodega = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.activo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.iNBodegasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsInventarioAdiggm = new ADIGGM.DataSets.DsInventarioAdiggm();
-            this.iN_BodegasTableAdapter = new ADIGGM.DataSets.DsInventarioAdiggmTableAdapters.IN_BodegasTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBodegas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNBodegasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsInventarioAdiggm)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSalir
@@ -133,46 +130,32 @@ namespace ADIGGM.INV.Mantenimiento
             this.dgvBodegas.ReadOnly = true;
             this.dgvBodegas.Size = new System.Drawing.Size(433, 329);
             this.dgvBodegas.TabIndex = 103;
-            // 
+            //
             // idBodega
-            // 
+            //
             this.idBodega.DataPropertyName = "IdBodega";
             this.idBodega.HeaderText = "IdBodega";
             this.idBodega.Name = "idBodega";
             this.idBodega.ReadOnly = true;
             this.idBodega.Visible = false;
-            // 
+            //
             // nombreBodega
-            // 
+            //
             this.nombreBodega.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.nombreBodega.DataPropertyName = "NombreBodega";
             this.nombreBodega.HeaderText = "Bodega";
             this.nombreBodega.Name = "nombreBodega";
             this.nombreBodega.ReadOnly = true;
-            // 
+            //
             // activo
-            // 
+            //
             this.activo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.activo.DataPropertyName = "Activo";
             this.activo.HeaderText = "Activo";
             this.activo.Name = "activo";
             this.activo.ReadOnly = true;
             this.activo.Width = 48;
-            // 
-            // iNBodegasBindingSource
-            // 
-            this.iNBodegasBindingSource.DataMember = "IN_Bodegas";
-            this.iNBodegasBindingSource.DataSource = this.dsInventarioAdiggm;
-            // 
-            // dsInventarioAdiggm
-            // 
-            this.dsInventarioAdiggm.DataSetName = "DsInventarioAdiggm";
-            this.dsInventarioAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // iN_BodegasTableAdapter
-            // 
-            this.iN_BodegasTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // frmBodegas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -188,7 +171,6 @@ namespace ADIGGM.INV.Mantenimiento
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBodegas)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNBodegasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsInventarioAdiggm)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -196,9 +178,7 @@ namespace ADIGGM.INV.Mantenimiento
         #endregion
 
         private System.Windows.Forms.DataGridView dgvBodegas;
-        private DataSets.DsInventarioAdiggm dsInventarioAdiggm;
         private System.Windows.Forms.BindingSource iNBodegasBindingSource;
-        private DataSets.DsInventarioAdiggmTableAdapters.IN_BodegasTableAdapter iN_BodegasTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn idBodega;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreBodega;
         private System.Windows.Forms.DataGridViewCheckBoxColumn activo;

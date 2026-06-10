@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Formularios_Base;
+using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.INV.Mantenimiento
 {
     public partial class frmBodegas : FrmMantenimiento
     {
+        private readonly RepositorioInventario _repo = new RepositorioInventario();
+        private DataTable _dtBodegas;
         int selectedIndex;
+
         public frmBodegas()
         {
             InitializeComponent();
             HabilitarBtn();
-            Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
+            FuncionesGlobales DgvStyle = new FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvBodegas);
         }
 
@@ -30,13 +29,19 @@ namespace ADIGGM.INV.Mantenimiento
             btnCancelar.Enabled = false;
         }
 
-        Clases.VarGlobales variables = new Clases.VarGlobales();
+        /// <summary>Carga la tabla vía Dapper (DataTable) y la enlaza al BindingSource del grid.</summary>
+        private void CargarBodegas()
+        {
+            _dtBodegas = _repo.ListarBodegas();
+            iNBodegasBindingSource.DataMember = "";
+            iNBodegasBindingSource.DataSource = _dtBodegas;
+        }
 
         private void frmBodegas_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsInventarioAdiggm.IN_Bodegas' Puede moverla o quitarla según sea necesario.
-            this.iN_BodegasTableAdapter.Fill(this.dsInventarioAdiggm.IN_Bodegas);
+            CargarBodegas();
         }
+
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             try
@@ -63,7 +68,7 @@ namespace ADIGGM.INV.Mantenimiento
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -75,8 +80,16 @@ namespace ADIGGM.INV.Mantenimiento
                 {
                     selectedIndex = dgvBodegas.CurrentRow.Index;
                     dgvBodegas.EndEdit();
-                    this.iN_BodegasTableAdapter.Update(this.dsInventarioAdiggm.IN_Bodegas);
-                    dgvBodegas.CurrentCell = dgvBodegas.Rows[selectedIndex].Cells[1];
+                    iNBodegasBindingSource.EndEdit();
+
+                    // Persiste altas/cambios del DataTable con Dapper (reemplaza TableAdapter.Update)
+                    _repo.GuardarBodegas(_dtBodegas);
+
+                    // Recargar para reflejar los IDs identity recién generados
+                    CargarBodegas();
+                    if (selectedIndex >= 0 && selectedIndex < dgvBodegas.Rows.Count)
+                        dgvBodegas.CurrentCell = dgvBodegas.Rows[selectedIndex].Cells[1];
+
                     dgvBodegas.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
@@ -88,7 +101,7 @@ namespace ADIGGM.INV.Mantenimiento
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -117,12 +130,13 @@ namespace ADIGGM.INV.Mantenimiento
             if (dgvBodegas.Rows.Count > 0 && dgvBodegas.FirstDisplayedCell != null && dgvBodegas.CurrentRow.IsNewRow == false)
             {
                 selectedIndex = dgvBodegas.CurrentRow.Index;
-                this.iN_BodegasTableAdapter.Fill(this.dsInventarioAdiggm.IN_Bodegas);
-                dgvBodegas.CurrentCell = dgvBodegas.Rows[selectedIndex].Cells[1];
+                CargarBodegas();
+                if (selectedIndex >= 0 && selectedIndex < dgvBodegas.Rows.Count)
+                    dgvBodegas.CurrentCell = dgvBodegas.Rows[selectedIndex].Cells[1];
             }
             else
             {
-                this.iN_BodegasTableAdapter.Fill(this.dsInventarioAdiggm.IN_Bodegas);
+                CargarBodegas();
             }
 
             dgvBodegas.AllowUserToAddRows = false;
