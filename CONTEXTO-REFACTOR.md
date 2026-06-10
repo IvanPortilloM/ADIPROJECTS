@@ -42,7 +42,7 @@ $msbuild = "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\MSBuild
 - `ConsultarTabla(sql,param) -> DataTable`; `CrearConexion() -> DbConnection` (transacciones manuales)
 - `GuardarCambios(DataTable, insertSql, updateSql, deleteSql) -> int`: persiste por RowState (Added/Modified/Deleted) en transacción; **REEMPLAZA `TableAdapter.Update()`**. Los `@parámetros` deben llamarse IGUAL que las columnas; el PK identity NO va en el INSERT.
 
-Repos (`ADIGGM\CapaDatos\`): RepositorioMotoristas, RepositorioPoliticas, RepositorioHistorialSalarios, RepositorioAsistencias, RepositorioReporteHoras, RepositorioTiposAsistencia, RepositorioFeriados, RepositorioInventario, **RepositorioPermisos** (Menu hecho; falta SubMenu/DetSubMenu/usp_CargarPermisos).
+Repos (`ADIGGM\CapaDatos\`): RepositorioMotoristas, RepositorioPoliticas, RepositorioHistorialSalarios, RepositorioAsistencias, RepositorioReporteHoras, RepositorioTiposAsistencia, RepositorioFeriados, RepositorioInventario, RepositorioPermisos (Menu/SubMenu/DetSubMenu/permisos transaccionales), RepositorioUsuarios (TR_Usuarios p/combos, BD Transporte).
 POCOs (`ADIGGM\CapaModelo\`): TipoAsistencia, DiaFeriado, MotoristaItem, HistorialSalario, TipoAsistenciaCombo, RegistroAsistenciaCab, TiempoTrabajado, ObservacionDia.
 Dapper 2.1.66 en packages.config + csproj (DLL gitignored, se restaura con NuGet).
 
@@ -80,7 +80,7 @@ Para retirar un DataSet por completo hay que reemplazar TAMBIÉN estas llamadas 
 
 ## 9. Roadmap DataSets — formularios por DataSet (orden: menos→más; borrar el .xsd cuando TODOS migren)
 - **DsInventarioAdiggm**: ✅ ELIMINADO (c2831bf).
-- **DsPermisos** (4, Seguridad; EN CURSO): ✅ frmMenuSistema (4e3c9bb), ✅ frmSubMenu (d567100). Faltan: frmDetSubMenu (tabla DetSubMenu; xsd L140-201; maestro-detalle SubMenu→DetSubMenu como frmSubMenu), frmAsigPermisos (usp_CargarPermisos @IdUsuario + usp_ActualizarPermisos(IdUsuario,IdSubMenu,IdDetSubMenu) + DELETE inline a tabla Permiso + combo TR_Usuarios de DsTRANSPORTE → al migrarlo APLICAR FIXES de §14).
+- **DsPermisos**: ✅ ELIMINADO (178c74b). frmMenuSistema (4e3c9bb), frmSubMenu (d567100), frmDetSubMenu (81bfa66), frmAsigPermisos + fixes §14.1-4 (d7bf391); fix XML nietos §14.5 (dd8a95b).
 - **DsOCWeb** (2): VisOrdenesTrabajo + VarGlobales.consultasOCWeb (enredado con dsOC/dsTransporteAdiggm; migrar junto con OC).
 - **DsCA** (9): Herramientas\frmDevoluciones, IA\frmBuscarAsociados, IA\frmInformacionAsoc, IA\frmCarnetImp, IA\frmDetCredito, IA\frmDetProducto, SAC\FrmSolCred, SAC\frmMenu + VarGlobales.consultasCA.
 - **DsFAC** (11): FAC\FAC_CAI, FAC_Productos, FAC_TipoFacUsuarios, FAC_TipoFacturas, FAC_TipoMoneda, FAC_ReporteCierres, FAC_BusquedaViajes, FAC_Factura, FAC_VisorFacturas, SAC\frmClientesRTN + VarGlobales.consultasFAC.
@@ -108,11 +108,13 @@ Para retirar un DataSet por completo hay que reemplazar TAMBIÉN estas llamadas 
 `OC→TranConfirmarOrden`: que el combo Bodega cargue (ahora vía repo); el resto del form no cambió.
 `Seguridad→Menú Sistema` (frmMenuSistema): listado con columnas; Nuevo+Guardar; Editar+Guardar; Cancelar.
 `Seguridad→SubMenú` (frmSubMenu): combo Menú Padre filtra el grid; Nuevo hereda el IdMenu del padre seleccionado; Guardar/Cancelar.
+`Seguridad→DetSubMenú` (frmDetSubMenu): cadena Menú→SubMenú→grid; Nuevo hereda el IdSubMenu; Guardar/Cancelar.
+`Seguridad→Permisos` (frmAsigPermisos): combo usuarios carga; cambiar usuario recarga matriz y resetea botón marcar-todo; marcar permisos+Guardar; **probar también que el MENÚ del MDI siga apareciendo correcto al iniciar sesión** (fix XML nietos + permisos transaccionales).
 
 ## 13. TAREA INMEDIATA
-Continuar **DsPermisos**: siguiente `frmDetSubMenu` (maestro-detalle como frmSubMenu), luego `frmAsigPermisos` (migrar + aplicar fixes de §14 con el OK del usuario). Al terminar los 4: borrar `DsPermisos.xsd` + .cs/.Designer.cs/.xsc/.xss + entradas del csproj (también borrar del disco la "Copia en conflicto" `DsPermisos.Designer (Copia en conflicto...).cs`, no está en csproj). UN form por turno, build verde + commit + actualizar §6/§9/§12/§13. **Tras cada edición de un `.Designer.cs` con grid, verificar las columnas y aplicar el patrón de binding en código (gotcha §11).**
+Empezar **DsCA** (9 forms, §9; BD = `Conexion.CA`): crear `RepositorioCA : RepositorioBase(Conexion.CA)`; ir de menor a mayor (sugerido: visores IA\frmBuscarAsociados / frmDetCredito / frmDetProducto / frmCarnetImp antes que SAC\FrmSolCred / frmMenu y Herramientas\frmDevoluciones); al final reemplazar `VarGlobales.consultasCA` y borrar `DsCA.xsd`. UN form por turno; **análisis de errores de lógica en cada form (§0)**, los GRAVES se reparan en la migración; build verde + commit + actualizar §6/§9/§12/§13. **Gotcha §11 en todo Designer con grid.**
 
-## 14. Revisión de lógica de ASIGNAR PERMISOS (auditoría 2026-06-10; pendiente aplicar al migrar frmAsigPermisos)
+## 14. Revisión de lógica de ASIGNAR PERMISOS (auditoría 2026-06-10; fixes 1-5 APLICADOS en d7bf391 y dd8a95b; queda el 6 como deuda de diseño)
 1. **GRAVE — guardado sin transacción** (`frmAsigPermisos.btnGuardar`): hace `DELETE FROM Permiso WHERE IdUsuario=...` y luego inserta fila por fila con `usp_ActualizarPermisos`; si algo falla a medio camino el usuario queda con permisos parciales o SIN permisos. Fix: envolver DELETE+INSERTs en UNA transacción (repo con `CrearConexion()`+BeginTransaction) y rollback ante error.
 2. **GRAVE — éxito mentiroso + catch por fila**: el catch interno del foreach traga errores y continúa, y al final SIEMPRE muestra "Permisos actualizados exitosamente". Fix: con la transacción del punto 1, un solo try: o todo o nada, y mensaje acorde.
 3. **RIESGO — `Convert.ToBoolean(DBNull)`**: la columna `Habilitado` de usp_CargarPermisos es nullable (xsd L370 minOccurs=0); si el SP devolviera NULL, `Convert.ToBoolean(row.Cells["habilitado"].Value)` lanza InvalidCastException DESPUÉS del DELETE (pérdida total). Fix: tratar DBNull como false.
