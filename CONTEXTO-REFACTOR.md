@@ -41,7 +41,7 @@ $msbuild = "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\MSBuild
 - `ConsultarTabla(sql,param) -> DataTable`; `CrearConexion() -> DbConnection` (transacciones manuales)
 - `GuardarCambios(DataTable, insertSql, updateSql, deleteSql) -> int`: persiste por RowState (Added/Modified/Deleted) en transacción; **REEMPLAZA `TableAdapter.Update()`**. Los `@parámetros` deben llamarse IGUAL que las columnas; el PK identity NO va en el INSERT.
 
-Repos (`ADIGGM\CapaDatos\`): RepositorioMotoristas, RepositorioPoliticas, RepositorioHistorialSalarios, RepositorioAsistencias, RepositorioReporteHoras, RepositorioTiposAsistencia, RepositorioFeriados, **RepositorioInventario**.
+Repos (`ADIGGM\CapaDatos\`): RepositorioMotoristas, RepositorioPoliticas, RepositorioHistorialSalarios, RepositorioAsistencias, RepositorioReporteHoras, RepositorioTiposAsistencia, RepositorioFeriados, RepositorioInventario, **RepositorioPermisos** (Menu hecho; falta SubMenu/DetSubMenu/usp_CargarPermisos).
 POCOs (`ADIGGM\CapaModelo\`): TipoAsistencia, DiaFeriado, MotoristaItem, HistorialSalario, TipoAsistenciaCombo, RegistroAsistenciaCab, TiempoTrabajado, ObservacionDia.
 Dapper 2.1.66 en packages.config + csproj (DLL gitignored, se restaura con NuGet).
 
@@ -79,7 +79,7 @@ Para retirar un DataSet por completo hay que reemplazar TAMBIÉN estas llamadas 
 
 ## 9. Roadmap DataSets — formularios por DataSet (orden: menos→más; borrar el .xsd cuando TODOS migren)
 - **DsInventarioAdiggm**: ✅ ELIMINADO (c2831bf).
-- **DsPermisos** (4, Seguridad): frmAsigPermisos, frmDetSubMenu, frmMenuSistema, frmSubMenu.
+- **DsPermisos** (4, Seguridad; EN CURSO): ✅ frmMenuSistema (4e3c9bb). Faltan: frmSubMenu (tabla SubMenu; SQL ya ubicado en xsd L77-138), frmDetSubMenu (tabla DetSubMenu; xsd L140-201), frmAsigPermisos (usp_CargarPermisos; xsd L203+, ver qué más usa).
 - **DsOCWeb** (2): VisOrdenesTrabajo + VarGlobales.consultasOCWeb (enredado con dsOC/dsTransporteAdiggm; migrar junto con OC).
 - **DsCA** (9): Herramientas\frmDevoluciones, IA\frmBuscarAsociados, IA\frmInformacionAsoc, IA\frmCarnetImp, IA\frmDetCredito, IA\frmDetProducto, SAC\FrmSolCred, SAC\frmMenu + VarGlobales.consultasCA.
 - **DsFAC** (11): FAC\FAC_CAI, FAC_Productos, FAC_TipoFacUsuarios, FAC_TipoFacturas, FAC_TipoMoneda, FAC_ReporteCierres, FAC_BusquedaViajes, FAC_Factura, FAC_VisorFacturas, SAC\frmClientesRTN + VarGlobales.consultasFAC.
@@ -105,6 +105,7 @@ Para retirar un DataSet por completo hay que reemplazar TAMBIÉN estas llamadas 
 `frmTipoOp` (INV→"Tipo Operación") y `frmBodegas` (INV→"Bodegas"): que el listado muestre COLUMNAS; Nuevo+Guardar (INSERT); Editar+Guardar (UPDATE); Cancelar.
 `frmTipoOp`/`frmBodegas`/`frmVisorExistencias`/`frmInventario`: VALIDADOS OK 2026-06-10.
 `OC→TranConfirmarOrden`: que el combo Bodega cargue (ahora vía repo); el resto del form no cambió.
+`Seguridad→Menú Sistema` (frmMenuSistema): listado con columnas; Nuevo+Guardar; Editar+Guardar; Cancelar.
 
 ## 13. TAREA INMEDIATA
-Empezar **DsPermisos** (Seguridad, 4 forms; BD = `Conexion.PERMISOS`): `frmAsigPermisos`, `frmDetSubMenu`, `frmMenuSistema`, `frmSubMenu`. Crear `RepositorioPermisos : RepositorioBase` (ctor `: base(Conexion.PERMISOS)`); extraer SQL de `DataSets\DsPermisos.xsd`; patrón §7 (mantenimientos → Opción A; visores → Consultar/ConsultarTabla). Al terminar los 4: borrar `DsPermisos.xsd` + .cs/.Designer.cs/.xsc/.xss + entradas del csproj (no hay `consultas*` global de Permisos en VarGlobales). UN form por turno, build verde + commit + actualizar §6/§9/§12/§13. **Tras cada edición de un `.Designer.cs` con grid, verificar las columnas y aplicar el patrón de binding en código (gotcha §11).**
+Continuar **DsPermisos** con `RepositorioPermisos` (ya existe): siguiente `frmSubMenu` (Opción A, tabla SubMenu — igual que frmMenuSistema pero con FK IdMenu; ver si tiene combo de Menú), luego `frmDetSubMenu`, luego `frmAsigPermisos` (usa usp_CargarPermisos y guardado de permisos — revisar su .cs completo). Al terminar los 4: borrar `DsPermisos.xsd` + .cs/.Designer.cs/.xsc/.xss + entradas del csproj (también la "Copia en conflicto" `DsPermisos.Designer (Copia en conflicto...).cs` si no está en csproj, solo borrarla del disco). UN form por turno, build verde + commit + actualizar §6/§9/§12/§13. **Tras cada edición de un `.Designer.cs` con grid, verificar las columnas y aplicar el patrón de binding en código (gotcha §11).**
