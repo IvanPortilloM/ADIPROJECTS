@@ -54,6 +54,7 @@ namespace ADIGGM.Seguridad
             // El DataSource se asigna aquí y NO en el Designer: si el grid queda enlazado en
             // diseño, el diseñador de VS borra las columnas al no poder resolver el esquema.
             dgvPermisosAsig.DataSource = uspCargarPermisosBindingSource;
+            dgvPermisosAsig.Columns["habilitado"].ReadOnly = false;
 
             // El botón marcar/desmarcar-todo vuelve a su estado inicial con cada recarga
             // (antes quedaba desincronizado al cambiar de usuario).
@@ -96,7 +97,6 @@ namespace ADIGGM.Seguridad
             tRUsuariosBindingSource.DataMember = "";
             tRUsuariosBindingSource.DataSource = _repoUsuarios.ListarUsuariosCombo();
             cargarDgv();
-            dgvPermisosAsig.Columns["habilitado"].ReadOnly = false;
             this.Dock = DockStyle.Fill;
         }
 

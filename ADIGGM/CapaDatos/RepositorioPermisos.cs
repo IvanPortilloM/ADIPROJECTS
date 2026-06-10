@@ -69,7 +69,12 @@ namespace ADIGGM.CapaDatos
         /// <summary>Matriz de permisos del usuario (SP usp_CargarPermisos: menús con flag Habilitado).</summary>
         public DataTable CargarPermisosUsuario(int idUsuario)
         {
-            return ConsultarTabla("dbo.usp_CargarPermisos", new { IdUsuario = idUsuario }, CommandType.StoredProcedure);
+            DataTable tabla = ConsultarTabla("dbo.usp_CargarPermisos", new { IdUsuario = idUsuario }, CommandType.StoredProcedure);
+            // DataTable.Load marca ReadOnly las columnas calculadas del SP; Habilitado debe
+            // poder editarse en el grid (el DataSet tipado la generaba editable).
+            if (tabla.Columns.Contains("Habilitado"))
+                tabla.Columns["Habilitado"].ReadOnly = false;
+            return tabla;
         }
 
         /// <summary>
