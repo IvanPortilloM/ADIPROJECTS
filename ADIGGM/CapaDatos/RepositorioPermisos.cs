@@ -26,5 +26,22 @@ namespace ADIGGM.CapaDatos
             const string delete = "DELETE FROM dbo.Menu WHERE IdMenu = @IdMenu";
             return GuardarCambios(tabla, insert, update, delete);
         }
+
+        // ===== SubMenu (mantenimiento de menús hijos; FK IdMenu) =====
+
+        public DataTable ListarSubMenus()
+        {
+            const string sql = "SELECT IdSubMenu, IdMenu, Nombre, NombreFormulario, NombreMenu FROM dbo.SubMenu";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Persiste altas/cambios hechos en la grilla (IdSubMenu es identity).</summary>
+        public int GuardarSubMenus(DataTable tabla)
+        {
+            const string insert = "INSERT INTO dbo.SubMenu (IdMenu, Nombre, NombreFormulario, NombreMenu) VALUES (@IdMenu, @Nombre, @NombreFormulario, @NombreMenu)";
+            const string update = "UPDATE dbo.SubMenu SET IdMenu = @IdMenu, Nombre = @Nombre, NombreFormulario = @NombreFormulario, NombreMenu = @NombreMenu WHERE IdSubMenu = @IdSubMenu";
+            const string delete = "DELETE FROM dbo.SubMenu WHERE IdSubMenu = @IdSubMenu";
+            return GuardarCambios(tabla, insert, update, delete);
+        }
     }
 }

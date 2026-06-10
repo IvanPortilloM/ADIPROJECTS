@@ -1,11 +1,15 @@
 ﻿using Formularios_Base;
 using System;
+using System.Data;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.Seguridad
 {
     public partial class frmSubMenu : FrmMantenimiento
     {
+        private readonly RepositorioPermisos _repo = new RepositorioPermisos();
+        private DataSet _dsMenus;
         int selectedIndex;
         public frmSubMenu()
         {
@@ -22,12 +26,36 @@ namespace ADIGGM.Seguridad
             btnEditar.Enabled = true;
             btnCancelar.Enabled = false;
         }
+        /// <summary>Carga Menu+SubMenu con la relación FK (sustituye al DataSet tipado) y enlaza el grid.</summary>
+        private void CargarDatos()
+        {
+            object idMenuSeleccionado = cboMenuPadre.SelectedValue;
+
+            _dsMenus = new DataSet();
+            DataTable menus = _repo.ListarMenus();
+            menus.TableName = "Menu";
+            DataTable subMenus = _repo.ListarSubMenus();
+            subMenus.TableName = "SubMenu";
+            _dsMenus.Tables.Add(menus);
+            _dsMenus.Tables.Add(subMenus);
+            _dsMenus.Relations.Add("FK_SubMenu_Menu",
+                menus.Columns["IdMenu"], subMenus.Columns["IdMenu"], false);
+
+            menuBindingSource.DataMember = "Menu";
+            menuBindingSource.DataSource = _dsMenus;
+            fKSubMenuBindingSource.DataSource = menuBindingSource;
+            fKSubMenuBindingSource.DataMember = "FK_SubMenu_Menu";
+            // El DataSource se asigna aquí y NO en el Designer: si el grid queda enlazado en
+            // diseño, el diseñador de VS borra las columnas al no poder resolver el esquema.
+            dgvSubMenu.DataSource = fKSubMenuBindingSource;
+
+            if (idMenuSeleccionado != null)
+                cboMenuPadre.SelectedValue = idMenuSeleccionado;
+        }
+
         private void frmSubMenu_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsPermisos.Menu' Puede moverla o quitarla según sea necesario.
-            this.menuTableAdapter.Fill(this.dsPermisos.Menu);
-            // TODO: esta línea de código carga datos en la tabla 'dsPermisos.SubMenu' Puede moverla o quitarla según sea necesario.
-            this.subMenuTableAdapter.Fill(this.dsPermisos.SubMenu);
+            CargarDatos();
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -52,8 +80,11 @@ namespace ADIGGM.Seguridad
                 {
                     selectedIndex = dgvSubMenu.CurrentRow.Index;
                     dgvSubMenu.EndEdit();
-                    this.subMenuTableAdapter.Update(this.dsPermisos.SubMenu);
-                    dgvSubMenu.CurrentCell = dgvSubMenu.Rows[selectedIndex].Cells[2];
+                    fKSubMenuBindingSource.EndEdit();
+                    _repo.GuardarSubMenus(_dsMenus.Tables["SubMenu"]);
+                    CargarDatos();
+                    if (selectedIndex >= 0 && selectedIndex < dgvSubMenu.Rows.Count)
+                        dgvSubMenu.CurrentCell = dgvSubMenu.Rows[selectedIndex].Cells[2];
                     dgvSubMenu.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
@@ -96,8 +127,9 @@ namespace ADIGGM.Seguridad
             {
                 selectedIndex = dgvSubMenu.CurrentRow.Index;
 
-                this.subMenuTableAdapter.Fill(this.dsPermisos.SubMenu);
-                dgvSubMenu.CurrentCell = dgvSubMenu.Rows[selectedIndex].Cells[2];
+                CargarDatos();
+                if (selectedIndex >= 0 && selectedIndex < dgvSubMenu.Rows.Count)
+                    dgvSubMenu.CurrentCell = dgvSubMenu.Rows[selectedIndex].Cells[2];
                 dgvSubMenu.AllowUserToAddRows = false;
 
                 dgvSubMenu.ReadOnly = true;

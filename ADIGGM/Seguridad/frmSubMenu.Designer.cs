@@ -38,17 +38,13 @@ namespace ADIGGM.Seguridad
             this.nombreMenuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fKSubMenuBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsPermisos = new ADIGGM.DataSets.DsPermisos();
             this.cboMenuPadre = new System.Windows.Forms.ComboBox();
-            this.menuTableAdapter = new ADIGGM.DataSets.DsPermisosTableAdapters.MenuTableAdapter();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.subMenuTableAdapter = new ADIGGM.DataSets.DsPermisosTableAdapters.SubMenuTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSubMenu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fKSubMenuBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.menuBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsPermisos)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -137,7 +133,6 @@ namespace ADIGGM.Seguridad
             this.nombreDataGridViewTextBoxColumn,
             this.nombreFormularioDataGridViewTextBoxColumn,
             this.nombreMenuDataGridViewTextBoxColumn});
-            this.dgvSubMenu.DataSource = this.fKSubMenuBindingSource;
             this.dgvSubMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSubMenu.Location = new System.Drawing.Point(0, 135);
             this.dgvSubMenu.Name = "dgvSubMenu";
@@ -187,22 +182,7 @@ namespace ADIGGM.Seguridad
             this.nombreMenuDataGridViewTextBoxColumn.HeaderText = "Menú";
             this.nombreMenuDataGridViewTextBoxColumn.Name = "nombreMenuDataGridViewTextBoxColumn";
             this.nombreMenuDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // fKSubMenuBindingSource
-            // 
-            this.fKSubMenuBindingSource.DataMember = "FK_SubMenu_Menu";
-            this.fKSubMenuBindingSource.DataSource = this.menuBindingSource;
-            // 
-            // menuBindingSource
-            // 
-            this.menuBindingSource.DataMember = "Menu";
-            this.menuBindingSource.DataSource = this.dsPermisos;
-            // 
-            // dsPermisos
-            // 
-            this.dsPermisos.DataSetName = "DsPermisos";
-            this.dsPermisos.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // cboMenuPadre
             // 
             this.cboMenuPadre.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
@@ -217,11 +197,7 @@ namespace ADIGGM.Seguridad
             this.cboMenuPadre.TabIndex = 104;
             this.cboMenuPadre.ValueMember = "IdMenu";
             this.cboMenuPadre.SelectionChangeCommitted += new System.EventHandler(this.cboMenuPadre_SelectionChangeCommitted);
-            // 
-            // menuTableAdapter
-            // 
-            this.menuTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // panel1
             // 
             this.panel1.Controls.Add(this.label1);
@@ -240,11 +216,7 @@ namespace ADIGGM.Seguridad
             this.label1.Size = new System.Drawing.Size(79, 16);
             this.label1.TabIndex = 105;
             this.label1.Text = "Menú Padre:";
-            // 
-            // subMenuTableAdapter
-            // 
-            this.subMenuTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // frmSubMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -263,7 +235,6 @@ namespace ADIGGM.Seguridad
             ((System.ComponentModel.ISupportInitialize)(this.dgvSubMenu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fKSubMenuBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.menuBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsPermisos)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -274,13 +245,10 @@ namespace ADIGGM.Seguridad
 
         private System.Windows.Forms.DataGridView dgvSubMenu;
         private System.Windows.Forms.ComboBox cboMenuPadre;
-        private DataSets.DsPermisos dsPermisos;
         private System.Windows.Forms.BindingSource menuBindingSource;
-        private DataSets.DsPermisosTableAdapters.MenuTableAdapter menuTableAdapter;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.BindingSource fKSubMenuBindingSource;
-        private DataSets.DsPermisosTableAdapters.SubMenuTableAdapter subMenuTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn idSubMenuDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn idMenuDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreDataGridViewTextBoxColumn;
