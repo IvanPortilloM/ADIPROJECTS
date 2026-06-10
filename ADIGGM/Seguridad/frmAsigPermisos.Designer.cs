@@ -40,24 +40,18 @@ namespace ADIGGM.Seguridad
             this.nombreDetSubMenu = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.habilitado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.uspCargarPermisosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsPermisos = new ADIGGM.DataSets.DsPermisos();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cboUsuarios = new System.Windows.Forms.ComboBox();
             this.tRUsuariosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsTransporteAdiggm = new ADIGGM.DataSets.DsTransporteAdiggm();
             this.btnImp = new System.Windows.Forms.Button();
             this.btnRecargar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
-            this.usp_CargarPermisosTableAdapter = new ADIGGM.DataSets.DsPermisosTableAdapters.usp_CargarPermisosTableAdapter();
-            this.tR_UsuariosTableAdapter = new ADIGGM.DataSets.DsTransporteAdiggmTableAdapters.TR_UsuariosTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPermisosAsig)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uspCargarPermisosBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsPermisos)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tRUsuariosBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsTransporteAdiggm)).BeginInit();
             this.SuspendLayout();
             // 
             // btnMax
@@ -108,7 +102,6 @@ namespace ADIGGM.Seguridad
             this.nombreSubMenu,
             this.nombreDetSubMenu,
             this.habilitado});
-            this.dgvPermisosAsig.DataSource = this.uspCargarPermisosBindingSource;
             this.dgvPermisosAsig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPermisosAsig.Location = new System.Drawing.Point(0, 131);
             this.dgvPermisosAsig.Name = "dgvPermisosAsig";
@@ -173,17 +166,7 @@ namespace ADIGGM.Seguridad
             this.habilitado.Name = "habilitado";
             this.habilitado.ReadOnly = true;
             this.habilitado.Width = 70;
-            // 
-            // uspCargarPermisosBindingSource
-            // 
-            this.uspCargarPermisosBindingSource.DataMember = "usp_CargarPermisos";
-            this.uspCargarPermisosBindingSource.DataSource = this.dsPermisos;
-            // 
-            // dsPermisos
-            // 
-            this.dsPermisos.DataSetName = "DsPermisos";
-            this.dsPermisos.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label1);
@@ -222,16 +205,6 @@ namespace ADIGGM.Seguridad
             this.cboUsuarios.TabIndex = 121;
             this.cboUsuarios.ValueMember = "IdUsuario";
             this.cboUsuarios.SelectionChangeCommitted += new System.EventHandler(this.cboUsuarios_SelectionChangeCommitted);
-            // 
-            // tRUsuariosBindingSource
-            // 
-            this.tRUsuariosBindingSource.DataMember = "TR_Usuarios";
-            this.tRUsuariosBindingSource.DataSource = this.dsTransporteAdiggm;
-            // 
-            // dsTransporteAdiggm
-            // 
-            this.dsTransporteAdiggm.DataSetName = "DsTransporteAdiggm";
-            this.dsTransporteAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // btnImp
             // 
@@ -286,15 +259,7 @@ namespace ADIGGM.Seguridad
             this.btnGuardar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
-            // 
-            // usp_CargarPermisosTableAdapter
-            // 
-            this.usp_CargarPermisosTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_UsuariosTableAdapter
-            // 
-            this.tR_UsuariosTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // frmAsigPermisos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -310,11 +275,9 @@ namespace ADIGGM.Seguridad
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPermisosAsig)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uspCargarPermisosBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsPermisos)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tRUsuariosBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsTransporteAdiggm)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -323,8 +286,6 @@ namespace ADIGGM.Seguridad
 
         private System.Windows.Forms.DataGridView dgvPermisosAsig;
         private System.Windows.Forms.BindingSource uspCargarPermisosBindingSource;
-        private DataSets.DsPermisos dsPermisos;
-        private DataSets.DsPermisosTableAdapters.usp_CargarPermisosTableAdapter usp_CargarPermisosTableAdapter;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnImp;
         private System.Windows.Forms.Button btnRecargar;
@@ -337,9 +298,7 @@ namespace ADIGGM.Seguridad
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreDetSubMenu;
         private System.Windows.Forms.DataGridViewCheckBoxColumn habilitado;
         private System.Windows.Forms.ComboBox cboUsuarios;
-        private DataSets.DsTransporteAdiggm dsTransporteAdiggm;
         private System.Windows.Forms.BindingSource tRUsuariosBindingSource;
-        private DataSets.DsTransporteAdiggmTableAdapters.TR_UsuariosTableAdapter tR_UsuariosTableAdapter;
         private System.Windows.Forms.Label label1;
     }
 }

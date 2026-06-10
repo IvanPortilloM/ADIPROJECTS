@@ -1,26 +1,27 @@
-﻿using ADIGGM.CapaDatos;
+using ADIGGM.CapaDatos;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ADIGGM.Seguridad
 {
     public partial class frmAsigPermisos : FrmPrincipal
     {
+        private readonly RepositorioPermisos _repoPermisos = new RepositorioPermisos();
+        private readonly RepositorioUsuarios _repoUsuarios = new RepositorioUsuarios();
         bool selectAllOff = true;
+
         public frmAsigPermisos()
         {
             InitializeComponent();
         }
+
         private void btnImp_Click(object sender, EventArgs e)
         {
             marcar();
         }
+
         private void marcar()
         {
             int rowcount = dgvPermisosAsig.Rows.Count;
@@ -48,55 +49,52 @@ namespace ADIGGM.Seguridad
 
         private void cargarDgv()
         {
-            this.usp_CargarPermisosTableAdapter.Fill(this.dsPermisos.usp_CargarPermisos, Convert.ToInt32(cboUsuarios.SelectedValue));
+            uspCargarPermisosBindingSource.DataMember = "";
+            uspCargarPermisosBindingSource.DataSource = _repoPermisos.CargarPermisosUsuario(Convert.ToInt32(cboUsuarios.SelectedValue));
+            // El DataSource se asigna aquí y NO en el Designer: si el grid queda enlazado en
+            // diseño, el diseñador de VS borra las columnas al no poder resolver el esquema.
+            dgvPermisosAsig.DataSource = uspCargarPermisosBindingSource;
+
+            // El botón marcar/desmarcar-todo vuelve a su estado inicial con cada recarga
+            // (antes quedaba desincronizado al cambiar de usuario).
+            selectAllOff = true;
+            btnImp.Image = Properties.Resources.select_all_off;
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            using (SqlConnection cn = new SqlConnection(Conexion.cn))
+            try
             {
-                try
+                // Se recolecta primero (sin tocar la BD); DBNull cuenta como no habilitado
+                var habilitados = new List<(int IdSubMenu, int IdDetSubMenu)>();
+                foreach (DataGridViewRow row in dgvPermisosAsig.Rows)
                 {
-                    SqlCommand cmd = new SqlCommand("DELETE FROM Permiso WHERE IdUsuario = @IdUsuario", cn);
-                    cmd.Parameters.Add("@IdUsuario", SqlDbType.Int);
-                    cmd.Parameters["@IdUsuario"].Value = Convert.ToInt32(cboUsuarios.SelectedValue);
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-
-                    foreach (DataGridViewRow row in dgvPermisosAsig.Rows)
+                    object valor = row.Cells["habilitado"].Value;
+                    if (valor != null && valor != DBNull.Value && Convert.ToBoolean(valor))
                     {
-                        if (Convert.ToBoolean(row.Cells["habilitado"].Value) == true)
-                        {
-                            try
-                            {
-                                SqlCommand command = new SqlCommand("usp_ActualizarPermisos", cn);
-                                command.Parameters.AddWithValue("IdUsuario", Convert.ToInt32(cboUsuarios.SelectedValue));
-                                command.Parameters.AddWithValue("IdSubMenu", Convert.ToInt32(row.Cells["idSubMenu"].Value));
-                                command.Parameters.AddWithValue("IdDetSubMenu", Convert.ToInt32(row.Cells["idDetSubMenu"].Value));
-                                command.CommandType = CommandType.StoredProcedure;
-                                command.ExecuteNonQuery();
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.Message, Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
+                        habilitados.Add((Convert.ToInt32(row.Cells["idSubMenu"].Value),
+                                         Convert.ToInt32(row.Cells["idDetSubMenu"].Value)));
                     }
-                    cn.Close();
-                    MessageBox.Show("Permisos actualizados exitosamente", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+
+                // DELETE + inserts en UNA transacción: o se guarda todo o no cambia nada
+                _repoPermisos.GuardarPermisosUsuario(Convert.ToInt32(cboUsuarios.SelectedValue), habilitados);
+
+                MessageBox.Show("Permisos actualizados exitosamente", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se guardaron los cambios (la operación se revirtió): " + ex.Message,
+                    Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             cargarDgv();
         }
 
         private void frmAsigPermisos_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsTransporteAdiggm.TR_Usuarios' Puede moverla o quitarla según sea necesario.
-            this.tR_UsuariosTableAdapter.Fill(this.dsTransporteAdiggm.TR_Usuarios);
+            // Solo Id y nombre para el combo (antes se traía TR_Usuarios completo, password incluido)
+            tRUsuariosBindingSource.DataMember = "";
+            tRUsuariosBindingSource.DataSource = _repoUsuarios.ListarUsuariosCombo();
             cargarDgv();
             dgvPermisosAsig.Columns["habilitado"].ReadOnly = false;
             this.Dock = DockStyle.Fill;

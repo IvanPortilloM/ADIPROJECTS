@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+using Dapper;
 
 namespace ADIGGM.CapaDatos
 {
@@ -59,6 +62,49 @@ namespace ADIGGM.CapaDatos
             const string update = "UPDATE dbo.DetSubMenu SET IdSubMenu = @IdSubMenu, Nombre = @Nombre, NombreFormulario = @NombreFormulario, NombreMenu = @NombreMenu WHERE IdDetSubMenu = @IdDetSubMenu";
             const string delete = "DELETE FROM dbo.DetSubMenu WHERE IdDetSubMenu = @IdDetSubMenu";
             return GuardarCambios(tabla, insert, update, delete);
+        }
+
+        // ===== Asignación de permisos por usuario =====
+
+        /// <summary>Matriz de permisos del usuario (SP usp_CargarPermisos: menús con flag Habilitado).</summary>
+        public DataTable CargarPermisosUsuario(int idUsuario)
+        {
+            return ConsultarTabla("dbo.usp_CargarPermisos", new { IdUsuario = idUsuario }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>
+        /// Reemplaza TODOS los permisos del usuario por la lista indicada, en UNA transacción:
+        /// si algo falla se revierte y el usuario conserva sus permisos anteriores.
+        /// (Antes el form hacía DELETE + inserts sueltos: un fallo a medio camino dejaba al usuario sin permisos.)
+        /// </summary>
+        public void GuardarPermisosUsuario(int idUsuario, IEnumerable<(int IdSubMenu, int IdDetSubMenu)> habilitados)
+        {
+            using (DbConnection con = CrearConexion())
+            {
+                con.Open();
+                using (IDbTransaction trans = con.BeginTransaction())
+                {
+                    try
+                    {
+                        con.Execute("DELETE FROM dbo.Permiso WHERE IdUsuario = @IdUsuario",
+                            new { IdUsuario = idUsuario }, trans);
+
+                        foreach ((int idSubMenu, int idDetSubMenu) in habilitados)
+                        {
+                            con.Execute("dbo.usp_ActualizarPermisos",
+                                new { IdUsuario = idUsuario, IdSubMenu = idSubMenu, IdDetSubMenu = idDetSubMenu },
+                                trans, commandType: CommandType.StoredProcedure);
+                        }
+
+                        trans.Commit();
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
         }
     }
 }
