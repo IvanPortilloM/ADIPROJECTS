@@ -98,6 +98,7 @@ Para retirar un DataSet por completo hay que reemplazar TAMBIÉN estas llamadas 
 - Antes de crear un POCO: `grep "class <Nombre>"`. Ya existen `PoliticaPago` y `RangoHora` en `ADIGGM\Clases\CalculadoraHoras.cs` (REUTILIZAR; PoliticaPago se extendió con PoliticaID/NombrePolitica). Para guardar horas se usa tupla `(TimeSpan,TimeSpan)`.
 - NO usar regex greedy sin anclar en archivos con patrones repetidos (corrompió frmAsistencias; se restauró con git y se reescribió completo).
 - `DataTable.Load` infiere columnas no-nulas; el PK identity se ignora en el INSERT y se obtiene al recargar.
+- ⚠️ `DataTable.Load` también marca `DataColumn.ReadOnly=true` en columnas CALCULADAS (expresiones/CASE de SPs o SELECTs). Si esa columna se edita en un grid (ej. flag Habilitado de usp_CargarPermisos), el binding lanza "columna enlazada a un campo de solo lectura..." y los `Cells[x].Value=` fallan. Fix: en el repositorio, tras ConsultarTabla, `tabla.Columns["X"].ReadOnly = false` (hecho en CargarPermisosUsuario, commit a7f46ba). Revisar esto en CUALQUIER grid editable que se cargue vía Dapper.
 - Reescribir historia git: `git filter-repo` NO está en PATH → `python <site-packages>\git_filter_repo.py` en un CLON temporal FUERA de Dropbox; force-push; luego en el repo Dropbox: `git -c transfer.unpackLimit=999999 fetch` + `git reset --hard origin/master`.
 - Commit POR MÓDULO; terminar mensajes con `Co-Authored-By: Claude <noreply@anthropic.com>`. No usar `--no-verify`.
 - Editar archivos con PowerShell: usar lectura/escritura UTF-8 explícita (no corromper ñ/á).
