@@ -5,15 +5,20 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.IA.Visores
 {
     public partial class frmDetProducto : FrmPrincipal
     {
+        private readonly RepositorioCA _repo = new RepositorioCA();
         string cdesdeducc, cidasociad, ccoddeducc, cnumdeducc;
 
         private void btnObs_Click(object sender, EventArgs e)
         {
+            if (dgvDetProd.CurrentRow == null)
+                return;
+
             frmObsProducto obsProducto = new frmObsProducto(Convert.ToString(dgvDetProd.Rows[dgvDetProd.CurrentRow.Index].Cells["cnumasient"].Value.ToString()),
                                                             Convert.ToString(dgvDetProd.Rows[dgvDetProd.CurrentRow.Index].Cells["ctipasient"].Value.ToString()));
             //this.Hide();
@@ -42,7 +47,11 @@ namespace ADIGGM.IA.Visores
         }
         private void cargarDgv()
         {
-            this.uSP_Sel_Cobros_CargarMovimientosProductos_FilterTableAdapter.Fill(this.dsCA.USP_Sel_Cobros_CargarMovimientosProductos_Filter, cidasociad, ccoddeducc, cnumdeducc);
+            uSPSelCobrosCargarMovimientosProductosFilterBindingSource.DataMember = "";
+            uSPSelCobrosCargarMovimientosProductosFilterBindingSource.DataSource = _repo.CargarMovimientosProducto(cidasociad, ccoddeducc, cnumdeducc);
+            // El DataSource se asigna aquí y NO en el Designer: si el grid queda enlazado en
+            // diseño, el diseñador de VS borra las columnas al no poder resolver el esquema.
+            dgvDetProd.DataSource = uSPSelCobrosCargarMovimientosProductosFilterBindingSource;
         }
     }
 }

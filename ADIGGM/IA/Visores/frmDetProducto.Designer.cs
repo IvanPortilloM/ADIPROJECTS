@@ -67,12 +67,10 @@ namespace ADIGGM.IA.Visores
             this.cdescrip01 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cdescrip02 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uSPSelCobrosCargarMovimientosProductosFilterBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCA = new ADIGGM.DataSets.DsCA();
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnObs = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtcdesdeducc = new System.Windows.Forms.TextBox();
-            this.uSP_Sel_Cobros_CargarMovimientosProductos_FilterTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.USP_Sel_Cobros_CargarMovimientosProductos_FilterTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -82,7 +80,6 @@ namespace ADIGGM.IA.Visores
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetProd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uSPSelCobrosCargarMovimientosProductosFilterBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -197,7 +194,6 @@ namespace ADIGGM.IA.Visores
             this.cnumdeducc1,
             this.cdescrip01,
             this.cdescrip02});
-            this.dgvDetProd.DataSource = this.uSPSelCobrosCargarMovimientosProductosFilterBindingSource;
             this.dgvDetProd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDetProd.Location = new System.Drawing.Point(3, 3);
             this.dgvDetProd.Name = "dgvDetProd";
@@ -409,17 +405,7 @@ namespace ADIGGM.IA.Visores
             this.cdescrip02.Name = "cdescrip02";
             this.cdescrip02.ReadOnly = true;
             this.cdescrip02.Visible = false;
-            // 
-            // uSPSelCobrosCargarMovimientosProductosFilterBindingSource
-            // 
-            this.uSPSelCobrosCargarMovimientosProductosFilterBindingSource.DataMember = "USP_Sel_Cobros_CargarMovimientosProductos_Filter";
-            this.uSPSelCobrosCargarMovimientosProductosFilterBindingSource.DataSource = this.dsCA;
-            // 
-            // dsCA
-            // 
-            this.dsCA.DataSetName = "DsCA";
-            this.dsCA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // btnSalir
             // 
             this.btnSalir.Dock = System.Windows.Forms.DockStyle.Right;
@@ -468,11 +454,7 @@ namespace ADIGGM.IA.Visores
             this.txtcdesdeducc.Size = new System.Drawing.Size(778, 20);
             this.txtcdesdeducc.TabIndex = 0;
             this.txtcdesdeducc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // uSP_Sel_Cobros_CargarMovimientosProductos_FilterTableAdapter
-            // 
-            this.uSP_Sel_Cobros_CargarMovimientosProductos_FilterTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // frmDetProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -494,7 +476,6 @@ namespace ADIGGM.IA.Visores
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetProd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uSPSelCobrosCargarMovimientosProductosFilterBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -510,8 +491,6 @@ namespace ADIGGM.IA.Visores
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtcdesdeducc;
         private System.Windows.Forms.BindingSource uSPSelCobrosCargarMovimientosProductosFilterBindingSource;
-        private DataSets.DsCA dsCA;
-        private DataSets.DsCATableAdapters.USP_Sel_Cobros_CargarMovimientosProductos_FilterTableAdapter uSP_Sel_Cobros_CargarMovimientosProductos_FilterTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn dfechamovi;
         private System.Windows.Forms.DataGridViewTextBoxColumn nnumconsec;
         private System.Windows.Forms.DataGridViewTextBoxColumn nmontomovi;
