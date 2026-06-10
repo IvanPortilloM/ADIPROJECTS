@@ -31,9 +31,9 @@ namespace ADIGGM.INV.Mantenimiento
         {
             this.components = new System.ComponentModel.Container();
             this.dgvTipoOp = new System.Windows.Forms.DataGridView();
+            this.iNTipoOperacionesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.idTipoOperacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombreOperacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iNTipoOperacionesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTipoOp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNTipoOperacionesBindingSource)).BeginInit();
@@ -127,23 +127,23 @@ namespace ADIGGM.INV.Mantenimiento
             this.dgvTipoOp.Name = "dgvTipoOp";
             this.dgvTipoOp.Size = new System.Drawing.Size(429, 329);
             this.dgvTipoOp.TabIndex = 103;
-            // 
+            //
             // idTipoOperacion
-            // 
+            //
             this.idTipoOperacion.DataPropertyName = "IdTipoOperacion";
             this.idTipoOperacion.HeaderText = "IdTipoOperacion";
             this.idTipoOperacion.Name = "idTipoOperacion";
             this.idTipoOperacion.Visible = false;
-            // 
+            //
             // nombreOperacion
-            // 
+            //
             this.nombreOperacion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.nombreOperacion.DataPropertyName = "NombreOperacion";
             this.nombreOperacion.HeaderText = "Operación";
             this.nombreOperacion.Name = "nombreOperacion";
             //
             // frmTipoOp
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(429, 450);

@@ -31,10 +31,10 @@ namespace ADIGGM.INV.Mantenimiento
         {
             this.components = new System.ComponentModel.Container();
             this.dgvBodegas = new System.Windows.Forms.DataGridView();
+            this.iNBodegasBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.idBodega = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombreBodega = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.activo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.iNBodegasBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBodegas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNBodegasBindingSource)).BeginInit();
@@ -157,7 +157,7 @@ namespace ADIGGM.INV.Mantenimiento
             this.activo.Width = 48;
             //
             // frmBodegas
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(433, 450);
