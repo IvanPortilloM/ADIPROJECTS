@@ -52,7 +52,7 @@ Nombres canónicos (`ADIGGM\App.config <connectionStrings>`): `TransporteAdiggm`
 - **Conexión centralizada COMPLETA**: se eliminó `DbManager`; migradas cadenas inline de ~13 forms + `TranOrdenCompra` (tenía bug `.ToString()`) + WSCorreos. `ConfigurationManager.ConnectionStrings` solo vive en `Conexion.cs`.
 - **Módulo HE migrado 100%** a Dapper (frmTiposAsistencia, frmFeriados, frmPoliticas, frmHistorialSalarios, frmCerrarPeriodo, frmCopiarAsistencia, frmReporteHorasExtras, frmAsistencias, frmEditarAsistencia).
 - **Seguridad**: token Twilio PURGADO de todo el historial git (filter-repo + force-push).
-- **DataSets — módulo INV EN CURSO**: `frmTipoOp` (9812322), `frmBodegas` (8832244), `frmVisorExistencias` (8df4782) y `frmInventario` (b313043) YA migrados (frmInventario ya NO usa consultasInv/consultasOC). `RepositorioInventario` tiene: ListarTiposOperacion/GuardarTiposOperacion, ListarBodegas/GuardarBodegas, ListarVehiculosActivos, ListarCategoriasProductos, ListarProductosConTodos, ReporteExistencias (SP), ReporteProductosExistencia (SP). Patrón visor RDLC: BindingSource del Designer se conserva y en Load se le asigna el DataTable; maestro-detalle con DataSet plano + DataRelation (createConstraints:false por la fila "(TODOS)").
+- **DataSets — DsInventarioAdiggm ELIMINADO (c2831bf)**: frmTipoOp, frmBodegas, frmVisorExistencias, frmInventario migrados; combo bodegas de TranConfirmarOrden vía repo; `consultasInv` quitado de VarGlobales; .xsd/.cs/.xsc/.xss borrados y fuera del csproj. Primer DataSet retirado por completo. `RepositorioInventario` tiene: ListarTiposOperacion/GuardarTiposOperacion, ListarBodegas/GuardarBodegas, ListarVehiculosActivos, ListarCategoriasProductos, ListarProductosConTodos, ReporteExistencias (SP), ReporteProductosExistencia (SP). Patrón visor RDLC: BindingSource del Designer se conserva y en Load se le asigna el DataTable; maestro-detalle con DataSet plano + DataRelation (createConstraints:false por la fila "(TODOS)").
 
 ## 7. Patrón "Opción A" para DataSets tipados (mantenimiento: grid editable + TableAdapter.Update)
 ```csharp
@@ -78,7 +78,7 @@ Para retirar un DataSet por completo hay que reemplazar TAMBIÉN estas llamadas 
 (VarGlobales también tiene Usuario/IdUsuario/IdPerfil/nombreSistema/rutas — dejar igual.)
 
 ## 9. Roadmap DataSets — formularios por DataSet (orden: menos→más; borrar el .xsd cuando TODOS migren)
-- **DsInventarioAdiggm** (EN CURSO; frmTipoOp + frmBodegas + frmVisorExistencias + frmInventario HECHOS): falta `OC\TranConfirmarOrden` + llamadas `VarGlobales.consultasInv` restantes → luego quitar `consultasInv` de VarGlobales y borrar `DsInventarioAdiggm.xsd` (y sacarlo del csproj).
+- **DsInventarioAdiggm**: ✅ ELIMINADO (c2831bf).
 - **DsPermisos** (4, Seguridad): frmAsigPermisos, frmDetSubMenu, frmMenuSistema, frmSubMenu.
 - **DsOCWeb** (2): VisOrdenesTrabajo + VarGlobales.consultasOCWeb (enredado con dsOC/dsTransporteAdiggm; migrar junto con OC).
 - **DsCA** (9): Herramientas\frmDevoluciones, IA\frmBuscarAsociados, IA\frmInformacionAsoc, IA\frmCarnetImp, IA\frmDetCredito, IA\frmDetProducto, SAC\FrmSolCred, SAC\frmMenu + VarGlobales.consultasCA.
@@ -103,8 +103,8 @@ Para retirar un DataSet por completo hay que reemplazar TAMBIÉN estas llamadas 
 
 ## 12. Validación pendiente del usuario
 `frmTipoOp` (INV→"Tipo Operación") y `frmBodegas` (INV→"Bodegas"): que el listado muestre COLUMNAS; Nuevo+Guardar (INSERT); Editar+Guardar (UPDATE); Cancelar.
-`frmVisorExistencias` (INV→Visores): VALIDADO OK 2026-06-10. `frmTipoOp`/`frmBodegas`: VALIDADOS OK 2026-06-10.
-`frmInventario` (INV→Transacciones): combos cargan (tipo operación/bodega/vehículo/categoría/producto encadenados); existencia e ISV al cambiar producto/bodega; Agregar al grid; Guardar (inserta kardex header + detalle y abre reporte).
+`frmTipoOp`/`frmBodegas`/`frmVisorExistencias`/`frmInventario`: VALIDADOS OK 2026-06-10.
+`OC→TranConfirmarOrden`: que el combo Bodega cargue (ahora vía repo); el resto del form no cambió.
 
 ## 13. TAREA INMEDIATA
-Continuar INV: `OC\TranConfirmarOrden` y llamadas `VarGlobales.consultasInv` restantes (grep "VarGlobales.consultasInv") → quitar `consultasInv` de VarGlobales → borrar `DsInventarioAdiggm.xsd` + sus .cs/.Designer.cs y sacarlos del csproj. Build verde + commit por módulo. Pedir validación en ejecución al usuario. **Tras cada edición de un `.Designer.cs` con grid, verificar las columnas (gotcha §11).**
+Empezar **DsPermisos** (Seguridad, 4 forms; BD = `Conexion.PERMISOS`): `frmAsigPermisos`, `frmDetSubMenu`, `frmMenuSistema`, `frmSubMenu`. Crear `RepositorioPermisos : RepositorioBase` (ctor `: base(Conexion.PERMISOS)`); extraer SQL de `DataSets\DsPermisos.xsd`; patrón §7 (mantenimientos → Opción A; visores → Consultar/ConsultarTabla). Al terminar los 4: borrar `DsPermisos.xsd` + .cs/.Designer.cs/.xsc/.xss + entradas del csproj (no hay `consultas*` global de Permisos en VarGlobales). UN form por turno, build verde + commit + actualizar §6/§9/§12/§13. **Tras cada edición de un `.Designer.cs` con grid, verificar las columnas y aplicar el patrón de binding en código (gotcha §11).**
