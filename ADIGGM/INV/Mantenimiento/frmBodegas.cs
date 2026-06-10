@@ -35,6 +35,9 @@ namespace ADIGGM.INV.Mantenimiento
             _dtBodegas = _repo.ListarBodegas();
             iNBodegasBindingSource.DataMember = "";
             iNBodegasBindingSource.DataSource = _dtBodegas;
+            // El DataSource se asigna aquí y NO en el Designer: si el grid queda enlazado en
+            // diseño, el diseñador de VS borra las columnas al no poder resolver el esquema.
+            dgvBodegas.DataSource = iNBodegasBindingSource;
         }
 
         private void frmBodegas_Load(object sender, EventArgs e)

@@ -123,7 +123,6 @@ namespace ADIGGM.INV.Mantenimiento
             this.idBodega,
             this.nombreBodega,
             this.activo});
-            this.dgvBodegas.DataSource = this.iNBodegasBindingSource;
             this.dgvBodegas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvBodegas.Location = new System.Drawing.Point(0, 98);
             this.dgvBodegas.Name = "dgvBodegas";

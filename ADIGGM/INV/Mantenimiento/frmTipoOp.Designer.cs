@@ -121,7 +121,6 @@ namespace ADIGGM.INV.Mantenimiento
             this.dgvTipoOp.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idTipoOperacion,
             this.nombreOperacion});
-            this.dgvTipoOp.DataSource = this.iNTipoOperacionesBindingSource;
             this.dgvTipoOp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTipoOp.Location = new System.Drawing.Point(0, 98);
             this.dgvTipoOp.Name = "dgvTipoOp";

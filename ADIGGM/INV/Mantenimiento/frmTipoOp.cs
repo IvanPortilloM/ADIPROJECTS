@@ -35,6 +35,9 @@ namespace ADIGGM.INV.Mantenimiento
             _dtTipoOp = _repo.ListarTiposOperacion();
             iNTipoOperacionesBindingSource.DataMember = "";
             iNTipoOperacionesBindingSource.DataSource = _dtTipoOp;
+            // El DataSource se asigna aquí y NO en el Designer: si el grid queda enlazado en
+            // diseño, el diseñador de VS borra las columnas al no poder resolver el esquema.
+            dgvTipoOp.DataSource = iNTipoOperacionesBindingSource;
         }
 
         private void frmTipoOp_Load(object sender, EventArgs e)
