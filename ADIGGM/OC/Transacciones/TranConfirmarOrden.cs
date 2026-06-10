@@ -17,8 +17,9 @@ namespace ADIGGM.OC.Transacciones
         {
             // TODO: esta línea de código carga datos en la tabla 'dsOC.OC_Proveedores_CAI' Puede moverla o quitarla según sea necesario.
             this.oC_Proveedores_CAITableAdapter.FillByIdOC(this.dsOC.OC_Proveedores_CAI, IdOC);
-            // TODO: esta línea de código carga datos en la tabla 'dsInventarioAdiggm.IN_Bodegas' Puede moverla o quitarla según sea necesario.
-            this.iN_BodegasTableAdapter.Fill(this.dsInventarioAdiggm.IN_Bodegas);
+            // Bodegas vía repositorio (DsInventarioAdiggm eliminado); el resto sigue en DsOC hasta esa fase
+            iNBodegasBindingSource.DataMember = "";
+            iNBodegasBindingSource.DataSource = new ADIGGM.CapaDatos.RepositorioInventario().ListarBodegas();
             this.oC_UnidadKilometrajeTableAdapter.Fill(this.dsOC.OC_UnidadKilometraje);
             cboUnidad.SelectedIndex = -1;
             this.tR_VehiculosTableAdapter.FillByIdOC(this.dsOC.TR_Vehiculos,IdOC);

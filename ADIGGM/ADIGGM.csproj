@@ -470,14 +470,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DsFAC.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DataSets\DsInventarioAdiggm.cs">
-      <DependentUpon>DsInventarioAdiggm.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DataSets\DsInventarioAdiggm.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DsInventarioAdiggm.xsd</DependentUpon>
-    </Compile>
     <Compile Include="DataSets\DsOC.cs">
       <DependentUpon>DsOC.xsd</DependentUpon>
     </Compile>
@@ -1951,17 +1943,6 @@
     </None>
     <None Include="DataSets\DsFAC.xss">
       <DependentUpon>DsFAC.xsd</DependentUpon>
-    </None>
-    <None Include="DataSets\DsInventarioAdiggm.xsc">
-      <DependentUpon>DsInventarioAdiggm.xsd</DependentUpon>
-    </None>
-    <None Include="DataSets\DsInventarioAdiggm.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DsInventarioAdiggm.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="DataSets\DsInventarioAdiggm.xss">
-      <DependentUpon>DsInventarioAdiggm.xsd</DependentUpon>
     </None>
     <None Include="DataSets\DsOC.xsc">
       <DependentUpon>DsOC.xsd</DependentUpon>

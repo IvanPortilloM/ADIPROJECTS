@@ -74,7 +74,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.iNBodegasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsInventarioAdiggm = new ADIGGM.DataSets.DsInventarioAdiggm();
             this.chkISV = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvOCDet1 = new System.Windows.Forms.DataGridView();
@@ -114,7 +113,6 @@
             this.tR_VehiculosTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.TR_VehiculosTableAdapter();
             this.oC_OrdenDetObtenerTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_OrdenDetObtenerTableAdapter();
             this.oC_OrdenDetObtener1TableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_OrdenDetObtener1TableAdapter();
-            this.iN_BodegasTableAdapter = new ADIGGM.DataSets.DsInventarioAdiggmTableAdapters.IN_BodegasTableAdapter();
             this.oC_Proveedores_CAITableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_Proveedores_CAITableAdapter();
             this.pnlFooter.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -123,7 +121,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.tRVehiculosBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCUnidadKilometrajeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNBodegasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsInventarioAdiggm)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOCDet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosBindingSource)).BeginInit();
@@ -543,17 +540,7 @@
             this.label1.Size = new System.Drawing.Size(44, 16);
             this.label1.TabIndex = 122;
             this.label1.Text = "Fecha:";
-            // 
-            // iNBodegasBindingSource
-            // 
-            this.iNBodegasBindingSource.DataMember = "IN_Bodegas";
-            this.iNBodegasBindingSource.DataSource = this.dsInventarioAdiggm;
-            // 
-            // dsInventarioAdiggm
-            // 
-            this.dsInventarioAdiggm.DataSetName = "DsInventarioAdiggm";
-            this.dsInventarioAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // chkISV
             // 
             this.chkISV.AutoSize = true;
@@ -992,11 +979,7 @@
             // oC_OrdenDetObtener1TableAdapter
             // 
             this.oC_OrdenDetObtener1TableAdapter.ClearBeforeFill = true;
-            // 
-            // iN_BodegasTableAdapter
-            // 
-            this.iN_BodegasTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // oC_Proveedores_CAITableAdapter
             // 
             this.oC_Proveedores_CAITableAdapter.ClearBeforeFill = true;
@@ -1025,7 +1008,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.tRVehiculosBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCUnidadKilometrajeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNBodegasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsInventarioAdiggm)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOCDet1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosBindingSource)).EndInit();
@@ -1112,9 +1094,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn IdProductoOriginal;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Conf;
         private System.Windows.Forms.DataGridViewTextBoxColumn Descuento;
-        private DataSets.DsInventarioAdiggm dsInventarioAdiggm;
         private System.Windows.Forms.BindingSource iNBodegasBindingSource;
-        private DataSets.DsInventarioAdiggmTableAdapters.IN_BodegasTableAdapter iN_BodegasTableAdapter;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cboCAI;
         private System.Windows.Forms.BindingSource oCProveedoresCAIBindingSource;
