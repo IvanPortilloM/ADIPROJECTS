@@ -95,7 +95,7 @@ namespace ADIGGM.INV.Visores
             // 
             this.pnlFooter.Location = new System.Drawing.Point(0, 656);
             this.pnlFooter.Size = new System.Drawing.Size(1000, 23);
-            //
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label3);
@@ -209,7 +209,7 @@ namespace ADIGGM.INV.Visores
             this.cboVehiculos.Size = new System.Drawing.Size(154, 24);
             this.cboVehiculos.TabIndex = 5;
             this.cboVehiculos.ValueMember = "IdVehiculo";
-            //
+            // 
             // chkFiltroVeh
             // 
             this.chkFiltroVeh.AutoSize = true;
@@ -253,7 +253,7 @@ namespace ADIGGM.INV.Visores
             this.cboCategorias.Size = new System.Drawing.Size(214, 24);
             this.cboCategorias.TabIndex = 1;
             this.cboCategorias.ValueMember = "IdCatProducto";
-            //
+            // 
             // cboProductos
             // 
             this.cboProductos.DataSource = this.oCProductosCategoriasOCProductosBindingSource;
@@ -265,7 +265,7 @@ namespace ADIGGM.INV.Visores
             this.cboProductos.Size = new System.Drawing.Size(214, 24);
             this.cboProductos.TabIndex = 0;
             this.cboProductos.ValueMember = "IdProducto";
-            //
+            // 
             // rvInv
             // 
             reportDataSource1.Name = "DsInv";
@@ -278,7 +278,7 @@ namespace ADIGGM.INV.Visores
             this.rvInv.Size = new System.Drawing.Size(324, 309);
             this.rvInv.TabIndex = 104;
             this.rvInv.Visible = false;
-            //
+            // 
             // rvExistencias
             // 
             reportDataSource2.Name = "DsInv";
@@ -291,7 +291,7 @@ namespace ADIGGM.INV.Visores
             this.rvExistencias.Size = new System.Drawing.Size(396, 246);
             this.rvExistencias.TabIndex = 105;
             this.rvExistencias.Visible = false;
-            //
+            // 
             // frmVisorExistencias
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
