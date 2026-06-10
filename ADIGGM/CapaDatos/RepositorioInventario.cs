@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 
 namespace ADIGGM.CapaDatos
@@ -42,6 +43,49 @@ namespace ADIGGM.CapaDatos
             const string update = "UPDATE dbo.IN_Bodegas SET NombreBodega = @NombreBodega, Activo = @Activo WHERE IdBodega = @IdBodega";
             const string delete = "DELETE FROM dbo.IN_Bodegas WHERE IdBodega = @IdBodega";
             return GuardarCambios(tabla, insert, update, delete);
+        }
+
+        // ===== Visor de existencias (combos de filtro + reportes RDLC) =====
+
+        public DataTable ListarVehiculosActivos()
+        {
+            const string sql = @"SELECT TR_Vehiculos.IdVehiculo, RTRIM(TR_Vehiculos.CodVehiculo + ' - ' + TR_Vehiculos.Placa) AS Vehiculo
+FROM TR_Vehiculos INNER JOIN TR_Contratistas ON TR_Vehiculos.IdContratista = TR_Contratistas.IdContratista
+WHERE TR_Vehiculos.Activo = 1
+ORDER BY TR_Vehiculos.CodVehiculo";
+            return ConsultarTabla(sql);
+        }
+
+        public DataTable ListarCategoriasProductos()
+        {
+            const string sql = "SELECT IdCatProducto, Codigo, Categoria, Activo, Usuario, NombreEquipo FROM OC_ProductosCategorias";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Productos activos con una fila sintética "(TODOS)" (IdProducto = 0) al inicio.</summary>
+        public DataTable ListarProductosConTodos()
+        {
+            const string sql = @"SELECT 1 AS Activo, '000' AS CodProducto, 0 AS IdCatProducto, 0 AS IdProducto, '' AS NombreEquipo, '(TODOS)' AS Producto, '' AS Usuario
+UNION ALL
+SELECT Activo, CodProducto, IdCatProducto, IdProducto, NombreEquipo, Producto, Usuario
+FROM OC_Productos
+WHERE Activo = 1
+ORDER BY Producto";
+            return ConsultarTabla(sql);
+        }
+
+        public DataTable ReporteExistencias(int idCatProducto, int idProducto, int idVehiculo, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            return ConsultarTabla("dbo.IN_R_Existencias",
+                new { IdCatProducto = idCatProducto, IdProducto = idProducto, IdVehiculo = idVehiculo, FechaDesde = fechaDesde, FechaHasta = fechaHasta },
+                CommandType.StoredProcedure);
+        }
+
+        public DataTable ReporteProductosExistencia(int idCatProducto, int idProducto, bool mostrarTodo, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            return ConsultarTabla("dbo.IN_R_ProductosExistencia",
+                new { IdCatProducto = idCatProducto, IdProducto = idProducto, MostrarTodo = mostrarTodo, FechaDesde = fechaDesde, FechaHasta = fechaHasta },
+                CommandType.StoredProcedure);
         }
     }
 }

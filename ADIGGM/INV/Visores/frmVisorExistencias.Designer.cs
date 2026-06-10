@@ -33,7 +33,6 @@ namespace ADIGGM.INV.Visores
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.iNRExistenciasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsInventarioAdiggm = new ADIGGM.DataSets.DsInventarioAdiggm();
             this.IN_R_ProductosExistenciaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -46,7 +45,6 @@ namespace ADIGGM.INV.Visores
             this.chkCat = new System.Windows.Forms.CheckBox();
             this.cboVehiculos = new System.Windows.Forms.ComboBox();
             this.tRVehiculosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsOC = new ADIGGM.DataSets.DsOC();
             this.chkFiltroVeh = new System.Windows.Forms.CheckBox();
             this.btnCargar = new System.Windows.Forms.Button();
             this.chkFiltroProd = new System.Windows.Forms.CheckBox();
@@ -54,20 +52,13 @@ namespace ADIGGM.INV.Visores
             this.oCProductosCategoriasBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cboProductos = new System.Windows.Forms.ComboBox();
             this.oCProductosCategoriasOCProductosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.oC_ProductosCategoriasTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ProductosCategoriasTableAdapter();
-            this.oC_ProductosTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ProductosTableAdapter();
             this.rvInv = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.iN_R_ExistenciasTableAdapter = new ADIGGM.DataSets.DsInventarioAdiggmTableAdapters.IN_R_ExistenciasTableAdapter();
-            this.tR_VehiculosTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.TR_VehiculosTableAdapter();
             this.rvExistencias = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.iN_R_ProductosExistenciaTableAdapter = new ADIGGM.DataSets.DsInventarioAdiggmTableAdapters.IN_R_ProductosExistenciaTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iNRExistenciasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsInventarioAdiggm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.IN_R_ProductosExistenciaBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tRVehiculosBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosCategoriasBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosCategoriasOCProductosBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -104,22 +95,7 @@ namespace ADIGGM.INV.Visores
             // 
             this.pnlFooter.Location = new System.Drawing.Point(0, 656);
             this.pnlFooter.Size = new System.Drawing.Size(1000, 23);
-            // 
-            // iNRExistenciasBindingSource
-            // 
-            this.iNRExistenciasBindingSource.DataMember = "IN_R_Existencias";
-            this.iNRExistenciasBindingSource.DataSource = this.dsInventarioAdiggm;
-            // 
-            // dsInventarioAdiggm
-            // 
-            this.dsInventarioAdiggm.DataSetName = "DsInventarioAdiggm";
-            this.dsInventarioAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // IN_R_ProductosExistenciaBindingSource
-            // 
-            this.IN_R_ProductosExistenciaBindingSource.DataMember = "IN_R_ProductosExistencia";
-            this.IN_R_ProductosExistenciaBindingSource.DataSource = this.dsInventarioAdiggm;
-            // 
+            //
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label3);
@@ -233,17 +209,7 @@ namespace ADIGGM.INV.Visores
             this.cboVehiculos.Size = new System.Drawing.Size(154, 24);
             this.cboVehiculos.TabIndex = 5;
             this.cboVehiculos.ValueMember = "IdVehiculo";
-            // 
-            // tRVehiculosBindingSource
-            // 
-            this.tRVehiculosBindingSource.DataMember = "TR_Vehiculos";
-            this.tRVehiculosBindingSource.DataSource = this.dsOC;
-            // 
-            // dsOC
-            // 
-            this.dsOC.DataSetName = "DsOC";
-            this.dsOC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // chkFiltroVeh
             // 
             this.chkFiltroVeh.AutoSize = true;
@@ -287,12 +253,7 @@ namespace ADIGGM.INV.Visores
             this.cboCategorias.Size = new System.Drawing.Size(214, 24);
             this.cboCategorias.TabIndex = 1;
             this.cboCategorias.ValueMember = "IdCatProducto";
-            // 
-            // oCProductosCategoriasBindingSource
-            // 
-            this.oCProductosCategoriasBindingSource.DataMember = "OC_ProductosCategorias";
-            this.oCProductosCategoriasBindingSource.DataSource = this.dsOC;
-            // 
+            //
             // cboProductos
             // 
             this.cboProductos.DataSource = this.oCProductosCategoriasOCProductosBindingSource;
@@ -304,20 +265,7 @@ namespace ADIGGM.INV.Visores
             this.cboProductos.Size = new System.Drawing.Size(214, 24);
             this.cboProductos.TabIndex = 0;
             this.cboProductos.ValueMember = "IdProducto";
-            // 
-            // oCProductosCategoriasOCProductosBindingSource
-            // 
-            this.oCProductosCategoriasOCProductosBindingSource.DataMember = "OC_ProductosCategorias_OC_Productos";
-            this.oCProductosCategoriasOCProductosBindingSource.DataSource = this.oCProductosCategoriasBindingSource;
-            // 
-            // oC_ProductosCategoriasTableAdapter
-            // 
-            this.oC_ProductosCategoriasTableAdapter.ClearBeforeFill = true;
-            // 
-            // oC_ProductosTableAdapter
-            // 
-            this.oC_ProductosTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // rvInv
             // 
             reportDataSource1.Name = "DsInv";
@@ -330,15 +278,7 @@ namespace ADIGGM.INV.Visores
             this.rvInv.Size = new System.Drawing.Size(324, 309);
             this.rvInv.TabIndex = 104;
             this.rvInv.Visible = false;
-            // 
-            // iN_R_ExistenciasTableAdapter
-            // 
-            this.iN_R_ExistenciasTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_VehiculosTableAdapter
-            // 
-            this.tR_VehiculosTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // rvExistencias
             // 
             reportDataSource2.Name = "DsInv";
@@ -351,11 +291,7 @@ namespace ADIGGM.INV.Visores
             this.rvExistencias.Size = new System.Drawing.Size(396, 246);
             this.rvExistencias.TabIndex = 105;
             this.rvExistencias.Visible = false;
-            // 
-            // iN_R_ProductosExistenciaTableAdapter
-            // 
-            this.iN_R_ProductosExistenciaTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // frmVisorExistencias
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -373,12 +309,10 @@ namespace ADIGGM.INV.Visores
             this.pnlFooter.ResumeLayout(false);
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iNRExistenciasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsInventarioAdiggm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.IN_R_ProductosExistenciaBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tRVehiculosBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosCategoriasBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosCategoriasOCProductosBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -389,29 +323,22 @@ namespace ADIGGM.INV.Visores
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cboCategorias;
-        private DataSets.DsOC dsOC;
         private System.Windows.Forms.ComboBox cboProductos;
         private System.Windows.Forms.BindingSource oCProductosCategoriasBindingSource;
-        private DataSets.DsOCTableAdapters.OC_ProductosCategoriasTableAdapter oC_ProductosCategoriasTableAdapter;
         private System.Windows.Forms.BindingSource oCProductosCategoriasOCProductosBindingSource;
-        private DataSets.DsOCTableAdapters.OC_ProductosTableAdapter oC_ProductosTableAdapter;
         private Microsoft.Reporting.WinForms.ReportViewer rvInv;
         private System.Windows.Forms.BindingSource iNRExistenciasBindingSource;
-        private DataSets.DsInventarioAdiggm dsInventarioAdiggm;
-        private DataSets.DsInventarioAdiggmTableAdapters.IN_R_ExistenciasTableAdapter iN_R_ExistenciasTableAdapter;
         private System.Windows.Forms.CheckBox chkFiltroProd;
         private System.Windows.Forms.Button btnCargar;
         private System.Windows.Forms.ComboBox cboVehiculos;
         private System.Windows.Forms.CheckBox chkFiltroVeh;
         private System.Windows.Forms.BindingSource tRVehiculosBindingSource;
-        private DataSets.DsOCTableAdapters.TR_VehiculosTableAdapter tR_VehiculosTableAdapter;
         private System.Windows.Forms.CheckBox chkCat;
         private System.Windows.Forms.CheckBox chkSoloExistencias;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboTipoReporte;
         private Microsoft.Reporting.WinForms.ReportViewer rvExistencias;
         private System.Windows.Forms.BindingSource IN_R_ProductosExistenciaBindingSource;
-        private DataSets.DsInventarioAdiggmTableAdapters.IN_R_ProductosExistenciaTableAdapter iN_R_ProductosExistenciaTableAdapter;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtpFechaHasta;
