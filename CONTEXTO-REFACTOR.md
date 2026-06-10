@@ -10,6 +10,7 @@
 - Build siempre con `/clp:ErrorsOnly` y `| Select-Object -Last 20` (no vuelques logs enormes). No repitas builds innecesarios.
 - Trabaja **UN formulario/módulo por turno**: build verde → commit → y actualiza §6/§9/§13 de ESTE archivo. Así el contexto del chat se mantiene corto y el progreso queda fuera del chat.
 - No abras chats largos: cuando el contexto crezca, deja todo committeado + este archivo actualizado y continúa en una sesión nueva.
+- **En CADA migración de form: análisis de errores de lógica** (transacciones, catches que tragan errores, éxito incondicional, DBNull, estado UI). Documentar hallazgos estilo §14; los GRAVES se reparan en la misma migración (autorizado por el usuario 2026-06-10); latentes/diseño se documentan y consultan.
 
 ## 1. Proyecto
 - WinForms **.NET Framework 4.6.2**, proyecto **NO-SDK** (packages.config). C# 7+ (hay tuplas/ValueTuple).

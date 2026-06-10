@@ -76,8 +76,9 @@ namespace ADIGGM.CapaDatos
                                       Nombre = submenu.Element("Nombre").Value,
                                       NombreFormulario = submenu.Element("NombreFormulario").Value,
                                       NombreMenu = submenu.Element("NombreMenu").Value,
-                                      ListaSubMenuNieto = menu.Element("DetalleSubMenu").Elements("SubMenu").Elements("DetalleSubMenuNieto") == null ? new List<SubMenuNieto>() :
-                                      (from detsubmenu in menu.Element("DetalleSubMenu").Elements("SubMenu").Elements("DetalleSubMenuNieto").Elements("SubMenuNieto")
+                                      // Los nietos cuelgan del submenu iterado; antes se leian de TODOS los submenus hermanos
+                                      ListaSubMenuNieto = submenu.Element("DetalleSubMenuNieto") == null ? new List<SubMenuNieto>() :
+                                      (from detsubmenu in submenu.Elements("DetalleSubMenuNieto").Elements("SubMenuNieto")
                                        select new SubMenuNieto()
                                        {
                                            Nombre = detsubmenu.Element("Nombre").Value,
