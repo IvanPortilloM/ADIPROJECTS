@@ -7,11 +7,13 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.IA.Busquedas
 {
     public partial class frmBuscarAsociados : FrmPrincipal
     {
+        private readonly RepositorioCA _repo = new RepositorioCA();
         public frmBuscarAsociados()
         {
             InitializeComponent();
@@ -47,7 +49,11 @@ namespace ADIGGM.IA.Busquedas
         }
         private void cargarDgv()
         {
-            this.cA_BuscarAsocTableAdapter.Fill(this.dsCA.CA_BuscarAsoc, txtBusqueda.Text, cboOrdenBusqueda.Text, cboOperador.Text, Convert.ToInt32(nudRegistros.Value));
+            cABuscarAsocBindingSource.DataMember = "";
+            cABuscarAsocBindingSource.DataSource = _repo.BuscarAsociados(txtBusqueda.Text, cboOrdenBusqueda.Text, cboOperador.Text, Convert.ToInt32(nudRegistros.Value));
+            // El DataSource se asigna aquí y NO en el Designer: si el grid queda enlazado en
+            // diseño, el diseñador de VS borra las columnas al no poder resolver el esquema.
+            dgvAsociados.DataSource = cABuscarAsocBindingSource;
             ordenar();
         }
         private void rdbDescendente_CheckedChanged(object sender, EventArgs e)
@@ -80,6 +86,9 @@ namespace ADIGGM.IA.Busquedas
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            if (dgvAsociados.CurrentRow == null)
+                return;
+
             if (Application.OpenForms["frmInformacionAsoc"] != null)
             {
                 Application.OpenForms["frmInformacionAsoc"].Close();

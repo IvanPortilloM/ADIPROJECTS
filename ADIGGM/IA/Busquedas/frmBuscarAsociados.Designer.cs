@@ -75,14 +75,11 @@ namespace ADIGGM.IA.Busquedas
             this.ccoddelegaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cnombredelDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cABuscarAsocBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCA = new ADIGGM.DataSets.DsCA();
-            this.cA_BuscarAsocTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CA_BuscarAsocTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudRegistros)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAsociados)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cABuscarAsocBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).BeginInit();
             this.SuspendLayout();
             // 
             // lblFooter
@@ -330,7 +327,6 @@ namespace ADIGGM.IA.Busquedas
             this.cnombrecomDataGridViewTextBoxColumn,
             this.ccoddelegaDataGridViewTextBoxColumn,
             this.cnombredelDataGridViewTextBoxColumn});
-            this.dgvAsociados.DataSource = this.cABuscarAsocBindingSource;
             this.dgvAsociados.Location = new System.Drawing.Point(39, 123);
             this.dgvAsociados.Name = "dgvAsociados";
             this.dgvAsociados.ReadOnly = true;
@@ -558,21 +554,7 @@ namespace ADIGGM.IA.Busquedas
             this.cnombredelDataGridViewTextBoxColumn.Name = "cnombredelDataGridViewTextBoxColumn";
             this.cnombredelDataGridViewTextBoxColumn.ReadOnly = true;
             this.cnombredelDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // cABuscarAsocBindingSource
-            // 
-            this.cABuscarAsocBindingSource.DataMember = "CA_BuscarAsoc";
-            this.cABuscarAsocBindingSource.DataSource = this.dsCA;
-            // 
-            // dsCA
-            // 
-            this.dsCA.DataSetName = "DsCA";
-            this.dsCA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // cA_BuscarAsocTableAdapter
-            // 
-            this.cA_BuscarAsocTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // frmBuscarAsociados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -607,7 +589,6 @@ namespace ADIGGM.IA.Busquedas
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAsociados)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cABuscarAsocBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -631,8 +612,6 @@ namespace ADIGGM.IA.Busquedas
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView dgvAsociados;
         private System.Windows.Forms.BindingSource cABuscarAsocBindingSource;
-        private DataSets.DsCA dsCA;
-        private DataSets.DsCATableAdapters.CA_BuscarAsocTableAdapter cA_BuscarAsocTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn cidasociad;
         private System.Windows.Forms.DataGridViewTextBoxColumn cnombreasoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ccedulasocDataGridViewTextBoxColumn;

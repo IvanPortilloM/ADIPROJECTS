@@ -37,6 +37,14 @@ namespace ADIGGM.CapaDatos
                 CommandType.StoredProcedure);
         }
 
+        /// <summary>Búsqueda de asociados (frmBuscarAsociados).</summary>
+        public DataTable BuscarAsociados(string texto, string ordenBusqueda, string operador, int numRegistros)
+        {
+            return ConsultarTabla("dbo.CA_BuscarAsoc",
+                new { texto, ordenBusq = ordenBusqueda, operador, numreg = numRegistros },
+                CommandType.StoredProcedure);
+        }
+
         /// <summary>Carnets de asociados pendientes de imprimir (la ruta UNC de fotos la consume el SP).</summary>
         public DataTable CargarCarnetsImprimir(string rutaFotos)
         {
