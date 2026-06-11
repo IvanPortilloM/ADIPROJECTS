@@ -1,4 +1,4 @@
-﻿using Microsoft.Reporting.WinForms;
+using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,12 +6,11 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.Reporting.WinForms;
-using System.Data.SqlClient;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.IO;
 using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -19,10 +18,11 @@ namespace ADIGGM.SAC
 {
     public partial class frmMenu : FrmPrincipal
     {
-        SqlConnection con;
+        private readonly RepositorioCA _repo = new RepositorioCA();
 
-        string Tab="";
+        string Tab = "";
         bool SubirFoto = false;
+
         public frmMenu()
         {
             InitializeComponent();
@@ -30,33 +30,64 @@ namespace ADIGGM.SAC
 
         private void frmMenu_Load(object sender, EventArgs e)
         {
-            cF_MenuTableAdapter.FillByTiempo(dsCA.CF_Menu, tbMenu.SelectedTab.Text);
-            cF_Menu1TableAdapter.FillByTiempo(dsCA.CF_Menu1, tbMenu.SelectedTab.Text);
-            cF_Menu2TableAdapter.FillByTiempo(dsCA.CF_Menu2, tbMenu.SelectedTab.Text);
-            cF_TiempoComTableAdapter.Fill(dsCA.CF_TiempoCom);
-            cF_DiasSemTableAdapter.Fill(dsCA.CF_DiasSem);
-            cF_ImgenMenuTableAdapter.Fill(dsCA.CF_ImgenMenu);
+            string tiempo = tbMenu.SelectedTab.Text;
 
-            Image newImage = null;
+            // Catálogos de las columnas combo ANTES de enlazar los grids
+            cFTiempoComBindingSource.DataMember = "";
+            cFTiempoComBindingSource.DataSource = _repo.ListarTiemposComida();
+            cFDiasSemBindingSource.DataMember = "";
+            cFDiasSemBindingSource.DataSource = _repo.ListarDiasSemana();
 
-            byte[] imgData = (byte[])VarGlobales.consultasCA.CF_ImgTiempoCom(tbMenu.SelectedTab.Text);
+            CargarGridsMenu(tiempo);
+            CargarImagenTiempo(tiempo);
+            CargarReporte(tiempo);
 
-            // Trata la información de la imagen para poder trasladarla al picturebox
-            using (MemoryStream ms = new MemoryStream(imgData, 0, imgData.Length))
-            {
-                ms.Write(imgData, 0, imgData.Length);
-                newImage = Image.FromStream(ms, true);
-            }
-
-             ptbTiempoCom.Image = newImage;
-            newImage = null;
-
-            cF_SelectMenuTableAdapter.Fill(dsCA.CF_SelectMenu, tbMenu.SelectedTab.Text);
             rvMenu.RefreshReport();
             rvMenu.SetDisplayMode(DisplayMode.PrintLayout);
             rvMenu.ZoomMode = ZoomMode.Percent;
             rvMenu.ZoomPercent = 75;
         }
+
+        /// <summary>Llena los 3 grids con el menú del tiempo indicado (tablas independientes, como los 3 Fill originales).</summary>
+        private void CargarGridsMenu(string tiempo)
+        {
+            // El DataSource se asigna aquí y NO en el Designer: si el grid queda enlazado en
+            // diseño, el diseñador de VS borra las columnas al no poder resolver el esquema.
+            cFMenuBindingSource.DataMember = "";
+            cFMenuBindingSource.DataSource = _repo.CargarMenuComedor(tiempo);
+            dgvDesayuno.DataSource = cFMenuBindingSource;
+            cFMenu1BindingSource.DataMember = "";
+            cFMenu1BindingSource.DataSource = _repo.CargarMenuComedor(tiempo);
+            dgvAlmuerzo.DataSource = cFMenu1BindingSource;
+            cFMenu2BindingSource.DataMember = "";
+            cFMenu2BindingSource.DataSource = _repo.CargarMenuComedor(tiempo);
+            dgvBocadillos.DataSource = cFMenu2BindingSource;
+        }
+
+        /// <summary>Muestra la imagen del tiempo de comida (sin imagen => picturebox vacío; antes tronaba con NULL).</summary>
+        private void CargarImagenTiempo(string tiempo)
+        {
+            byte[] imgData = _repo.ObtenerImagenTiempoComida(tiempo);
+
+            if (imgData == null || imgData.Length == 0)
+            {
+                ptbTiempoCom.Image = null;
+                return;
+            }
+
+            // El stream debe seguir vivo mientras exista la imagen (GDI+); no usar using aquí
+            MemoryStream ms = new MemoryStream(imgData);
+            ptbTiempoCom.Image = Image.FromStream(ms, true);
+        }
+
+        private void CargarReporte(string tiempo)
+        {
+            cFSelectMenuBindingSource.DataMember = "";
+            cFSelectMenuBindingSource.DataSource = _repo.CargarMenuReporte(tiempo);
+            cFImgenMenuBindingSource.DataMember = "";
+            cFImgenMenuBindingSource.DataSource = _repo.ListarImagenesMenu();
+        }
+
         public byte[] ImageToByteArray(Image imagen)
         {
             MemoryStream ms = new MemoryStream();
@@ -66,47 +97,59 @@ namespace ADIGGM.SAC
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (SubirFoto == true)
+            try
             {
-                byte[] byteArrayImagen = ImageToByteArray(ptbTiempoCom.Image);
+                if (SubirFoto == true)
+                {
+                    byte[] byteArrayImagen = ImageToByteArray(ptbTiempoCom.Image);
+                    _repo.ActualizarImagenTiempoComida(tbMenu.SelectedTab.Text, byteArrayImagen);
+                }
 
-                VarGlobales.consultasCA.CF_TiempoCom_UPD(tbMenu.SelectedTab.Text, byteArrayImagen);
+                string CtrlDgv = "";
+                if (Tab == "Desayuno")
+                {
+                    CtrlDgv = "dgvDesayuno";
+                }
+                else if (Tab == "Almuerzo")
+                {
+                    CtrlDgv = "dgvAlmuerzo";
+                }
+                else if (Tab == "Bocadillos")
+                {
+                    CtrlDgv = "dgvBocadillos";
+                }
+
+                Control[] Dgv = Controls.Find(CtrlDgv, true);
+                if (Dgv.Length > 0 && Dgv[0] is DataGridView dgv)
+                {
+                    dgv.EndEdit(); // confirma la celda en edición (antes el último cambio podía perderse)
+
+                    var filas = new List<(int Consecutivo, string Comida, DateTime Fecha, bool Activo)>();
+                    foreach (DataGridViewRow row in dgv.Rows)
+                    {
+                        if (row.IsNewRow)
+                            continue;
+                        filas.Add((int.Parse(row.Cells[0].Value.ToString()),
+                                   row.Cells[3].Value.ToString(),
+                                   Convert.ToDateTime(row.Cells[4].Value.ToString()),
+                                   bool.Parse(row.Cells[5].Value.ToString())));
+                    }
+                    _repo.ActualizarMenuComedor(filas); // en UNA transacción
+                }
+
+                CargarReporte(tbMenu.SelectedTab.Text);
+                rvMenu.RefreshReport();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se guardaron los cambios del menú: " + ex.Message,
+                    VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             btnCancelar.Enabled = false;
             btnGuardar.Enabled = false;
             btnEditar.Enabled = true;
             btnFotoArch.Enabled = false;
-
-            string CtrlDgv = "";
-            if (Tab == "Desayuno")
-            {
-                CtrlDgv = "dgvDesayuno";
-            }else
-                if (Tab == "Almuerzo")
-            {
-                CtrlDgv = "dgvAlmuerzo";
-            }
-            else
-                if (Tab == "Bocadillos")
-            {
-                CtrlDgv = "dgvBocadillos";
-            }
-
-            Control[] Dgv = Controls.Find(CtrlDgv, true);
-
-            DataGridView dgv = Dgv[0] as DataGridView;
-
-            foreach (DataGridViewRow row in dgv.Rows)
-            {
-                VarGlobales.consultasCA.CF_Menu_UPD(int.Parse(row.Cells[0].Value.ToString()),
-                                                            row.Cells[3].Value.ToString(),
-                                                            Convert.ToDateTime(row.Cells[4].Value.ToString()),
-                                                            bool.Parse(row.Cells[5].Value.ToString()));
-            }
-            this.cF_SelectMenuTableAdapter.Fill(this.dsCA.CF_SelectMenu, tbMenu.SelectedTab.Text);
-            this.cF_ImgenMenuTableAdapter.Fill(this.dsCA.CF_ImgenMenu);
-            this.rvMenu.RefreshReport();
             Tab = "";
         }
 
@@ -126,39 +169,23 @@ namespace ADIGGM.SAC
                 SubirFoto = false;
             }
         }
+
         private void tbMenu_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Tab == "")
             {
-                this.cF_MenuTableAdapter.FillByTiempo(this.dsCA.CF_Menu, tbMenu.SelectedTab.Text);
-                this.cF_Menu1TableAdapter.FillByTiempo(this.dsCA.CF_Menu1, tbMenu.SelectedTab.Text);
-                this.cF_Menu2TableAdapter.FillByTiempo(this.dsCA.CF_Menu2, tbMenu.SelectedTab.Text);
-
-                Image newImage = null;
-
-                byte[] imgData = (byte[])VarGlobales.consultasCA.CF_ImgTiempoCom(tbMenu.SelectedTab.Text);
-
-                // Trata la información de la imagen para poder trasladarla al picturebox
-                using (MemoryStream ms = new MemoryStream(imgData, 0, imgData.Length))
-                {
-                    ms.Write(imgData, 0, imgData.Length);
-                    newImage = Image.FromStream(ms, true);
-                }
-
-                ptbTiempoCom.Image = newImage;
-                newImage = null;
-            } else
-                if (Tab == "Desayuno") 
-            {
-                tbMenu.SelectedTab = tpDesayuno; 
+                CargarGridsMenu(tbMenu.SelectedTab.Text);
+                CargarImagenTiempo(tbMenu.SelectedTab.Text);
             }
-            else
-                if (Tab == "Almuerzo")
+            else if (Tab == "Desayuno")
+            {
+                tbMenu.SelectedTab = tpDesayuno;
+            }
+            else if (Tab == "Almuerzo")
             {
                 tbMenu.SelectedTab = tpAlmuerzo;
             }
-            else
-                if (Tab == "Bocadillos")
+            else if (Tab == "Bocadillos")
             {
                 tbMenu.SelectedTab = tpBocadillos;
             }
@@ -181,24 +208,9 @@ namespace ADIGGM.SAC
             btnEditar.Enabled = true;
             btnFotoArch.Enabled = false;
 
-            this.cF_MenuTableAdapter.FillByTiempo(this.dsCA.CF_Menu, tbMenu.SelectedTab.Text);
-            this.cF_Menu1TableAdapter.FillByTiempo(this.dsCA.CF_Menu1, tbMenu.SelectedTab.Text);
-            this.cF_Menu2TableAdapter.FillByTiempo(this.dsCA.CF_Menu2, tbMenu.SelectedTab.Text);
-
-            Image newImage = null;
-
-            byte[] imgData = (byte[])VarGlobales.consultasCA.CF_ImgTiempoCom(tbMenu.SelectedTab.Text);
-
-            // Trata la información de la imagen para poder trasladarla al picturebox
-            using (MemoryStream ms = new MemoryStream(imgData, 0, imgData.Length))
-            {
-                ms.Write(imgData, 0, imgData.Length);
-                newImage = Image.FromStream(ms, true);
-            }
-
-            ptbTiempoCom.Image = newImage;
+            CargarGridsMenu(tbMenu.SelectedTab.Text);
+            CargarImagenTiempo(tbMenu.SelectedTab.Text);
             ptbTiempoCom.SizeMode = PictureBoxSizeMode.Zoom;
-            newImage = null;
 
             Tab = "";
         }
@@ -231,32 +243,29 @@ namespace ADIGGM.SAC
                 {
                     string formato = "";
 
+                    // El formato corresponde al filtro elegido (antes PNG exportaba JPG y BMP exportaba PNG)
                     switch (saveFileDialog1.FilterIndex)
                     {
                         case 1:
-                            formato = "JPG";
-                            break;
-
-                        case 2:
                             formato = "PNG";
                             break;
 
-                        case 3:
+                        case 2:
                             formato = "BMP";
                             break;
                     }
                     Warning[] warnings;
-                        string[] streamids;
-                        string mimeType;
-                        string encoding;
-                        string extension;
+                    string[] streamids;
+                    string mimeType;
+                    string encoding;
+                    string extension;
 
                     var byts = rvMenu.LocalReport.Render("Image", "<DeviceInfo><OutputFormat>" + formato + "</OutputFormat><EmbedFonts>EmbedAll</EmbedFonts></DeviceInfo>",
                          out mimeType, out encoding, out extension, out streamids, out warnings);
                     File.WriteAllBytes(saveFileDialog1.FileName.ToString(), byts);
                 }
             }
-            
+
         }
     }
 }

@@ -57,6 +57,81 @@ namespace ADIGGM.CapaDatos
             Ejecutar("dbo.CA_CarnetsAsocImpExpor", new { nconsecarn }, CommandType.StoredProcedure);
         }
 
+        // ===== Menú del comedor (SAC\frmMenu; tablas CF_*) =====
+
+        /// <summary>Platos del menú para un tiempo de comida (Desayuno/Almuerzo/Bocadillos). Editable en grilla.</summary>
+        public DataTable CargarMenuComedor(string tiempoComida)
+        {
+            const string sql = @"SELECT CF_Menu.bestaactiv, CF_Menu.cnomcomida, CF_Menu.dfechacrea, CF_Menu.nconsemenu, CF_Menu.nnumdiasem, CF_Menu.nnumtiempo
+FROM CF_Menu INNER JOIN CF_TiempoCom ON CF_Menu.nnumtiempo = CF_TiempoCom.nnumtiempo
+WHERE CF_TiempoCom.ctiempocom = @ctiempocom";
+            DataTable tabla = ConsultarTabla(sql, new { ctiempocom = tiempoComida });
+            foreach (DataColumn col in tabla.Columns)
+                col.ReadOnly = false; // la grilla edita estas columnas (gotcha DataTable.Load)
+            return tabla;
+        }
+
+        /// <summary>Tiempos de comida para la columna combo de la grilla (sin la imagen varbinary).</summary>
+        public DataTable ListarTiemposComida()
+        {
+            return ConsultarTabla("SELECT nnumtiempo, ctiempocom FROM CF_TiempoCom");
+        }
+
+        public DataTable ListarDiasSemana()
+        {
+            return ConsultarTabla("SELECT nnumdiasem, cnomdiasem FROM CF_DiasSem");
+        }
+
+        /// <summary>Imágenes Desayuno/Almuerzo/Bocadillos para el reporte RDLC.</summary>
+        public DataTable ListarImagenesMenu()
+        {
+            return ConsultarTabla("dbo.CF_ImgenMenu", null, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Menú consolidado del tiempo de comida para el reporte RDLC.</summary>
+        public DataTable CargarMenuReporte(string tiempoComida)
+        {
+            return ConsultarTabla("dbo.CF_SelectMenu", new { ctiempocom = tiempoComida }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Imagen del tiempo de comida (NULL si no tiene).</summary>
+        public byte[] ObtenerImagenTiempoComida(string tiempoComida)
+        {
+            return Escalar<byte[]>("dbo.CF_ImgTiempoCom", new { ctiempocom = tiempoComida }, CommandType.StoredProcedure);
+        }
+
+        public void ActualizarImagenTiempoComida(string tiempoComida, byte[] imagen)
+        {
+            Ejecutar("dbo.CF_TiempoCom_UPD", new { ctiempocom = tiempoComida, imagen }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Actualiza los platos del menú en UNA transacción (antes era fila por fila sin protección).</summary>
+        public void ActualizarMenuComedor(IEnumerable<(int Consecutivo, string Comida, System.DateTime Fecha, bool Activo)> filas)
+        {
+            using (DbConnection con = CrearConexion())
+            {
+                con.Open();
+                using (IDbTransaction trans = con.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach ((int consecutivo, string comida, System.DateTime fecha, bool activo) in filas)
+                        {
+                            con.Execute("dbo.CF_Menu_UPD",
+                                new { nconsemenu = consecutivo, cnomcomida = comida, dfechacrea = fecha, bestaactiv = activo },
+                                trans, commandType: CommandType.StoredProcedure);
+                        }
+                        trans.Commit();
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
         // Parámetros OUTPUT (nombre, tamaño) del SP USP_Sel_Cobros_ConsUsuCredAsoc_Filter, en el orden del SP.
         private static readonly KeyValuePair<string, int>[] _salidasDetalleCredito =
         {

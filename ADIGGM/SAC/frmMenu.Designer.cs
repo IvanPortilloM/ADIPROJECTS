@@ -34,7 +34,6 @@ namespace ADIGGM.SAC
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMenu));
             this.cFSelectMenuBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCA = new ADIGGM.DataSets.DsCA();
             this.cFImgenMenuBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.rvMenu = new Microsoft.Reporting.WinForms.ReportViewer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -75,18 +74,10 @@ namespace ADIGGM.SAC
             this.btnFotoArch = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.ptbTiempoCom = new System.Windows.Forms.PictureBox();
-            this.cF_SelectMenuTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CF_SelectMenuTableAdapter();
-            this.cF_MenuTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CF_MenuTableAdapter();
-            this.cF_ImgenMenuTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CF_ImgenMenuTableAdapter();
-            this.cF_DiasSemTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CF_DiasSemTableAdapter();
-            this.cF_TiempoComTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CF_TiempoComTableAdapter();
-            this.cF_Menu2TableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CF_Menu2TableAdapter();
-            this.cF_Menu1TableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CF_Menu1TableAdapter();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.btnExportar = new System.Windows.Forms.Button();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cFSelectMenuBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cFImgenMenuBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tbMenu.SuspendLayout();
@@ -148,22 +139,7 @@ namespace ADIGGM.SAC
             // 
             this.pnlFooter.Location = new System.Drawing.Point(0, 665);
             this.pnlFooter.Size = new System.Drawing.Size(1068, 23);
-            // 
-            // cFSelectMenuBindingSource
-            // 
-            this.cFSelectMenuBindingSource.DataMember = "CF_SelectMenu";
-            this.cFSelectMenuBindingSource.DataSource = this.dsCA;
-            // 
-            // dsCA
-            // 
-            this.dsCA.DataSetName = "DsCA";
-            this.dsCA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // cFImgenMenuBindingSource
-            // 
-            this.cFImgenMenuBindingSource.DataMember = "CF_ImgenMenu";
-            this.cFImgenMenuBindingSource.DataSource = this.dsCA;
-            // 
+            //
             // rvMenu
             // 
             this.rvMenu.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -236,7 +212,6 @@ namespace ADIGGM.SAC
             this.cnomcomida,
             this.dfechacrea,
             this.bestaactiv});
-            this.dgvDesayuno.DataSource = this.cFMenuBindingSource;
             this.dgvDesayuno.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDesayuno.Location = new System.Drawing.Point(3, 3);
             this.dgvDesayuno.Name = "dgvDesayuno";
@@ -272,8 +247,6 @@ namespace ADIGGM.SAC
             // 
             // cFDiasSemBindingSource
             // 
-            this.cFDiasSemBindingSource.DataMember = "CF_DiasSem";
-            this.cFDiasSemBindingSource.DataSource = this.dsCA;
             // 
             // nnumtiempo
             // 
@@ -292,8 +265,6 @@ namespace ADIGGM.SAC
             // 
             // cFTiempoComBindingSource
             // 
-            this.cFTiempoComBindingSource.DataMember = "CF_TiempoCom";
-            this.cFTiempoComBindingSource.DataSource = this.dsCA;
             // 
             // cnomcomida
             // 
@@ -320,8 +291,6 @@ namespace ADIGGM.SAC
             // 
             // cFMenuBindingSource
             // 
-            this.cFMenuBindingSource.DataMember = "CF_Menu";
-            this.cFMenuBindingSource.DataSource = this.dsCA;
             // 
             // tpAlmuerzo
             // 
@@ -348,7 +317,6 @@ namespace ADIGGM.SAC
             this.cnomcomida1,
             this.dfechacrea1,
             this.bestaactiv1});
-            this.dgvAlmuerzo.DataSource = this.cFMenu1BindingSource;
             this.dgvAlmuerzo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAlmuerzo.Location = new System.Drawing.Point(3, 3);
             this.dgvAlmuerzo.Name = "dgvAlmuerzo";
@@ -421,8 +389,6 @@ namespace ADIGGM.SAC
             // 
             // cFMenu1BindingSource
             // 
-            this.cFMenu1BindingSource.DataMember = "CF_Menu1";
-            this.cFMenu1BindingSource.DataSource = this.dsCA;
             // 
             // tpBocadillos
             // 
@@ -449,7 +415,6 @@ namespace ADIGGM.SAC
             this.cnomcomida2,
             this.dfechacrea2,
             this.bestaactiv2});
-            this.dgvBocadillos.DataSource = this.cFMenu2BindingSource;
             this.dgvBocadillos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvBocadillos.Location = new System.Drawing.Point(3, 3);
             this.dgvBocadillos.Name = "dgvBocadillos";
@@ -523,8 +488,6 @@ namespace ADIGGM.SAC
             // 
             // cFMenu2BindingSource
             // 
-            this.cFMenu2BindingSource.DataMember = "CF_Menu2";
-            this.cFMenu2BindingSource.DataSource = this.dsCA;
             // 
             // splitContainer1
             // 
@@ -645,34 +608,6 @@ namespace ADIGGM.SAC
             this.ptbTiempoCom.TabIndex = 0;
             this.ptbTiempoCom.TabStop = false;
             // 
-            // cF_SelectMenuTableAdapter
-            // 
-            this.cF_SelectMenuTableAdapter.ClearBeforeFill = true;
-            // 
-            // cF_MenuTableAdapter
-            // 
-            this.cF_MenuTableAdapter.ClearBeforeFill = true;
-            // 
-            // cF_ImgenMenuTableAdapter
-            // 
-            this.cF_ImgenMenuTableAdapter.ClearBeforeFill = true;
-            // 
-            // cF_DiasSemTableAdapter
-            // 
-            this.cF_DiasSemTableAdapter.ClearBeforeFill = true;
-            // 
-            // cF_TiempoComTableAdapter
-            // 
-            this.cF_TiempoComTableAdapter.ClearBeforeFill = true;
-            // 
-            // cF_Menu2TableAdapter
-            // 
-            this.cF_Menu2TableAdapter.ClearBeforeFill = true;
-            // 
-            // cF_Menu1TableAdapter
-            // 
-            this.cF_Menu1TableAdapter.ClearBeforeFill = true;
-            // 
             // splitContainer3
             // 
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -722,7 +657,6 @@ namespace ADIGGM.SAC
             this.pnlFooter.ResumeLayout(false);
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cFSelectMenuBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cFImgenMenuBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.tbMenu.ResumeLayout(false);
@@ -758,8 +692,6 @@ namespace ADIGGM.SAC
 
         private Microsoft.Reporting.WinForms.ReportViewer rvMenu;
         private System.Windows.Forms.BindingSource cFSelectMenuBindingSource;
-        private DataSets.DsCA dsCA;
-        private DataSets.DsCATableAdapters.CF_SelectMenuTableAdapter cF_SelectMenuTableAdapter;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TabControl tbMenu;
         private System.Windows.Forms.TabPage tpDesayuno;
@@ -774,18 +706,12 @@ namespace ADIGGM.SAC
         private System.Windows.Forms.Button btnFotoArch;
         private System.Windows.Forms.PictureBox ptbTiempoCom;
         private System.Windows.Forms.BindingSource cFMenuBindingSource;
-        private DataSets.DsCATableAdapters.CF_MenuTableAdapter cF_MenuTableAdapter;
         private System.Windows.Forms.BindingSource cFImgenMenuBindingSource;
-        private DataSets.DsCATableAdapters.CF_ImgenMenuTableAdapter cF_ImgenMenuTableAdapter;
         private System.Windows.Forms.BindingSource cFDiasSemBindingSource;
-        private DataSets.DsCATableAdapters.CF_DiasSemTableAdapter cF_DiasSemTableAdapter;
         private System.Windows.Forms.BindingSource cFTiempoComBindingSource;
-        private DataSets.DsCATableAdapters.CF_TiempoComTableAdapter cF_TiempoComTableAdapter;
         private System.Windows.Forms.DataGridView dgvBocadillos;
         private System.Windows.Forms.BindingSource cFMenu2BindingSource;
-        private DataSets.DsCATableAdapters.CF_Menu2TableAdapter cF_Menu2TableAdapter;
         private System.Windows.Forms.BindingSource cFMenu1BindingSource;
-        private DataSets.DsCATableAdapters.CF_Menu1TableAdapter cF_Menu1TableAdapter;
         private System.Windows.Forms.DataGridView dgvAlmuerzo;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.Button btnExportar;
