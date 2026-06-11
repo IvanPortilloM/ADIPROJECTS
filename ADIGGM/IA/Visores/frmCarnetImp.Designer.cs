@@ -45,18 +45,15 @@ namespace ADIGGM.IA.Visores
             this.select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.nconsecarn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cACarnetsAsocImpBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCA = new ADIGGM.DataSets.DsCA();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnImpCarnets = new System.Windows.Forms.Button();
             this.btnImp = new System.Windows.Forms.Button();
             this.btnRecargar = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
-            this.cA_CarnetsAsocImpTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CA_CarnetsAsocImpTableAdapter();
             this.pnlFooter.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCarnetsImp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cACarnetsAsocImpBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -122,7 +119,6 @@ namespace ADIGGM.IA.Visores
             this.image,
             this.select,
             this.nconsecarn});
-            this.dgvCarnetsImp.DataSource = this.cACarnetsAsocImpBindingSource;
             this.dgvCarnetsImp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCarnetsImp.Location = new System.Drawing.Point(3, 17);
             this.dgvCarnetsImp.Name = "dgvCarnetsImp";
@@ -220,17 +216,7 @@ namespace ADIGGM.IA.Visores
             this.nconsecarn.Name = "nconsecarn";
             this.nconsecarn.ReadOnly = true;
             this.nconsecarn.Visible = false;
-            // 
-            // cACarnetsAsocImpBindingSource
-            // 
-            this.cACarnetsAsocImpBindingSource.DataMember = "CA_CarnetsAsocImp";
-            this.cACarnetsAsocImpBindingSource.DataSource = this.dsCA;
-            // 
-            // dsCA
-            // 
-            this.dsCA.DataSetName = "DsCA";
-            this.dsCA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.btnImpCarnets);
@@ -315,11 +301,7 @@ namespace ADIGGM.IA.Visores
             this.btnExport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
-            // cA_CarnetsAsocImpTableAdapter
-            // 
-            this.cA_CarnetsAsocImpTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // frmCarnetImp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -336,7 +318,6 @@ namespace ADIGGM.IA.Visores
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCarnetsImp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cACarnetsAsocImpBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -348,8 +329,6 @@ namespace ADIGGM.IA.Visores
         private System.Windows.Forms.DataGridView dgvCarnetsImp;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.BindingSource cACarnetsAsocImpBindingSource;
-        private DataSets.DsCA dsCA;
-        private DataSets.DsCATableAdapters.CA_CarnetsAsocImpTableAdapter cA_CarnetsAsocImpTableAdapter;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnImp;
         private System.Windows.Forms.Button btnImpCarnets;

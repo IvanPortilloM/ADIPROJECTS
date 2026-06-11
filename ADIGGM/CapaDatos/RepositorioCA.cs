@@ -37,6 +37,18 @@ namespace ADIGGM.CapaDatos
                 CommandType.StoredProcedure);
         }
 
+        /// <summary>Carnets de asociados pendientes de imprimir (la ruta UNC de fotos la consume el SP).</summary>
+        public DataTable CargarCarnetsImprimir(string rutaFotos)
+        {
+            return ConsultarTabla("dbo.CA_CarnetsAsocImp", new { url = rutaFotos }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Marca un carnet como exportado/impreso.</summary>
+        public void MarcarCarnetExportado(int nconsecarn)
+        {
+            Ejecutar("dbo.CA_CarnetsAsocImpExpor", new { nconsecarn }, CommandType.StoredProcedure);
+        }
+
         // Parámetros OUTPUT (nombre, tamaño) del SP USP_Sel_Cobros_ConsUsuCredAsoc_Filter, en el orden del SP.
         private static readonly KeyValuePair<string, int>[] _salidasDetalleCredito =
         {

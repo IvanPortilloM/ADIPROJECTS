@@ -6,11 +6,13 @@ using System.Drawing;
 using System.Text;
 using Microsoft.Office;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.IA.Visores
 {
     public partial class frmCarnetImp : FrmPrincipal
     {
+        private readonly RepositorioCA _repo = new RepositorioCA();
         string dirFotosCarnets = @"\" + Clases.VarGlobales.dirFotosCarnets.Replace(@"\\",@"\");
         bool selectAllOff = true;
         public frmCarnetImp()
@@ -60,8 +62,13 @@ namespace ADIGGM.IA.Visores
             {
                 Console.WriteLine("Ruta en: " + saveFileDialog.FileName);
                 workbook.SaveAs(saveFileDialog.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-                app.Quit();
             }
+            else
+            {
+                workbook.Close(false); // al cancelar, no dejar el libro abierto
+            }
+            // Quit SIEMPRE: antes, cancelar el diálogo dejaba un Excel.exe huérfano en memoria
+            app.Quit();
         }
         private void frmCarnetImp_Load(object sender, EventArgs e)
         {
@@ -116,19 +123,32 @@ namespace ADIGGM.IA.Visores
         }
         private void cargarDgv()
         {
-            this.cA_CarnetsAsocImpTableAdapter.Fill(this.dsCA.CA_CarnetsAsocImp, dirFotosCarnets);
+            cACarnetsAsocImpBindingSource.DataMember = "";
+            cACarnetsAsocImpBindingSource.DataSource = _repo.CargarCarnetsImprimir(dirFotosCarnets);
+            // El DataSource se asigna aquí y NO en el Designer: si el grid queda enlazado en
+            // diseño, el diseñador de VS borra las columnas al no poder resolver el esquema.
+            dgvCarnetsImp.DataSource = cACarnetsAsocImpBindingSource;
             btnImpCarnets.Enabled = false;
             selectAllOff = false;
             marcar();
         }
         private void btnImpCarnets_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow row in dgvCarnetsImp.Rows)
+            try
             {
-                if (Convert.ToBoolean(row.Cells["select"].Value) == true)
+                foreach (DataGridViewRow row in dgvCarnetsImp.Rows)
                 {
-                    Clases.VarGlobales.consultasCA.CA_CarnetsAsocImpExpor(Convert.ToInt32(row.Cells["nconsecarn"].Value));
+                    if (Convert.ToBoolean(row.Cells["select"].Value) == true)
+                    {
+                        _repo.MarcarCarnetExportado(Convert.ToInt32(row.Cells["nconsecarn"].Value));
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                // Antes un fallo a media lista tumbaba el form; la recarga muestra lo que sí se marcó
+                MessageBox.Show("No se pudieron marcar todos los carnets: " + ex.Message,
+                    Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             cargarDgv();
             dgvCarnetsImp.Enabled = true;
