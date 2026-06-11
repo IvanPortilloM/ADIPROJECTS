@@ -145,7 +145,6 @@ namespace ADIGGM.IA.Visores
             this.cnombreasoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cobserva01DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cACreditosDetMovAplicBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCA = new ADIGGM.DataSets.DsCA();
             this.txtcdetactivi = new System.Windows.Forms.TextBox();
             this.txtccomentari = new System.Windows.Forms.TextBox();
             this.txtcnumsesion = new System.Windows.Forms.TextBox();
@@ -175,7 +174,6 @@ namespace ADIGGM.IA.Visores
             this.nsaldoactuDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cidasociadDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uSPSelCobrosConsUsuPlanCredFilterBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCA1 = new ADIGGM.DataSets.DsCA();
             this.tbpProyPend = new System.Windows.Forms.TabPage();
             this.dgvProyPend = new System.Windows.Forms.DataGridView();
             this.dfecinicorDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -206,23 +204,17 @@ namespace ADIGGM.IA.Visores
             this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uSPSelCobrosConsUsuPlanCredFilter2BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cA_CreditosDetMovAplicTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CA_CreditosDetMovAplicTableAdapter();
-            this.uSP_Sel_Cobros_ConsUsuPlanCred_FilterTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.USP_Sel_Cobros_ConsUsuPlanCred_FilterTableAdapter();
-            this.uSP_Sel_Cobros_ConsUsuPlanCred_Filter1TableAdapter = new ADIGGM.DataSets.DsCATableAdapters.USP_Sel_Cobros_ConsUsuPlanCred_Filter1TableAdapter();
-            this.uSP_Sel_Cobros_ConsUsuPlanCred_Filter2TableAdapter = new ADIGGM.DataSets.DsCATableAdapters.USP_Sel_Cobros_ConsUsuPlanCred_Filter2TableAdapter();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnSalir = new System.Windows.Forms.Button();
             this.pnlFooter.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovAplic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cACreditosDetMovAplicBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).BeginInit();
             this.tbcDgv.SuspendLayout();
             this.tbpMovAplic.SuspendLayout();
             this.tbpProyTransito.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProyTransito)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uSPSelCobrosConsUsuPlanCredFilterBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA1)).BeginInit();
             this.tbpProyPend.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProyPend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uSPSelCobrosConsUsuPlanCredFilter1BindingSource)).BeginInit();
@@ -821,7 +813,6 @@ namespace ADIGGM.IA.Visores
             this.nmonpolizaDataGridViewTextBoxColumn,
             this.cnombreasoDataGridViewTextBoxColumn,
             this.cobserva01DataGridViewTextBoxColumn});
-            this.dgvMovAplic.DataSource = this.cACreditosDetMovAplicBindingSource;
             this.dgvMovAplic.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMovAplic.Location = new System.Drawing.Point(3, 3);
             this.dgvMovAplic.Name = "dgvMovAplic";
@@ -1002,17 +993,7 @@ namespace ADIGGM.IA.Visores
             this.cobserva01DataGridViewTextBoxColumn.ReadOnly = true;
             this.cobserva01DataGridViewTextBoxColumn.Visible = false;
             this.cobserva01DataGridViewTextBoxColumn.Width = 97;
-            // 
-            // cACreditosDetMovAplicBindingSource
-            // 
-            this.cACreditosDetMovAplicBindingSource.DataMember = "CA_CreditosDetMovAplic";
-            this.cACreditosDetMovAplicBindingSource.DataSource = this.dsCA;
-            // 
-            // dsCA
-            // 
-            this.dsCA.DataSetName = "DsCA";
-            this.dsCA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // txtcdetactivi
             // 
             this.txtcdetactivi.Location = new System.Drawing.Point(145, 302);
@@ -1192,7 +1173,6 @@ namespace ADIGGM.IA.Visores
             this.ncuotapagaDataGridViewTextBoxColumn,
             this.nsaldoactuDataGridViewTextBoxColumn1,
             this.cidasociadDataGridViewTextBoxColumn});
-            this.dgvProyTransito.DataSource = this.uSPSelCobrosConsUsuPlanCredFilterBindingSource;
             this.dgvProyTransito.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProyTransito.Location = new System.Drawing.Point(3, 3);
             this.dgvProyTransito.Name = "dgvProyTransito";
@@ -1319,17 +1299,7 @@ namespace ADIGGM.IA.Visores
             this.cidasociadDataGridViewTextBoxColumn.ReadOnly = true;
             this.cidasociadDataGridViewTextBoxColumn.Visible = false;
             this.cidasociadDataGridViewTextBoxColumn.Width = 94;
-            // 
-            // uSPSelCobrosConsUsuPlanCredFilterBindingSource
-            // 
-            this.uSPSelCobrosConsUsuPlanCredFilterBindingSource.DataMember = "USP_Sel_Cobros_ConsUsuPlanCred_Filter";
-            this.uSPSelCobrosConsUsuPlanCredFilterBindingSource.DataSource = this.dsCA1;
-            // 
-            // dsCA1
-            // 
-            this.dsCA1.DataSetName = "DsCA";
-            this.dsCA1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // tbpProyPend
             // 
             this.tbpProyPend.Controls.Add(this.dgvProyPend);
@@ -1367,7 +1337,6 @@ namespace ADIGGM.IA.Visores
             this.ncuotapagaDataGridViewTextBoxColumn1,
             this.nsaldoactuDataGridViewTextBoxColumn2,
             this.cidasociadDataGridViewTextBoxColumn1});
-            this.dgvProyPend.DataSource = this.uSPSelCobrosConsUsuPlanCredFilter1BindingSource;
             this.dgvProyPend.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProyPend.Location = new System.Drawing.Point(3, 3);
             this.dgvProyPend.Name = "dgvProyPend";
@@ -1492,8 +1461,6 @@ namespace ADIGGM.IA.Visores
             // 
             // uSPSelCobrosConsUsuPlanCredFilter1BindingSource
             // 
-            this.uSPSelCobrosConsUsuPlanCredFilter1BindingSource.DataMember = "USP_Sel_Cobros_ConsUsuPlanCred_Filter1";
-            this.uSPSelCobrosConsUsuPlanCredFilter1BindingSource.DataSource = this.dsCA1;
             // 
             // tbpProyAplic
             // 
@@ -1532,7 +1499,6 @@ namespace ADIGGM.IA.Visores
             this.dataGridViewTextBoxColumn10,
             this.dataGridViewTextBoxColumn11,
             this.dataGridViewTextBoxColumn12});
-            this.dgvProyAplic.DataSource = this.uSPSelCobrosConsUsuPlanCredFilter2BindingSource;
             this.dgvProyAplic.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProyAplic.Location = new System.Drawing.Point(3, 3);
             this.dgvProyAplic.Name = "dgvProyAplic";
@@ -1660,24 +1626,6 @@ namespace ADIGGM.IA.Visores
             // 
             // uSPSelCobrosConsUsuPlanCredFilter2BindingSource
             // 
-            this.uSPSelCobrosConsUsuPlanCredFilter2BindingSource.DataMember = "USP_Sel_Cobros_ConsUsuPlanCred_Filter2";
-            this.uSPSelCobrosConsUsuPlanCredFilter2BindingSource.DataSource = this.dsCA1;
-            // 
-            // cA_CreditosDetMovAplicTableAdapter
-            // 
-            this.cA_CreditosDetMovAplicTableAdapter.ClearBeforeFill = true;
-            // 
-            // uSP_Sel_Cobros_ConsUsuPlanCred_FilterTableAdapter
-            // 
-            this.uSP_Sel_Cobros_ConsUsuPlanCred_FilterTableAdapter.ClearBeforeFill = true;
-            // 
-            // uSP_Sel_Cobros_ConsUsuPlanCred_Filter1TableAdapter
-            // 
-            this.uSP_Sel_Cobros_ConsUsuPlanCred_Filter1TableAdapter.ClearBeforeFill = true;
-            // 
-            // uSP_Sel_Cobros_ConsUsuPlanCred_Filter2TableAdapter
-            // 
-            this.uSP_Sel_Cobros_ConsUsuPlanCred_Filter2TableAdapter.ClearBeforeFill = true;
             // 
             // panel2
             // 
@@ -1835,13 +1783,11 @@ namespace ADIGGM.IA.Visores
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovAplic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cACreditosDetMovAplicBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).EndInit();
             this.tbcDgv.ResumeLayout(false);
             this.tbpMovAplic.ResumeLayout(false);
             this.tbpProyTransito.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProyTransito)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uSPSelCobrosConsUsuPlanCredFilterBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA1)).EndInit();
             this.tbpProyPend.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProyPend)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uSPSelCobrosConsUsuPlanCredFilter1BindingSource)).EndInit();
@@ -1911,8 +1857,6 @@ namespace ADIGGM.IA.Visores
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dgvMovAplic;
         private System.Windows.Forms.BindingSource cACreditosDetMovAplicBindingSource;
-        private DataSets.DsCA dsCA;
-        private DataSets.DsCATableAdapters.CA_CreditosDetMovAplicTableAdapter cA_CreditosDetMovAplicTableAdapter;
         private System.Windows.Forms.TextBox txtcdetactivi;
         private System.Windows.Forms.TextBox txtccomentari;
         private System.Windows.Forms.TextBox txtcnumsesion;
@@ -1932,7 +1876,6 @@ namespace ADIGGM.IA.Visores
         private System.Windows.Forms.TabPage tbpProyPend;
         private System.Windows.Forms.DataGridView dgvProyPend;
         private System.Windows.Forms.BindingSource uSPSelCobrosConsUsuPlanCredFilterBindingSource;
-        private DataSets.DsCATableAdapters.USP_Sel_Cobros_ConsUsuPlanCred_FilterTableAdapter uSP_Sel_Cobros_ConsUsuPlanCred_FilterTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn dfetransacDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cnumreciboDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cdetatipabDataGridViewTextBoxColumn;
@@ -1953,7 +1896,6 @@ namespace ADIGGM.IA.Visores
         private System.Windows.Forms.DataGridViewTextBoxColumn cnombreasoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cobserva01DataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource uSPSelCobrosConsUsuPlanCredFilter1BindingSource;
-        private DataSets.DsCATableAdapters.USP_Sel_Cobros_ConsUsuPlanCred_Filter1TableAdapter uSP_Sel_Cobros_ConsUsuPlanCred_Filter1TableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn dfecinicorDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dfechacortDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cestatusDataGridViewTextBoxColumn;
@@ -1969,10 +1911,8 @@ namespace ADIGGM.IA.Visores
         private System.Windows.Forms.TabPage tbpProyAplic;
         private System.Windows.Forms.DataGridView dgvProyAplic;
         private System.Windows.Forms.BindingSource uSPSelCobrosConsUsuPlanCredFilter2BindingSource;
-        private DataSets.DsCATableAdapters.USP_Sel_Cobros_ConsUsuPlanCred_Filter2TableAdapter uSP_Sel_Cobros_ConsUsuPlanCred_Filter2TableAdapter;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnSalir;
-        private DataSets.DsCA dsCA1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dfecinicorDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dfechacortDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn cestatusDataGridViewTextBoxColumn1;
