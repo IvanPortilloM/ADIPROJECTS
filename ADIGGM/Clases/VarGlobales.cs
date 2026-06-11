@@ -18,10 +18,11 @@ namespace ADIGGM.Clases
         public static string tempVar = "";
         //public static DateTime primerPago = DateTime.Now;
         //public static DateTime formalizacion = DateTime.Now;
-        public static string urlReportes = "http://adiggm/ReportServer";
-        public static string dirFotos = @"\\ADIGGM\Publish\ADIPROJECTS\BD_Fotos\";
-        public static string dirFotosCarnets = @"\\ADIGGM\Publish\ADIPROJECTS\FotosCarnets\";
-        public static string dirEstadosDeCuenta = @"\\ADIGGM\Publish\ADIPROJECTS\EstadosDeCuenta\";
+        // Rutas al servidor: pasan por Conexion para usar la IP de respaldo cuando el nombre no resuelve (VPN)
+        public static string urlReportes = "http://" + CapaDatos.Conexion.Servidor + "/ReportServer";
+        public static string dirFotos = CapaDatos.Conexion.AjustarRuta(@"\\ADIGGM\Publish\ADIPROJECTS\BD_Fotos\");
+        public static string dirFotosCarnets = CapaDatos.Conexion.AjustarRuta(@"\\ADIGGM\Publish\ADIPROJECTS\FotosCarnets\");
+        public static string dirEstadosDeCuenta = CapaDatos.Conexion.AjustarRuta(@"\\ADIGGM\Publish\ADIPROJECTS\EstadosDeCuenta\");
         public static string _gCarpetaReportes = "/ADIGGM/";
         //public string CodigoSistema = "007";
         //public static string CodigoSistemaMenu = "007";

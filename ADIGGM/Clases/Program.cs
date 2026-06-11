@@ -16,6 +16,9 @@ namespace ADIGGM
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            // Resuelve el servidor (nombre o IP de respaldo si el DNS falla, p. ej. por VPN)
+            // y ajusta las cadenas legacy que consumen los DataSets tipados aún no migrados.
+            CapaDatos.Conexion.AjustarCadenasLegacy(Properties.Settings.Default);
             Application.Run(new Seguridad.FrmLogin());
             //Application.Run(new Herramientas.frmVisorLiqudaciones());
         }
