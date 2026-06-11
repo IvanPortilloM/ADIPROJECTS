@@ -36,6 +36,7 @@ $msbuild = "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\MSBuild
 
 ## 4. Infraestructura ya creada
 **`ADIGGM\CapaDatos\Conexion.cs`** = FUENTE ÚNICA. API: `Conexion.Cadena(nombre)`, `Conexion.CrearConexion(nombre)` [DbConnection agnóstico], `Conexion.CrearSql(nombre)` [SqlConnection]. Constantes: `Conexion.TRANSPORTE/.PERMISOS/.CA/.PRESUPUESTO/.COVIBASE/.COVIPRUEBAS/.SAC_MYSQL`. Compat: `Conexion.cn`, `Conexion.TransporteADI`.
+**Respaldo por IP (996b640, para VPN sin DNS)**: appSettings `ServidorNombre`=ADIGGM / `ServidorIp`=192.168.2.77. `Conexion.Servidor` resuelve UNA vez por sesión (DNS del nombre → si falla, IP); `Cadena()` reescribe el host; `AjustarCadenasLegacy(Settings.Default)` (en Program.Main) cubre los DataSets tipados restantes; `AjustarRuta()` cubre rutas UNC (VarGlobales) y `urlReportes` se compone con `Conexion.Servidor`. Cadenas a otros hosts (MySQL adiggm.hn) NO se tocan. Al migrar forms NUEVOS no hay nada especial que hacer: todo pasa por Conexion.
 
 **`ADIGGM\CapaDatos\RepositorioBase.cs`** (heredar con `: RepositorioBase`, ctor `: base(Conexion.XXX)`). Métodos protegidos:
 - `Consultar<T>(sql,param) -> List<T>`; `PrimeroODefault<T>`; `Escalar<T>`; `Ejecutar(sql,param) -> int`
@@ -113,6 +114,7 @@ Para retirar un DataSet por completo hay que reemplazar TAMBIÉN estas llamadas 
 `Seguridad` (los 4 forms) + menú del MDI: VALIDADOS OK 2026-06-10 (incl. fix Habilitado a7f46ba).
 `IA→frmDetProducto`: VALIDADO OK 2026-06-11.
 `IA→frmDetCredito` (se abre desde el detalle del asociado): encabezado del crédito completo (fechas/montos), los 4 tabs cargan (Mov. Aplicados / Tránsito / Pendientes / Aplicados), y % saldo / % plazo / pagos restantes correctos.
+**Respaldo por IP (VPN)**: probar la app CON VPN (sin DNS): login, un form de cada BD (Transporte/Permisos/CA), un DataSet tipado legacy (ej. OC), fotos del asociado y un reporte SSRS; y luego SIN VPN en la red local (debe seguir usando el nombre ADIGGM).
 
 ## 13. TAREA INMEDIATA
 Continuar **DsCA** con `RepositorioCA` (ya existe): siguiente `IA\Visores\frmCarnetImp`, luego frmBuscarAsociados, SAC\frmMenu, frmDevoluciones, frmInformacionAsoc (parte CA), FrmSolCred; al final reemplazar `VarGlobales.consultasCA` y borrar `DsCA.xsd`. UN form por turno; **análisis de errores de lógica en cada form (§0)**, los GRAVES se reparan en la migración; build verde + commit + actualizar §6/§9/§12/§13. **Gotcha §11 en todo Designer con grid.**
