@@ -11,6 +11,8 @@ namespace ADIGGM.Herramientas
     {
         string cadenaConexion = ADIGGM.CapaDatos.Conexion.Cadena("Covibase");
         string cadenaConexionCA = ADIGGM.CapaDatos.Conexion.Cadena("CA");
+        private readonly ADIGGM.CapaDatos.RepositorioCA _repoCA = new ADIGGM.CapaDatos.RepositorioCA();
+        private readonly ADIGGM.CapaDatos.RepositorioCodeas _repoCodeas = new ADIGGM.CapaDatos.RepositorioCodeas();
         public frmDevoluciones()
         {
             InitializeComponent();
@@ -197,8 +199,8 @@ namespace ADIGGM.Herramientas
 
         private void frmDevoluciones_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsCA.CC_Puntos' Puede moverla o quitarla según sea necesario.
-            this.cC_PuntosTableAdapter.Fill(this.dsCA.CC_Puntos);
+            cCPuntosBindingSource.DataMember = "";
+            cCPuntosBindingSource.DataSource = _repoCA.ListarPuntos();
             cboPuntos.SelectedIndex = 0;
         }
 
@@ -208,10 +210,17 @@ namespace ADIGGM.Herramientas
 
             foreach (DataGridViewRow row in dgvDatosCorregidos.Rows)
             {
-                if (Convert.ToInt32(VarGlobales.consultas.PR_VerificarCtaCont(Convert.ToString(row.Cells["CuentaContable"].Value.ToString().Trim()))) == 0)
+                if (_repoCodeas.VerificarCuentaContable(Convert.ToString(row.Cells["CuentaContable"].Value.ToString().Trim())) == 0)
                 {
                     VerificarCta += 1;
                 }
+            }
+
+            if (VerificarCta > 0)
+            {
+                // Antes el botón no hacía nada y el usuario no sabía por qué
+                MessageBox.Show("Hay " + VerificarCta + " cuenta(s) no válidas en el catálogo (NO ENCONTRADA / PUNTO INCORRECTO). Corrija antes de actualizar.",
+                    VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             if (VerificarCta == 0)
@@ -236,34 +245,48 @@ namespace ADIGGM.Herramientas
                         connection.Open();
                         int updatedRows = 0;
 
-                        foreach (DataGridViewRow row in dgvDatosCorregidos.Rows)
+                        // Correcciones contables en UNA transacción: o se aplican todas o ninguna
+                        using (SqlTransaction transaction = connection.BeginTransaction())
                         {
-                            if (!row.IsNewRow)
+                            try
                             {
-                                string cuentaOriginal = row.Cells["CuentaOriginal"].Value?.ToString();
-                                string cuentaContable = row.Cells["CuentaContable"].Value?.ToString();
-                                string cdocurefer = row.Cells["cdocurefer"].Value?.ToString();
-                                string cnumasient = row.Cells["cnumasient"].Value?.ToString();
-
-                                if (!string.IsNullOrEmpty(cuentaOriginal) &&
-                                    !string.IsNullOrEmpty(cuentaContable) &&
-                                    cuentaOriginal != cuentaContable)
+                                foreach (DataGridViewRow row in dgvDatosCorregidos.Rows)
                                 {
-                                    using (SqlCommand cmd = new SqlCommand(
-                                        @"UPDATE codesgnoapli 
-                        SET ccuentacon = @CuentaContable 
-                        WHERE ccuentacon = @CuentaOriginal 
-                        AND cdocurefer = @cdocurefer 
-                        AND cnumasient = @cnumasient", connection))
+                                    if (!row.IsNewRow)
                                     {
-                                        cmd.Parameters.AddWithValue("@CuentaContable", cuentaContable);
-                                        cmd.Parameters.AddWithValue("@CuentaOriginal", cuentaOriginal);
-                                        cmd.Parameters.AddWithValue("@cdocurefer", cdocurefer);
-                                        cmd.Parameters.AddWithValue("@cnumasient", cnumasient);
+                                        string cuentaOriginal = row.Cells["CuentaOriginal"].Value?.ToString();
+                                        string cuentaContable = row.Cells["CuentaContable"].Value?.ToString();
+                                        string cdocurefer = row.Cells["cdocurefer"].Value?.ToString();
+                                        string cnumasient = row.Cells["cnumasient"].Value?.ToString();
 
-                                        updatedRows += cmd.ExecuteNonQuery();
+                                        if (!string.IsNullOrEmpty(cuentaOriginal) &&
+                                            !string.IsNullOrEmpty(cuentaContable) &&
+                                            cuentaOriginal != cuentaContable)
+                                        {
+                                            using (SqlCommand cmd = new SqlCommand(
+                                                @"UPDATE codesgnoapli
+                                SET ccuentacon = @CuentaContable
+                                WHERE ccuentacon = @CuentaOriginal
+                                AND cdocurefer = @cdocurefer
+                                AND cnumasient = @cnumasient", connection, transaction))
+                                            {
+                                                cmd.Parameters.AddWithValue("@CuentaContable", cuentaContable);
+                                                cmd.Parameters.AddWithValue("@CuentaOriginal", cuentaOriginal);
+                                                cmd.Parameters.AddWithValue("@cdocurefer", cdocurefer);
+                                                cmd.Parameters.AddWithValue("@cnumasient", cnumasient);
+
+                                                updatedRows += cmd.ExecuteNonQuery();
+                                            }
+                                        }
                                     }
                                 }
+
+                                transaction.Commit();
+                            }
+                            catch
+                            {
+                                transaction.Rollback();
+                                throw;
                             }
                         }
 
@@ -279,7 +302,7 @@ namespace ADIGGM.Herramientas
                 catch (Exception ex)
                 {
                     MessageBox.Show(
-                        $"Error durante la actualización: {ex.Message}",
+                        $"Error durante la actualización (no se aplicó ningún cambio): {ex.Message}",
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error

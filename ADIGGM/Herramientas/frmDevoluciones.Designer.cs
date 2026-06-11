@@ -37,15 +37,12 @@
             this.dgvDatosCorregidos = new System.Windows.Forms.DataGridView();
             this.cboPuntos = new System.Windows.Forms.ComboBox();
             this.cCPuntosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCA = new ADIGGM.DataSets.DsCA();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.cC_PuntosTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CC_PuntosTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatosOriginales)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatosCorregidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cCPuntosBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).BeginInit();
             this.SuspendLayout();
             // 
             // btnMax
@@ -155,17 +152,7 @@
             this.cboPuntos.TabIndex = 110;
             this.cboPuntos.ValueMember = "IdPunto";
             this.cboPuntos.SelectedValueChanged += new System.EventHandler(this.cboPuntos_SelectedValueChanged);
-            // 
-            // cCPuntosBindingSource
-            // 
-            this.cCPuntosBindingSource.DataMember = "CC_Puntos";
-            this.cCPuntosBindingSource.DataSource = this.dsCA;
-            // 
-            // dsCA
-            // 
-            this.dsCA.DataSetName = "DsCA";
-            this.dsCA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // label1
             // 
             this.label1.AutoSize = true;
@@ -184,11 +171,7 @@
             this.label2.Size = new System.Drawing.Size(37, 16);
             this.label2.TabIndex = 111;
             this.label2.Text = "Caja:";
-            // 
-            // cC_PuntosTableAdapter
-            // 
-            this.cC_PuntosTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // frmDevoluciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -217,7 +200,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatosOriginales)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatosCorregidos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cCPuntosBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,8 +215,6 @@
         private System.Windows.Forms.ComboBox cboPuntos;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private DataSets.DsCA dsCA;
         private System.Windows.Forms.BindingSource cCPuntosBindingSource;
-        private DataSets.DsCATableAdapters.CC_PuntosTableAdapter cC_PuntosTableAdapter;
     }
 }

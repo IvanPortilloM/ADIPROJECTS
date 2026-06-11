@@ -57,6 +57,12 @@ namespace ADIGGM.CapaDatos
             Ejecutar("dbo.CA_CarnetsAsocImpExpor", new { nconsecarn }, CommandType.StoredProcedure);
         }
 
+        /// <summary>Puntos contables (combo de Herramientas\frmDevoluciones).</summary>
+        public DataTable ListarPuntos()
+        {
+            return ConsultarTabla("SELECT IdPunto, NombrePunto FROM CC_Puntos");
+        }
+
         // ===== Menú del comedor (SAC\frmMenu; tablas CF_*) =====
 
         /// <summary>Platos del menú para un tiempo de comida (Desayuno/Almuerzo/Bocadillos). Editable en grilla.</summary>
