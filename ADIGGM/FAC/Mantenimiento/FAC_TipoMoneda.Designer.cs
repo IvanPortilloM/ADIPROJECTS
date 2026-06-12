@@ -31,16 +31,13 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvTipoMoneda = new System.Windows.Forms.DataGridView();
-            this.dsFAC = new ADIGGM.DataSets.DsFAC();
             this.fACTipoMonedaBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.fAC_TipoMonedaTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_TipoMonedaTableAdapter();
             this.idTipoMonedaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tipoMonedaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.simboloDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.valorLempirasDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTipoMoneda)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoMonedaBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -130,7 +127,6 @@
             this.tipoMonedaDataGridViewTextBoxColumn,
             this.simboloDataGridViewTextBoxColumn,
             this.valorLempirasDataGridViewTextBoxColumn});
-            this.dgvTipoMoneda.DataSource = this.fACTipoMonedaBindingSource;
             this.dgvTipoMoneda.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTipoMoneda.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvTipoMoneda.Location = new System.Drawing.Point(0, 98);
@@ -139,21 +135,7 @@
             this.dgvTipoMoneda.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTipoMoneda.Size = new System.Drawing.Size(476, 189);
             this.dgvTipoMoneda.TabIndex = 110;
-            // 
-            // dsFAC
-            // 
-            this.dsFAC.DataSetName = "DsFAC";
-            this.dsFAC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // fACTipoMonedaBindingSource
-            // 
-            this.fACTipoMonedaBindingSource.DataMember = "FAC_TipoMoneda";
-            this.fACTipoMonedaBindingSource.DataSource = this.dsFAC;
-            // 
-            // fAC_TipoMonedaTableAdapter
-            // 
-            this.fAC_TipoMonedaTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // idTipoMonedaDataGridViewTextBoxColumn
             // 
             this.idTipoMonedaDataGridViewTextBoxColumn.DataPropertyName = "IdTipoMoneda";
@@ -197,7 +179,6 @@
             this.pnlFooter.ResumeLayout(false);
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTipoMoneda)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoMonedaBindingSource)).EndInit();
             this.ResumeLayout(false);
 
@@ -206,9 +187,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvTipoMoneda;
-        private DataSets.DsFAC dsFAC;
         private System.Windows.Forms.BindingSource fACTipoMonedaBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_TipoMonedaTableAdapter fAC_TipoMonedaTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn idTipoMonedaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipoMonedaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn simboloDataGridViewTextBoxColumn;

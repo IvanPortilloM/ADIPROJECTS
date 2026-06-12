@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
 using Formularios_Base;
 
 namespace ADIGGM.FAC.Mantenimiento
 {
     public partial class FAC_TipoMoneda : FrmMantenimiento
     {
+        private readonly RepositorioFAC _repo = new RepositorioFAC();
+        private DataTable _dt;
+
         public FAC_TipoMoneda()
         {
             InitializeComponent();
@@ -18,8 +18,15 @@ namespace ADIGGM.FAC.Mantenimiento
 
         private void FAC_TipoMoneda_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_TipoMoneda' Puede moverla o quitarla según sea necesario.
-            this.fAC_TipoMonedaTableAdapter.Fill(this.dsFAC.FAC_TipoMoneda);
+            CargarTiposMoneda();
+        }
+
+        private void CargarTiposMoneda()
+        {
+            _dt = _repo.ListarTiposMoneda();
+            fACTipoMonedaBindingSource.DataMember = "";
+            fACTipoMonedaBindingSource.DataSource = _dt;
+            dgvTipoMoneda.DataSource = fACTipoMonedaBindingSource;
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -41,8 +48,9 @@ namespace ADIGGM.FAC.Mantenimiento
                 if (dgvTipoMoneda.Rows.Count > 0 && dgvTipoMoneda.FirstDisplayedCell != null)
                 {
                     dgvTipoMoneda.EndEdit();
-                    this.fAC_TipoMonedaTableAdapter.Update(this.dsFAC.FAC_TipoMoneda);
-                    dgvTipoMoneda.CurrentCell = dgvTipoMoneda.Rows[dgvTipoMoneda.CurrentRow.Index].Cells[1];
+                    fACTipoMonedaBindingSource.EndEdit();
+                    _repo.GuardarTiposMoneda(_dt);
+                    CargarTiposMoneda();
                     dgvTipoMoneda.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
@@ -84,7 +92,7 @@ namespace ADIGGM.FAC.Mantenimiento
             dgvTipoMoneda.AllowUserToAddRows = false;
             if (dgvTipoMoneda.Rows.Count > 0 && dgvTipoMoneda.FirstDisplayedCell != null)
             {
-                this.fAC_TipoMonedaTableAdapter.Fill(this.dsFAC.FAC_TipoMoneda);
+                CargarTiposMoneda();
                 dgvTipoMoneda.CurrentCell = dgvTipoMoneda.Rows[dgvTipoMoneda.CurrentRow.Index].Cells[1];
 
                 dgvTipoMoneda.ReadOnly = true;

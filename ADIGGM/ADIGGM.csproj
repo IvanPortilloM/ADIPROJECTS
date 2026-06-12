@@ -426,6 +426,7 @@
     <Compile Include="CapaDatos\RepositorioUsuarios.cs" />
     <Compile Include="CapaDatos\RepositorioCA.cs" />
     <Compile Include="CapaDatos\RepositorioCodeas.cs" />
+    <Compile Include="CapaDatos\RepositorioFAC.cs" />
     <Compile Include="CapaModelo\SubMenuNieto.cs" />
     <Compile Include="CapaModelo\Menu.cs" />
     <Compile Include="CapaModelo\SubMenu.cs" />
