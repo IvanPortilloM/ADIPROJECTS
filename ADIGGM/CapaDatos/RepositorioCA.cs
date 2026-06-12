@@ -115,6 +115,32 @@ namespace ADIGGM.CapaDatos
                 new { cidasociad, ccodigopin = pin }, CommandType.StoredProcedure);
         }
 
+        /// <summary>Crea el carnet/PIN del asociado. Devuelve 0 si se guardó; distinto de 0 si el PIN ya existe.</summary>
+        public int InsertarCarnetAsociado(string cidasociad, string ccodigopin, string cnombreaso, string cnombinsti,
+            string cnombdivis, System.DateTime ffechexped, System.DateTime ffechvalid, string crutaimage)
+        {
+            return System.Convert.ToInt32(Escalar<object>("dbo.CA_CarnetsAsocInsert",
+                new { cidasociad, ccodigopin, cnombreaso, cnombinsti, cnombdivis, ffechexped, ffechvalid, crutaimage },
+                CommandType.StoredProcedure));
+        }
+
+        /// <summary>Renueva/reporta/activa/desactiva el carnet del asociado según los flags.</summary>
+        public void ActualizarCarnetAsociado(string cidasociad, string ccodigopin, string ccodpinNue, string cnombreaso,
+            string cnombinsti, string cnombdivis, System.DateTime ffechvalid, bool breportado, bool breimprime, bool bdesactiva)
+        {
+            Ejecutar("dbo.CA_CarnetsAsocUpdate",
+                new { cidasociad, ccodigopin, ccodpinNue, cnombreaso, cnombinsti, cnombdivis, ffechvalid, breportado, breimprime, bdesactiva },
+                CommandType.StoredProcedure);
+        }
+
+        /// <summary>Observación/descripción de un asiento (frmObsProducto).</summary>
+        public string ObtenerObservacionAsiento(string prmCnumasient, string prmCtipasient)
+        {
+            return Escalar<string>("dbo.USP_Sel_Carga_Desc_Asie_Filter",
+                new { PrmCnumasient = prmCnumasient, PrmCtipasient = prmCtipasient },
+                CommandType.StoredProcedure) ?? "";
+        }
+
         // Parámetros OUTPUT del SP CA_CarnetsAsocSel, en el orden del SP.
         private static readonly KeyValuePair<string, int>[] _salidasCarnet =
         {

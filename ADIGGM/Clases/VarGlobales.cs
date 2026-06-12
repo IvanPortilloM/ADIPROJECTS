@@ -32,7 +32,6 @@ namespace ADIGGM.Clases
         public static DataSetsWeb.DsOCWebTableAdapters.ConsultasOCWeb consultasOCWeb = new DataSetsWeb.DsOCWebTableAdapters.ConsultasOCWeb();
         public static DataSets.DsFACTableAdapters.ConsultasFAC consultasFAC = new DataSets.DsFACTableAdapters.ConsultasFAC();
         public static DataSets.DsPresupuestoTableAdapters.SP_Presupuesto consultasPR = new DataSets.DsPresupuestoTableAdapters.SP_Presupuesto();
-        public static DataSets.DsCATableAdapters.ConsultasCA consultasCA = new DataSets.DsCATableAdapters.ConsultasCA();
         //public static DataSet.GGMDataSetTableAdapters.ConsultasGGM consultasGGM = new ConsultasGGM();
     }
 }

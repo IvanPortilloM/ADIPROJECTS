@@ -453,14 +453,6 @@
     <Compile Include="DataSetsWeb\DsSACWeb.cs">
       <DependentUpon>DsSACWeb.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DataSets\DsCA.cs">
-      <DependentUpon>DsCA.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DataSets\DsCA.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DsCA.xsd</DependentUpon>
-    </Compile>
     <Compile Include="DataSets\DsCodeasAdiggm.cs">
       <DependentUpon>DsCodeasAdiggm.xsd</DependentUpon>
     </Compile>
@@ -1909,17 +1901,6 @@
     </None>
     <None Include="DataSetsWeb\DsOCWeb.xss">
       <DependentUpon>DsOCWeb.xsd</DependentUpon>
-    </None>
-    <None Include="DataSets\DsCA.xsc">
-      <DependentUpon>DsCA.xsd</DependentUpon>
-    </None>
-    <None Include="DataSets\DsCA.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DsCA.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="DataSets\DsCA.xss">
-      <DependentUpon>DsCA.xsd</DependentUpon>
     </None>
     <None Include="DataSets\DsCodeasAdiggm.xsc">
       <DependentUpon>DsCodeasAdiggm.xsd</DependentUpon>

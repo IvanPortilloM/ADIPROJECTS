@@ -26,7 +26,7 @@ namespace ADIGGM.IA.Visores
 
         private void frmObsProducto_Load(object sender, EventArgs e)
         {
-            txtObs.Text = Convert.ToString(VarGlobales.consultasCA.USP_Sel_Carga_Desc_Asie_Filter(PrmCnumasient, PrmCtipasient));
+            txtObs.Text = new ADIGGM.CapaDatos.RepositorioCA().ObtenerObservacionAsiento(PrmCnumasient, PrmCtipasient);
         }
     }
 }

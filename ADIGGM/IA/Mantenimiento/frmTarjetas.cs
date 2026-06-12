@@ -423,16 +423,17 @@ namespace ADIGGM.IA.Mantenimiento
                     else
                         ptbFoto.Image.Save(VarGlobales.dirFotosCarnets + cidasociad + ".JPG", ImageFormat.Jpeg);
                     int validar = 0;
+                    var repoCA = new ADIGGM.CapaDatos.RepositorioCA();
                     if (renovar == false && reportar == false && activar == false && desactivar == false)
-                        validar = Convert.ToInt32(VarGlobales.consultasCA.CA_CarnetsAsocInsert(txtId.Text, mktPIN.Text, txtNombre.Text, txtInst.Text, txtAreaTrab.Text, dtpFecCrea.Value.Date, dtpFecExp.Value.Date, cidasociad + ".JPG"));
+                        validar = repoCA.InsertarCarnetAsociado(txtId.Text, mktPIN.Text, txtNombre.Text, txtInst.Text, txtAreaTrab.Text, dtpFecCrea.Value.Date, dtpFecExp.Value.Date, cidasociad + ".JPG");
                     else if (renovar == true && reportar == false && activar == false && desactivar == false)
-                        VarGlobales.consultasCA.CA_CarnetsAsocUpdate(cidasociad, ccodigopin, mktPIN.Text, txtNombre.Text, txtInst.Text, txtAreaTrab.Text, dtpFecExp.Value.Date, false, chkReimprimir.Checked, false);
+                        repoCA.ActualizarCarnetAsociado(cidasociad, ccodigopin, mktPIN.Text, txtNombre.Text, txtInst.Text, txtAreaTrab.Text, dtpFecExp.Value.Date, false, chkReimprimir.Checked, false);
                     else if (renovar == false && reportar == true && activar == false && desactivar == false)
-                        VarGlobales.consultasCA.CA_CarnetsAsocUpdate(cidasociad, ccodigopin, mktPIN.Text, txtNombre.Text, txtInst.Text, txtAreaTrab.Text, dtpFecExp.Value.Date, true, false, false);
+                        repoCA.ActualizarCarnetAsociado(cidasociad, ccodigopin, mktPIN.Text, txtNombre.Text, txtInst.Text, txtAreaTrab.Text, dtpFecExp.Value.Date, true, false, false);
                     else if (renovar == false && reportar == false && activar == false && desactivar == true)
-                        VarGlobales.consultasCA.CA_CarnetsAsocUpdate(cidasociad, ccodigopin, mktPIN.Text, txtNombre.Text, txtInst.Text, txtAreaTrab.Text, dtpFecExp.Value.Date, false, false, true);
+                        repoCA.ActualizarCarnetAsociado(cidasociad, ccodigopin, mktPIN.Text, txtNombre.Text, txtInst.Text, txtAreaTrab.Text, dtpFecExp.Value.Date, false, false, true);
                     else if (renovar == false && reportar == false && activar == true && desactivar == false)
-                        VarGlobales.consultasCA.CA_CarnetsAsocUpdate(cidasociad, ccodigopin, mktPIN.Text, txtNombre.Text, txtInst.Text, txtAreaTrab.Text, dtpFecExp.Value.Date, false, false, false);
+                        repoCA.ActualizarCarnetAsociado(cidasociad, ccodigopin, mktPIN.Text, txtNombre.Text, txtInst.Text, txtAreaTrab.Text, dtpFecExp.Value.Date, false, false, false);
 
                     if (validar == 0)
                     {
