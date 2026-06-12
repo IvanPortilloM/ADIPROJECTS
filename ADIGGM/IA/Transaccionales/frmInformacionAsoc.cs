@@ -1,5 +1,6 @@
 ﻿namespace ADIGGM.IA.Transaccionales
 {
+    using ADIGGM.CapaDatos;
     using ADIGGM.Clases;
     using ADIGGM.IA.Busquedas;
     using ADIGGM.IA.Mantenimiento;
@@ -15,6 +16,8 @@
     using System.Windows.Forms;
     public partial class frmInformacionAsoc : FrmPrincipal
     {
+        private readonly RepositorioCA _repoCA = new RepositorioCA();
+        private readonly RepositorioCodeas _repoCodeas = new RepositorioCodeas();
         public string cidasociad, ccodigopin;
         decimal TotalAport, TotalCred;
         int selectedIndex, validar, validarPAConsul, validarPAInsert;
@@ -26,34 +29,29 @@
         }
         private void cargarDgv()
         {
-            this.cA_AportesTableAdapter.Fill(this.dsCA.CA_Aportes, cidasociad, rdbConSaldoProd.Checked);
-            
-            this.cA_CreditosTableAdapter.Fill(this.dsCA.CA_Creditos, cidasociad, rdbConSaldoCred.Checked);
+            // El DataSource se asigna aquí y NO en el Designer: si el grid queda enlazado en
+            // diseño, el diseñador de VS borra las columnas al no poder resolver el esquema.
+            cAAportesBindingSource.DataMember = "";
+            cAAportesBindingSource.DataSource = _repoCA.CargarAportes(cidasociad, rdbConSaldoProd.Checked);
+            dgvProd.DataSource = cAAportesBindingSource;
 
-            string conn = Properties.Settings.Default.CAConn;
-            //------------------------------------------------------------------------------------------------------------------------------------
+            cACreditosBindingSource.DataMember = "";
+            cACreditosBindingSource.DataSource = _repoCA.CargarCreditos(cidasociad, rdbConSaldoCred.Checked);
+            dgvCred.DataSource = cACreditosBindingSource;
+
+            // Tránsito/pendiente por crédito vía repositorio parametrizado
+            // (antes se armaba un EXEC por concatenación de texto con la cadena legacy de Settings)
             foreach (DataGridViewRow row in dgvCred.Rows)
             {
-                SqlDataAdapter TranAdapter = new SqlDataAdapter(
-                 "EXEC [dbo].[USP_Sel_Cobros_ConsUsuPlanCred_Filter] '" + row.Cells["cnumoperac"].Value.ToString() + "', 'T', 'N'", conn);
-
-                DataSet enTransito = new DataSet();
-                TranAdapter.Fill(enTransito);
-
-                SqlDataAdapter PendAdapter = new SqlDataAdapter(
-                 "EXEC [dbo].[USP_Sel_Cobros_ConsUsuPlanCred_Filter] '" + row.Cells["cnumoperac"].Value.ToString() + "', 'P', 'N'", conn);
-
-                DataSet Pendientes = new DataSet();
-                PendAdapter.Fill(Pendientes);
-
                 decimal ncuotaT = 0, ncuotaP = 0;
+                string cnumoperac = row.Cells["cnumoperac"].Value.ToString();
 
-                foreach (DataRow pRow in enTransito.Tables[0].Rows)
+                foreach (DataRow pRow in _repoCA.CargarPlanCredito(cnumoperac, "T").Rows)
                 {
                     ncuotaT += Convert.ToDecimal(pRow["ncuota"]);
                 }
 
-                foreach (DataRow tRow in Pendientes.Tables[0].Rows)
+                foreach (DataRow tRow in _repoCA.CargarPlanCredito(cnumoperac, "P").Rows)
                 {
                     ncuotaP += Convert.ToDecimal(tRow["ncuota"]);
                 }
@@ -67,7 +65,9 @@
         {
             try
             {
-                this.cA_AutorizadosCreditoAsocSelTableAdapter.Fill(this.dsCA.CA_AutorizadosCreditoAsocSel, cidasociad);
+                cAAutorizadosCreditoAsocSelBindingSource.DataMember = "";
+                cAAutorizadosCreditoAsocSelBindingSource.DataSource = _repoCA.CargarAutorizadosCredito(cidasociad);
+                dgvAutorizados.DataSource = cAAutorizadosCreditoAsocSelBindingSource;
             }
             catch (Exception)
             {
@@ -125,28 +125,28 @@
                 }
                 catch (Exception)
                 {
-                    using (var bmpTemp = new Bitmap(VarGlobales.dirFotosCarnets + "no_image.JPG"))
+                    try
                     {
-                        img = new Bitmap(bmpTemp);
+                        using (var bmpTemp = new Bitmap(VarGlobales.dirFotosCarnets + "no_image.JPG"))
+                        {
+                            img = new Bitmap(bmpTemp);
+                        }
+                        ptbAsociado.Image = img;
                     }
-                    ptbAsociado.Image = img;
+                    catch (Exception)
+                    {
+                        // Sin foto y sin no_image.JPG accesible: dejar el picturebox vacío en vez de tronar
+                        ptbAsociado.Image = null;
+                    }
                 }
             }
         }
         public void frmInformacionAsoc_Load(object sender, EventArgs e)
         {
             cargarImg();
-            string cidasociadOut = "", ccedulasoc = "", cnombreaso = "", dfechainga = "", dfechasali = "", cnombconda = "", cnombinsti = "", cnombdepto = "",
-                cnombdivis = "", cnombtipop = "", cteletraba = "", ctelecelul = "", cextentrab = "", cteledomic = "", cdireccaso = "", dfechanaci = "",
-                nsalarioas = "", nsalarione = "", cmuestclav = "", dfechaingc = "", cconoccomo = "", cemailasoc = "", anio = "", mes = "", dia = "", cnombrecom = "",
-                ccoddelega = "", cnombredel = "", cnombinstb = "", cctabancas = "";
+            System.Collections.Generic.Dictionary<string, string> header = _repoCA.ConsultarHeaderAsociado(cidasociad);
 
-            VarGlobales.consultasCA.CA_HeaderAsoc(cidasociad, ref cidasociadOut, ref ccedulasoc, ref cnombreaso, ref dfechainga, ref dfechasali, ref cnombconda,
-                ref cnombinsti, ref cnombdepto, ref cnombdivis, ref cnombtipop, ref cteletraba, ref ctelecelul, ref cextentrab, ref cteledomic, ref cdireccaso,
-                ref dfechanaci, ref nsalarioas, ref nsalarione, ref cmuestclav, ref dfechaingc, ref cconoccomo, ref cemailasoc, ref anio, ref mes, ref dia, ref cnombrecom,
-                ref ccoddelega, ref cnombredel, ref cnombinstb, ref cctabancas);
-
-            validarPAConsul = Convert.ToInt32(VarGlobales.consultasCA.CA_AutorizadosCreditoAsocValidar(cidasociad, "", false));
+            validarPAConsul = _repoCA.ValidarAutorizadoCredito(cidasociad, "", false);
 
             if (validarPAConsul == 0)
             {
@@ -172,16 +172,16 @@
                 btnCancelar.Enabled = false;
             }
 
-            lblNombre.Text = cnombreaso;
-            lblDNI.Text = ccedulasoc;
-            lblInstitucion.Text = cnombinsti;
-            lblAreaTrab.Text = cnombdivis;
-            lblIdentificacion.Text = cidasociadOut;
-            lblIngresoInst.Text = dfechainga;
-            lblTiempoAfiliado.Text = anio + " años, " + mes + " meses, " + dia + " días";
-            lblCondLab.Text = cnombconda;
-            lblNombBanco.Text = cnombinstb;
-            lblCtaBanc.Text = cctabancas;
+            lblNombre.Text = header["cnombreaso"];
+            lblDNI.Text = header["ccedulasoc"];
+            lblInstitucion.Text = header["cnombinsti"];
+            lblAreaTrab.Text = header["cnombdivis"];
+            lblIdentificacion.Text = header["cidasociadOut"];
+            lblIngresoInst.Text = header["dfechainga"];
+            lblTiempoAfiliado.Text = header["anio"] + " años, " + header["mes"] + " meses, " + header["dia"] + " días";
+            lblCondLab.Text = header["cnombconda"];
+            lblNombBanco.Text = header["cnombinstb"];
+            lblCtaBanc.Text = header["cctabancas"];
 
             cbocparentezc.SelectedIndex = 0;
 
@@ -193,8 +193,7 @@
         }
         public void cargarPanel(string PIN)
         {
-            string ccodigopinOUT = "", cnombreaso = "", cnombinsti = "", cnombdivis = "", ffechexped = DateTime.Now.ToString("d"), ffechvalid = DateTime.Now.ToString("d");
-            validar = Convert.ToInt32(VarGlobales.consultasCA.CA_CarnetsAsocValidar(cidasociad, PIN));
+            validar = _repoCA.ValidarCarnetAsociado(cidasociad, PIN);
 
             if (validar == 0 || validar == 6)
             {
@@ -246,8 +245,8 @@
                 gboDetalles.Visible = true;                
                 lblEstado.Text = "INACTIVO";
                 lblEstado.ForeColor = Color.Red; 
-                btnActDesact.Visible = false; 
-                validar = Convert.ToInt32(VarGlobales.consultasCA.CA_CarnetsAsocValidar(cidasociad, ""));
+                btnActDesact.Visible = false;
+                validar = _repoCA.ValidarCarnetAsociado(cidasociad, "");
                 
                 if (validar == 8)
                 {
@@ -305,11 +304,17 @@
 
             if (validar != 0 && validar != 5)
             {
-                VarGlobales.consultasCA.CA_CarnetsAsocSel(cidasociad, mktPIN.Text, true, ref ccodigopinOUT, ref cnombreaso, ref cnombinsti, ref cnombdivis, ref ffechexped, ref ffechvalid);
-                
-                dtpFecCrea.Value = DateTime.Parse(ffechexped);
-                dtpFecExp.Value = DateTime.Parse(ffechvalid);
+                System.Collections.Generic.Dictionary<string, string> carnet = _repoCA.ConsultarCarnetAsociado(cidasociad, mktPIN.Text, true);
+
+                dtpFecCrea.Value = ParseFechaODefault(carnet["ffechexped"]);
+                dtpFecExp.Value = ParseFechaODefault(carnet["ffechvalid"]);
             }
+        }
+
+        /// <summary>Fecha del SP o la fecha actual si viene vacía/inválida (antes DateTime.Parse tronaba).</summary>
+        private static DateTime ParseFechaODefault(string valor)
+        {
+            return DateTime.TryParse(valor, out DateTime fecha) ? fecha : DateTime.Now;
         }
         public void ImpSolicitud()
         {
@@ -317,21 +322,13 @@
             rdlcEstadoCta.DataSources.Clear();
             rdlcEstadoCta.ReportEmbeddedResource = "ADIGGM.Informes.rptASMaestra.rdlc";
 
-            DataTable COD_SlcASMaestra = dsCodeasAdiggm.COD_SlcASMaestras;
-            rdlcEstadoCta.DataSources.Add(new ReportDataSource("DsASMaestras", COD_SlcASMaestra));
-
-            DataTable COD_SlcEstadoCuenta = dsCodeasAdiggm.COD_SlcEstadoCuenta;
-            rdlcEstadoCta.DataSources.Add(new ReportDataSource("DsEstadoCuenta", COD_SlcEstadoCuenta));
-
-            DataTable COD_SlcEstadoCuentaDet = dsCodeasAdiggm.COD_SlcEstadoCuentaDet;
-            rdlcEstadoCta.DataSources.Add(new ReportDataSource("DsEstadoCuentaDet", COD_SlcEstadoCuentaDet));
+            rdlcEstadoCta.DataSources.Add(new ReportDataSource("DsASMaestras", _repoCodeas.CargarASMaestras(cidasociad)));
+            rdlcEstadoCta.DataSources.Add(new ReportDataSource("DsEstadoCuenta", _repoCodeas.CargarEstadoCuenta(cidasociad)));
+            rdlcEstadoCta.DataSources.Add(new ReportDataSource("DsEstadoCuentaDet", _repoCodeas.CargarEstadoCuentaDet(cidasociad)));
 
             ReportParameter[] ParametroEstado = new ReportParameter[1];
             ParametroEstado[0] = new ReportParameter("Usuario", VarGlobales.Usuario, false);
             rdlcEstadoCta.SetParameters(ParametroEstado);
-            this.cOD_SlcEstadoCuentaTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcEstadoCuenta, cidasociad);
-            this.cOD_SlcASMaestrasTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcASMaestras, cidasociad);
-            this.cOD_SlcEstadoCuentaDetTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcEstadoCuentaDet, cidasociad);
             try
             {
                         string deviceInfo =
@@ -398,6 +395,9 @@
         }
         private void btnDetProd_Click(object sender, EventArgs e)
         {
+            if (dgvProd.CurrentRow == null)
+                return;
+
             // Deshabilitar controles en la ventana principal
             SetControlsEnabledState(false);
 
@@ -417,6 +417,9 @@
         }
         private void btnDetCred_Click(object sender, EventArgs e)
         {
+            if (dgvCred.CurrentRow == null)
+                return;
+
             // Deshabilitar controles en la ventana principal
             SetControlsEnabledState(false);
 
@@ -520,7 +523,7 @@
         private void ptbAsociado_DoubleClick(object sender, EventArgs e)
         {
             frmFotoExpan fotoExpan = new frmFotoExpan(cidasociad);
-            ptbAsociado.Image.Dispose();
+            ptbAsociado.Image?.Dispose();
             ptbAsociado.Image = null;
             fotoExpan.ShowDialog();
             cargarPanel(mktPIN.Text);
@@ -529,7 +532,7 @@
         private void btnCrearPIN_Click(object sender, EventArgs e)
         {
             frmTarjetas tarjetas = new frmTarjetas(cidasociad, lblNombre.Text, lblInstitucion.Text, lblAreaTrab.Text, DateTime.Now, DateTime.Now, "", false, false, false, false);
-            ptbAsociado.Image.Dispose();
+            ptbAsociado.Image?.Dispose();
             ptbAsociado.Image = null;
             tarjetas.ShowDialog();
             cargarImg();
@@ -537,20 +540,22 @@
         }
         private void frmInformacionAsoc_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ptbAsociado.Image.Dispose();
+            ptbAsociado.Image?.Dispose();
             ptbAsociado.Image = null;
         }
         private void btnRenovarPIN_Click(object sender, EventArgs e)
         {
-            string ccodigopinOUT = "", cnombreaso = "", cnombinsti = "", cnombdivis = "", ffechexped = DateTime.Now.ToString("d"), ffechvalid = DateTime.Now.ToString("d");
+            string cnombreaso = "", cnombinsti = "", cnombdivis = "", ffechexped = DateTime.Now.ToString("d"), ffechvalid = DateTime.Now.ToString("d");
 
             if (validar != 0 && validar != 5)
             {
-                VarGlobales.consultasCA.CA_CarnetsAsocSel(cidasociad, mktPIN.Text, true, ref ccodigopinOUT, ref cnombreaso, ref cnombinsti, ref cnombdivis, ref ffechexped, ref ffechvalid);
+                System.Collections.Generic.Dictionary<string, string> carnet = _repoCA.ConsultarCarnetAsociado(cidasociad, mktPIN.Text, true);
+                cnombreaso = carnet["cnombreaso"]; cnombinsti = carnet["cnombinsti"]; cnombdivis = carnet["cnombdivis"];
+                ffechexped = carnet["ffechexped"]; ffechvalid = carnet["ffechvalid"];
             }
 
-            frmTarjetas tarjetas = new frmTarjetas(cidasociad, cnombreaso, cnombinsti,cnombdivis, DateTime.Parse(ffechexped), DateTime.Parse(ffechvalid), mktPIN.Text, true, false, false, false);
-            ptbAsociado.Image.Dispose();
+            frmTarjetas tarjetas = new frmTarjetas(cidasociad, cnombreaso, cnombinsti,cnombdivis, ParseFechaODefault(ffechexped), ParseFechaODefault(ffechvalid), mktPIN.Text, true, false, false, false);
+            ptbAsociado.Image?.Dispose();
             ptbAsociado.Image = null;
             tarjetas.ShowDialog();
             cargarPanel(mktPIN.Text);
@@ -558,12 +563,10 @@
         }
         private void btnReportar_Click(object sender, EventArgs e)
         {
-            string ccodigopinOUT = "", cnombreaso = "", cnombinsti = "", cnombdivis = "", ffechexped = DateTime.Now.ToString("d"), ffechvalid = DateTime.Now.ToString("d");
+            System.Collections.Generic.Dictionary<string, string> carnet = _repoCA.ConsultarCarnetAsociado(cidasociad, "", true);
 
-            VarGlobales.consultasCA.CA_CarnetsAsocSel(cidasociad, "", true, ref ccodigopinOUT, ref cnombreaso, ref cnombinsti, ref cnombdivis, ref ffechexped, ref ffechvalid);
-            
-            frmTarjetas tarjetas = new frmTarjetas(cidasociad, cnombreaso, cnombinsti, cnombdivis, DateTime.Parse(ffechexped), DateTime.Parse(ffechvalid), ccodigopinOUT, false, true, false, false);
-            ptbAsociado.Image.Dispose();
+            frmTarjetas tarjetas = new frmTarjetas(cidasociad, carnet["cnombreaso"], carnet["cnombinsti"], carnet["cnombdivis"], ParseFechaODefault(carnet["ffechexped"]), ParseFechaODefault(carnet["ffechvalid"]), carnet["ccodigopinOUT"], false, true, false, false);
+            ptbAsociado.Image?.Dispose();
             ptbAsociado.Image = null;
             tarjetas.ShowDialog();
             cargarPanel(mktPIN.Text);
@@ -608,6 +611,9 @@
         }
         private void btnEditar_Click(object sender, EventArgs e)
         {
+            if (dgvAutorizados.CurrentRow == null)
+                return;
+
             selectedIndex = dgvAutorizados.CurrentRow.Index;
 
             update = true;
@@ -635,21 +641,24 @@
         }
         private void btnBloqDesbloq_Click(object sender, EventArgs e)
         {
+            if (dgvAutorizados.CurrentRow == null)
+                return;
+
             if (Convert.ToBoolean(dgvAutorizados.Rows[dgvAutorizados.CurrentRow.Index].Cells["bestaactiv"].Value) == true && validarPAConsul == 1)
             {
-                VarGlobales.consultasCA.CA_AutorizadosCreditoAsocUpdate(cidasociad, Convert.ToString(dgvAutorizados.Rows[dgvAutorizados.CurrentRow.Index].Cells["cidautoriz"].Value), "", false, "", "", "", "", true);
+                _repoCA.ActualizarAutorizadoCredito(cidasociad, Convert.ToString(dgvAutorizados.Rows[dgvAutorizados.CurrentRow.Index].Cells["cidautoriz"].Value), "", false, "", "", "", "", true);
                 btnBloqDesbloq.Image = Properties.Resources.security_unlock;
                 //btnBloqDesbloq.Enabled = false;
             }
             else
             if (Convert.ToBoolean(dgvAutorizados.Rows[dgvAutorizados.CurrentRow.Index].Cells["bestaactiv"].Value) == false && validarPAConsul == 2)
             {
-                VarGlobales.consultasCA.CA_AutorizadosCreditoAsocUpdate(cidasociad, Convert.ToString(dgvAutorizados.Rows[dgvAutorizados.CurrentRow.Index].Cells["cidautoriz"].Value), "", true, "", "", "", "", true);
+                _repoCA.ActualizarAutorizadoCredito(cidasociad, Convert.ToString(dgvAutorizados.Rows[dgvAutorizados.CurrentRow.Index].Cells["cidautoriz"].Value), "", true, "", "", "", "", true);
                 btnBloqDesbloq.Image = Properties.Resources.security_lock;
                 //btnBloqDesbloq.Enabled = true;
             }
 
-            validarPAConsul = Convert.ToInt32(VarGlobales.consultasCA.CA_AutorizadosCreditoAsocValidar(cidasociad, "", false));
+            validarPAConsul = _repoCA.ValidarAutorizadoCredito(cidasociad, "", false);
 
             if (validarPAConsul == 0 || validarPAConsul == 2)
             {
@@ -777,24 +786,22 @@
         }
         private void btnActDesact_Click(object sender, EventArgs e)
         {
-            string ccodigopinOUT = "", cnombreaso = "", cnombinsti = "", cnombdivis = "", ffechexped = DateTime.Now.ToString("d"), ffechvalid = DateTime.Now.ToString("d");
-
             if(btnActDesact.Text == "Activar")
             {
-                VarGlobales.consultasCA.CA_CarnetsAsocSel(cidasociad, "", false, ref ccodigopinOUT, ref cnombreaso, ref cnombinsti, ref cnombdivis, ref ffechexped, ref ffechvalid);
+                System.Collections.Generic.Dictionary<string, string> carnet = _repoCA.ConsultarCarnetAsociado(cidasociad, "", false);
 
-                frmTarjetas tarjetas = new frmTarjetas(cidasociad, cnombreaso, cnombinsti, cnombdivis, DateTime.Parse(ffechexped), DateTime.Parse(ffechvalid), ccodigopinOUT, false, false, true, false);
-                ptbAsociado.Image.Dispose();
+                frmTarjetas tarjetas = new frmTarjetas(cidasociad, carnet["cnombreaso"], carnet["cnombinsti"], carnet["cnombdivis"], ParseFechaODefault(carnet["ffechexped"]), ParseFechaODefault(carnet["ffechvalid"]), carnet["ccodigopinOUT"], false, false, true, false);
+                ptbAsociado.Image?.Dispose();
                 ptbAsociado.Image = null;
                 tarjetas.ShowDialog();
             }
             else
             if (btnActDesact.Text == "Desactivar")
             {
-                VarGlobales.consultasCA.CA_CarnetsAsocSel(cidasociad, "", true, ref ccodigopinOUT, ref cnombreaso, ref cnombinsti, ref cnombdivis, ref ffechexped, ref ffechvalid);
+                System.Collections.Generic.Dictionary<string, string> carnet = _repoCA.ConsultarCarnetAsociado(cidasociad, "", true);
 
-                frmTarjetas tarjetas = new frmTarjetas(cidasociad, cnombreaso, cnombinsti, cnombdivis, DateTime.Parse(ffechexped), DateTime.Parse(ffechvalid), ccodigopinOUT, false, false, false, true);
-                ptbAsociado.Image.Dispose();
+                frmTarjetas tarjetas = new frmTarjetas(cidasociad, carnet["cnombreaso"], carnet["cnombinsti"], carnet["cnombdivis"], ParseFechaODefault(carnet["ffechexped"]), ParseFechaODefault(carnet["ffechvalid"]), carnet["ccodigopinOUT"], false, false, false, true);
+                ptbAsociado.Image?.Dispose();
                 ptbAsociado.Image = null;
                 tarjetas.ShowDialog();
             }
@@ -859,9 +866,9 @@
         }
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (mktcidautoriz.Text != "" &&  txtcnombreaut.Text != "" && txtcdomicilio.Text != "" && cbocparentezc.SelectedIndex >= 0) 
+            if (mktcidautoriz.Text != "" &&  txtcnombreaut.Text != "" && txtcdomicilio.Text != "" && cbocparentezc.SelectedIndex >= 0)
             {
-                validarPAInsert = Convert.ToInt32(VarGlobales.consultasCA.CA_AutorizadosCreditoAsocValidar(cidasociad, mktcidautoriz.Text, true));
+                validarPAInsert = _repoCA.ValidarAutorizadoCredito(cidasociad, mktcidautoriz.Text, true);
 
                 var curRow = dgvAutorizados.CurrentRow;
 
@@ -874,12 +881,12 @@
                 {
                     if (insert == true)
                     {
-                        VarGlobales.consultasCA.CA_AutorizadosCreditoAsocInsert(cidasociad, mktcidautoriz.Text, cbocparentezc.Text, txtcnombreaut.Text, txtcdomicilio.Text, mktcnumtelefo.Text, "");
+                        _repoCA.InsertarAutorizadoCredito(cidasociad, mktcidautoriz.Text, cbocparentezc.Text, txtcnombreaut.Text, txtcdomicilio.Text, mktcnumtelefo.Text, "");
                         MessageBox.Show("¡Registro guardado existosamente!", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         insert = false;
 
-                        validarPAConsul = Convert.ToInt32(VarGlobales.consultasCA.CA_AutorizadosCreditoAsocValidar(cidasociad, "", false));
+                        validarPAConsul = _repoCA.ValidarAutorizadoCredito(cidasociad, "", false);
 
                         cargarDgvAutorizados();
 
@@ -905,11 +912,11 @@
                         MessageBox.Show("¡Existen registros activos, favor verificar!", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     if (update == true)
                     {
-                        VarGlobales.consultasCA.CA_AutorizadosCreditoAsocUpdate(cidasociad, Convert.ToString(dgvAutorizados.Rows[dgvAutorizados.CurrentRow.Index].Cells["cidautoriz"].Value), cbocparentezc.Text, false, txtcnombreaut.Text, txtcdomicilio.Text, mktcnumtelefo.Text, "", false);
+                        _repoCA.ActualizarAutorizadoCredito(cidasociad, Convert.ToString(dgvAutorizados.Rows[dgvAutorizados.CurrentRow.Index].Cells["cidautoriz"].Value), cbocparentezc.Text, false, txtcnombreaut.Text, txtcdomicilio.Text, mktcnumtelefo.Text, "", false);
 
                         update = false;
 
-                        validarPAConsul = Convert.ToInt32(VarGlobales.consultasCA.CA_AutorizadosCreditoAsocValidar(cidasociad, "", false));
+                        validarPAConsul = _repoCA.ValidarAutorizadoCredito(cidasociad, "", false);
 
                         cargarDgvAutorizados();
 
@@ -946,12 +953,12 @@
                         MessageBox.Show("¡Esta persona ya se encuentra registrada, verifique e intentelo de nuevo!", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     if (update == true)
                     {
-                        VarGlobales.consultasCA.CA_AutorizadosCreditoAsocUpdate(cidasociad, Convert.ToString(dgvAutorizados.Rows[dgvAutorizados.CurrentRow.Index].Cells["cidautoriz"].Value),
+                        _repoCA.ActualizarAutorizadoCredito(cidasociad, Convert.ToString(dgvAutorizados.Rows[dgvAutorizados.CurrentRow.Index].Cells["cidautoriz"].Value),
                             cbocparentezc.Text, false, txtcnombreaut.Text, txtcdomicilio.Text, mktcnumtelefo.Text, "", false);
 
                         MessageBox.Show("¡Registro actualizado existosamente!", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        validarPAConsul = Convert.ToInt32(VarGlobales.consultasCA.CA_AutorizadosCreditoAsocValidar(cidasociad, "", false));
+                        validarPAConsul = _repoCA.ValidarAutorizadoCredito(cidasociad, "", false);
 
                         cargarDgvAutorizados();
 
@@ -986,24 +993,24 @@
                 {
                     if (insert == true)
                     {
-                        VarGlobales.consultasCA.CA_AutorizadosCreditoAsocInsert(cidasociad, mktcidautoriz.Text, cbocparentezc.Text, txtcnombreaut.Text, txtcdomicilio.Text, mktcnumtelefo.Text, "");
+                        _repoCA.InsertarAutorizadoCredito(cidasociad, mktcidautoriz.Text, cbocparentezc.Text, txtcnombreaut.Text, txtcdomicilio.Text, mktcnumtelefo.Text, "");
 
                         insert = false;
 
                         mktcidautoriz.Enabled = false;
 
-                        validarPAConsul = Convert.ToInt32(VarGlobales.consultasCA.CA_AutorizadosCreditoAsocValidar(cidasociad, "", false));
+                        validarPAConsul = _repoCA.ValidarAutorizadoCredito(cidasociad, "", false);
 
                         cargarDgvAutorizados();
 
                     }
                     if (update == true)
                     {
-                        VarGlobales.consultasCA.CA_AutorizadosCreditoAsocUpdate(cidasociad, Convert.ToString(dgvAutorizados.Rows[dgvAutorizados.CurrentRow.Index].Cells["cidautoriz"].Value), cbocparentezc.Text, false, txtcnombreaut.Text, txtcdomicilio.Text, mktcnumtelefo.Text, "", false);
+                        _repoCA.ActualizarAutorizadoCredito(cidasociad, Convert.ToString(dgvAutorizados.Rows[dgvAutorizados.CurrentRow.Index].Cells["cidautoriz"].Value), cbocparentezc.Text, false, txtcnombreaut.Text, txtcdomicilio.Text, mktcnumtelefo.Text, "", false);
 
                         update = false;
 
-                        validarPAConsul = Convert.ToInt32(VarGlobales.consultasCA.CA_AutorizadosCreditoAsocValidar(cidasociad, "", false));
+                        validarPAConsul = _repoCA.ValidarAutorizadoCredito(cidasociad, "", false);
 
                         cargarDgvAutorizados();
 

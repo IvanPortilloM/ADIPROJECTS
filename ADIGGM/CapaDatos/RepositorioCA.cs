@@ -63,6 +63,128 @@ namespace ADIGGM.CapaDatos
             return ConsultarTabla("SELECT IdPunto, NombrePunto FROM CC_Puntos");
         }
 
+        // ===== Información del asociado (frmInformacionAsoc) =====
+
+        /// <summary>Productos/aportes del asociado (@mostrar filtra solo con saldo).</summary>
+        public DataTable CargarAportes(string cidasociad, bool soloConSaldo)
+        {
+            return ConsultarTabla("dbo.CA_Aportes", new { cidasociad, mostrar = soloConSaldo }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Créditos del asociado (@mostrar filtra solo con saldo).</summary>
+        public DataTable CargarCreditos(string cidasociad, bool soloConSaldo)
+        {
+            DataTable tabla = ConsultarTabla("dbo.CA_Creditos", new { cidasociad, mostrar = soloConSaldo }, CommandType.StoredProcedure);
+            foreach (DataColumn col in tabla.Columns)
+                col.ReadOnly = false; // el form escribe Transito/Pendientes en el grid
+            return tabla;
+        }
+
+        public DataTable CargarAutorizadosCredito(string cidasociad)
+        {
+            return ConsultarTabla("dbo.CA_AutorizadosCreditoAsocSel", new { cidasociad }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Valida personas autorizadas (0/1/2/3 según existencia y estado).</summary>
+        public int ValidarAutorizadoCredito(string cidasociad, string cidautoriz, bool insUpd)
+        {
+            return Escalar<int>("dbo.CA_AutorizadosCreditoAsocValidar",
+                new { cidasociad, cidautoriz, insUpd }, CommandType.StoredProcedure);
+        }
+
+        public void InsertarAutorizadoCredito(string cidasociad, string cidautoriz, string cparentezc,
+            string cnombreaut, string cdomicilio, string cnumtelefo, string crutaimage)
+        {
+            Ejecutar("dbo.CA_AutorizadosCreditoAsocInsert",
+                new { cidasociad, cidautoriz, cparentezc, cnombreaut, cdomicilio, cnumtelefo, crutaimage },
+                CommandType.StoredProcedure);
+        }
+
+        public void ActualizarAutorizadoCredito(string cidasociad, string cidautoriz, string cparentezc,
+            bool bestaactiv, string cnombreaut, string cdomicilio, string cnumtelefo, string crutaimage, bool bloqDesbloq)
+        {
+            Ejecutar("dbo.CA_AutorizadosCreditoAsocUpdate",
+                new { cidasociad, cidautoriz, cparentezc, bestaactiv, cnombreaut, cdomicilio, cnumtelefo, crutaimage, bloqDesbloq },
+                CommandType.StoredProcedure);
+        }
+
+        /// <summary>Estado del carnet/PIN del asociado (código 0..8 que gobierna el panel del PIN).</summary>
+        public int ValidarCarnetAsociado(string cidasociad, string pin)
+        {
+            return Escalar<int>("dbo.CA_CarnetsAsocValidar",
+                new { cidasociad, ccodigopin = pin }, CommandType.StoredProcedure);
+        }
+
+        // Parámetros OUTPUT del SP CA_CarnetsAsocSel, en el orden del SP.
+        private static readonly KeyValuePair<string, int>[] _salidasCarnet =
+        {
+            new KeyValuePair<string, int>("ccodigopinOUT", 4), new KeyValuePair<string, int>("cnombreaso", 50),
+            new KeyValuePair<string, int>("cnombinsti", 30), new KeyValuePair<string, int>("cnombdivis", 30),
+            new KeyValuePair<string, int>("ffechexped", 15), new KeyValuePair<string, int>("ffechvalid", 15)
+        };
+
+        /// <summary>Datos del carnet del asociado (SP con 6 OUTPUT) como diccionario nombreParametro -> valor.</summary>
+        public Dictionary<string, string> ConsultarCarnetAsociado(string cidasociad, string pin, bool estaActivo)
+        {
+            DynamicParameters p = new DynamicParameters();
+            p.Add("cidasociad", cidasociad);
+            p.Add("ccodigopin", pin);
+            p.Add("bestaactiv", estaActivo);
+            foreach (KeyValuePair<string, int> salida in _salidasCarnet)
+                p.Add(salida.Key, "", DbType.String, ParameterDirection.InputOutput, salida.Value);
+
+            using (DbConnection con = CrearConexion())
+            {
+                con.Open();
+                con.Execute("dbo.CA_CarnetsAsocSel", p, commandType: CommandType.StoredProcedure);
+            }
+
+            Dictionary<string, string> resultado = new Dictionary<string, string>();
+            foreach (KeyValuePair<string, int> salida in _salidasCarnet)
+                resultado[salida.Key] = p.Get<string>(salida.Key) ?? "";
+            return resultado;
+        }
+
+        // Parámetros OUTPUT del SP CA_HeaderAsoc, en el orden del SP.
+        private static readonly KeyValuePair<string, int>[] _salidasHeaderAsociado =
+        {
+            new KeyValuePair<string, int>("cidasociadOut", 15), new KeyValuePair<string, int>("ccedulasoc", 15),
+            new KeyValuePair<string, int>("cnombreaso", 50), new KeyValuePair<string, int>("dfechainga", 10),
+            new KeyValuePair<string, int>("dfechasali", 10), new KeyValuePair<string, int>("cnombconda", 15),
+            new KeyValuePair<string, int>("cnombinsti", 30), new KeyValuePair<string, int>("cnombdepto", 20),
+            new KeyValuePair<string, int>("cnombdivis", 25), new KeyValuePair<string, int>("cnombtipop", 30),
+            new KeyValuePair<string, int>("cteletraba", 30), new KeyValuePair<string, int>("ctelecelul", 30),
+            new KeyValuePair<string, int>("cextentrab", 30), new KeyValuePair<string, int>("cteledomic", 30),
+            new KeyValuePair<string, int>("cdireccaso", 30), new KeyValuePair<string, int>("dfechanaci", 10),
+            new KeyValuePair<string, int>("nsalarioas", 10), new KeyValuePair<string, int>("nsalarione", 10),
+            new KeyValuePair<string, int>("cmuestclav", 10), new KeyValuePair<string, int>("dfechaingc", 10),
+            new KeyValuePair<string, int>("cconoccomo", 50), new KeyValuePair<string, int>("cemailasoc", 20),
+            new KeyValuePair<string, int>("anio", 5), new KeyValuePair<string, int>("mes", 5),
+            new KeyValuePair<string, int>("dia", 5), new KeyValuePair<string, int>("cnombrecom", 20),
+            new KeyValuePair<string, int>("ccoddelega", 20), new KeyValuePair<string, int>("cnombredel", 20),
+            new KeyValuePair<string, int>("cnombinstb", 20), new KeyValuePair<string, int>("cctabancas", 15)
+        };
+
+        /// <summary>Encabezado del asociado (SP CA_HeaderAsoc con 30 OUTPUT) como diccionario nombreParametro -> valor.</summary>
+        public Dictionary<string, string> ConsultarHeaderAsociado(string cidasociad)
+        {
+            DynamicParameters p = new DynamicParameters();
+            p.Add("cidasociad", cidasociad);
+            foreach (KeyValuePair<string, int> salida in _salidasHeaderAsociado)
+                p.Add(salida.Key, "", DbType.String, ParameterDirection.InputOutput, salida.Value);
+
+            using (DbConnection con = CrearConexion())
+            {
+                con.Open();
+                con.Execute("dbo.CA_HeaderAsoc", p, commandType: CommandType.StoredProcedure);
+            }
+
+            Dictionary<string, string> resultado = new Dictionary<string, string>();
+            foreach (KeyValuePair<string, int> salida in _salidasHeaderAsociado)
+                resultado[salida.Key] = p.Get<string>(salida.Key) ?? "";
+            return resultado;
+        }
+
         // ===== Menú del comedor (SAC\frmMenu; tablas CF_*) =====
 
         /// <summary>Platos del menú para un tiempo de comida (Desayuno/Almuerzo/Bocadillos). Editable en grilla.</summary>

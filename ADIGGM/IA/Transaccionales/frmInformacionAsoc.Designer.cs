@@ -111,7 +111,6 @@ namespace ADIGGM.IA.Transaccionales
             this.nmtocuotar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ccodmoneda = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cAAportesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCA = new ADIGGM.DataSets.DsCA();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTotalProd = new System.Windows.Forms.Label();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
@@ -216,14 +215,7 @@ namespace ADIGGM.IA.Transaccionales
             this.mktPIN = new System.Windows.Forms.MaskedTextBox();
             this.btnReportar = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.dsCodeasAdiggm = new ADIGGM.DataSets.DsCodeasAdiggm();
-            this.cOD_SlcEstadoCuentaTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcEstadoCuentaTableAdapter();
-            this.cOD_SlcASMaestrasTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcASMaestrasTableAdapter();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.cA_AportesTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CA_AportesTableAdapter();
-            this.cA_CreditosTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CA_CreditosTableAdapter();
-            this.cA_AutorizadosCreditoAsocSelTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.CA_AutorizadosCreditoAsocSelTableAdapter();
-            this.cOD_SlcEstadoCuentaDetTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcEstadoCuentaDetTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -245,7 +237,6 @@ namespace ADIGGM.IA.Transaccionales
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cAAportesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.Panel1.SuspendLayout();
@@ -270,7 +261,6 @@ namespace ADIGGM.IA.Transaccionales
             this.gboOpciones.SuspendLayout();
             this.gboDetalles.SuspendLayout();
             this.gboPIN.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).BeginInit();
             this.SuspendLayout();
             // 
             // btnMax
@@ -723,7 +713,6 @@ namespace ADIGGM.IA.Transaccionales
             this.ccolorgest,
             this.nmtocuotar,
             this.ccodmoneda});
-            this.dgvProd.DataSource = this.cAAportesBindingSource;
             this.dgvProd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProd.Location = new System.Drawing.Point(0, 0);
             this.dgvProd.Name = "dgvProd";
@@ -993,13 +982,6 @@ namespace ADIGGM.IA.Transaccionales
             // 
             // cAAportesBindingSource
             // 
-            this.cAAportesBindingSource.DataMember = "CA_Aportes";
-            this.cAAportesBindingSource.DataSource = this.dsCA;
-            // 
-            // dsCA
-            // 
-            this.dsCA.DataSetName = "DsCA";
-            this.dsCA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // panel1
             // 
@@ -1182,7 +1164,6 @@ namespace ADIGGM.IA.Transaccionales
             this.dfecharenu,
             this.ccodmoneda1,
             this.cnumdocume});
-            this.dgvCred.DataSource = this.cACreditosBindingSource;
             this.dgvCred.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCred.Location = new System.Drawing.Point(0, 0);
             this.dgvCred.Name = "dgvCred";
@@ -1625,8 +1606,6 @@ namespace ADIGGM.IA.Transaccionales
             // 
             // cACreditosBindingSource
             // 
-            this.cACreditosBindingSource.DataMember = "CA_Creditos";
-            this.cACreditosBindingSource.DataSource = this.dsCA;
             // 
             // panel2
             // 
@@ -1965,7 +1944,6 @@ namespace ADIGGM.IA.Transaccionales
             this.cdomicilio,
             this.cnumtelefo,
             this.ffechacrea});
-            this.dgvAutorizados.DataSource = this.cAAutorizadosCreditoAsocSelBindingSource;
             this.dgvAutorizados.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dgvAutorizados.Location = new System.Drawing.Point(3, 190);
             this.dgvAutorizados.Name = "dgvAutorizados";
@@ -2040,8 +2018,6 @@ namespace ADIGGM.IA.Transaccionales
             // 
             // cAAutorizadosCreditoAsocSelBindingSource
             // 
-            this.cAAutorizadosCreditoAsocSelBindingSource.DataMember = "CA_AutorizadosCreditoAsocSel";
-            this.cAAutorizadosCreditoAsocSelBindingSource.DataSource = this.dsCA;
             // 
             // splitContainer7
             // 
@@ -2253,35 +2229,6 @@ namespace ADIGGM.IA.Transaccionales
             this.label5.TabIndex = 2;
             this.label5.Text = "PIN:";
             // 
-            // dsCodeasAdiggm
-            // 
-            this.dsCodeasAdiggm.DataSetName = "DsCodeasAdiggm";
-            this.dsCodeasAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // cOD_SlcEstadoCuentaTableAdapter
-            // 
-            this.cOD_SlcEstadoCuentaTableAdapter.ClearBeforeFill = true;
-            // 
-            // cOD_SlcASMaestrasTableAdapter
-            // 
-            this.cOD_SlcASMaestrasTableAdapter.ClearBeforeFill = true;
-            // 
-            // cA_AportesTableAdapter
-            // 
-            this.cA_AportesTableAdapter.ClearBeforeFill = true;
-            // 
-            // cA_CreditosTableAdapter
-            // 
-            this.cA_CreditosTableAdapter.ClearBeforeFill = true;
-            // 
-            // cA_AutorizadosCreditoAsocSelTableAdapter
-            // 
-            this.cA_AutorizadosCreditoAsocSelTableAdapter.ClearBeforeFill = true;
-            // 
-            // cOD_SlcEstadoCuentaDetTableAdapter
-            // 
-            this.cOD_SlcEstadoCuentaDetTableAdapter.ClearBeforeFill = true;
-            // 
             // frmInformacionAsoc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -2316,7 +2263,6 @@ namespace ADIGGM.IA.Transaccionales
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cAAportesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.splitContainer4.Panel1.ResumeLayout(false);
@@ -2347,7 +2293,6 @@ namespace ADIGGM.IA.Transaccionales
             this.gboDetalles.PerformLayout();
             this.gboPIN.ResumeLayout(false);
             this.gboPIN.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2395,13 +2340,7 @@ namespace ADIGGM.IA.Transaccionales
         private System.Windows.Forms.Label lblCtaBanc;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.BindingSource cAAportesBindingSource;
-        private DataSets.DsCA dsCA;
-        private DataSets.DsCATableAdapters.CA_AportesTableAdapter cA_AportesTableAdapter;
         private System.Windows.Forms.BindingSource cACreditosBindingSource;
-        private DataSets.DsCATableAdapters.CA_CreditosTableAdapter cA_CreditosTableAdapter;
-        private DataSets.DsCodeasAdiggm dsCodeasAdiggm;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcEstadoCuentaTableAdapter cOD_SlcEstadoCuentaTableAdapter;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcASMaestrasTableAdapter cOD_SlcASMaestrasTableAdapter;
         private System.Windows.Forms.Button btnEstadoCta;
         private System.Windows.Forms.Button btnPosFin;
         private System.Windows.Forms.Label label8;
@@ -2463,7 +2402,6 @@ namespace ADIGGM.IA.Transaccionales
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.MaskedTextBox mktcnumtelefo;
         private System.Windows.Forms.BindingSource cAAutorizadosCreditoAsocSelBindingSource;
-        private DataSets.DsCATableAdapters.CA_AutorizadosCreditoAsocSelTableAdapter cA_AutorizadosCreditoAsocSelTableAdapter;
         private System.Windows.Forms.DataGridViewCheckBoxColumn bestaactiv;
         private System.Windows.Forms.DataGridViewTextBoxColumn cidautoriz;
         private System.Windows.Forms.DataGridViewTextBoxColumn cnombreaut;
@@ -2476,7 +2414,6 @@ namespace ADIGGM.IA.Transaccionales
         private System.Windows.Forms.Label lblEstado;
         private System.Windows.Forms.Button btnActDesact;
         private System.Windows.Forms.Button btnVisorCarnets;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcEstadoCuentaDetTableAdapter cOD_SlcEstadoCuentaDetTableAdapter;
         private System.Windows.Forms.Label lblPosFin;
         private System.Windows.Forms.DataGridViewTextBoxColumn cbloqplani;
         private System.Windows.Forms.DataGridViewTextBoxColumn cnumoperac;
