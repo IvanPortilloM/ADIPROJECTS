@@ -1,5 +1,6 @@
 ﻿namespace ADIGGM.SAC
 {
+    using ADIGGM.CapaDatos;
     using ADIGGM.Clases;
     using Microsoft.Reporting.WinForms;
     using System;
@@ -31,6 +32,8 @@
             m_streams.Add(stream);
             return stream;
         }
+        private readonly RepositorioCodeas _repoCodeas = new RepositorioCodeas();
+        private readonly RepositorioCA _repoCA = new RepositorioCA();
         //campos usados para editar préstamos
         string Identidad = "";
         int IdAsociado = 0, IdSolicitud = 0, Capitalizacion = 24, FrecuPago = 15;
@@ -52,8 +55,9 @@
         private void mskId_Leave(object sender, EventArgs e)
         {
             var debe = 0;
-            // Copiar el texto del TextBox al portapapeles
-            Clipboard.SetText(mskId.Text);
+            // Copiar el texto del TextBox al portapapeles (SetText lanza con texto vacío)
+            if (!string.IsNullOrEmpty(mskId.Text))
+                Clipboard.SetText(mskId.Text);
             if (!Editar && !EditarDatosAct)
             {
                 cambioTipoSol();
@@ -80,10 +84,28 @@
             {
                 MessageBox.Show("El Asociado tiene una o más cuotas pendientes sin pagar", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-            if (0==0)
+        }
+        /// <summary>Suma de cuotas en tránsito ("T") y pendientes ("P") por crédito, vía repositorio
+        /// parametrizado (antes era un EXEC por concatenación con la cadena legacy de Settings).</summary>
+        private void CalcularTransitoPendientes(DataGridView dgvCredito, string colOperacion, string colTransito, string colPendientes)
+        {
+            foreach (DataGridViewRow row in dgvCredito.Rows)
             {
+                decimal ncuotaT = 0, ncuotaP = 0;
+                string numOperacion = row.Cells[colOperacion].Value.ToString();
 
+                foreach (DataRow pRow in _repoCA.CargarPlanCredito(numOperacion, "T").Rows)
+                {
+                    ncuotaT += Convert.ToDecimal(pRow["ncuota"]);
+                }
+
+                foreach (DataRow pRow in _repoCA.CargarPlanCredito(numOperacion, "P").Rows)
+                {
+                    ncuotaP += Convert.ToDecimal(pRow["ncuota"]);
+                }
+
+                row.Cells[colTransito].Value = ncuotaT;
+                row.Cells[colPendientes].Value = ncuotaP;
             }
         }
         private void GetAllPrinterList()
@@ -124,7 +146,8 @@
                 cboSolicitud.SelectedIndex = 0;
                 btnGenerar.Enabled = false;
                 btnImprimir.Enabled = false;
-                this.sAC_FechasCorteTableAdapter.FillByActivo(this.dsCodeasAdiggm.SAC_FechasCorte);
+                sACFechasCorteBindingSource.DataMember = "";
+                sACFechasCorteBindingSource.DataSource = _repoCodeas.ListarFechasCorteActivas();
                 cboFormalizacion.SelectedIndex = 0;
                 dtpFormalizacion.Visible = false;
                 dtpPrimerPago.Enabled = false;
@@ -244,43 +267,21 @@
             {
                 int ExisteAsoc = 0;
 
-                this.cOD_SlcAportesTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcAportes, t);
-                this.cOD_SlcCreditosTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcCreditos, t);
-                this.cOD_SlcASMaestrasTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcASMaestras, t);
-                this.sAC_AsociadosTableAdapter.FillByCodAsoc(this.dsCodeasAdiggm.SAC_Asociados, t);
+                // El DataSource de los grids se asigna aquí y NO en el Designer (gotcha del diseñador de VS)
+                cODSlcAportesBindingSource.DataMember = "";
+                cODSlcAportesBindingSource.DataSource = _repoCodeas.CargarAportesAsociado(t);
+                dgvAportes.DataSource = cODSlcAportesBindingSource;
+                cODSlcCreditosBindingSource.DataMember = "";
+                cODSlcCreditosBindingSource.DataSource = _repoCodeas.CargarCreditosAsociado(t);
+                dgvCreditos.DataSource = cODSlcCreditosBindingSource;
+                cODSlcASMaestrasBindingSource.DataMember = "";
+                cODSlcASMaestrasBindingSource.DataSource = _repoCodeas.CargarASMaestras(t);
+                sACAsociadosBindingSource.DataMember = "";
+                sACAsociadosBindingSource.DataSource = _repoCodeas.CargarAsociadoPorCodigo(t);
 
-                string conn = Properties.Settings.Default.CAConn;
-                //------------------------------------------------------------------------------------------------------------------------------------
-                foreach (DataGridViewRow row in dgvCreditos.Rows)
-                {
-                    SqlDataAdapter TranAdapter = new SqlDataAdapter(
-                     "EXEC [dbo].[USP_Sel_Cobros_ConsUsuPlanCred_Filter] '" + row.Cells["cnumoperac"].Value.ToString() + "', 'T', 'N'", conn);
+                CalcularTransitoPendientes(dgvCreditos, "cnumoperac", "Transito", "Pendientes");
 
-                    DataSet enTransito = new DataSet();
-                    TranAdapter.Fill(enTransito);
-
-                    SqlDataAdapter PendAdapter = new SqlDataAdapter(
-                     "EXEC [dbo].[USP_Sel_Cobros_ConsUsuPlanCred_Filter] '" + row.Cells["cnumoperac"].Value.ToString() + "', 'P', 'N'", conn);
-
-                    DataSet Pendientes = new DataSet();
-                    PendAdapter.Fill(Pendientes);
-
-                    decimal ncuotaT = 0, ncuotaP = 0;
-
-                    foreach (DataRow pRow in enTransito.Tables[0].Rows)
-                    {
-                        ncuotaT += Convert.ToDecimal(pRow["ncuota"]);
-                    }
-
-                    foreach (DataRow pRow in Pendientes.Tables[0].Rows)
-                    {
-                        ncuotaP += Convert.ToDecimal(pRow["ncuota"]);
-                    }
-
-                    row.Cells["Transito"].Value = ncuotaT;
-                    row.Cells["Pendientes"].Value = ncuotaP;
-                }
-                ExisteAsoc = Convert.ToInt32(VarGlobales.consultas.SAC_AsocExiste(t));
+                ExisteAsoc = _repoCodeas.ExisteAsociado(t);
 
                 if (ExisteAsoc == 0)
                 {
@@ -309,8 +310,12 @@
                 LlenarTotales("", "dgvAportes", "dgvCreditos");
             }else if (t == "")
             {
-                this.cOD_SlcAportesTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcAportes, t);
-                this.cOD_SlcCreditosTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcCreditos, t);
+                cODSlcAportesBindingSource.DataMember = "";
+                cODSlcAportesBindingSource.DataSource = _repoCodeas.CargarAportesAsociado(t);
+                dgvAportes.DataSource = cODSlcAportesBindingSource;
+                cODSlcCreditosBindingSource.DataMember = "";
+                cODSlcCreditosBindingSource.DataSource = _repoCodeas.CargarCreditosAsociado(t);
+                dgvCreditos.DataSource = cODSlcCreditosBindingSource;
             }
             Identidad = t;
         }
@@ -330,11 +335,10 @@
 
             string Codigo = this.Identidad.Replace("-", "").Replace(" ", "");
 
-            decimal ncuotaT = 0, ncuotaP = 0;
-
-            this.sAC_AsociadosTableAdapter.FillByCodAsoc(this.dsCodeasAdiggm.SAC_Asociados, Codigo);
-            this.sAC_SolicitudesTableAdapter.FillBySolicitud(this.dsCodeasAdiggm.SAC_Solicitudes, IdSolicitud);
-            string conn = Properties.Settings.Default.CAConn;
+            sACAsociadosBindingSource.DataMember = "";
+            sACAsociadosBindingSource.DataSource = _repoCodeas.CargarAsociadoPorCodigo(Codigo);
+            sACSolicitudesBindingSource.DataMember = "";
+            sACSolicitudesBindingSource.DataSource = _repoCodeas.CargarSolicitud(IdSolicitud);
 
             if (EditarDatosAct == false)
             {
@@ -342,36 +346,16 @@
                 dgvCreditosEdit.Visible = true;
                 dgvAportesEdit.Dock = DockStyle.Fill;
                 dgvCreditosEdit.Dock = DockStyle.Fill;
-                this.sAC_AportesTableAdapter.Fill(this.dsCodeasAdiggm.SAC_Aportes, IdSolicitud);
-                this.sAC_CreditosTableAdapter.Fill(this.dsCodeasAdiggm.SAC_Creditos, IdSolicitud);
+                sACAportesBindingSource.DataMember = "";
+                sACAportesBindingSource.DataSource = _repoCodeas.CargarEstadoFinancieroAportes(IdSolicitud);
+                dgvAportesEdit.DataSource = sACAportesBindingSource;
+                sACCreditosBindingSource.DataMember = "";
+                sACCreditosBindingSource.DataSource = _repoCodeas.CargarEstadoFinancieroCreditos(IdSolicitud);
+                dgvCreditosEdit.DataSource = sACCreditosBindingSource;
 
-                foreach (DataGridViewRow row in dgvCreditosEdit.Rows)
-                {
-                    SqlDataAdapter TranAdapter = new SqlDataAdapter(
-                     "EXEC [dbo].[USP_Sel_Cobros_ConsUsuPlanCred_Filter] '" + row.Cells["NumOperacion"].Value.ToString() + "', 'T', 'N'", conn);
-
-                    DataSet enTransito = new DataSet();
-                    TranAdapter.Fill(enTransito);
-
-                    SqlDataAdapter PendAdapter = new SqlDataAdapter(
-                     "EXEC [dbo].[USP_Sel_Cobros_ConsUsuPlanCred_Filter] '" + row.Cells["NumOperacion"].Value.ToString() + "', 'P', 'N'", conn);
-
-                    DataSet Pendientes = new DataSet();
-                    PendAdapter.Fill(Pendientes);
-
-                    foreach (DataRow pRow in enTransito.Tables[0].Rows)
-                    {
-                        ncuotaT += Convert.ToDecimal(pRow["ncuota"]);
-                    }
-
-                    foreach (DataRow pRow in Pendientes.Tables[0].Rows)
-                    {
-                        ncuotaP += Convert.ToDecimal(pRow["ncuota"]);
-                    }
-
-                    row.Cells["Transito1"].Value = ncuotaT;
-                    row.Cells["Pendientes1"].Value = ncuotaP;
-                }
+                // Fix: antes los acumuladores se declaraban fuera del loop y los valores de
+                // Tránsito/Pendientes se iban sumando de una fila a la siguiente (montos inflados)
+                CalcularTransitoPendientes(dgvCreditosEdit, "NumOperacion", "Transito1", "Pendientes1");
             }
             else
             {
@@ -379,36 +363,14 @@
                 dgvCreditos.Visible = true;
                 dgvAportes.Dock = DockStyle.Fill;
                 dgvCreditos.Dock = DockStyle.Fill;
-                this.cOD_SlcAportesTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcAportes, Codigo);
-                this.cOD_SlcCreditosTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcCreditos, Codigo);
+                cODSlcAportesBindingSource.DataMember = "";
+                cODSlcAportesBindingSource.DataSource = _repoCodeas.CargarAportesAsociado(Codigo);
+                dgvAportes.DataSource = cODSlcAportesBindingSource;
+                cODSlcCreditosBindingSource.DataMember = "";
+                cODSlcCreditosBindingSource.DataSource = _repoCodeas.CargarCreditosAsociado(Codigo);
+                dgvCreditos.DataSource = cODSlcCreditosBindingSource;
 
-                foreach (DataGridViewRow row in dgvCreditos.Rows)
-                {
-                    SqlDataAdapter TranAdapter = new SqlDataAdapter(
-                     "EXEC [dbo].[USP_Sel_Cobros_ConsUsuPlanCred_Filter] '" + row.Cells["cnumoperac"].Value.ToString() + "', 'T', 'N'", conn);
-
-                    DataSet enTransito = new DataSet();
-                    TranAdapter.Fill(enTransito);
-
-                    SqlDataAdapter PendAdapter = new SqlDataAdapter(
-                     "EXEC [dbo].[USP_Sel_Cobros_ConsUsuPlanCred_Filter] '" + row.Cells["cnumoperac"].Value.ToString() + "', 'P', 'N'", conn);
-
-                    DataSet Pendientes = new DataSet();
-                    PendAdapter.Fill(Pendientes);
-
-                    foreach (DataRow pRow in enTransito.Tables[0].Rows)
-                    {
-                        ncuotaT += Convert.ToDecimal(pRow["ncuota"]);
-                    }
-
-                    foreach (DataRow pRow in Pendientes.Tables[0].Rows)
-                    {
-                        ncuotaP += Convert.ToDecimal(pRow["ncuota"]);
-                    }
-
-                    row.Cells["Transito"].Value = ncuotaT;
-                    row.Cells["Pendientes"].Value = ncuotaP;
-                }
+                CalcularTransitoPendientes(dgvCreditos, "cnumoperac", "Transito", "Pendientes");
             }
             //------------------------------------------------------------------------------------------------
             mskId.DataBindings.Add(new Binding("Text", this.sACAsociadosBindingSource, "CodigoAsociado", false));
@@ -764,11 +726,11 @@
 
                 try
                 {
-                    IdAsociado = Convert.ToInt32(VarGlobales.consultas.SAC_AsociadosInsert(CodigoAsoc, Identidad, NombreCompleto, AreaTrabajo, Domicilio, EstadoCivil, TipoEmpleado, Telefono));
-                    IdSolicitud = Convert.ToInt32(VarGlobales.consultas.SAC_SolicitudesInsert_v2(IdAsociado, IdSolicitud, TotalAport, TotalCred, Fecha, CantSolicitada, let.ToCustomCardinal(CantSolicitada).ToUpper(),
+                    IdAsociado = _repoCodeas.InsertarAsociado(CodigoAsoc, Identidad, NombreCompleto, AreaTrabajo, Domicilio, EstadoCivil, TipoEmpleado, Telefono);
+                    IdSolicitud = _repoCodeas.InsertarSolicitud(IdAsociado, IdSolicitud, TotalAport, TotalCred, Fecha, CantSolicitada, let.ToCustomCardinal(CantSolicitada).ToUpper(),
                                                                                                 CantConsumo, CantAprobada, MontoCuota, let.ToCustomCardinal(MontoCuota).ToUpper(), Periodo, PeriodoSug,
                                                                                                 Convert.ToDecimal(Tasa), Capitalizacion, Motivo, Anios, Meses, Dias, VarGlobales.Division, TipoSolicitud,
-                                                                                                dtpFormalizacion.Value.Date, dtpPrimerPago.Value.Date, FrecuPago, VarGlobales.Usuario));
+                                                                                                dtpFormalizacion.Value.Date, dtpPrimerPago.Value.Date, FrecuPago, VarGlobales.Usuario);
                 }
                 catch (Exception ex)
                 {
@@ -778,7 +740,7 @@
                 {
                     if (cboSolicitud.Text == "PRÉSTAMO" || cboSolicitud.Text == "REFINANCIAMIENTO")
                     {
-                        VarGlobales.consultas.SAC_TablaAmortizacion(Prestamo, Periodo, Capitalizacion, Tasa, IdSolicitud);
+                        _repoCodeas.GenerarTablaAmortizacion(Prestamo, Periodo, Capitalizacion, Tasa, IdSolicitud);
                     }
                     if (Editar == false || (Editar == true && EditarDatosAct == true))
                     {
@@ -786,7 +748,7 @@
                         {
                             foreach (DataGridViewRow row in dgvAportes.Rows)
                             {
-                                VarGlobales.consultas.SAC_EstadoFinancieroInsert(IdSolicitud,
+                                _repoCodeas.InsertarEstadoFinanciero(IdSolicitud,
                                                                             row.Cells["codigo"].Value.ToString(),
                                                                             decimal.Parse(row.Cells["nmtoprinci"].Value.ToString()),
                                                                             0,
@@ -813,7 +775,7 @@
                                 {
                                     row.Cells["Marcar"].Value = false;
                                 }
-                                VarGlobales.consultas.SAC_EstadoFinancieroInsert(IdSolicitud,
+                                _repoCodeas.InsertarEstadoFinanciero(IdSolicitud,
                                                                             row.Cells["cnumoperac"].Value.ToString(),
                                                                             decimal.Parse(row.Cells["nmontoapro"].Value.ToString()),
                                                                             decimal.Parse(row.Cells["nsaldocred"].Value.ToString()),
@@ -861,7 +823,7 @@
                         {
                             foreach (DataGridViewRow row in dgvAportesEdit.Rows)
                             {
-                                VarGlobales.consultas.SAC_EstadoFinancieroInsert(IdSolicitud,
+                                _repoCodeas.InsertarEstadoFinanciero(IdSolicitud,
                                                                             row.Cells["Operacion"].Value.ToString(),
                                                                             decimal.Parse(row.Cells["principal"].Value.ToString()),
                                                                             0,
@@ -888,7 +850,7 @@
                                 {
                                     row.Cells["seleccionado"].Value = false;
                                 }
-                                VarGlobales.consultas.SAC_EstadoFinancieroInsert(IdSolicitud,
+                                _repoCodeas.InsertarEstadoFinanciero(IdSolicitud,
                                                                             row.Cells["NumOperacion"].Value.ToString(),
                                                                             decimal.Parse(row.Cells["MontoAprob"].Value.ToString()),
                                                                             decimal.Parse(row.Cells["saldo"].Value.ToString()),
@@ -1011,14 +973,12 @@
         }
         private void CargarCorte()
         {
-            string ncodfecortOUT = "", dfechforma = "", dfecpripag = "", cperiodpag = "", bestaactiv = "";
-
-            VarGlobales.consultas.SAC_FechasCorteHeader(Convert.ToInt32(cboFormalizacion.SelectedValue), ref ncodfecortOUT, ref dfechforma, ref dfecpripag, ref cperiodpag, ref bestaactiv);
-            lblcperiodpag.Text = cperiodpag;
-            if (dfecpripag != "" && dfechforma != "")
+            System.Collections.Generic.Dictionary<string, string> corte = _repoCodeas.ConsultarFechaCorte(Convert.ToInt32(cboFormalizacion.SelectedValue));
+            lblcperiodpag.Text = corte["cperiodpag"];
+            if (corte["dfecpripag"] != "" && corte["dfechforma"] != "")
             {
-                dtpFormalizacion.Value = Convert.ToDateTime(dfechforma);
-                dtpPrimerPago.Value = Convert.ToDateTime(dfecpripag);
+                dtpFormalizacion.Value = Convert.ToDateTime(corte["dfechforma"]);
+                dtpPrimerPago.Value = Convert.ToDateTime(corte["dfecpripag"]);
             }
         }
         private void Limpiar()
@@ -1158,7 +1118,7 @@
             {
                 resultado = 19; //Validar si la fecha de formalización es menor a la del primer pago
             }
-            else if ((Convert.ToDecimal(VarGlobales.consultas.COD_SlcTotalCreditos(Identidad)) > TotalCred) && (!Editar || (Editar && EditarDatosAct)))
+            else if ((_repoCodeas.TotalCreditosAsociado(Identidad) > TotalCred) && (!Editar || (Editar && EditarDatosAct)))
             {
                 resultado = 20;
             }
@@ -1216,7 +1176,19 @@
             rdlcNeteo.DataSources.Clear();
             rdlcNeteo.ReportEmbeddedResource = "ADIGGM.Informes.rptSacSolPresNeteo.rdlc";
 
-            DataTable SAC_Asociados = dsCodeasAdiggm.SAC_Asociados;
+            // Cargar PRIMERO los datos (vía repositorio); los BindingSources se refrescan igual
+            // que lo hacían los Fill originales para que los textboxes enlazados se actualicen.
+            sACAsociadosBindingSource.DataMember = "";
+            sACAsociadosBindingSource.DataSource = _repoCodeas.CargarAsociadoPorId(IdAsociado);
+            sACSolicitudesBindingSource.DataMember = "";
+            sACSolicitudesBindingSource.DataSource = _repoCodeas.CargarSolicitud(IdSolicitud);
+            if (Editar == true)
+            {
+                cODSlcASMaestrasBindingSource.DataMember = "";
+                cODSlcASMaestrasBindingSource.DataSource = _repoCodeas.CargarASMaestras(Identidad);
+            }
+
+            DataTable SAC_Asociados = (DataTable)sACAsociadosBindingSource.DataSource;
             rdlc.DataSources.Add(new ReportDataSource("DsAsociados", SAC_Asociados));
             rdlcImpDir.DataSources.Add(new ReportDataSource("DsAsociados", SAC_Asociados));
             rdlcPagare.DataSources.Add(new ReportDataSource("DsAsociados", SAC_Asociados));
@@ -1225,7 +1197,7 @@
             rdlcRetiroParcial.DataSources.Add(new ReportDataSource("DsAsociados", SAC_Asociados));
             rdlcNeteo.DataSources.Add(new ReportDataSource("DsAsociados", SAC_Asociados));
 
-            DataTable SAC_Solicitudes = dsCodeasAdiggm.SAC_Solicitudes;
+            DataTable SAC_Solicitudes = (DataTable)sACSolicitudesBindingSource.DataSource;
             rdlc.DataSources.Add(new ReportDataSource("DsSolicitudes", SAC_Solicitudes));
             rdlcImpDir.DataSources.Add(new ReportDataSource("DsSolicitudes", SAC_Solicitudes));
             rdlcPagare.DataSources.Add(new ReportDataSource("DsSolicitudes", SAC_Solicitudes));
@@ -1234,23 +1206,23 @@
             rdlcRetiroParcial.DataSources.Add(new ReportDataSource("DsSolicitudes", SAC_Solicitudes));
             rdlcNeteo.DataSources.Add(new ReportDataSource("DsSolicitudes", SAC_Solicitudes));
 
-            DataTable SAC_EstadoFinanciero = dsCodeasAdiggm.SAC_EstadoFinanciero;
+            DataTable SAC_EstadoFinanciero = _repoCodeas.CargarEstadoFinanciero(IdSolicitud);
             rdlc.DataSources.Add(new ReportDataSource("DsEstadoFinanciero", SAC_EstadoFinanciero));
             rdlcImpDir.DataSources.Add(new ReportDataSource("DsEstadoFinanciero", SAC_EstadoFinanciero));
 
-            DataTable SAC_Amortizaciones = dsCodeasAdiggm.SAC_Amortizaciones;
+            DataTable SAC_Amortizaciones = _repoCodeas.CargarAmortizaciones(IdSolicitud);
             rdlc.DataSources.Add(new ReportDataSource("DsAmortizaciones", SAC_Amortizaciones));
             rdlcImpDir.DataSources.Add(new ReportDataSource("DsAmortizaciones", SAC_Amortizaciones));
 
-            DataTable COD_SlcASMaestra = dsCodeasAdiggm.COD_SlcASMaestras;
+            DataTable COD_SlcASMaestra = (DataTable)cODSlcASMaestrasBindingSource.DataSource ?? new DataTable();
             rdlcEstadoCta.DataSources.Add(new ReportDataSource("DsASMaestras", COD_SlcASMaestra));
             rdlcEstadoCtav2.DataSources.Add(new ReportDataSource("DsASMaestras", COD_SlcASMaestra));
 
-            DataTable COD_SlcEstadoCuenta = dsCodeasAdiggm.COD_SlcEstadoCuenta;
+            DataTable COD_SlcEstadoCuenta = _repoCodeas.CargarEstadoCuenta(Identidad);
             rdlcEstadoCta.DataSources.Add(new ReportDataSource("DsEstadoCuenta", COD_SlcEstadoCuenta));
             rdlcEstadoCtav2.DataSources.Add(new ReportDataSource("DsEstadoCuenta", COD_SlcEstadoCuenta));
 
-            DataTable COD_SlcEstadoCuentaDet = dsCodeasAdiggm.COD_SlcEstadoCuentaDet;
+            DataTable COD_SlcEstadoCuentaDet = _repoCodeas.CargarEstadoCuentaDet(Identidad);
             rdlcEstadoCta.DataSources.Add(new ReportDataSource("DsEstadoCuentaDet", COD_SlcEstadoCuentaDet));
             //-----------------------------------------------------------------------------------
             ReportParameter[] ParametroSolicitud = new ReportParameter[1];
@@ -1274,17 +1246,6 @@
             rdlcEstadoCta.SetParameters(ParametroEstado);
             rdlcEstadoCtav2.SetParameters(ParametroEstado);
 
-            this.sAC_AsociadosTableAdapter.FillByAsociado(this.dsCodeasAdiggm.SAC_Asociados, IdAsociado);
-            this.sAC_SolicitudesTableAdapter.FillBySolicitud(this.dsCodeasAdiggm.SAC_Solicitudes, IdSolicitud);
-            this.sAC_EstadoFinancieroTableAdapter.FillBySolicitud(this.dsCodeasAdiggm.SAC_EstadoFinanciero, IdSolicitud);
-            this.saC_AmortizacionesTableAdapter.FillBySolicitud(this.dsCodeasAdiggm.SAC_Amortizaciones, IdSolicitud);
-            this.cOD_SlcEstadoCuentaTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcEstadoCuenta, Identidad);
-            this.cOD_SlcEstadoCuentaDetTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcEstadoCuentaDet, Identidad);
-
-            if (Editar == true)
-            {
-                this.cOD_SlcASMaestrasTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcASMaestras, Identidad);
-            }
             try
             {
                 if (ctrls.Length > 0)

@@ -81,7 +81,6 @@
             this.nmtocuotarDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ccodmonedaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cODSlcAportesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCodeasAdiggm = new ADIGGM.DataSets.DsCodeasAdiggm();
             this.cboMotivoPres = new System.Windows.Forms.ComboBox();
             this.dgvCreditos = new System.Windows.Forms.DataGridView();
             this.cbloqplani = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -251,27 +250,12 @@
             this.label25 = new System.Windows.Forms.Label();
             this.chartPosFin = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.lblTotalPosFin = new System.Windows.Forms.Label();
-            this.usP_Sel_Cobros_ConsUsuPlanCred_FilterTableAdapter = new ADIGGM.DataSets.DsCATableAdapters.USP_Sel_Cobros_ConsUsuPlanCred_FilterTableAdapter();
-            this.dsCA = new ADIGGM.DataSets.DsCA();
             this.sACSolicitudesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.sACEstadoFinancieroBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cOD_SlcAportesTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcAportesTableAdapter();
-            this.cOD_SlcCreditosTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcCreditosTableAdapter();
-            this.cOD_SlcASMaestrasTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcASMaestrasTableAdapter();
             this.sACAsociadosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.sAC_AsociadosTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_AsociadosTableAdapter();
-            this.sAC_SolicitudesTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_SolicitudesTableAdapter();
-            this.sAC_EstadoFinancieroTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_EstadoFinancieroTableAdapter();
-            this.saC_AmortizacionesTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_AmortizacionesTableAdapter();
-            this.sAC_AportesTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_AportesTableAdapter();
-            this.sAC_CreditosTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_CreditosTableAdapter();
-            this.cOD_SlcEstadoCuentaTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcEstadoCuentaTableAdapter();
-            this.sAC_FechasCorteTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_FechasCorteTableAdapter();
-            this.cOD_SlcEstadoCuentaDetTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcEstadoCuentaDetTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAportes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cODSlcAportesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCreditos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cODSlcCreditosBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -310,7 +294,6 @@
             this.groupBox13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sACFechasCorteBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartPosFin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sACSolicitudesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sACEstadoFinancieroBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sACAsociadosBindingSource)).BeginInit();
@@ -403,7 +386,6 @@
             this.cdetagesti,
             this.nmtocuotarDataGridViewTextBoxColumn,
             this.ccodmonedaDataGridViewTextBoxColumn});
-            this.dgvAportes.DataSource = this.cODSlcAportesBindingSource;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -704,13 +686,6 @@
             // 
             // cODSlcAportesBindingSource
             // 
-            this.cODSlcAportesBindingSource.DataMember = "COD_SlcAportes";
-            this.cODSlcAportesBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // dsCodeasAdiggm
-            // 
-            this.dsCodeasAdiggm.DataSetName = "DsCodeasAdiggm";
-            this.dsCodeasAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // cboMotivoPres
             // 
@@ -800,7 +775,6 @@
             this.cnumdocume,
             this.Transito,
             this.Pendientes});
-            this.dgvCreditos.DataSource = this.cODSlcCreditosBindingSource;
             dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1269,8 +1243,6 @@
             // 
             // cODSlcCreditosBindingSource
             // 
-            this.cODSlcCreditosBindingSource.DataMember = "COD_SlcCreditos";
-            this.cODSlcCreditosBindingSource.DataSource = this.dsCodeasAdiggm;
             // 
             // mskId
             // 
@@ -1711,7 +1683,6 @@
             this.saldoDataGridViewTextBoxColumn1,
             this.desGrupoDataGridViewTextBoxColumn,
             this.seleccionadoDataGridViewCheckBoxColumn1});
-            this.dgvAportesEdit.DataSource = this.sACAportesBindingSource;
             this.dgvAportesEdit.GridColor = System.Drawing.SystemColors.AppWorkspace;
             this.dgvAportesEdit.Location = new System.Drawing.Point(205, 17);
             this.dgvAportesEdit.Name = "dgvAportesEdit";
@@ -1880,8 +1851,6 @@
             // 
             // sACAportesBindingSource
             // 
-            this.sACAportesBindingSource.DataMember = "SAC_Aportes";
-            this.sACAportesBindingSource.DataSource = this.dsCodeasAdiggm;
             // 
             // lblTotalAportes
             // 
@@ -1957,7 +1926,6 @@
             this.seleccionado,
             this.Transito1,
             this.Pendientes1});
-            this.dgvCreditosEdit.DataSource = this.sACCreditosBindingSource;
             this.dgvCreditosEdit.GridColor = System.Drawing.SystemColors.AppWorkspace;
             this.dgvCreditosEdit.Location = new System.Drawing.Point(326, 5);
             this.dgvCreditosEdit.Name = "dgvCreditosEdit";
@@ -2176,8 +2144,6 @@
             // 
             // sACCreditosBindingSource
             // 
-            this.sACCreditosBindingSource.DataMember = "SAC_Creditos";
-            this.sACCreditosBindingSource.DataSource = this.dsCodeasAdiggm;
             // 
             // groupBox11
             // 
@@ -2434,8 +2400,6 @@
             // 
             // cODSlcASMaestrasBindingSource
             // 
-            this.cODSlcASMaestrasBindingSource.DataMember = "COD_SlcASMaestras";
-            this.cODSlcASMaestrasBindingSource.DataSource = this.dsCodeasAdiggm;
             // 
             // txtmeses
             // 
@@ -2638,8 +2602,6 @@
             // 
             // sACFechasCorteBindingSource
             // 
-            this.sACFechasCorteBindingSource.DataMember = "SAC_FechasCorte";
-            this.sACFechasCorteBindingSource.DataSource = this.dsCodeasAdiggm;
             // 
             // label23
             // 
@@ -2709,77 +2671,14 @@
             this.lblTotalPosFin.Size = new System.Drawing.Size(0, 16);
             this.lblTotalPosFin.TabIndex = 1;
             // 
-            // usP_Sel_Cobros_ConsUsuPlanCred_FilterTableAdapter
-            // 
-            this.usP_Sel_Cobros_ConsUsuPlanCred_FilterTableAdapter.ClearBeforeFill = true;
-            // 
-            // dsCA
-            // 
-            this.dsCA.DataSetName = "DsCA";
-            this.dsCA.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // sACSolicitudesBindingSource
             // 
-            this.sACSolicitudesBindingSource.DataMember = "SAC_Solicitudes";
-            this.sACSolicitudesBindingSource.DataSource = this.dsCodeasAdiggm;
             // 
             // sACEstadoFinancieroBindingSource
             // 
-            this.sACEstadoFinancieroBindingSource.DataMember = "SAC_EstadoFinanciero";
-            this.sACEstadoFinancieroBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // cOD_SlcAportesTableAdapter
-            // 
-            this.cOD_SlcAportesTableAdapter.ClearBeforeFill = true;
-            // 
-            // cOD_SlcCreditosTableAdapter
-            // 
-            this.cOD_SlcCreditosTableAdapter.ClearBeforeFill = true;
-            // 
-            // cOD_SlcASMaestrasTableAdapter
-            // 
-            this.cOD_SlcASMaestrasTableAdapter.ClearBeforeFill = true;
             // 
             // sACAsociadosBindingSource
             // 
-            this.sACAsociadosBindingSource.DataMember = "SAC_Asociados";
-            this.sACAsociadosBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // sAC_AsociadosTableAdapter
-            // 
-            this.sAC_AsociadosTableAdapter.ClearBeforeFill = true;
-            // 
-            // sAC_SolicitudesTableAdapter
-            // 
-            this.sAC_SolicitudesTableAdapter.ClearBeforeFill = true;
-            // 
-            // sAC_EstadoFinancieroTableAdapter
-            // 
-            this.sAC_EstadoFinancieroTableAdapter.ClearBeforeFill = true;
-            // 
-            // saC_AmortizacionesTableAdapter
-            // 
-            this.saC_AmortizacionesTableAdapter.ClearBeforeFill = true;
-            // 
-            // sAC_AportesTableAdapter
-            // 
-            this.sAC_AportesTableAdapter.ClearBeforeFill = true;
-            // 
-            // sAC_CreditosTableAdapter
-            // 
-            this.sAC_CreditosTableAdapter.ClearBeforeFill = true;
-            // 
-            // cOD_SlcEstadoCuentaTableAdapter
-            // 
-            this.cOD_SlcEstadoCuentaTableAdapter.ClearBeforeFill = true;
-            // 
-            // sAC_FechasCorteTableAdapter
-            // 
-            this.sAC_FechasCorteTableAdapter.ClearBeforeFill = true;
-            // 
-            // cOD_SlcEstadoCuentaDetTableAdapter
-            // 
-            this.cOD_SlcEstadoCuentaDetTableAdapter.ClearBeforeFill = true;
             // 
             // FrmSolCred
             // 
@@ -2799,7 +2698,6 @@
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAportes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cODSlcAportesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCreditos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cODSlcCreditosBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -2847,7 +2745,6 @@
             this.groupBox13.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sACFechasCorteBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartPosFin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCA)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sACSolicitudesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sACEstadoFinancieroBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sACAsociadosBindingSource)).EndInit();
@@ -2891,12 +2788,8 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.BindingSource cODSlcAportesBindingSource;
-        private DataSets.DsCodeasAdiggm dsCodeasAdiggm;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcAportesTableAdapter cOD_SlcAportesTableAdapter;
         private System.Windows.Forms.BindingSource cODSlcCreditosBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcCreditosTableAdapter cOD_SlcCreditosTableAdapter;
         private System.Windows.Forms.BindingSource cODSlcASMaestrasBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcASMaestrasTableAdapter cOD_SlcASMaestrasTableAdapter;
         private System.Windows.Forms.Label lblTotalAportes;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtTotDesemb;
@@ -2911,11 +2804,8 @@
         private System.Windows.Forms.Button btnGenerar;
         private System.Windows.Forms.MaskedTextBox mskFecha;
         private System.Windows.Forms.BindingSource sACAsociadosBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_AsociadosTableAdapter sAC_AsociadosTableAdapter;
         private System.Windows.Forms.BindingSource sACSolicitudesBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_SolicitudesTableAdapter sAC_SolicitudesTableAdapter;
         private System.Windows.Forms.BindingSource sACEstadoFinancieroBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_EstadoFinancieroTableAdapter sAC_EstadoFinancieroTableAdapter;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.SplitContainer splitContainer3;
@@ -2928,7 +2818,6 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button btnBuscar;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_AmortizacionesTableAdapter saC_AmortizacionesTableAdapter;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label17;
@@ -2938,13 +2827,10 @@
         private System.Windows.Forms.DataGridView dgvCreditosEdit;
         private System.Windows.Forms.DataGridView dgvAportesEdit;
         private System.Windows.Forms.BindingSource sACAportesBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_AportesTableAdapter sAC_AportesTableAdapter;
         private System.Windows.Forms.BindingSource sACCreditosBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_CreditosTableAdapter sAC_CreditosTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn descripciDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cuotaDataGridViewTextBoxColumn1;
         private System.Windows.Forms.Button btnEstado;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcEstadoCuentaTableAdapter cOD_SlcEstadoCuentaTableAdapter;
         private System.Windows.Forms.TextBox txtMontoNeto;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox txtInteres;
@@ -2993,8 +2879,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn saldoDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn desGrupoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn seleccionadoDataGridViewCheckBoxColumn1;
-        private DataSets.DsCATableAdapters.USP_Sel_Cobros_ConsUsuPlanCred_FilterTableAdapter usP_Sel_Cobros_ConsUsuPlanCred_FilterTableAdapter;
-        private DataSets.DsCA dsCA;
         private System.Windows.Forms.DataGridViewTextBoxColumn cbloqplani;
         private System.Windows.Forms.DataGridViewTextBoxColumn cnumoperac;
         private System.Windows.Forms.DataGridViewTextBoxColumn ccodigolin;
@@ -3072,8 +2956,6 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.ComboBox cboFormalizacion;
         private System.Windows.Forms.BindingSource sACFechasCorteBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_FechasCorteTableAdapter sAC_FechasCorteTableAdapter;
         private System.Windows.Forms.Label lblcperiodpag;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcEstadoCuentaDetTableAdapter cOD_SlcEstadoCuentaDetTableAdapter;
     }
 }
