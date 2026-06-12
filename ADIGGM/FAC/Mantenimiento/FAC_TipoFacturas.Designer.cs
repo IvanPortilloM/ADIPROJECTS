@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.dgvTipoFactura = new System.Windows.Forms.DataGridView();
             this.fACTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsFAC = new ADIGGM.DataSets.DsFAC();
-            this.fAC_TipoFacturasTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_TipoFacturasTableAdapter();
             this.idTipoFacturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.codTipoFacturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tipoFacturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,7 +39,6 @@
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTipoFactura)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoFacturasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSalir
@@ -131,7 +128,6 @@
             this.tipoFacturaDataGridViewTextBoxColumn,
             this.activoDataGridViewCheckBoxColumn,
             this.EsTransporte});
-            this.dgvTipoFactura.DataSource = this.fACTipoFacturasBindingSource;
             this.dgvTipoFactura.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTipoFactura.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvTipoFactura.Location = new System.Drawing.Point(0, 98);
@@ -140,21 +136,7 @@
             this.dgvTipoFactura.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTipoFactura.Size = new System.Drawing.Size(577, 242);
             this.dgvTipoFactura.TabIndex = 110;
-            // 
-            // fACTipoFacturasBindingSource
-            // 
-            this.fACTipoFacturasBindingSource.DataMember = "FAC_TipoFacturas";
-            this.fACTipoFacturasBindingSource.DataSource = this.dsFAC;
-            // 
-            // dsFAC
-            // 
-            this.dsFAC.DataSetName = "DsFAC";
-            this.dsFAC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // fAC_TipoFacturasTableAdapter
-            // 
-            this.fAC_TipoFacturasTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // idTipoFacturaDataGridViewTextBoxColumn
             // 
             this.idTipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "IdTipoFactura";
@@ -208,7 +190,6 @@
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTipoFactura)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoFacturasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -216,9 +197,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvTipoFactura;
-        private DataSets.DsFAC dsFAC;
         private System.Windows.Forms.BindingSource fACTipoFacturasBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_TipoFacturasTableAdapter fAC_TipoFacturasTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn idTipoFacturaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn codTipoFacturaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipoFacturaDataGridViewTextBoxColumn;

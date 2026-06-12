@@ -30,6 +30,23 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla, insert, update, delete);
         }
 
+        // ===== FAC_TipoFacturas (mantenimiento de tipos de factura) =====
+
+        public DataTable ListarTiposFactura()
+        {
+            const string sql = "SELECT IdTipoFactura, CodTipoFactura, TipoFactura, Activo, EsTransporte FROM dbo.FAC_TipoFacturas";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Persiste altas/cambios hechos en la grilla (IdTipoFactura es identity).</summary>
+        public int GuardarTiposFactura(DataTable tabla)
+        {
+            const string insert = "INSERT INTO dbo.FAC_TipoFacturas (CodTipoFactura, TipoFactura, Activo, EsTransporte) VALUES (@CodTipoFactura, @TipoFactura, @Activo, @EsTransporte)";
+            const string update = "UPDATE dbo.FAC_TipoFacturas SET CodTipoFactura = @CodTipoFactura, TipoFactura = @TipoFactura, Activo = @Activo, EsTransporte = @EsTransporte WHERE IdTipoFactura = @IdTipoFactura";
+            const string delete = "DELETE FROM dbo.FAC_TipoFacturas WHERE IdTipoFactura = @IdTipoFactura";
+            return GuardarCambios(tabla, insert, update, delete);
+        }
+
         // ===== FAC_TipoMoneda (mantenimiento de tipos de moneda) =====
 
         public DataTable ListarTiposMoneda()

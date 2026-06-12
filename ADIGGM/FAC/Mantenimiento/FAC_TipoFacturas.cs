@@ -1,16 +1,16 @@
-﻿using Formularios_Base;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
+using Formularios_Base;
 
 namespace ADIGGM.FAC.Mantenimiento
 {
     public partial class FAC_TipoFacturas : FrmMantenimiento
     {
+        private readonly RepositorioFAC _repo = new RepositorioFAC();
+        private DataTable _dt;
+
         public FAC_TipoFacturas()
         {
             InitializeComponent();
@@ -18,9 +18,16 @@ namespace ADIGGM.FAC.Mantenimiento
 
         private void FAC_TipoFacturas_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_TipoFacturas' Puede moverla o quitarla según sea necesario.
-            this.fAC_TipoFacturasTableAdapter.Fill(this.dsFAC.FAC_TipoFacturas);
+            CargarTiposFactura();
             lblFooter.Text = "Tipo Facturas - #Registros: " + (dgvTipoFactura.RowCount);
+        }
+
+        private void CargarTiposFactura()
+        {
+            _dt = _repo.ListarTiposFactura();
+            fACTipoFacturasBindingSource.DataMember = "";
+            fACTipoFacturasBindingSource.DataSource = _dt;
+            dgvTipoFactura.DataSource = fACTipoFacturasBindingSource;
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -42,8 +49,9 @@ namespace ADIGGM.FAC.Mantenimiento
                 if (dgvTipoFactura.Rows.Count > 0 && dgvTipoFactura.FirstDisplayedCell != null)
                 {
                     dgvTipoFactura.EndEdit();
-                    this.fAC_TipoFacturasTableAdapter.Update(this.dsFAC.FAC_TipoFacturas);
-                    dgvTipoFactura.CurrentCell = dgvTipoFactura.Rows[dgvTipoFactura.CurrentRow.Index].Cells[1];
+                    fACTipoFacturasBindingSource.EndEdit();
+                    _repo.GuardarTiposFactura(_dt);
+                    CargarTiposFactura();
                     dgvTipoFactura.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
@@ -85,7 +93,7 @@ namespace ADIGGM.FAC.Mantenimiento
             dgvTipoFactura.AllowUserToAddRows = false;
             if (dgvTipoFactura.Rows.Count > 0 && dgvTipoFactura.FirstDisplayedCell != null)
             {
-                this.fAC_TipoFacturasTableAdapter.Fill(this.dsFAC.FAC_TipoFacturas);
+                CargarTiposFactura();
                 dgvTipoFactura.CurrentCell = dgvTipoFactura.Rows[dgvTipoFactura.CurrentRow.Index].Cells[1];
 
                 dgvTipoFactura.ReadOnly = true;
