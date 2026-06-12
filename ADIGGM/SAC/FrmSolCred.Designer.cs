@@ -2390,7 +2390,6 @@
             // 
             // txtdias
             // 
-            this.txtdias.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cODSlcASMaestrasBindingSource, "dias", true));
             this.txtdias.Location = new System.Drawing.Point(263, 97);
             this.txtdias.Name = "txtdias";
             this.txtdias.Size = new System.Drawing.Size(34, 21);
@@ -2403,7 +2402,6 @@
             // 
             // txtmeses
             // 
-            this.txtmeses.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cODSlcASMaestrasBindingSource, "meses", true));
             this.txtmeses.Location = new System.Drawing.Point(179, 97);
             this.txtmeses.Name = "txtmeses";
             this.txtmeses.Size = new System.Drawing.Size(34, 21);
@@ -2431,7 +2429,6 @@
             // 
             // txtanios
             // 
-            this.txtanios.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cODSlcASMaestrasBindingSource, "anios", true));
             this.txtanios.Location = new System.Drawing.Point(102, 97);
             this.txtanios.Name = "txtanios";
             this.txtanios.Size = new System.Drawing.Size(34, 21);
@@ -2442,7 +2439,6 @@
             // txtDomicilio
             // 
             this.txtDomicilio.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtDomicilio.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.cODSlcASMaestrasBindingSource, "cdireccaso", true));
             this.txtDomicilio.Location = new System.Drawing.Point(102, 71);
             this.txtDomicilio.Name = "txtDomicilio";
             this.txtDomicilio.Size = new System.Drawing.Size(374, 21);

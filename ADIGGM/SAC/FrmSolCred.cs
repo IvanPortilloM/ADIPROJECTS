@@ -276,6 +276,14 @@
                 dgvCreditos.DataSource = cODSlcCreditosBindingSource;
                 cODSlcASMaestrasBindingSource.DataMember = "";
                 cODSlcASMaestrasBindingSource.DataSource = _repoCodeas.CargarASMaestras(t);
+                // años/meses/días: el binding vivía en el Designer contra el DataSet de diseño;
+                // sin éste debe crearse aquí, ya con el DataTable cargado.
+                txtanios.DataBindings.Clear();
+                txtmeses.DataBindings.Clear();
+                txtdias.DataBindings.Clear();
+                txtanios.DataBindings.Add(new Binding("Text", this.cODSlcASMaestrasBindingSource, "anios", true));
+                txtmeses.DataBindings.Add(new Binding("Text", this.cODSlcASMaestrasBindingSource, "meses", true));
+                txtdias.DataBindings.Add(new Binding("Text", this.cODSlcASMaestrasBindingSource, "dias", true));
                 sACAsociadosBindingSource.DataMember = "";
                 sACAsociadosBindingSource.DataSource = _repoCodeas.CargarAsociadoPorCodigo(t);
 
