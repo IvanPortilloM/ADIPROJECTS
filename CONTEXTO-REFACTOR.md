@@ -11,6 +11,7 @@
 - Trabaja **UN formulario/módulo por turno**: build verde → commit → y actualiza §6/§9/§13 de ESTE archivo. Así el contexto del chat se mantiene corto y el progreso queda fuera del chat.
 - No abras chats largos: cuando el contexto crezca, deja todo committeado + este archivo actualizado y continúa en una sesión nueva.
 - **En CADA migración de form: análisis de errores de lógica** (transacciones, catches que tragan errores, éxito incondicional, DBNull, estado UI). Documentar hallazgos estilo §14; los GRAVES se reparan en la misma migración (autorizado por el usuario 2026-06-10); latentes/diseño se documentan y consultan.
+- **Trucos de ahorro probados**: (a) XSD: extraer CommandText+params con UN script PowerShell ([xml] + SelectNodes por FillMethodName/Name), NO con múltiples Read; (b) limpieza de Designer: las líneas repetitivas (campos, ClearBeforeFill, dgv.DataSource) se quitan en bloque con PowerShell Replace, no con N Edits; (c) si ADIGGM.exe está corriendo, compilar con `/p:OutputPath=bin\Debug-verify\` y borrar la carpeta después; (d) commit con `| Select-Object -First 2` para no volcar salida; (e) los archivos `*.tmp.<pid>.<hash>` que aparezcan son residuos de edición: borrarlos, no commitearlos (cuidado con `git add -A`, preferir add selectivo).
 
 ## 1. Proyecto
 - WinForms **.NET Framework 4.6.2**, proyecto **NO-SDK** (packages.config). C# 7+ (hay tuplas/ValueTuple).
