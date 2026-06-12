@@ -10,6 +10,26 @@ namespace ADIGGM.CapaDatos
     {
         public RepositorioFAC() : base(Conexion.TRANSPORTE) { }
 
+        // ===== FAC_CAI (mantenimiento de CAI / rangos de facturación SAR) =====
+
+        public DataTable ListarCAI()
+        {
+            const string sql = "SELECT IdCai, Cai, FragmentoSAR, FechaDesde, FechaHasta, NumeroDesde, NumeroHasta, Activo, Anulado, Usuario, NombreEquipo, IdSucursal FROM dbo.FAC_CAI";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Persiste altas/cambios hechos en la grilla (IdCai es identity).</summary>
+        public int GuardarCAI(DataTable tabla)
+        {
+            const string insert = "INSERT INTO dbo.FAC_CAI (Cai, FragmentoSAR, FechaDesde, FechaHasta, NumeroDesde, NumeroHasta, Activo, Anulado, Usuario, NombreEquipo, IdSucursal) " +
+                                  "VALUES (@Cai, @FragmentoSAR, @FechaDesde, @FechaHasta, @NumeroDesde, @NumeroHasta, @Activo, @Anulado, @Usuario, @NombreEquipo, @IdSucursal)";
+            const string update = "UPDATE dbo.FAC_CAI SET Cai = @Cai, FragmentoSAR = @FragmentoSAR, FechaDesde = @FechaDesde, FechaHasta = @FechaHasta, " +
+                                  "NumeroDesde = @NumeroDesde, NumeroHasta = @NumeroHasta, Activo = @Activo, Anulado = @Anulado, Usuario = @Usuario, " +
+                                  "NombreEquipo = @NombreEquipo, IdSucursal = @IdSucursal WHERE IdCai = @IdCai";
+            const string delete = "DELETE FROM dbo.FAC_CAI WHERE IdCai = @IdCai";
+            return GuardarCambios(tabla, insert, update, delete);
+        }
+
         // ===== FAC_TipoMoneda (mantenimiento de tipos de moneda) =====
 
         public DataTable ListarTiposMoneda()

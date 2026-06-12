@@ -43,12 +43,9 @@
             this.nombreEquipoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idSucursalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fACCAIBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsFAC = new ADIGGM.DataSets.DsFAC();
-            this.fAC_CAITableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_CAITableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCAI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACCAIBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSalir
@@ -145,7 +142,6 @@
             this.usuarioDataGridViewTextBoxColumn,
             this.nombreEquipoDataGridViewTextBoxColumn,
             this.idSucursalDataGridViewTextBoxColumn});
-            this.dgvCAI.DataSource = this.fACCAIBindingSource;
             this.dgvCAI.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCAI.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvCAI.Location = new System.Drawing.Point(0, 98);
@@ -251,21 +247,7 @@
             this.idSucursalDataGridViewTextBoxColumn.Name = "idSucursalDataGridViewTextBoxColumn";
             this.idSucursalDataGridViewTextBoxColumn.ReadOnly = true;
             this.idSucursalDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // fACCAIBindingSource
-            // 
-            this.fACCAIBindingSource.DataMember = "FAC_CAI";
-            this.fACCAIBindingSource.DataSource = this.dsFAC;
-            // 
-            // dsFAC
-            // 
-            this.dsFAC.DataSetName = "DsFAC";
-            this.dsFAC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // fAC_CAITableAdapter
-            // 
-            this.fAC_CAITableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // FAC_CAI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -279,7 +261,6 @@
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCAI)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACCAIBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -287,9 +268,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvCAI;
-        private DataSets.DsFAC dsFAC;
         private System.Windows.Forms.BindingSource fACCAIBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_CAITableAdapter fAC_CAITableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn idCaiDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn caiDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fragmentoSARDataGridViewTextBoxColumn;

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using ADIGGM;
+using ADIGGM.CapaDatos;
 using ADIGGM.Clases;
 using Formularios_Base;
 
@@ -13,6 +9,9 @@ namespace ADIGGM.FAC.Mantenimiento
 {
     public partial class FAC_CAI : FrmMantenimiento
     {
+        private readonly RepositorioFAC _repo = new RepositorioFAC();
+        private DataTable _dt;
+
         public FAC_CAI()
         {
             InitializeComponent();
@@ -20,9 +19,16 @@ namespace ADIGGM.FAC.Mantenimiento
 
         private void FAC_CAI_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_CAI' Puede moverla o quitarla según sea necesario.
-            this.fAC_CAITableAdapter.Fill(this.dsFAC.FAC_CAI);
+            CargarCAI();
             lblFooter.Text = "CAI - #Registros: " + (dgvCAI.RowCount);
+        }
+
+        private void CargarCAI()
+        {
+            _dt = _repo.ListarCAI();
+            fACCAIBindingSource.DataMember = "";
+            fACCAIBindingSource.DataSource = _dt;
+            dgvCAI.DataSource = fACCAIBindingSource;
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -50,8 +56,9 @@ namespace ADIGGM.FAC.Mantenimiento
                     if (dgvCAI.Rows.Count > 0 && dgvCAI.FirstDisplayedCell != null)
                     {
                         dgvCAI.EndEdit();
-                        this.fAC_CAITableAdapter.Update(this.dsFAC.FAC_CAI);
-                        dgvCAI.CurrentCell = dgvCAI.Rows[dgvCAI.CurrentRow.Index].Cells[1];
+                        fACCAIBindingSource.EndEdit();
+                        _repo.GuardarCAI(_dt);
+                        CargarCAI();
                         dgvCAI.AllowUserToAddRows = false;
 
                         btnGuardar.Enabled = false;
@@ -66,7 +73,7 @@ namespace ADIGGM.FAC.Mantenimiento
                 {
                     MessageBox.Show(ex.Message, VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }           
+            }
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -93,9 +100,9 @@ namespace ADIGGM.FAC.Mantenimiento
         {
             dgvCAI.AllowUserToAddRows = false;
             if (dgvCAI.Rows.Count > 0 && dgvCAI.FirstDisplayedCell != null)
-            {               
-                this.fAC_CAITableAdapter.Fill(this.dsFAC.FAC_CAI);
-                dgvCAI.CurrentCell = dgvCAI.Rows[dgvCAI.CurrentRow.Index].Cells[1];                
+            {
+                CargarCAI();
+                dgvCAI.CurrentCell = dgvCAI.Rows[dgvCAI.CurrentRow.Index].Cells[1];
 
                 dgvCAI.ReadOnly = true;
                 btnGuardar.Enabled = false;
@@ -110,7 +117,7 @@ namespace ADIGGM.FAC.Mantenimiento
         {
             this.Close();
         }
-        
+
         bool validarDatagrid(DataGridView dgvListas)
         {
             bool IsEmptyCell = false;
