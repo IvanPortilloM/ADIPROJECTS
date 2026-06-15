@@ -82,6 +82,106 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla, insert, update, delete);
         }
 
+        // ===== FAC_Factura (alta de facturas — combos + SPs) =====
+
+        /// <summary>Tipos de factura ACTIVOS asignados al usuario (combo cboTipoFactura).</summary>
+        public DataTable ListarTipoFacturasPorUsuario(string usuario)
+        {
+            const string sql = "SELECT A.* FROM dbo.FAC_TipoFacturas A " +
+                               "INNER JOIN dbo.FAC_TipoFacUsuarios B ON A.IdTipoFactura=B.IdTipoFactura " +
+                               "INNER JOIN dbo.TR_Usuarios C ON B.IdUsuario=C.IdUsuario " +
+                               "WHERE ISNULL(A.Activo,0)=1 AND C.NombreUsuario=@Usuario";
+            return ConsultarTabla(sql, new { Usuario = usuario });
+        }
+
+        /// <summary>Productos NO-transporte activos (combo cboProducto del detalle manual).</summary>
+        public DataTable ListarProductosNoTransporte()
+        {
+            const string sql = "SELECT Activo, AplicaImporte, CodProducto, Descripcion, EsBus, EsCamion, EsRetro, IdProducto, IdTipoEx, IdTipoFactura, NombreProducto, PagaISV " +
+                               "FROM dbo.FAC_Productos " +
+                               "WHERE ISNULL(IdTipoFactura,0) NOT IN (SELECT IdTipoFactura FROM dbo.TR_TipoFacturas WHERE ISNULL(EsTransporte,0)=1) AND ISNULL(Activo,1)=1";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Id/Nombre de todos los productos (fuente de la columna combo del grid de detalle).</summary>
+        public DataTable ListarProductosDet()
+        {
+            const string sql = "SELECT IdProducto, NombreProducto FROM dbo.FAC_Productos";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>¿El tipo de factura es de transporte? (ISNULL(EsTransporte,0)).</summary>
+        public bool TipoFacturaEsTransporte(int idTipoFactura)
+        {
+            const string sql = "SELECT ISNULL(EsTransporte,0) FROM dbo.FAC_TipoFacturas WHERE IdTipoFactura=@IdTipoFactura";
+            return Escalar<bool>(sql, new { IdTipoFactura = idTipoFactura });
+        }
+
+        /// <summary>Porcentaje de ISV vigente (SP FAC_ObtenerISV).</summary>
+        public decimal ObtenerISV()
+        {
+            return Escalar<decimal>("dbo.FAC_ObtenerISV", null, CommandType.StoredProcedure);
+        }
+
+        /// <summary>CAI y correlativo siguiente (SP FAC_ObtenerCAI, ambos por OUTPUT).</summary>
+        public (string Cai, string Correlativo) ObtenerCAI()
+        {
+            DynamicParameters p = new DynamicParameters();
+            p.Add("@CAI", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 100);
+            p.Add("@CorrelativoP", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 50);
+            Ejecutar("dbo.FAC_ObtenerCAI", p, CommandType.StoredProcedure);
+            return (p.Get<string>("@CAI"), p.Get<string>("@CorrelativoP"));
+        }
+
+        /// <summary>¿El producto es exento de ISV? (SP FAC_EsExenta).</summary>
+        public bool EsExenta(int idProducto)
+        {
+            return Escalar<bool>("dbo.FAC_EsExenta", new { IdProducto = idProducto }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>¿El cliente paga ISV? (SP FAC_ObtenerPagaISV).</summary>
+        public bool ClientePagaISV(int idCliente)
+        {
+            return Escalar<bool>("dbo.FAC_ObtenerPagaISV", new { IdCliente = idCliente }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>
+        /// Inserta la cabecera de factura (SP FAC_FacturaInsert). Devuelve el IdFactura nuevo y el
+        /// @Mensaje del SP ("SI" si reservó número de CAI correctamente). Los detalles se insertan
+        /// aparte con <see cref="InsertarFacturaDetalle"/> sólo si Mensaje=="SI".
+        /// </summary>
+        public (int IdFactura, string Mensaje) InsertarFactura(DateTime fecha, int idTipoFactura, int idCliente,
+            string cai, int idTipoMoneda, string observaciones, int idCierre, int idProforma, string tiposVeh,
+            string usuario, string ordenExenta, string registroSAG, bool aplicaISV)
+        {
+            DynamicParameters p = new DynamicParameters();
+            p.Add("@Fecha", fecha.Date, DbType.Date);
+            p.Add("@IdTipoFactura", idTipoFactura);
+            p.Add("@IdCliente", idCliente);
+            p.Add("@CAI", cai);
+            p.Add("@IdTipoMoneda", idTipoMoneda);
+            p.Add("@Observaciones", observaciones);
+            p.Add("@IdCierre", idCierre);
+            p.Add("@IdProforma", idProforma);
+            p.Add("@TiposVeh", tiposVeh);
+            p.Add("@IdUsuario", usuario);
+            p.Add("@Mensaje", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 50);
+            p.Add("@OrdenExenta", ordenExenta);
+            p.Add("@RegitroSAG", registroSAG);
+            p.Add("@AplicaISV", aplicaISV);
+
+            int idFac = Escalar<int>("dbo.FAC_FacturaInsert", p, CommandType.StoredProcedure);
+            return (idFac, p.Get<string>("@Mensaje"));
+        }
+
+        /// <summary>Inserta una línea de detalle de la factura (SP FAC_FacturaDetInsert).</summary>
+        public int InsertarFacturaDetalle(int idFactura, int idServicio, decimal cantidad, decimal precio, decimal isv, decimal total)
+        {
+            return Ejecutar("dbo.FAC_FacturaDetInsert",
+                new { IdFAC = idFactura, IdServicio = idServicio, Cantidad = cantidad, Precio = precio, ISV = isv, Total = total },
+                CommandType.StoredProcedure);
+        }
+
         // ===== FAC_ActualizarDatos (Orden/SAG/Proforma de una factura) =====
 
         /// <summary>

@@ -36,7 +36,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cboTipoFactura = new System.Windows.Forms.ComboBox();
             this.fACTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsFAC = new ADIGGM.DataSets.DsFAC();
             this.cboCliente = new System.Windows.Forms.ComboBox();
             this.tRClientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label2 = new System.Windows.Forms.Label();
@@ -67,16 +66,11 @@
             this.label7 = new System.Windows.Forms.Label();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnBuscarBoletas = new System.Windows.Forms.Button();
-            this.fAC_TipoFacturasTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_TipoFacturasTableAdapter();
-            this.tR_ClientesTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.TR_ClientesTableAdapter();
             this.cboTipoMoneda = new System.Windows.Forms.ComboBox();
             this.fACTipoMonedaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label11 = new System.Windows.Forms.Label();
-            this.fAC_Productos_DetTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_Productos_DetTableAdapter();
-            this.fAC_ProductosTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_ProductosTableAdapter();
             this.txtCAI = new System.Windows.Forms.TextBox();
             this.txtCorrelativo = new System.Windows.Forms.TextBox();
-            this.fAC_TipoMonedaTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_TipoMonedaTableAdapter();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chkAplica = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -86,7 +80,6 @@
             this.lblExenta = new System.Windows.Forms.Label();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoFacturasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRClientesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACProductosDetBindingSource)).BeginInit();
@@ -148,8 +141,7 @@
             this.label1.Text = "Tipo Factura";
             // 
             // cboTipoFactura
-            // 
-            this.cboTipoFactura.DataSource = this.fACTipoFacturasBindingSource;
+            //
             this.cboTipoFactura.DisplayMember = "TipoFactura";
             this.cboTipoFactura.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTipoFactura.FormattingEnabled = true;
@@ -159,20 +151,9 @@
             this.cboTipoFactura.TabIndex = 104;
             this.cboTipoFactura.ValueMember = "IdTipoFactura";
             this.cboTipoFactura.SelectedIndexChanged += new System.EventHandler(this.cboTipoFactura_SelectedIndexChanged);
-            // 
-            // fACTipoFacturasBindingSource
-            // 
-            this.fACTipoFacturasBindingSource.DataMember = "FAC_TipoFacturas";
-            this.fACTipoFacturasBindingSource.DataSource = this.dsFAC;
-            // 
-            // dsFAC
-            // 
-            this.dsFAC.DataSetName = "DsFAC";
-            this.dsFAC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // cboCliente
-            // 
-            this.cboCliente.DataSource = this.tRClientesBindingSource;
+            //
             this.cboCliente.DisplayMember = "Cliente";
             this.cboCliente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCliente.FormattingEnabled = true;
@@ -182,12 +163,7 @@
             this.cboCliente.TabIndex = 106;
             this.cboCliente.ValueMember = "IdCliente";
             this.cboCliente.SelectedIndexChanged += new System.EventHandler(this.cboCliente_SelectedIndexChanged);
-            // 
-            // tRClientesBindingSource
-            // 
-            this.tRClientesBindingSource.DataMember = "TR_Clientes";
-            this.tRClientesBindingSource.DataSource = this.dsFAC;
-            // 
+            //
             // label2
             // 
             this.label2.AutoSize = true;
@@ -251,8 +227,7 @@
             this.dgvDetalle.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvDetalle_DataError);
             // 
             // Producto
-            // 
-            this.Producto.DataSource = this.fACProductosDetBindingSource;
+            //
             this.Producto.DisplayMember = "NombreProducto";
             this.Producto.FillWeight = 235.93F;
             this.Producto.HeaderText = "Servicio";
@@ -262,12 +237,7 @@
             this.Producto.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Producto.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Producto.ValueMember = "IdProducto";
-            // 
-            // fACProductosDetBindingSource
-            // 
-            this.fACProductosDetBindingSource.DataMember = "FAC_Productos_Det";
-            this.fACProductosDetBindingSource.DataSource = this.dsFAC;
-            // 
+            //
             // Cantidad
             // 
             dataGridViewCellStyle1.Format = "N2";
@@ -437,8 +407,7 @@
             this.label8.Text = "Cantidad";
             // 
             // cboProducto
-            // 
-            this.cboProducto.DataSource = this.fACProductosBindingSource;
+            //
             this.cboProducto.DisplayMember = "NombreProducto";
             this.cboProducto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboProducto.FormattingEnabled = true;
@@ -447,12 +416,7 @@
             this.cboProducto.Size = new System.Drawing.Size(401, 24);
             this.cboProducto.TabIndex = 108;
             this.cboProducto.ValueMember = "IdProducto";
-            // 
-            // fACProductosBindingSource
-            // 
-            this.fACProductosBindingSource.DataMember = "FAC_Productos";
-            this.fACProductosBindingSource.DataSource = this.dsFAC;
-            // 
+            //
             // label7
             // 
             this.label7.AutoSize = true;
@@ -488,18 +452,9 @@
             this.btnBuscarBoletas.UseVisualStyleBackColor = false;
             this.btnBuscarBoletas.Visible = false;
             this.btnBuscarBoletas.Click += new System.EventHandler(this.btnBuscarBoletas_Click);
-            // 
-            // fAC_TipoFacturasTableAdapter
-            // 
-            this.fAC_TipoFacturasTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_ClientesTableAdapter
-            // 
-            this.tR_ClientesTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // cboTipoMoneda
-            // 
-            this.cboTipoMoneda.DataSource = this.fACTipoMonedaBindingSource;
+            //
             this.cboTipoMoneda.DisplayMember = "TipoMoneda";
             this.cboTipoMoneda.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTipoMoneda.FormattingEnabled = true;
@@ -508,12 +463,7 @@
             this.cboTipoMoneda.Size = new System.Drawing.Size(253, 24);
             this.cboTipoMoneda.TabIndex = 118;
             this.cboTipoMoneda.ValueMember = "IdTipoMoneda";
-            // 
-            // fACTipoMonedaBindingSource
-            // 
-            this.fACTipoMonedaBindingSource.DataMember = "FAC_TipoMoneda";
-            this.fACTipoMonedaBindingSource.DataSource = this.dsFAC;
-            // 
+            //
             // label11
             // 
             this.label11.AutoSize = true;
@@ -522,15 +472,7 @@
             this.label11.Size = new System.Drawing.Size(80, 16);
             this.label11.TabIndex = 117;
             this.label11.Text = "Tipo Moneda";
-            // 
-            // fAC_Productos_DetTableAdapter
-            // 
-            this.fAC_Productos_DetTableAdapter.ClearBeforeFill = true;
-            // 
-            // fAC_ProductosTableAdapter
-            // 
-            this.fAC_ProductosTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // txtCAI
             // 
             this.txtCAI.Location = new System.Drawing.Point(99, 102);
@@ -548,11 +490,7 @@
             this.txtCorrelativo.Size = new System.Drawing.Size(112, 21);
             this.txtCorrelativo.TabIndex = 121;
             this.txtCorrelativo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // fAC_TipoMonedaTableAdapter
-            // 
-            this.fAC_TipoMonedaTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.chkAplica);
@@ -656,7 +594,6 @@
             this.pnlFooter.ResumeLayout(false);
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoFacturasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRClientesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACProductosDetBindingSource)).EndInit();
@@ -696,22 +633,16 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnBuscarBoletas;
-        private DataSets.DsFAC dsFAC;
         private System.Windows.Forms.BindingSource fACTipoFacturasBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_TipoFacturasTableAdapter fAC_TipoFacturasTableAdapter;
         private System.Windows.Forms.BindingSource tRClientesBindingSource;
-        private DataSets.DsFACTableAdapters.TR_ClientesTableAdapter tR_ClientesTableAdapter;
         private System.Windows.Forms.ComboBox cboTipoMoneda;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.BindingSource fACProductosDetBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_Productos_DetTableAdapter fAC_Productos_DetTableAdapter;
         private System.Windows.Forms.BindingSource fACProductosBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_ProductosTableAdapter fAC_ProductosTableAdapter;
         private System.Windows.Forms.TextBox txtCAI;
         private System.Windows.Forms.TextBox txtCorrelativo;
         private System.Windows.Forms.BindingSource fACTipoMonedaBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_TipoMonedaTableAdapter fAC_TipoMonedaTableAdapter;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox txtSAG;

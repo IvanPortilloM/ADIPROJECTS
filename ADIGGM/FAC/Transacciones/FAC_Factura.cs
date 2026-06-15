@@ -1,10 +1,12 @@
 ﻿namespace ADIGGM.FAC.Transacciones
 {
     using ADIGGM.Clases;
+    using ADIGGM.CapaDatos;
     using System;
     using System.Windows.Forms;
     public partial class FAC_Factura : FrmPrincipal
     {
+        private readonly RepositorioFAC _repo = new RepositorioFAC();
         public bool EsTransporte = false;
         public static int IdCierre = 0;
         public static int IdProforma = 0;
@@ -30,11 +32,19 @@
             TipoFact = "N/A";
         }
 
+        void CargarClientes()
+        {
+            // El DataSource se asigna aquí y NO en el Designer (gotcha del diseñador de VS)
+            tRClientesBindingSource.DataMember = "";
+            tRClientesBindingSource.DataSource = _repo.ListarClientesTransporte(EsTransporte);
+            cboCliente.DataSource = tRClientesBindingSource;
+        }
+
         void validarTipoFactura()
         {
             if (cboTipoFactura.SelectedIndex != -1)
             {
-                bool resul = bool.Parse(VarGlobales.consultasFAC.ObtenerTipoFactura(int.Parse(cboTipoFactura.SelectedValue.ToString())).ToString());
+                bool resul = _repo.TipoFacturaEsTransporte(int.Parse(cboTipoFactura.SelectedValue.ToString()));
 
                 if (resul)
                 {
@@ -42,7 +52,7 @@
                     gbDetalle.Enabled = false;
                     dgvDetalle.Rows.Clear();
                     EsTransporte = true;
-                    this.tR_ClientesTableAdapter.Fill(this.dsFAC.TR_Clientes, EsTransporte);
+                    CargarClientes();
                 }
                 else
                 {
@@ -50,24 +60,32 @@
                     gbDetalle.Enabled = true;
                     dgvDetalle.Rows.Clear();
                     EsTransporte = false;
-                    this.tR_ClientesTableAdapter.Fill(this.dsFAC.TR_Clientes, EsTransporte);
+                    CargarClientes();
                 }
             }
         }
 
         private void FAC_Factura_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_TipoMoneda' Puede moverla o quitarla según sea necesario.
-            this.fAC_TipoMonedaTableAdapter.Fill(this.dsFAC.FAC_TipoMoneda);
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_Productos' Puede moverla o quitarla según sea necesario.
-            this.fAC_ProductosTableAdapter.FillByProDet(this.dsFAC.FAC_Productos);
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_Productos_Det' Puede moverla o quitarla según sea necesario.
-            this.fAC_Productos_DetTableAdapter.Fill(this.dsFAC.FAC_Productos_Det);
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_TipoFacturas' Puede moverla o quitarla según sea necesario.
-            this.fAC_TipoFacturasTableAdapter.FillByActivos(this.dsFAC.FAC_TipoFacturas, VarGlobales.Usuario);
-            this.tR_ClientesTableAdapter.Fill(this.dsFAC.TR_Clientes, EsTransporte);
+            // Tipo de moneda
+            fACTipoMonedaBindingSource.DataMember = "";
+            fACTipoMonedaBindingSource.DataSource = _repo.ListarTiposMoneda();
+            cboTipoMoneda.DataSource = fACTipoMonedaBindingSource;
+            // Productos no-transporte (detalle manual)
+            fACProductosBindingSource.DataMember = "";
+            fACProductosBindingSource.DataSource = _repo.ListarProductosNoTransporte();
+            cboProducto.DataSource = fACProductosBindingSource;
+            // Fuente de la columna combo del grid de detalle (Id->NombreProducto)
+            fACProductosDetBindingSource.DataMember = "";
+            fACProductosDetBindingSource.DataSource = _repo.ListarProductosDet();
+            Producto.DataSource = fACProductosDetBindingSource;
+            // Tipos de factura del usuario (dispara cboTipoFactura_SelectedIndexChanged -> validarTipoFactura)
+            fACTipoFacturasBindingSource.DataMember = "";
+            fACTipoFacturasBindingSource.DataSource = _repo.ListarTipoFacturasPorUsuario(VarGlobales.Usuario);
+            cboTipoFactura.DataSource = fACTipoFacturasBindingSource;
+            CargarClientes();
 
-            ISVP = decimal.Parse(VarGlobales.consultasFAC.FAC_ObtenerISV().ToString());
+            ISVP = _repo.ObtenerISV();
             txtISV.Text = ISVP.ToString();
             obtenerCAI();
             validarTipoFactura();
@@ -76,9 +94,11 @@
 
         void obtenerCAI()
         {
-            VarGlobales.consultasFAC.FAC_ObtenerCAI(ref CAI, ref Correlativo);
-            txtCAI.Text = CAI.ToString();
-            txtCorrelativo.Text = Correlativo.ToString();
+            var cai = _repo.ObtenerCAI();
+            CAI = cai.Cai;
+            Correlativo = cai.Correlativo;
+            txtCAI.Text = CAI;
+            txtCorrelativo.Text = Correlativo;
         }
 
         private void btnBuscarBoletas_Click(object sender, EventArgs e)
@@ -143,31 +163,31 @@
                     //MessageBox.Show(IdCierre.ToString() + '-' + IdProforma.ToString() + '-' + TiposVeh);
                     if (MessageBox.Show("Seguro desea guardar esta factura?", VarGlobales.nombreSistema, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        var mensaje = "";
-                        int IdFAC = int.Parse(VarGlobales.consultasFAC.FAC_FacturaInsert(dtpFecha.Value.Date,
-                                                                                                     int.Parse(cboTipoFactura.SelectedValue.ToString()),
-                                                                                                     int.Parse(cboCliente.SelectedValue.ToString()),
-                                                                                                     txtCAI.Text,
-                                                                                                     int.Parse(cboTipoMoneda.SelectedValue.ToString()),
-                                                                                                     txtObservaciones.Text,
-                                                                                                     int.Parse(IdCierre.ToString()),
-                                                                                                     int.Parse(IdProforma.ToString()),
-                                                                                                     TiposVeh,
-                                                                                                     VarGlobales.Usuario,
-                                                                                                     ref mensaje,
-                                                                                                     txtOrdenExenta.Text,
-                                                                                                     txtSAG.Text,
-                                                                                                     chkAplica.Checked).ToString());
+                        var resultado = _repo.InsertarFactura(dtpFecha.Value.Date,
+                                                              int.Parse(cboTipoFactura.SelectedValue.ToString()),
+                                                              int.Parse(cboCliente.SelectedValue.ToString()),
+                                                              txtCAI.Text,
+                                                              int.Parse(cboTipoMoneda.SelectedValue.ToString()),
+                                                              txtObservaciones.Text,
+                                                              int.Parse(IdCierre.ToString()),
+                                                              int.Parse(IdProforma.ToString()),
+                                                              TiposVeh,
+                                                              VarGlobales.Usuario,
+                                                              txtOrdenExenta.Text,
+                                                              txtSAG.Text,
+                                                              chkAplica.Checked);
+                        int IdFAC = resultado.IdFactura;
+                        var mensaje = resultado.Mensaje;
 
                         if (mensaje == "SI")
                         {
                             foreach (DataGridViewRow row in dgvDetalle.Rows)
                             {
-                                VarGlobales.consultasFAC.FAC_FacturaDetInsert(IdFAC, int.Parse(row.Cells[0].Value.ToString()),
-                                                                                              decimal.Parse(row.Cells[1].Value.ToString()),
-                                                                                              decimal.Parse(row.Cells[2].Value.ToString()),
-                                                                                              decimal.Parse(row.Cells[3].Value.ToString()),
-                                                                                              decimal.Parse(row.Cells[4].Value.ToString()));
+                                _repo.InsertarFacturaDetalle(IdFAC, int.Parse(row.Cells[0].Value.ToString()),
+                                                                    decimal.Parse(row.Cells[1].Value.ToString()),
+                                                                    decimal.Parse(row.Cells[2].Value.ToString()),
+                                                                    decimal.Parse(row.Cells[3].Value.ToString()),
+                                                                    decimal.Parse(row.Cells[4].Value.ToString()));
                             }
                             MessageBox.Show("Factura agregada exitosamente", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                             limpiarDatos();
@@ -388,7 +408,7 @@
 
         void EsExenta(int IdProducto)
         {
-            bool esExenta = bool.Parse(VarGlobales.consultasFAC.FAC_EsExenta(IdProducto).ToString());
+            bool esExenta = _repo.EsExenta(IdProducto);
             if (esExenta)
             {
                 lblExenta.Visible = true;
@@ -406,7 +426,7 @@
         {
             if (cboCliente.SelectedIndex != -1)
             {
-                chkAplica.Checked = bool.Parse(VarGlobales.consultasFAC.FAC_ObtenerPagaISV(int.Parse(cboCliente.SelectedValue.ToString())).ToString());
+                chkAplica.Checked = _repo.ClientePagaISV(int.Parse(cboCliente.SelectedValue.ToString()));
             }
         }
 
