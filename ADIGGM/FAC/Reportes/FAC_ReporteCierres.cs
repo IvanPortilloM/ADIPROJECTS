@@ -1,4 +1,5 @@
 ﻿using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 using Microsoft.Reporting.WinForms;
 using System;
 
@@ -6,6 +7,7 @@ namespace ADIGGM.FAC.Reportes
 {
     public partial class FAC_ReporteCierres : FrmPrincipal
     {
+        private readonly RepositorioFAC _repo = new RepositorioFAC();
         string usuarioDominio = "Administrator";
         string claveDominio = "camaron+2016";
         string dominio = "";
@@ -16,8 +18,9 @@ namespace ADIGGM.FAC.Reportes
 
         private void FAC_ReporteCierres_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_FincasGGM' Puede moverla o quitarla según sea necesario.
-            this.fAC_FincasGGMTableAdapter.Fill(this.dsFAC.FAC_FincasGGM);
+            fACFincasGGMBindingSource.DataMember = "";
+            fACFincasGGMBindingSource.DataSource = _repo.ListarFincasGGM();
+            cboCliente.DataSource = fACFincasGGMBindingSource;
         }
 
         private void btnVisualizar_Click(object sender, EventArgs e)

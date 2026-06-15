@@ -80,6 +80,14 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla, insert, update, delete);
         }
 
+        // ===== FAC_ReporteCierres (combo de fincas/clientes del reporte de cierres) =====
+
+        /// <summary>Fincas/clientes (SP FAC_FincasGGM) para el combo del reporte de cierres.</summary>
+        public DataTable ListarFincasGGM()
+        {
+            return ConsultarTabla("dbo.FAC_FincasGGM", null, CommandType.StoredProcedure);
+        }
+
         // ===== FAC_TipoFacUsuarios (asignación de tipos de factura a usuarios) =====
 
         /// <summary>Usuarios NO asignados al tipo de factura (SP, filtra por texto de búsqueda).</summary>

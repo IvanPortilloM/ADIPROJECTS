@@ -41,12 +41,9 @@
             this.dtpDesde = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.rvFAC = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.dsFAC = new ADIGGM.DataSets.DsFAC();
             this.fACFincasGGMBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.fAC_FincasGGMTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_FincasGGMTableAdapter();
             this.pnlFooter.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACFincasGGMBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,7 +113,6 @@
             // 
             this.cboCliente.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cboCliente.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cboCliente.DataSource = this.fACFincasGGMBindingSource;
             this.cboCliente.DisplayMember = "Finca";
             this.cboCliente.FormattingEnabled = true;
             this.cboCliente.Location = new System.Drawing.Point(79, 39);
@@ -124,7 +120,7 @@
             this.cboCliente.Size = new System.Drawing.Size(442, 21);
             this.cboCliente.TabIndex = 118;
             this.cboCliente.ValueMember = "IdFinca";
-            // 
+            //
             // label4
             // 
             this.label4.AutoSize = true;
@@ -190,20 +186,6 @@
             this.rvFAC.TabIndex = 107;
             this.rvFAC.Visible = false;
             // 
-            // dsFAC
-            // 
-            this.dsFAC.DataSetName = "DsFAC";
-            this.dsFAC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // fACFincasGGMBindingSource
-            // 
-            this.fACFincasGGMBindingSource.DataMember = "FAC_FincasGGM";
-            this.fACFincasGGMBindingSource.DataSource = this.dsFAC;
-            // 
-            // fAC_FincasGGMTableAdapter
-            // 
-            this.fAC_FincasGGMTableAdapter.ClearBeforeFill = true;
-            // 
             // FAC_ReporteCierres
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -219,7 +201,6 @@
             this.pnlFooter.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACFincasGGMBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -237,8 +218,6 @@
         private System.Windows.Forms.DateTimePicker dtpDesde;
         private System.Windows.Forms.Label label1;
         private Microsoft.Reporting.WinForms.ReportViewer rvFAC;
-        private DataSets.DsFAC dsFAC;
         private System.Windows.Forms.BindingSource fACFincasGGMBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_FincasGGMTableAdapter fAC_FincasGGMTableAdapter;
     }
 }
