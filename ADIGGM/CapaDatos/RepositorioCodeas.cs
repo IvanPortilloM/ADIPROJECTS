@@ -15,6 +15,23 @@ namespace ADIGGM.CapaDatos
     {
         public RepositorioCodeas() : base(Conexion.TRANSPORTE) { }
 
+        // ===== TR_TipoFacturas (mantenimiento de tipos de factura — Mant\FrmTipoFac) =====
+
+        public DataTable ListarTipoFacturas()
+        {
+            const string sql = "SELECT IdTipoFactura, TipoFactura, Activo FROM dbo.TR_TipoFacturas";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Persiste altas/cambios de la grilla (IdTipoFactura es identity).</summary>
+        public int GuardarTipoFacturas(DataTable tabla)
+        {
+            const string insert = "INSERT INTO dbo.TR_TipoFacturas (TipoFactura, Activo) VALUES (@TipoFactura, @Activo)";
+            const string update = "UPDATE dbo.TR_TipoFacturas SET TipoFactura = @TipoFactura, Activo = @Activo WHERE IdTipoFactura = @IdTipoFactura";
+            const string delete = "DELETE FROM dbo.TR_TipoFacturas WHERE IdTipoFactura = @IdTipoFactura";
+            return GuardarCambios(tabla, insert, update, delete);
+        }
+
         // ===== Estado de cuenta del asociado (reporte rptASMaestra) =====
 
         public DataTable CargarASMaestras(string identidad)

@@ -34,11 +34,8 @@
             this.tipoFactura = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Activo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tRTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCodeasAdiggm = new ADIGGM.DataSets.DsCodeasAdiggm();
-            this.tR_TipoFacturasTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.TR_TipoFacturasTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTipoFac)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoFacturasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSalir
@@ -118,7 +115,6 @@
             this.idTipoFactura,
             this.tipoFactura,
             this.Activo});
-            this.dgvTipoFac.DataSource = this.tRTipoFacturasBindingSource;
             this.dgvTipoFac.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTipoFac.Location = new System.Drawing.Point(0, 98);
             this.dgvTipoFac.Margin = new System.Windows.Forms.Padding(48, 22, 48, 22);
@@ -155,18 +151,7 @@
             this.Activo.Width = 43;
             // 
             // tRTipoFacturasBindingSource
-            // 
-            this.tRTipoFacturasBindingSource.DataMember = "TR_TipoFacturas";
-            this.tRTipoFacturasBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // dsCodeasAdiggm
-            // 
-            this.dsCodeasAdiggm.DataSetName = "DsCodeasAdiggm";
-            this.dsCodeasAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // tR_TipoFacturasTableAdapter
-            // 
-            this.tR_TipoFacturasTableAdapter.ClearBeforeFill = true;
+            //
             // 
             // FrmTipoFac
             // 
@@ -179,7 +164,6 @@
             this.Controls.SetChildIndex(this.dgvTipoFac, 0);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTipoFac)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoFacturasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -187,9 +171,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvTipoFac;
-        private DataSets.DsCodeasAdiggm dsCodeasAdiggm;
         private System.Windows.Forms.BindingSource tRTipoFacturasBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.TR_TipoFacturasTableAdapter tR_TipoFacturasTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn idTipoFactura;
         private System.Windows.Forms.DataGridViewTextBoxColumn tipoFactura;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Activo;

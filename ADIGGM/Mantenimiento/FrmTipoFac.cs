@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
 using Formularios_Base;
 
 namespace ADIGGM.Mantenimiento
 {
     public partial class FrmTipoFac : FrmMantenimiento
     {
+        private readonly RepositorioCodeas _repo = new RepositorioCodeas();
+        private DataTable _dt;
         int selectedIndex;
 
         public FrmTipoFac()
@@ -31,6 +30,13 @@ namespace ADIGGM.Mantenimiento
 
         Clases.VarGlobales variables = new Clases.VarGlobales();
 
+        private void CargarTipoFac()
+        {
+            _dt = _repo.ListarTipoFacturas();
+            tRTipoFacturasBindingSource.DataMember = "";
+            tRTipoFacturasBindingSource.DataSource = _dt;
+            dgvTipoFac.DataSource = tRTipoFacturasBindingSource;
+        }
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
@@ -53,7 +59,9 @@ namespace ADIGGM.Mantenimiento
                 {
                     selectedIndex = dgvTipoFac.CurrentRow.Index;
                     dgvTipoFac.EndEdit();
-                    this.tR_TipoFacturasTableAdapter.Update(this.dsCodeasAdiggm.TR_TipoFacturas);
+                    tRTipoFacturasBindingSource.EndEdit();
+                    _repo.GuardarTipoFacturas(_dt);
+                    CargarTipoFac();
                     dgvTipoFac.CurrentCell = dgvTipoFac.Rows[selectedIndex].Cells[1];
                     dgvTipoFac.AllowUserToAddRows = false;
 
@@ -96,7 +104,7 @@ namespace ADIGGM.Mantenimiento
             {
                 selectedIndex = dgvTipoFac.CurrentRow.Index;
 
-                this.tR_TipoFacturasTableAdapter.Fill(this.dsCodeasAdiggm.TR_TipoFacturas);
+                CargarTipoFac();
                 dgvTipoFac.CurrentCell = dgvTipoFac.Rows[selectedIndex].Cells[1];
                 dgvTipoFac.AllowUserToAddRows = false;
 
@@ -125,8 +133,7 @@ namespace ADIGGM.Mantenimiento
 
         private void FrmTipoFac_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsCodeasAdiggm.TR_TipoFacturas' Puede moverla o quitarla según sea necesario.
-            this.tR_TipoFacturasTableAdapter.Fill(this.dsCodeasAdiggm.TR_TipoFacturas);
+            CargarTipoFac();
         }
     }
 }
