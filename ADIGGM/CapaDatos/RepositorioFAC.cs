@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using Dapper;
 
 namespace ADIGGM.CapaDatos
 {
@@ -79,6 +80,30 @@ namespace ADIGGM.CapaDatos
             const string update = "UPDATE dbo.FAC_TipoFacturas SET CodTipoFactura = @CodTipoFactura, TipoFactura = @TipoFactura, Activo = @Activo, EsTransporte = @EsTransporte WHERE IdTipoFactura = @IdTipoFactura";
             const string delete = "DELETE FROM dbo.FAC_TipoFacturas WHERE IdTipoFactura = @IdTipoFactura";
             return GuardarCambios(tabla, insert, update, delete);
+        }
+
+        // ===== FAC_ActualizarDatos (Orden/SAG/Proforma de una factura) =====
+
+        /// <summary>
+        /// SP FAC_ActualizarDatos: Opcion=1 guarda los datos recibidos; Opcion=2 los lee.
+        /// El SP devuelve los 3 valores por parámetros OUTPUT (@NumOrden1/@NumSAG1/@NumProforma1).
+        /// </summary>
+        public (string NumOrden, string NumSAG, string NumProforma) ActualizarDatosFactura(
+            int idFactura, string numOrden, string numSAG, string numProforma, int opcion)
+        {
+            DynamicParameters p = new DynamicParameters();
+            p.Add("@IdFactura", idFactura);
+            p.Add("@NumOrden", numOrden);
+            p.Add("@NumSAG", numSAG);
+            p.Add("@NumProforma", numProforma);
+            p.Add("@NumOrden1", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 50);
+            p.Add("@NumSAG1", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 50);
+            p.Add("@NumProforma1", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 25);
+            p.Add("@Opcion", opcion);
+
+            Ejecutar("dbo.FAC_ActualizarDatos", p, CommandType.StoredProcedure);
+
+            return (p.Get<string>("@NumOrden1"), p.Get<string>("@NumSAG1"), p.Get<string>("@NumProforma1"));
         }
 
         // ===== FAC_VisorFacturas (visor maestro-detalle de facturas) =====
