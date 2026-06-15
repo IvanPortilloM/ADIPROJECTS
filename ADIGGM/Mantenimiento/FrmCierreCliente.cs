@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.Mantenimiento
 {
     public partial class FrmCierreCliente : FrmPrincipal
     {
+        private readonly RepositorioTransporte _repo = new RepositorioTransporte();
         int IdCierre = 0;
         string Usuario = Clases.VarGlobales.Usuario;
         public FrmCierreCliente(int IdCierre)
@@ -23,17 +20,26 @@ namespace ADIGGM.Mantenimiento
 
         private void FrmCierreCliente_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsCodeasAdiggm.TR_TipoFacturas' Puede moverla o quitarla según sea necesario.
-            this.tR_TipoFacturasTableAdapter.Fill(this.dsCodeasAdiggm.TR_TipoFacturas);
-            this.tR_TipoVehiculosTableAdapter.FillByActivo(this.dsTransporteAdiggm.TR_TipoVehiculos);
-            this.tR_ClientesTableAdapter.Fill(this.dsTransporteAdiggm.TR_Clientes);
+            // Combos-columna del grid (el DataSource se asigna aquí, no en el Designer)
+            tRClientesBindingSource.DataMember = "";
+            tRClientesBindingSource.DataSource = _repo.ListarClientes();
+            idCliente.DataSource = tRClientesBindingSource;
+            tRTipoVehiculosBindingSource.DataMember = "";
+            tRTipoVehiculosBindingSource.DataSource = _repo.ListarTipoVehiculosActivos();
+            idTipoVehiculo.DataSource = tRTipoVehiculosBindingSource;
+            // Combo filtro por Tipo de Factura (dispara cboTipoVeh_SelectedValueChanged -> LlenarDgv)
+            tRTipoFacturasBindingSource.DataMember = "";
+            tRTipoFacturasBindingSource.DataSource = _repo.ListarTipoFacturas();
+
             LlenarDgv();
             LlenarTotales(-1);
         }
 
         public void LlenarDgv()
         {
-            this.tR_CierreClientesTableAdapter.FillByTpFac(this.dsTransporteAdiggm.TR_CierreClientes, IdCierre, Convert.ToInt32(cboTipoVeh.SelectedValue));
+            tRCierreClientesBindingSource.DataMember = "";
+            tRCierreClientesBindingSource.DataSource = _repo.ListarCierreClientesPorTipoFac(IdCierre, Convert.ToInt32(cboTipoVeh.SelectedValue));
+            dgvCierreCliente.DataSource = tRCierreClientesBindingSource;
         }
 
         private void LimpiarContextMenuStrip()
@@ -62,7 +68,7 @@ namespace ADIGGM.Mantenimiento
                 int IdCliente = int.Parse(dgvCierreCliente.CurrentRow.Cells["idCliente"].Value.ToString());
                 int IdTipoVeh = int.Parse(dgvCierreCliente.CurrentRow.Cells["idTipoVehiculo"].Value.ToString()); 
 
-                Clases.VarGlobales.consultasTrans.PR_CierresClientesCerrar(IdCierre, IdCliente, IdTipoVeh, Usuario);
+                _repo.CerrarCierreCliente(IdCierre, IdCliente, IdTipoVeh, Usuario);
                 MessageBox.Show("Cierre Realizado Exitosamente", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LlenarDgv();
             }
@@ -77,7 +83,7 @@ namespace ADIGGM.Mantenimiento
                 int IdCliente = int.Parse(dgvCierreCliente.CurrentRow.Cells["idCliente"].Value.ToString());
                 int IdTipoVeh = int.Parse(dgvCierreCliente.CurrentRow.Cells["idTipoVehiculo"].Value.ToString());
 
-                Clases.VarGlobales.consultasTrans.PR_CierreClientesReversar(IdCierre, IdCliente, IdTipoVeh, Usuario);
+                _repo.ReversarCierreCliente(IdCierre, IdCliente, IdTipoVeh, Usuario);
                 MessageBox.Show("Reversión Realizada Exitosamente", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LlenarDgv();
             }
@@ -189,7 +195,7 @@ namespace ADIGGM.Mantenimiento
                 int IdCliente = int.Parse(dgvCierreCliente.CurrentRow.Cells["idCliente"].Value.ToString());
                 int IdTipoVeh = int.Parse(dgvCierreCliente.CurrentRow.Cells["idTipoVehiculo"].Value.ToString());
 
-                Clases.VarGlobales.consultasTrans.PR_CierresCAplicaISV(IdCierre, IdCliente, IdTipoVeh, Usuario, true);
+                _repo.AplicarISVCierre(IdCierre, IdCliente, IdTipoVeh, Usuario, true);
                 MessageBox.Show("La aplicación del impuesto fue realizada exitosamente", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LlenarDgv();
             }
@@ -204,7 +210,7 @@ namespace ADIGGM.Mantenimiento
                 int IdCliente = int.Parse(dgvCierreCliente.CurrentRow.Cells["idCliente"].Value.ToString());
                 int IdTipoVeh = int.Parse(dgvCierreCliente.CurrentRow.Cells["idTipoVehiculo"].Value.ToString());
 
-                Clases.VarGlobales.consultasTrans.PR_CierresCAplicaISV(IdCierre, IdCliente, IdTipoVeh, Usuario, false);
+                _repo.AplicarISVCierre(IdCierre, IdCliente, IdTipoVeh, Usuario, false);
                 MessageBox.Show("La aplicación del impuesto fue realizada exitosamente", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LlenarDgv();
             }

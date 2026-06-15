@@ -38,6 +38,51 @@ namespace ADIGGM.CapaDatos
             return ConsultarTabla(sql);
         }
 
+        // ===== TR_Clientes =====
+
+        /// <summary>Id/Nombre de clientes (combo-columna del grid de cierres).</summary>
+        public DataTable ListarClientes()
+        {
+            const string sql = "SELECT IdCliente, Cliente FROM dbo.TR_Clientes";
+            return ConsultarTabla(sql);
+        }
+
+        // ===== TR_CierreClientes (cierre de clientes — Mant\FrmCierreCliente) =====
+
+        /// <summary>Filas de cierre de un cierre y tipo de factura (JOIN con TR_AsigFacTipoVeh).</summary>
+        public DataTable ListarCierreClientesPorTipoFac(int idCierre, int idTipoFactura)
+        {
+            const string sql =
+                "SELECT TR_CierreClientes.IdCierreCliente, TR_CierreClientes.IdCierre, TR_CierreClientes.IdCliente, " +
+                "TR_CierreClientes.IdTipoVehiculo, TR_AsigFacTipoVeh.IdTipoFactura, TR_CierreClientes.SubTotalCierre, " +
+                "TR_CierreClientes.ISVCierre, TR_CierreClientes.TotalCierre, TR_CierreClientes.Cerrado, TR_CierreClientes.Anulado, TR_CierreClientes.SynCodeas " +
+                "FROM dbo.TR_CierreClientes INNER JOIN dbo.TR_AsigFacTipoVeh ON TR_AsigFacTipoVeh.IdTipoVehiculo = TR_CierreClientes.IdTipoVehiculo " +
+                "WHERE TR_CierreClientes.IdCierre = @IdCierre AND TR_AsigFacTipoVeh.IdTipoFactura = @IdTipoFactura " +
+                "ORDER BY TR_CierreClientes.IdCliente";
+            return ConsultarTabla(sql, new { IdCierre = idCierre, IdTipoFactura = idTipoFactura });
+        }
+
+        /// <summary>Cierra todos los viajes del cliente en el cierre (SP PR_CierresClientesCerrar).</summary>
+        public int CerrarCierreCliente(int idCierre, int idCliente, int idTipoVeh, string usuario)
+        {
+            return Ejecutar("dbo.PR_CierresClientesCerrar",
+                new { IdCierre = idCierre, IdCliente = idCliente, IdTipoVeh = idTipoVeh, Usuario = usuario }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Reversa el estado de cerrado del cliente (SP PR_CierreClientesReversar).</summary>
+        public int ReversarCierreCliente(int idCierre, int idCliente, int idTipoVeh, string usuario)
+        {
+            return Ejecutar("dbo.PR_CierreClientesReversar",
+                new { IdCierre = idCierre, IdCliente = idCliente, IdTipoVeh = idTipoVeh, Usuario = usuario }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Aplica (esISV=true) o borra (false) el ISV de los viajes del rango (SP PR_CierresCAplicaISV).</summary>
+        public int AplicarISVCierre(int idCierre, int idCliente, int idTipoVeh, string usuario, bool esISV)
+        {
+            return Ejecutar("dbo.PR_CierresCAplicaISV",
+                new { IdCierre = idCierre, IdCliente = idCliente, IdTipoVeh = idTipoVeh, Usuario = usuario, EsISV = esISV }, CommandType.StoredProcedure);
+        }
+
         // ===== TR_AsigFacTipoVeh (asignación tipo factura <-> tipo vehículo — Mant\FrmAsigTpFacTpVeh) =====
 
         /// <summary>Asignaciones tipo-factura/tipo-vehículo (tabla hija del grid filtrado por relación).</summary>

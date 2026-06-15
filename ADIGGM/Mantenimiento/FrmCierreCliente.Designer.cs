@@ -39,7 +39,6 @@
             this.idCierrePK = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idCliente = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tRClientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsTransporteAdiggm = new ADIGGM.DataSets.DsTransporteAdiggm();
             this.idTipoVehiculo = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tRTipoVehiculosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.SubTotalCierre = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,15 +53,9 @@
             this.aplicarISVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borrarISVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tRCierreClientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.fKTRCierreClientesTRTipoVehiculosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cboTipoVeh = new System.Windows.Forms.ComboBox();
             this.tRTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCodeasAdiggm = new ADIGGM.DataSets.DsCodeasAdiggm();
-            this.tR_TipoVehiculosTableAdapter = new ADIGGM.DataSets.DsTransporteAdiggmTableAdapters.TR_TipoVehiculosTableAdapter();
-            this.tR_CierreClientesTableAdapter = new ADIGGM.DataSets.DsTransporteAdiggmTableAdapters.TR_CierreClientesTableAdapter();
-            this.tR_ClientesTableAdapter = new ADIGGM.DataSets.DsTransporteAdiggmTableAdapters.TR_ClientesTableAdapter();
             this.label1 = new System.Windows.Forms.Label();
-            this.tR_TipoFacturasTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.TR_TipoFacturasTableAdapter();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -73,13 +66,10 @@
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCierreCliente)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRClientesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsTransporteAdiggm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoVehiculosBindingSource)).BeginInit();
             this.cmsOpciones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tRCierreClientesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fKTRCierreClientesTRTipoVehiculosBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoFacturasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -143,7 +133,6 @@
             this.SynCodeas,
             this.anulado});
             this.dgvCierreCliente.ContextMenuStrip = this.cmsOpciones;
-            this.dgvCierreCliente.DataSource = this.tRCierreClientesBindingSource;
             this.dgvCierreCliente.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dgvCierreCliente.Location = new System.Drawing.Point(0, 129);
             this.dgvCierreCliente.Name = "dgvCierreCliente";
@@ -190,7 +179,6 @@
             // 
             this.idCliente.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.idCliente.DataPropertyName = "IdCliente";
-            this.idCliente.DataSource = this.tRClientesBindingSource;
             this.idCliente.DisplayMember = "Cliente";
             this.idCliente.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
             this.idCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -201,22 +189,11 @@
             this.idCliente.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.idCliente.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.idCliente.ValueMember = "IdCliente";
-            // 
-            // tRClientesBindingSource
-            // 
-            this.tRClientesBindingSource.DataMember = "TR_Clientes";
-            this.tRClientesBindingSource.DataSource = this.dsTransporteAdiggm;
-            // 
-            // dsTransporteAdiggm
-            // 
-            this.dsTransporteAdiggm.DataSetName = "DsTransporteAdiggm";
-            this.dsTransporteAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // idTipoVehiculo
-            // 
+            //
             this.idTipoVehiculo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.idTipoVehiculo.DataPropertyName = "IdTipoVehiculo";
-            this.idTipoVehiculo.DataSource = this.tRTipoVehiculosBindingSource;
             this.idTipoVehiculo.DisplayMember = "TipoVehiculo";
             this.idTipoVehiculo.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
             this.idTipoVehiculo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -227,12 +204,7 @@
             this.idTipoVehiculo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.idTipoVehiculo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.idTipoVehiculo.ValueMember = "IdTipoVehiculo";
-            // 
-            // tRTipoVehiculosBindingSource
-            // 
-            this.tRTipoVehiculosBindingSource.DataMember = "TR_TipoVehiculos";
-            this.tRTipoVehiculosBindingSource.DataSource = this.dsTransporteAdiggm;
-            // 
+            //
             // SubTotalCierre
             // 
             this.SubTotalCierre.DataPropertyName = "SubTotalCierre";
@@ -345,15 +317,9 @@
             // tRCierreClientesBindingSource
             // 
             this.tRCierreClientesBindingSource.DataMember = "TR_CierreClientes";
-            this.tRCierreClientesBindingSource.DataSource = this.dsTransporteAdiggm;
-            // 
-            // fKTRCierreClientesTRTipoVehiculosBindingSource
-            // 
-            this.fKTRCierreClientesTRTipoVehiculosBindingSource.DataMember = "FK_TR_CierreClientes_TR_TipoVehiculos";
-            this.fKTRCierreClientesTRTipoVehiculosBindingSource.DataSource = this.tRTipoVehiculosBindingSource;
-            // 
+            //
             // cboTipoVeh
-            // 
+            //
             this.cboTipoVeh.DataSource = this.tRTipoFacturasBindingSource;
             this.cboTipoVeh.DisplayMember = "TipoFactura";
             this.cboTipoVeh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -364,29 +330,7 @@
             this.cboTipoVeh.TabIndex = 104;
             this.cboTipoVeh.ValueMember = "IdTipoFactura";
             this.cboTipoVeh.SelectedValueChanged += new System.EventHandler(this.cboTipoVeh_SelectedValueChanged);
-            // 
-            // tRTipoFacturasBindingSource
-            // 
-            this.tRTipoFacturasBindingSource.DataMember = "TR_TipoFacturas";
-            this.tRTipoFacturasBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // dsCodeasAdiggm
-            // 
-            this.dsCodeasAdiggm.DataSetName = "DsCodeasAdiggm";
-            this.dsCodeasAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // tR_TipoVehiculosTableAdapter
-            // 
-            this.tR_TipoVehiculosTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_CierreClientesTableAdapter
-            // 
-            this.tR_CierreClientesTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_ClientesTableAdapter
-            // 
-            this.tR_ClientesTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // label1
             // 
             this.label1.AutoSize = true;
@@ -395,11 +339,7 @@
             this.label1.Size = new System.Drawing.Size(70, 16);
             this.label1.TabIndex = 105;
             this.label1.Text = "Seleccione:";
-            // 
-            // tR_TipoFacturasTableAdapter
-            // 
-            this.tR_TipoFacturasTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label5);
@@ -497,13 +437,10 @@
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCierreCliente)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRClientesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsTransporteAdiggm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoVehiculosBindingSource)).EndInit();
             this.cmsOpciones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tRCierreClientesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fKTRCierreClientesTRTipoVehiculosBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoFacturasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -515,20 +452,13 @@
 
         private System.Windows.Forms.DataGridView dgvCierreCliente;
         private System.Windows.Forms.ComboBox cboTipoVeh;
-        private DataSets.DsTransporteAdiggm dsTransporteAdiggm;
         private System.Windows.Forms.BindingSource tRTipoVehiculosBindingSource;
-        private DataSets.DsTransporteAdiggmTableAdapters.TR_TipoVehiculosTableAdapter tR_TipoVehiculosTableAdapter;
-        private System.Windows.Forms.BindingSource fKTRCierreClientesTRTipoVehiculosBindingSource;
-        private DataSets.DsTransporteAdiggmTableAdapters.TR_CierreClientesTableAdapter tR_CierreClientesTableAdapter;
         private System.Windows.Forms.BindingSource tRClientesBindingSource;
-        private DataSets.DsTransporteAdiggmTableAdapters.TR_ClientesTableAdapter tR_ClientesTableAdapter;
         private System.Windows.Forms.ContextMenuStrip cmsOpciones;
         private System.Windows.Forms.ToolStripMenuItem cerrarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reversarCerrarToolStripMenuItem;
         private System.Windows.Forms.Label label1;
-        private DataSets.DsCodeasAdiggm dsCodeasAdiggm;
         private System.Windows.Forms.BindingSource tRTipoFacturasBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.TR_TipoFacturasTableAdapter tR_TipoFacturasTableAdapter;
         private System.Windows.Forms.BindingSource tRCierreClientesBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn idCierreCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn IdTipoFactura;
