@@ -37,17 +37,12 @@
             this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdTipoEx = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.fACTipoExBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsFAC = new ADIGGM.DataSets.DsFAC();
             this.IdTipoFactura = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tRTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fACProductosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.fAC_ProductosTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_ProductosTableAdapter();
-            this.fAC_TipoExTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_TipoExTableAdapter();
-            this.tR_TipoFacturasTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.TR_TipoFacturasTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoExBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoFacturasBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACProductosBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -143,7 +138,6 @@
             this.Descripcion,
             this.IdTipoEx,
             this.IdTipoFactura});
-            this.dgvProductos.DataSource = this.fACProductosBindingSource;
             this.dgvProductos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProductos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvProductos.Location = new System.Drawing.Point(0, 98);
@@ -203,7 +197,6 @@
             // IdTipoEx
             // 
             this.IdTipoEx.DataPropertyName = "IdTipoEx";
-            this.IdTipoEx.DataSource = this.fACTipoExBindingSource;
             this.IdTipoEx.DisplayMember = "Tipo";
             this.IdTipoEx.FillWeight = 87.0173F;
             this.IdTipoEx.HeaderText = "Tipo";
@@ -213,52 +206,19 @@
             this.IdTipoEx.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.IdTipoEx.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.IdTipoEx.ValueMember = "IdTipoEx";
-            // 
-            // fACTipoExBindingSource
-            // 
-            this.fACTipoExBindingSource.DataMember = "FAC_TipoEx";
-            this.fACTipoExBindingSource.DataSource = this.dsFAC;
-            // 
-            // dsFAC
-            // 
-            this.dsFAC.DataSetName = "DsFAC";
-            this.dsFAC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // IdTipoFactura
-            // 
+            //
             this.IdTipoFactura.DataPropertyName = "IdTipoFactura";
-            this.IdTipoFactura.DataSource = this.tRTipoFacturasBindingSource;
             this.IdTipoFactura.DisplayMember = "TipoFactura";
             this.IdTipoFactura.FillWeight = 148.721F;
             this.IdTipoFactura.HeaderText = "Tipo Factura";
             this.IdTipoFactura.Name = "IdTipoFactura";
             this.IdTipoFactura.ReadOnly = true;
             this.IdTipoFactura.ValueMember = "IdTipoFactura";
-            // 
-            // tRTipoFacturasBindingSource
-            // 
-            this.tRTipoFacturasBindingSource.DataMember = "TR_TipoFacturas";
-            this.tRTipoFacturasBindingSource.DataSource = this.dsFAC;
-            // 
-            // fACProductosBindingSource
-            // 
-            this.fACProductosBindingSource.DataMember = "FAC_Productos";
-            this.fACProductosBindingSource.DataSource = this.dsFAC;
-            // 
-            // fAC_ProductosTableAdapter
-            // 
-            this.fAC_ProductosTableAdapter.ClearBeforeFill = true;
-            // 
-            // fAC_TipoExTableAdapter
-            // 
-            this.fAC_TipoExTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_TipoFacturasTableAdapter
-            // 
-            this.tR_TipoFacturasTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // FAC_Productos
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.ClientSize = new System.Drawing.Size(903, 416);
             this.Controls.Add(this.dgvProductos);
@@ -271,7 +231,6 @@
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoExBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoFacturasBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACProductosBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -281,13 +240,9 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvProductos;
-        private DataSets.DsFAC dsFAC;
         private System.Windows.Forms.BindingSource fACProductosBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_ProductosTableAdapter fAC_ProductosTableAdapter;
         private System.Windows.Forms.BindingSource fACTipoExBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_TipoExTableAdapter fAC_TipoExTableAdapter;
         private System.Windows.Forms.BindingSource tRTipoFacturasBindingSource;
-        private DataSets.DsFACTableAdapters.TR_TipoFacturasTableAdapter tR_TipoFacturasTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn idProductoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn codProductoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreProductoDataGridViewTextBoxColumn;

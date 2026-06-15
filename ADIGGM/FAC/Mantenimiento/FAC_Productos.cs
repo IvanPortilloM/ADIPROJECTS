@@ -1,16 +1,16 @@
-﻿using Formularios_Base;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
+using Formularios_Base;
 
 namespace ADIGGM.FAC.Mantenimiento
 {
     public partial class FAC_Productos : FrmMantenimiento
     {
+        private readonly RepositorioFAC _repo = new RepositorioFAC();
+        private DataTable _dt;
+
         public FAC_Productos()
         {
             InitializeComponent();
@@ -18,13 +18,24 @@ namespace ADIGGM.FAC.Mantenimiento
 
         private void FAC_Productos_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.TR_TipoFacturas' Puede moverla o quitarla según sea necesario.
-            this.tR_TipoFacturasTableAdapter.Fill(this.dsFAC.TR_TipoFacturas);
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_TipoEx' Puede moverla o quitarla según sea necesario.
-            this.fAC_TipoExTableAdapter.Fill(this.dsFAC.FAC_TipoEx);
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_Productos' Puede moverla o quitarla según sea necesario.
-            this.fAC_ProductosTableAdapter.Fill(this.dsFAC.FAC_Productos);
+            // Combos de las columnas (tipos de exoneración y tipos de factura)
+            fACTipoExBindingSource.DataMember = "";
+            fACTipoExBindingSource.DataSource = _repo.ListarTipoEx();
+            IdTipoEx.DataSource = fACTipoExBindingSource;
+            tRTipoFacturasBindingSource.DataMember = "";
+            tRTipoFacturasBindingSource.DataSource = _repo.ListarTipoFacturasCombo();
+            IdTipoFactura.DataSource = tRTipoFacturasBindingSource;
+
+            CargarProductos();
             lblFooter.Text = "Productos - #Registros: " + (dgvProductos.RowCount);
+        }
+
+        private void CargarProductos()
+        {
+            _dt = _repo.ListarProductos();
+            fACProductosBindingSource.DataMember = "";
+            fACProductosBindingSource.DataSource = _dt;
+            dgvProductos.DataSource = fACProductosBindingSource;
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -46,8 +57,9 @@ namespace ADIGGM.FAC.Mantenimiento
                 if (dgvProductos.Rows.Count > 0 && dgvProductos.FirstDisplayedCell != null)
                 {
                     dgvProductos.EndEdit();
-                    this.fAC_ProductosTableAdapter.Update(this.dsFAC.FAC_Productos);
-                    dgvProductos.CurrentCell = dgvProductos.Rows[dgvProductos.CurrentRow.Index].Cells[1];
+                    fACProductosBindingSource.EndEdit();
+                    _repo.GuardarProductos(_dt);
+                    CargarProductos();
                     dgvProductos.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
@@ -89,7 +101,7 @@ namespace ADIGGM.FAC.Mantenimiento
             dgvProductos.AllowUserToAddRows = false;
             if (dgvProductos.Rows.Count > 0 && dgvProductos.FirstDisplayedCell != null)
             {
-                this.fAC_ProductosTableAdapter.Fill(this.dsFAC.FAC_Productos);
+                CargarProductos();
                 dgvProductos.CurrentCell = dgvProductos.Rows[dgvProductos.CurrentRow.Index].Cells[1];
 
                 dgvProductos.ReadOnly = true;

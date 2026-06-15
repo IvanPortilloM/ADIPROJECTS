@@ -30,6 +30,39 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla, insert, update, delete);
         }
 
+        // ===== FAC_Productos (mantenimiento de productos de facturación) =====
+
+        public DataTable ListarProductos()
+        {
+            const string sql = "SELECT IdProducto, CodProducto, NombreProducto, Activo, Descripcion, EsCamion, EsRetro, EsBus, PagaISV, IdTipoEx, AplicaImporte, IdTipoFactura FROM dbo.FAC_Productos";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Persiste altas/cambios hechos en la grilla (IdProducto es identity).</summary>
+        public int GuardarProductos(DataTable tabla)
+        {
+            const string insert = "INSERT INTO dbo.FAC_Productos (CodProducto, NombreProducto, Activo, Descripcion, EsCamion, EsRetro, EsBus, PagaISV, IdTipoEx, AplicaImporte, IdTipoFactura) " +
+                                  "VALUES (@CodProducto, @NombreProducto, @Activo, @Descripcion, @EsCamion, @EsRetro, @EsBus, @PagaISV, @IdTipoEx, @AplicaImporte, @IdTipoFactura)";
+            const string update = "UPDATE dbo.FAC_Productos SET CodProducto = @CodProducto, NombreProducto = @NombreProducto, Activo = @Activo, Descripcion = @Descripcion, " +
+                                  "EsCamion = @EsCamion, EsRetro = @EsRetro, EsBus = @EsBus, PagaISV = @PagaISV, IdTipoEx = @IdTipoEx, AplicaImporte = @AplicaImporte, IdTipoFactura = @IdTipoFactura WHERE IdProducto = @IdProducto";
+            const string delete = "DELETE FROM dbo.FAC_Productos WHERE IdProducto = @IdProducto";
+            return GuardarCambios(tabla, insert, update, delete);
+        }
+
+        /// <summary>Combo de tipos de exoneración (FAC_TipoEx) para la columna IdTipoEx del grid de productos.</summary>
+        public DataTable ListarTipoEx()
+        {
+            const string sql = "SELECT IdTipoEx, Tipo, EsExenta FROM dbo.FAC_TipoEx";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Combo de tipos de factura activos (TR_TipoFacturas) para la columna IdTipoFactura del grid de productos.</summary>
+        public DataTable ListarTipoFacturasCombo()
+        {
+            const string sql = "SELECT IdTipoFactura, TipoFactura FROM dbo.TR_TipoFacturas WHERE ISNULL(Activo, 0) = 1";
+            return ConsultarTabla(sql);
+        }
+
         // ===== FAC_TipoFacturas (mantenimiento de tipos de factura) =====
 
         public DataTable ListarTiposFactura()
