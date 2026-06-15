@@ -463,11 +463,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DsCodeasAdiggm.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DataSets\DsFAC.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DsFAC.xsd</DependentUpon>
-    </Compile>
     <Compile Include="DataSets\DsOC.cs">
       <DependentUpon>DsOC.xsd</DependentUpon>
     </Compile>
@@ -1914,17 +1909,6 @@
     </None>
     <None Include="DataSets\DsCodeasAdiggm.xss">
       <DependentUpon>DsCodeasAdiggm.xsd</DependentUpon>
-    </None>
-    <None Include="DataSets\DsFAC.xsc">
-      <DependentUpon>DsFAC.xsd</DependentUpon>
-    </None>
-    <None Include="DataSets\DsFAC.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DsFAC.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="DataSets\DsFAC.xss">
-      <DependentUpon>DsFAC.xsd</DependentUpon>
     </None>
     <None Include="DataSets\DsOC.xsc">
       <DependentUpon>DsOC.xsd</DependentUpon>
