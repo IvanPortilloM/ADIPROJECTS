@@ -38,8 +38,6 @@ namespace ADIGGM.SAC
             this.contactoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.telefonoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fACRTNBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsFAC = new ADIGGM.DataSets.DsFAC();
-            this.fAC_RTNTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_RTNTableAdapter();
             this.tbRTN = new System.Windows.Forms.TabControl();
             this.tpRTN = new System.Windows.Forms.TabPage();
             this.tpBuscarRTN = new System.Windows.Forms.TabPage();
@@ -55,7 +53,6 @@ namespace ADIGGM.SAC
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRTN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACRTNBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).BeginInit();
             this.tbRTN.SuspendLayout();
             this.tpRTN.SuspendLayout();
             this.tpBuscarRTN.SuspendLayout();
@@ -148,7 +145,6 @@ namespace ADIGGM.SAC
             this.direccionDataGridViewTextBoxColumn,
             this.contactoDataGridViewTextBoxColumn,
             this.telefonoDataGridViewTextBoxColumn});
-            this.dgvRTN.DataSource = this.fACRTNBindingSource;
             this.dgvRTN.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvRTN.Location = new System.Drawing.Point(3, 3);
             this.dgvRTN.MultiSelect = false;
@@ -199,18 +195,7 @@ namespace ADIGGM.SAC
             this.telefonoDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // fACRTNBindingSource
-            // 
-            this.fACRTNBindingSource.DataMember = "FAC_RTN";
-            this.fACRTNBindingSource.DataSource = this.dsFAC;
-            // 
-            // dsFAC
-            // 
-            this.dsFAC.DataSetName = "DsFAC";
-            this.dsFAC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // fAC_RTNTableAdapter
-            // 
-            this.fAC_RTNTableAdapter.ClearBeforeFill = true;
+            //
             // 
             // tbRTN
             // 
@@ -291,7 +276,6 @@ namespace ADIGGM.SAC
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5});
-            this.dataGridView1.DataSource = this.fACRTNBindingSource;
             this.dataGridView1.Location = new System.Drawing.Point(3, 64);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
@@ -351,7 +335,6 @@ namespace ADIGGM.SAC
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRTN)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACRTNBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).EndInit();
             this.tbRTN.ResumeLayout(false);
             this.tpRTN.ResumeLayout(false);
             this.tpBuscarRTN.ResumeLayout(false);
@@ -364,9 +347,7 @@ namespace ADIGGM.SAC
         #endregion
 
         private System.Windows.Forms.DataGridView dgvRTN;
-        private DataSets.DsFAC dsFAC;
         private System.Windows.Forms.BindingSource fACRTNBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_RTNTableAdapter fAC_RTNTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn empresaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn rTNDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn direccionDataGridViewTextBoxColumn;

@@ -80,6 +80,33 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla, insert, update, delete);
         }
 
+        // ===== FAC_RTN (mantenimiento de clientes/RTN — SAC\frmClientesRTN) =====
+
+        public DataTable ListarRTN()
+        {
+            const string sql = "SELECT RTN, Empresa, Direccion, Contacto, Telefono FROM dbo.FAC_RTN";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Filtra clientes por RTN o Empresa (LIKE).</summary>
+        public DataTable BuscarRTN(string busqueda)
+        {
+            const string sql = "SELECT RTN, Empresa, Direccion, Contacto, Telefono FROM dbo.FAC_RTN " +
+                               "WHERE (RTN LIKE '%' + @Busqueda + '%') OR (Empresa LIKE '%' + @Busqueda + '%')";
+            return ConsultarTabla(sql, new { Busqueda = busqueda });
+        }
+
+        /// <summary>Persiste altas/cambios de la grilla. El PK es RTN (string, no identity); por eso
+        /// va en el INSERT. Nota: renombrar el RTN de una fila existente no se persiste (el WHERE del
+        /// UPDATE usa el valor actual); para "renombrar" hay que borrar y crear.</summary>
+        public int GuardarRTN(DataTable tabla)
+        {
+            const string insert = "INSERT INTO dbo.FAC_RTN (RTN, Empresa, Direccion, Contacto, Telefono) VALUES (@RTN, @Empresa, @Direccion, @Contacto, @Telefono)";
+            const string update = "UPDATE dbo.FAC_RTN SET Empresa = @Empresa, Direccion = @Direccion, Contacto = @Contacto, Telefono = @Telefono WHERE RTN = @RTN";
+            const string delete = "DELETE FROM dbo.FAC_RTN WHERE RTN = @RTN";
+            return GuardarCambios(tabla, insert, update, delete);
+        }
+
         // ===== FAC_ReporteCierres (combo de fincas/clientes del reporte de cierres) =====
 
         /// <summary>Fincas/clientes (SP FAC_FincasGGM) para el combo del reporte de cierres.</summary>
