@@ -8,7 +8,7 @@ namespace ADIGGM.Mantenimiento
 {
     public partial class FrmAsigTpFacTpVeh : FrmMantenimiento
     {
-        private readonly RepositorioCodeas _repo = new RepositorioCodeas();
+        private readonly RepositorioTransporte _repo = new RepositorioTransporte();
         private DataSet _ds;
         int selectedIndex;
         public FrmAsigTpFacTpVeh()
