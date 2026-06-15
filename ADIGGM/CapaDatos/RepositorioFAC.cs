@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 
 namespace ADIGGM.CapaDatos
@@ -78,6 +79,44 @@ namespace ADIGGM.CapaDatos
             const string update = "UPDATE dbo.FAC_TipoFacturas SET CodTipoFactura = @CodTipoFactura, TipoFactura = @TipoFactura, Activo = @Activo, EsTransporte = @EsTransporte WHERE IdTipoFactura = @IdTipoFactura";
             const string delete = "DELETE FROM dbo.FAC_TipoFacturas WHERE IdTipoFactura = @IdTipoFactura";
             return GuardarCambios(tabla, insert, update, delete);
+        }
+
+        // ===== FAC_VisorFacturas (visor maestro-detalle de facturas) =====
+
+        /// <summary>Tipos de factura con fila "Todos" (IdTipoFactura=0) al inicio (combo del visor).</summary>
+        public DataTable ListarTipoFacturasConTodos()
+        {
+            const string sql = "SELECT 0 AS IdTipoFactura, '' AS CodTipoFactura, 'Todos' AS TipoFactura, 0 AS Activo, 0 AS EsTransporte " +
+                               "UNION ALL SELECT IdTipoFactura, CodTipoFactura, TipoFactura, Activo, EsTransporte FROM dbo.FAC_TipoFacturas";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Clientes activos con fila "Todos" (IdCliente=0) al inicio (combo del visor).</summary>
+        public DataTable ListarClientesConTodos()
+        {
+            const string sql = "SELECT 0 AS IdCliente, 'Todos' AS Cliente " +
+                               "UNION ALL SELECT IdCliente, Cliente FROM dbo.TR_Clientes WHERE ISNULL(Activo,0)=1";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Facturas del rango/filtros (SP FAC_FacturasVisor) para el grid maestro.</summary>
+        public DataTable ListarFacturasVisor(DateTime desde, DateTime hasta, int idTipoFactura, int idCliente, string filtro)
+        {
+            return ConsultarTabla("dbo.FAC_FacturasVisor",
+                new { Desde = desde, Hasta = hasta, IdTipoFactura = idTipoFactura, IdCliente = idCliente, Filtro = filtro },
+                CommandType.StoredProcedure);
+        }
+
+        /// <summary>Detalle de una factura (SP FAC_FacturaDetVisor) para el grid de detalle.</summary>
+        public DataTable ListarFacturaDetVisor(int idFactura)
+        {
+            return ConsultarTabla("dbo.FAC_FacturaDetVisor", new { IdFac = idFactura }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Anula una factura (SP FAC_FacturaAnular).</summary>
+        public int AnularFactura(int idFactura, string usuario)
+        {
+            return Ejecutar("dbo.FAC_FacturaAnular", new { IdFactura = idFactura, Usuario = usuario }, CommandType.StoredProcedure);
         }
 
         // ===== FAC_BusquedaViajes (combos + visor de boletas para facturar) =====

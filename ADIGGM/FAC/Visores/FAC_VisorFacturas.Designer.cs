@@ -41,7 +41,6 @@
             this.btnVisualizar = new System.Windows.Forms.Button();
             this.cboCliente = new System.Windows.Forms.ComboBox();
             this.tRClientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsFAC = new ADIGGM.DataSets.DsFAC();
             this.label4 = new System.Windows.Forms.Label();
             this.cboTipoFactura = new System.Windows.Forms.ComboBox();
             this.fACTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -58,7 +57,6 @@
             this.iSVDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.totalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fACFacturaDetVisorBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsFAC1 = new ADIGGM.DataSets.DsFAC();
             this.panel3 = new System.Windows.Forms.Panel();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.fACFacturasVisorBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -79,21 +77,15 @@
             this.verFacturaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verFacturaCondescipcionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actualizarDatosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fAC_FacturasVisorTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_FacturasVisorTableAdapter();
-            this.fAC_TipoFacturasTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_TipoFacturasTableAdapter();
-            this.tR_ClientesTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.TR_ClientesTableAdapter();
-            this.fAC_FacturaDetVisorTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_FacturaDetVisorTableAdapter();
             this.btnReporte1 = new System.Windows.Forms.Button();
             this.btnReporte2 = new System.Windows.Forms.Button();
             this.pnlFooter.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tRClientesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoFacturasBindingSource)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturaDet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACFacturaDetVisorBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC1)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fACFacturasVisorBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFactura)).BeginInit();
@@ -222,7 +214,6 @@
             // 
             this.cboCliente.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cboCliente.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cboCliente.DataSource = this.tRClientesBindingSource;
             this.cboCliente.DisplayMember = "Cliente";
             this.cboCliente.FormattingEnabled = true;
             this.cboCliente.Location = new System.Drawing.Point(326, 40);
@@ -230,17 +221,7 @@
             this.cboCliente.Size = new System.Drawing.Size(195, 24);
             this.cboCliente.TabIndex = 118;
             this.cboCliente.ValueMember = "IdCliente";
-            // 
-            // tRClientesBindingSource
-            // 
-            this.tRClientesBindingSource.DataMember = "TR_Clientes";
-            this.tRClientesBindingSource.DataSource = this.dsFAC;
-            // 
-            // dsFAC
-            // 
-            this.dsFAC.DataSetName = "DsFAC";
-            this.dsFAC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // label4
             // 
             this.label4.AutoSize = true;
@@ -252,8 +233,7 @@
             this.label4.Text = "Cliente:";
             // 
             // cboTipoFactura
-            // 
-            this.cboTipoFactura.DataSource = this.fACTipoFacturasBindingSource;
+            //
             this.cboTipoFactura.DisplayMember = "TipoFactura";
             this.cboTipoFactura.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTipoFactura.FormattingEnabled = true;
@@ -262,12 +242,7 @@
             this.cboTipoFactura.Size = new System.Drawing.Size(171, 24);
             this.cboTipoFactura.TabIndex = 116;
             this.cboTipoFactura.ValueMember = "IdTipoFactura";
-            // 
-            // fACTipoFacturasBindingSource
-            // 
-            this.fACTipoFacturasBindingSource.DataMember = "FAC_TipoFacturas";
-            this.fACTipoFacturasBindingSource.DataSource = this.dsFAC;
-            // 
+            //
             // label3
             // 
             this.label3.AutoSize = true;
@@ -337,7 +312,6 @@
             this.precioDataGridViewTextBoxColumn,
             this.iSVDataGridViewTextBoxColumn,
             this.totalDataGridViewTextBoxColumn});
-            this.dgvFacturaDet.DataSource = this.fACFacturaDetVisorBindingSource;
             this.dgvFacturaDet.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFacturaDet.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvFacturaDet.Location = new System.Drawing.Point(0, 0);
@@ -394,17 +368,7 @@
             this.totalDataGridViewTextBoxColumn.HeaderText = "Total";
             this.totalDataGridViewTextBoxColumn.Name = "totalDataGridViewTextBoxColumn";
             this.totalDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // fACFacturaDetVisorBindingSource
-            // 
-            this.fACFacturaDetVisorBindingSource.DataMember = "FAC_FacturaDetVisor";
-            this.fACFacturaDetVisorBindingSource.DataSource = this.dsFAC1;
-            // 
-            // dsFAC1
-            // 
-            this.dsFAC1.DataSetName = "DsFAC";
-            this.dsFAC1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.LightSteelBlue;
@@ -417,8 +381,7 @@
             this.panel3.TabIndex = 110;
             // 
             // txtObservaciones
-            // 
-            this.txtObservaciones.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.fACFacturasVisorBindingSource, "Observaciones", true));
+            //
             this.txtObservaciones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtObservaciones.Location = new System.Drawing.Point(92, 0);
             this.txtObservaciones.Multiline = true;
@@ -426,12 +389,7 @@
             this.txtObservaciones.ReadOnly = true;
             this.txtObservaciones.Size = new System.Drawing.Size(841, 36);
             this.txtObservaciones.TabIndex = 4;
-            // 
-            // fACFacturasVisorBindingSource
-            // 
-            this.fACFacturasVisorBindingSource.DataMember = "FAC_FacturasVisor";
-            this.fACFacturasVisorBindingSource.DataSource = this.dsFAC;
-            // 
+            //
             // label5
             // 
             this.label5.AutoSize = true;
@@ -462,7 +420,6 @@
             this.Cierre,
             this.AplicaISV});
             this.dgvFactura.ContextMenuStrip = this.contextMenuStrip1;
-            this.dgvFactura.DataSource = this.fACFacturasVisorBindingSource;
             this.dgvFactura.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFactura.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvFactura.Location = new System.Drawing.Point(0, 105);
@@ -596,23 +553,7 @@
             this.actualizarDatosToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.actualizarDatosToolStripMenuItem.Text = "&Actualizar Datos";
             this.actualizarDatosToolStripMenuItem.Click += new System.EventHandler(this.actualizarDatosToolStripMenuItem_Click);
-            // 
-            // fAC_FacturasVisorTableAdapter
-            // 
-            this.fAC_FacturasVisorTableAdapter.ClearBeforeFill = true;
-            // 
-            // fAC_TipoFacturasTableAdapter
-            // 
-            this.fAC_TipoFacturasTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_ClientesTableAdapter
-            // 
-            this.tR_ClientesTableAdapter.ClearBeforeFill = true;
-            // 
-            // fAC_FacturaDetVisorTableAdapter
-            // 
-            this.fAC_FacturaDetVisorTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // btnReporte1
             // 
             this.btnReporte1.BackColor = System.Drawing.Color.Silver;
@@ -658,12 +599,10 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tRClientesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoFacturasBindingSource)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFacturaDet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACFacturaDetVisorBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fACFacturasVisorBindingSource)).EndInit();
@@ -695,15 +634,9 @@
         private System.Windows.Forms.TextBox txtFiltro;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.BindingSource fACFacturasVisorBindingSource;
-        private DataSets.DsFAC dsFAC;
-        private DataSets.DsFACTableAdapters.FAC_FacturasVisorTableAdapter fAC_FacturasVisorTableAdapter;
         private System.Windows.Forms.BindingSource fACTipoFacturasBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_TipoFacturasTableAdapter fAC_TipoFacturasTableAdapter;
         private System.Windows.Forms.BindingSource tRClientesBindingSource;
-        private DataSets.DsFACTableAdapters.TR_ClientesTableAdapter tR_ClientesTableAdapter;
         private System.Windows.Forms.BindingSource fACFacturaDetVisorBindingSource;
-        private DataSets.DsFAC dsFAC1;
-        private DataSets.DsFACTableAdapters.FAC_FacturaDetVisorTableAdapter fAC_FacturaDetVisorTableAdapter;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem anularToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem verFacturaToolStripMenuItem;
