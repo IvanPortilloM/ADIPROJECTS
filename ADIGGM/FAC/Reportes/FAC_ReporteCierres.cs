@@ -8,9 +8,9 @@ namespace ADIGGM.FAC.Reportes
     public partial class FAC_ReporteCierres : FrmPrincipal
     {
         private readonly RepositorioFAC _repo = new RepositorioFAC();
-        string usuarioDominio = "Administrator";
-        string claveDominio = "camaron+2016";
-        string dominio = "";
+        string usuarioDominio = ADIGGM.CapaDatos.AppConfig.ReportServerUsuario;
+        string claveDominio = ADIGGM.CapaDatos.AppConfig.ReportServerClave;
+        string dominio = ADIGGM.CapaDatos.AppConfig.ReportServerDominio;
         public FAC_ReporteCierres()
         {
             InitializeComponent();

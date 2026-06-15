@@ -7,9 +7,9 @@ namespace ADIGGM.OC.Reportes
 {
     public partial class ReporteMaestro : ADIGGM.FrmPrincipal
     {
-        string usuarioDominio = "Administrator";
-        string claveDominio = "camaron+2016";
-        string dominio = "";
+        string usuarioDominio = ADIGGM.CapaDatos.AppConfig.ReportServerUsuario;
+        string claveDominio = ADIGGM.CapaDatos.AppConfig.ReportServerClave;
+        string dominio = ADIGGM.CapaDatos.AppConfig.ReportServerDominio;
         public ReporteMaestro()
         {
             InitializeComponent();

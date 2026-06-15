@@ -86,7 +86,7 @@ namespace ADIGGM.Mantenimiento
 
                 SmtpClient client = new SmtpClient("smtp.office365.com", 587);
                 client.EnableSsl = true;
-                client.Credentials = new System.Net.NetworkCredential("jlanza@adiggm.hn", "JuniorADI@19");
+                client.Credentials = new System.Net.NetworkCredential(ADIGGM.CapaDatos.AppConfig.SmtpEdoCtaUsuario, ADIGGM.CapaDatos.AppConfig.SmtpEdoCtaClave);
                 MailAddress from = new MailAddress("jlanza@adiggm.hn", "Servidor A.D.I.-GGM");//, Encoding.UTF8);
                 MailAddress to = new MailAddress(Correo);
                 Attachment attachment = new Attachment(memoryStream, "Estado de Cuenta - " + Identidad + ".PDF");

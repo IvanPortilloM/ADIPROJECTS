@@ -9,9 +9,9 @@
         DateTime fecha1, fecha2;
         string TipoFac;
 
-        string usuarioDominio = "Administrator";
-        string claveDominio = "camaron+2016";
-        string dominio = "";
+        string usuarioDominio = ADIGGM.CapaDatos.AppConfig.ReportServerUsuario;
+        string claveDominio = ADIGGM.CapaDatos.AppConfig.ReportServerClave;
+        string dominio = ADIGGM.CapaDatos.AppConfig.ReportServerDominio;
         public FAC_VerReporte(int IdFactura, int NumReporte, DateTime fecha1, DateTime fecha2, string TipoFac)
         {
             InitializeComponent();

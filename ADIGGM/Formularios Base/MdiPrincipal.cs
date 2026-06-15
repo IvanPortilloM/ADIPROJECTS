@@ -581,7 +581,7 @@ namespace ADIGGM.Formularios_Base
             client.Port = 587;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("serviciosadiggm@adiggm.hn", "serviciosadi@2020");
+            client.Credentials = new NetworkCredential(ADIGGM.CapaDatos.AppConfig.SmtpUsuario, ADIGGM.CapaDatos.AppConfig.SmtpClave);
             client.Host = "smtp.office365.com";
             client.EnableSsl = true;
 

@@ -413,6 +413,7 @@
   <ItemGroup>
     <Compile Include="CapaDatos\CD_Usuario.cs" />
     <Compile Include="CapaDatos\Conexion.cs" />
+    <Compile Include="CapaDatos\AppConfig.cs" />
     <Compile Include="CapaDatos\RepositorioBase.cs" />
     <Compile Include="CapaDatos\RepositorioTiposAsistencia.cs" />
     <Compile Include="CapaDatos\RepositorioFeriados.cs" />
@@ -1983,6 +1984,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <!-- Secretos: se copian a la salida para que el override file="secrets.config" los resuelva en runtime. -->
+    <!-- La Condition evita romper el build cuando secrets.config no existe (clones sin secretos). -->
+    <None Include="secrets.config" Condition="Exists('secrets.config')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="secrets.config.example" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="invoice_106601.ico" />

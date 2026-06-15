@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Secretos (credenciales reales): override gitignored del App.config. Ver secrets.config.example.
+secrets.config
+
 # User-specific files
 *.rsuser
 *.suo

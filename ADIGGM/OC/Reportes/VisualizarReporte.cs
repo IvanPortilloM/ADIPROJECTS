@@ -10,9 +10,9 @@ namespace ADIGGM.OC.Reportes
         int ID = 0;
         string fechaini, fechafin, codbanco, cuentabancaria, tipodoc, descripdetalle;
 
-        string usuarioDominio = "Administrator";
-        string claveDominio = "camaron+2016";
-        string dominio = "";
+        string usuarioDominio = ADIGGM.CapaDatos.AppConfig.ReportServerUsuario;
+        string claveDominio = ADIGGM.CapaDatos.AppConfig.ReportServerClave;
+        string dominio = ADIGGM.CapaDatos.AppConfig.ReportServerDominio;
         private void reportViewer1_Load(object sender, EventArgs e)
         {
 
