@@ -34,8 +34,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cboTipoFactura = new System.Windows.Forms.ComboBox();
             this.fACTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsFAC = new ADIGGM.DataSets.DsFAC();
-            this.fAC_TipoFacturasTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_TipoFacturasTableAdapter();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvNoAsig = new System.Windows.Forms.DataGridView();
             this.idUsuarioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,12 +56,9 @@
             this.txtBusqueda2 = new System.Windows.Forms.TextBox();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
-            this.fAC_TipoFacUsuario_NoAsigTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_TipoFacUsuario_NoAsigTableAdapter();
-            this.fAC_TipoFacUsuario_AsigTableAdapter = new ADIGGM.DataSets.DsFACTableAdapters.FAC_TipoFacUsuario_AsigTableAdapter();
             this.pnlFooter.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoFacturasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNoAsig)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoFacUsuarioNoAsigBindingSource)).BeginInit();
@@ -134,8 +129,7 @@
             this.label3.Text = "Tipo Factura:";
             // 
             // cboTipoFactura
-            // 
-            this.cboTipoFactura.DataSource = this.fACTipoFacturasBindingSource;
+            //
             this.cboTipoFactura.DisplayMember = "TipoFactura";
             this.cboTipoFactura.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTipoFactura.FormattingEnabled = true;
@@ -146,21 +140,7 @@
             this.cboTipoFactura.ValueMember = "IdTipoFactura";
             this.cboTipoFactura.SelectedIndexChanged += new System.EventHandler(this.cboTipoFactura_SelectedIndexChanged);
             this.cboTipoFactura.SelectedValueChanged += new System.EventHandler(this.cboTipoFactura_SelectedValueChanged);
-            // 
-            // fACTipoFacturasBindingSource
-            // 
-            this.fACTipoFacturasBindingSource.DataMember = "FAC_TipoFacturas";
-            this.fACTipoFacturasBindingSource.DataSource = this.dsFAC;
-            // 
-            // dsFAC
-            // 
-            this.dsFAC.DataSetName = "DsFAC";
-            this.dsFAC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // fAC_TipoFacturasTableAdapter
-            // 
-            this.fAC_TipoFacturasTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // panel2
             // 
             this.panel2.Controls.Add(this.dgvNoAsig);
@@ -184,7 +164,6 @@
             this.nombreApellidoDataGridViewTextBoxColumn,
             this.nombreUsuarioDataGridViewTextBoxColumn,
             this.Selección});
-            this.dgvNoAsig.DataSource = this.fACTipoFacUsuarioNoAsigBindingSource;
             this.dgvNoAsig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvNoAsig.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvNoAsig.Location = new System.Drawing.Point(0, 40);
@@ -221,12 +200,7 @@
             this.Selección.FillWeight = 38.34297F;
             this.Selección.HeaderText = "";
             this.Selección.Name = "Selección";
-            // 
-            // fACTipoFacUsuarioNoAsigBindingSource
-            // 
-            this.fACTipoFacUsuarioNoAsigBindingSource.DataMember = "FAC_TipoFacUsuario_NoAsig";
-            this.fACTipoFacUsuarioNoAsigBindingSource.DataSource = this.dsFAC;
-            // 
+            //
             // panel5
             // 
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -278,7 +252,6 @@
             this.Selección2,
             this.nombreApellidoDataGridViewTextBoxColumn1,
             this.nombreUsuarioDataGridViewTextBoxColumn1});
-            this.dgvAsig.DataSource = this.fACTipoFacUsuarioAsigBindingSource;
             this.dgvAsig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAsig.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvAsig.Location = new System.Drawing.Point(0, 40);
@@ -315,12 +288,7 @@
             this.nombreUsuarioDataGridViewTextBoxColumn1.HeaderText = "Nombre Usuario";
             this.nombreUsuarioDataGridViewTextBoxColumn1.Name = "nombreUsuarioDataGridViewTextBoxColumn1";
             this.nombreUsuarioDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // fACTipoFacUsuarioAsigBindingSource
-            // 
-            this.fACTipoFacUsuarioAsigBindingSource.DataMember = "FAC_TipoFacUsuario_Asig";
-            this.fACTipoFacUsuarioAsigBindingSource.DataSource = this.dsFAC;
-            // 
+            //
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -372,15 +340,7 @@
             this.btnEliminar.TabIndex = 109;
             this.btnEliminar.UseVisualStyleBackColor = true;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
-            // 
-            // fAC_TipoFacUsuario_NoAsigTableAdapter
-            // 
-            this.fAC_TipoFacUsuario_NoAsigTableAdapter.ClearBeforeFill = true;
-            // 
-            // fAC_TipoFacUsuario_AsigTableAdapter
-            // 
-            this.fAC_TipoFacUsuario_AsigTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // FAC_TipoFacUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -403,7 +363,6 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoFacturasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsFAC)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvNoAsig)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoFacUsuarioNoAsigBindingSource)).EndInit();
@@ -423,9 +382,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cboTipoFactura;
-        private DataSets.DsFAC dsFAC;
         private System.Windows.Forms.BindingSource fACTipoFacturasBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_TipoFacturasTableAdapter fAC_TipoFacturasTableAdapter;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView dgvNoAsig;
         private System.Windows.Forms.Panel panel5;
@@ -440,8 +397,6 @@
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.BindingSource fACTipoFacUsuarioNoAsigBindingSource;
         private System.Windows.Forms.BindingSource fACTipoFacUsuarioAsigBindingSource;
-        private DataSets.DsFACTableAdapters.FAC_TipoFacUsuario_NoAsigTableAdapter fAC_TipoFacUsuario_NoAsigTableAdapter;
-        private DataSets.DsFACTableAdapters.FAC_TipoFacUsuario_AsigTableAdapter fAC_TipoFacUsuario_AsigTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn idUsuarioDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreApellidoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreUsuarioDataGridViewTextBoxColumn;

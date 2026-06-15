@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.FAC.Mantenimiento
 {
     public partial class FAC_TipoFacUsuarios : ADIGGM.FrmPrincipal
     {
+        private readonly RepositorioFAC _repo = new RepositorioFAC();
+
         public FAC_TipoFacUsuarios()
         {
             InitializeComponent();
@@ -17,16 +16,35 @@ namespace ADIGGM.FAC.Mantenimiento
 
         private void FAC_TipoFacUsuarios_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_TipoFacturas' Puede moverla o quitarla según sea necesario.
-            this.fAC_TipoFacturasTableAdapter.Fill(this.dsFAC.FAC_TipoFacturas);
+            fACTipoFacturasBindingSource.DataMember = "";
+            fACTipoFacturasBindingSource.DataSource = _repo.ListarTiposFactura();
+            cboTipoFactura.DataSource = fACTipoFacturasBindingSource;
+        }
 
+        private int IdTipoFacSeleccionado()
+        {
+            return int.Parse(cboTipoFactura.SelectedValue.ToString());
+        }
+
+        private void CargarNoAsignados()
+        {
+            fACTipoFacUsuarioNoAsigBindingSource.DataMember = "";
+            fACTipoFacUsuarioNoAsigBindingSource.DataSource = _repo.ListarUsuariosNoAsignados(txtBusqueda1.Text, IdTipoFacSeleccionado());
+            dgvNoAsig.DataSource = fACTipoFacUsuarioNoAsigBindingSource;
+        }
+
+        private void CargarAsignados()
+        {
+            fACTipoFacUsuarioAsigBindingSource.DataMember = "";
+            fACTipoFacUsuarioAsigBindingSource.DataSource = _repo.ListarUsuariosAsignados(txtBusqueda2.Text, IdTipoFacSeleccionado());
+            dgvAsig.DataSource = fACTipoFacUsuarioAsigBindingSource;
         }
 
         private void txtBusqueda1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
-                this.fAC_TipoFacUsuario_NoAsigTableAdapter.Fill(this.dsFAC.FAC_TipoFacUsuario_NoAsig, txtBusqueda1.Text, int.Parse(cboTipoFactura.SelectedValue.ToString()));
+                CargarNoAsignados();
             }
         }
 
@@ -34,21 +52,21 @@ namespace ADIGGM.FAC.Mantenimiento
         {
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
-                this.fAC_TipoFacUsuario_AsigTableAdapter.Fill(this.dsFAC.FAC_TipoFacUsuario_Asig, txtBusqueda2.Text, int.Parse(cboTipoFactura.SelectedValue.ToString()));
+                CargarAsignados();
             }
         }
 
         private void cboTipoFactura_SelectedIndexChanged(object sender, EventArgs e)
         {
-                  
+
         }
 
         private void cboTipoFactura_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (cboTipoFactura.SelectedIndex !=-1)
+            if (cboTipoFactura.SelectedIndex != -1)
             {
-                this.fAC_TipoFacUsuario_NoAsigTableAdapter.Fill(this.dsFAC.FAC_TipoFacUsuario_NoAsig, txtBusqueda1.Text, int.Parse(cboTipoFactura.SelectedValue.ToString()));
-                this.fAC_TipoFacUsuario_AsigTableAdapter.Fill(this.dsFAC.FAC_TipoFacUsuario_Asig, txtBusqueda2.Text, int.Parse(cboTipoFactura.SelectedValue.ToString()));
+                CargarNoAsignados();
+                CargarAsignados();
             }
         }
 
@@ -60,13 +78,11 @@ namespace ADIGGM.FAC.Mantenimiento
                 {
                     if (Convert.ToBoolean(row.Cells[3].Value) == true)
                     {
-                        Clases.VarGlobales.consultasFAC.FAC_Asignaciones_INS_UPD(int.Parse(row.Cells[0].Value.ToString()), int.Parse(cboTipoFactura.SelectedValue.ToString()), 1);
+                        _repo.GuardarAsignacionUsuario(int.Parse(row.Cells[0].Value.ToString()), IdTipoFacSeleccionado(), 1);
                     }
                 }
-                this.fAC_TipoFacUsuario_NoAsigTableAdapter.Fill(this.dsFAC.FAC_TipoFacUsuario_NoAsig, txtBusqueda1.Text, int.Parse(cboTipoFactura.SelectedValue.ToString()));
-                this.fAC_TipoFacUsuario_AsigTableAdapter.Fill(this.dsFAC.FAC_TipoFacUsuario_Asig, txtBusqueda2.Text, int.Parse(cboTipoFactura.SelectedValue.ToString()));
-                
-
+                CargarNoAsignados();
+                CargarAsignados();
             }
             catch (Exception ex)
             {
@@ -82,12 +98,11 @@ namespace ADIGGM.FAC.Mantenimiento
                 {
                     if (Convert.ToBoolean(row.Cells[1].Value) == true)
                     {
-                        Clases.VarGlobales.consultasFAC.FAC_Asignaciones_INS_UPD(int.Parse(row.Cells[0].Value.ToString()), int.Parse(cboTipoFactura.SelectedValue.ToString()), 2);
+                        _repo.GuardarAsignacionUsuario(int.Parse(row.Cells[0].Value.ToString()), IdTipoFacSeleccionado(), 2);
                     }
                 }
-                this.fAC_TipoFacUsuario_NoAsigTableAdapter.Fill(this.dsFAC.FAC_TipoFacUsuario_NoAsig, txtBusqueda1.Text, int.Parse(cboTipoFactura.SelectedValue.ToString()));
-                this.fAC_TipoFacUsuario_AsigTableAdapter.Fill(this.dsFAC.FAC_TipoFacUsuario_Asig, txtBusqueda2.Text, int.Parse(cboTipoFactura.SelectedValue.ToString()));
-
+                CargarNoAsignados();
+                CargarAsignados();
             }
             catch (Exception ex)
             {

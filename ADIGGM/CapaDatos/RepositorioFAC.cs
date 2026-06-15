@@ -80,6 +80,29 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla, insert, update, delete);
         }
 
+        // ===== FAC_TipoFacUsuarios (asignación de tipos de factura a usuarios) =====
+
+        /// <summary>Usuarios NO asignados al tipo de factura (SP, filtra por texto de búsqueda).</summary>
+        public DataTable ListarUsuariosNoAsignados(string usuario, int idTipoFac)
+        {
+            return ConsultarTabla("dbo.FAC_TipoFacUsuario_NoAsig",
+                new { Usuario = usuario, IdTipoFac = idTipoFac }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Usuarios YA asignados al tipo de factura (SP, filtra por texto de búsqueda).</summary>
+        public DataTable ListarUsuariosAsignados(string usuario, int idTipoFac)
+        {
+            return ConsultarTabla("dbo.FAC_TipoFacUsuario_Asig",
+                new { Usuario = usuario, IdTipoFac = idTipoFac }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Asigna (Opcion=1) o quita (Opcion=2) un usuario de un tipo de factura.</summary>
+        public int GuardarAsignacionUsuario(int idUsuario, int idTipoFac, int opcion)
+        {
+            return Ejecutar("dbo.FAC_Asignaciones_INS_UPD",
+                new { IdUsuario = idUsuario, IdTipoFac = idTipoFac, Opcion = opcion }, CommandType.StoredProcedure);
+        }
+
         // ===== FAC_TipoMoneda (mantenimiento de tipos de moneda) =====
 
         public DataTable ListarTiposMoneda()
