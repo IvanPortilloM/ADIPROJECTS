@@ -80,6 +80,50 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla, insert, update, delete);
         }
 
+        // ===== FAC_BusquedaViajes (combos + visor de boletas para facturar) =====
+
+        /// <summary>Tipos de factura de TRANSPORTE activos (combo cboTipoFac).</summary>
+        public DataTable ListarTipoFacTransporte()
+        {
+            const string sql = "SELECT IdTipoFactura, TipoFactura FROM dbo.TR_TipoFacturas WHERE ISNULL(Activo,0)=1 AND ISNULL(EsTransporte,0)=1";
+            return ConsultarTabla(sql);
+        }
+
+        /// <summary>Productos de transporte de un tipo de factura (combo cboProducto).</summary>
+        public DataTable ListarProductosPorTipoFac(int idTipoFactura)
+        {
+            const string sql = "SELECT IdProducto, CodProducto, NombreProducto, A.Activo, Descripcion, EsCamion, EsRetro, EsBus, PagaISV, IdTipoEx, AplicaImporte, A.IdTipoFactura " +
+                               "FROM dbo.FAC_Productos A INNER JOIN dbo.TR_TipoFacturas B ON A.IdTipoFactura=B.IdTipoFactura " +
+                               "WHERE ISNULL(B.EsTransporte,0)=1 AND A.IdTipoFactura=@IdTipoFactura";
+            return ConsultarTabla(sql, new { IdTipoFactura = idTipoFactura });
+        }
+
+        /// <summary>Cierres/calendarización (SP FAC_Cierres) para el combo cboCalendarizacion.</summary>
+        public DataTable ListarCierres()
+        {
+            return ConsultarTabla("dbo.FAC_Cierres", null, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Clientes activos filtrados por transporte (combo cboCliente). El flag mapea a TR_Clientes.Trasporte.</summary>
+        public DataTable ListarClientesTransporte(bool esTransporte)
+        {
+            const string sql = "SELECT IdCliente, Cliente FROM dbo.TR_Clientes WHERE ISNULL(Activo,0)=1 AND ISNULL(Trasporte,0)=@EsTransporte";
+            return ConsultarTabla(sql, new { EsTransporte = esTransporte });
+        }
+
+        /// <summary>Proformas de un cierre y cliente (SP FAC_Proformas) para el combo cboProforma.</summary>
+        public DataTable ListarProformas(int idCierre, int idCliente)
+        {
+            return ConsultarTabla("dbo.FAC_Proformas", new { IdCierre = idCierre, IdCliente = idCliente }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Boletas de viaje a facturar (SP FAC_VisorBoletas) para el grid dgvBoletas.</summary>
+        public DataTable ListarVisorBoletas(int idCierre, int idCliente, int idTipoFactura)
+        {
+            return ConsultarTabla("dbo.FAC_VisorBoletas",
+                new { IdCierre = idCierre, IdCliente = idCliente, IdTipoFactura = idTipoFactura }, CommandType.StoredProcedure);
+        }
+
         // ===== FAC_RTN (mantenimiento de clientes/RTN — SAC\frmClientesRTN) =====
 
         public DataTable ListarRTN()

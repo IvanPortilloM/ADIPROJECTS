@@ -1,17 +1,15 @@
 ﻿using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 using CheckComboBoxTest;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace ADIGGM.FAC.Transacciones
-{    
+{
     public partial class FAC_BusquedaViajes : FrmPrincipal
     {
+        private readonly RepositorioFAC _repo = new RepositorioFAC();
         public int IdCliente = 0;
         public decimal Cant = 0;
         public decimal Impuesto = 0;
@@ -25,22 +23,19 @@ namespace ADIGGM.FAC.Transacciones
         }
 
         private void FAC_BusquedaViajes_Load(object sender, EventArgs e)
-        {          
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.TR_TipoFacturas' Puede moverla o quitarla según sea necesario.
-            this.tR_TipoFacturasTableAdapter.FillByTransporte(this.dsFAC.TR_TipoFacturas);
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_Productos' Puede moverla o quitarla según sea necesario.
-            if (int.Parse(cboTipoFac.SelectedIndex.ToString()) != -1)
+        {
+            CargarTipoFac();   // dispara cboTipoFac_SelectedIndexChanged -> carga productos
+            if (cboTipoFac.SelectedIndex != -1)
             {
-                this.fAC_ProductosTableAdapter.FillByTransporte(this.dsFAC.FAC_Productos, int.Parse(cboTipoFac.SelectedValue.ToString()));
+                CargarProductos(int.Parse(cboTipoFac.SelectedValue.ToString()));
             }
-            
-            // TODO: esta línea de código carga datos en la tabla 'dsFAC.FAC_Cierres' Puede moverla o quitarla según sea necesario.
-            this.fAC_CierresTableAdapter.Fill(this.dsFAC.FAC_Cierres);
-            this.tR_ClientesTableAdapter.Fill(this.dsFAC.TR_Clientes, true);
+
+            CargarCierres();   // dispara cboCalendarizacion_SelectedIndexChanged -> carga proformas
+            CargarClientes();
 
             if (cboCalendarizacion.SelectedIndex != -1)
             {
-                this.fAC_ProformasTableAdapter.Fill(this.dsFAC.FAC_Proformas, int.Parse(cboCalendarizacion.SelectedValue.ToString()), IdCliente);
+                CargarProformas(int.Parse(cboCalendarizacion.SelectedValue.ToString()), IdCliente);
             }
 
             cboCliente.SelectedValue = IdCliente;
@@ -48,11 +43,46 @@ namespace ADIGGM.FAC.Transacciones
             lblTotal.Text = $"Cantidad: {0} ISV: {0} Total: {0}";
         }
 
+        private void CargarTipoFac()
+        {
+            tRTipoFacturasBindingSource.DataMember = "";
+            tRTipoFacturasBindingSource.DataSource = _repo.ListarTipoFacTransporte();
+            cboTipoFac.DataSource = tRTipoFacturasBindingSource;
+        }
+
+        private void CargarProductos(int idTipoFac)
+        {
+            fACProductosBindingSource.DataMember = "";
+            fACProductosBindingSource.DataSource = _repo.ListarProductosPorTipoFac(idTipoFac);
+            cboProducto.DataSource = fACProductosBindingSource;
+        }
+
+        private void CargarCierres()
+        {
+            fACCierresBindingSource.DataMember = "";
+            fACCierresBindingSource.DataSource = _repo.ListarCierres();
+            cboCalendarizacion.DataSource = fACCierresBindingSource;
+        }
+
+        private void CargarClientes()
+        {
+            tRClientesBindingSource.DataMember = "";
+            tRClientesBindingSource.DataSource = _repo.ListarClientesTransporte(true);
+            cboCliente.DataSource = tRClientesBindingSource;
+        }
+
+        private void CargarProformas(int idCierre, int idCliente)
+        {
+            fACProformasBindingSource.DataMember = "";
+            fACProformasBindingSource.DataSource = _repo.ListarProformas(idCierre, idCliente);
+            cboProforma.DataSource = fACProformasBindingSource;
+        }
+
         private void cboCalendarizacion_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cboCalendarizacion.SelectedIndex != -1)
             {
-                this.fAC_ProformasTableAdapter.Fill(this.dsFAC.FAC_Proformas, int.Parse(cboCalendarizacion.SelectedValue.ToString()), IdCliente);
+                CargarProformas(int.Parse(cboCalendarizacion.SelectedValue.ToString()), IdCliente);
             }
         }
 
@@ -63,7 +93,12 @@ namespace ADIGGM.FAC.Transacciones
             }
             else
             {
-                this.fAC_VisorBoletasTableAdapter.Fill(this.dsFAC.FAC_VisorBoletas, int.Parse(cboCalendarizacion.SelectedValue.ToString()), int.Parse(cboCliente.SelectedValue.ToString()), int.Parse(cboTipoFac.SelectedValue.ToString()));
+                fACVisorBoletasBindingSource.DataMember = "";
+                fACVisorBoletasBindingSource.DataSource = _repo.ListarVisorBoletas(
+                    int.Parse(cboCalendarizacion.SelectedValue.ToString()),
+                    int.Parse(cboCliente.SelectedValue.ToString()),
+                    int.Parse(cboTipoFac.SelectedValue.ToString()));
+                dgvBoletas.DataSource = fACVisorBoletasBindingSource;
 
                 Cant = 0;
                 Impuesto = 0;
@@ -119,7 +154,7 @@ namespace ADIGGM.FAC.Transacciones
         {
             if (int.Parse(cboTipoFac.SelectedIndex.ToString()) != -1)
             {
-                this.fAC_ProductosTableAdapter.FillByTransporte(this.dsFAC.FAC_Productos, int.Parse(cboTipoFac.SelectedValue.ToString()));
+                CargarProductos(int.Parse(cboTipoFac.SelectedValue.ToString()));
             }
         }
 
