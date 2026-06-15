@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using Formularios_Base;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.Mantenimiento
 {
     public partial class FrmAsigTpFacTpVeh : FrmMantenimiento
     {
+        private readonly RepositorioCodeas _repo = new RepositorioCodeas();
+        private DataSet _ds;
         int selectedIndex;
         public FrmAsigTpFacTpVeh()
         {
@@ -26,6 +25,39 @@ namespace ADIGGM.Mantenimiento
             btnGuardar.Enabled = false;
             btnEditar.Enabled = true;
             btnCancelar.Enabled = false;
+        }
+
+        /// <summary>Carga TipoFactura(padre)+AsigFacTipoVeh(hijo) con la relación FK (sustituye al DataSet
+        /// tipado): el combo selecciona el padre y el grid muestra sus asignaciones; el combo-columna de
+        /// tipo de vehículo se llena aparte.</summary>
+        private void CargarDatos()
+        {
+            object idTipoFacSeleccionado = cboTipoFac.SelectedValue;
+
+            // Combo-columna de tipo de vehículo (mismo BD TransporteAdiggm)
+            tRTipoVehiculosBindingSource.DataMember = "";
+            tRTipoVehiculosBindingSource.DataSource = _repo.ListarTipoVehiculosActivos();
+            idTipoVehiculo.DataSource = tRTipoVehiculosBindingSource;
+
+            _ds = new DataSet();
+            DataTable tipoFacturas = _repo.ListarTipoFacturas();
+            tipoFacturas.TableName = "TR_TipoFacturas";
+            DataTable asig = _repo.ListarAsigFacTipoVeh();
+            asig.TableName = "TR_AsigFacTipoVeh";
+            _ds.Tables.Add(tipoFacturas);
+            _ds.Tables.Add(asig);
+            _ds.Relations.Add("FK_TR_AsigFacTipoVeh_TR_TipoFacturas",
+                tipoFacturas.Columns["IdTipoFactura"], asig.Columns["IdTipoFactura"], false);
+
+            tRTipoFacturasBindingSource.DataMember = "TR_TipoFacturas";
+            tRTipoFacturasBindingSource.DataSource = _ds;
+            fKTRAsigFacTipoVehTRTipoFacturasBindingSource.DataSource = tRTipoFacturasBindingSource;
+            fKTRAsigFacTipoVehTRTipoFacturasBindingSource.DataMember = "FK_TR_AsigFacTipoVeh_TR_TipoFacturas";
+            // El DataSource se asigna aquí y NO en el Designer (el diseñador de VS borra las columnas).
+            dgvAsigTipoFac.DataSource = fKTRAsigFacTipoVehTRTipoFacturasBindingSource;
+
+            if (idTipoFacSeleccionado != null)
+                cboTipoFac.SelectedValue = idTipoFacSeleccionado;
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -49,8 +81,11 @@ namespace ADIGGM.Mantenimiento
                 {
                     selectedIndex = dgvAsigTipoFac.CurrentRow.Index;
                     dgvAsigTipoFac.EndEdit();
-                    this.tR_AsigFacTipoVehTableAdapter.Update(this.dsCodeasAdiggm.TR_AsigFacTipoVeh);
-                    dgvAsigTipoFac.CurrentCell = dgvAsigTipoFac.Rows[selectedIndex].Cells[2];
+                    fKTRAsigFacTipoVehTRTipoFacturasBindingSource.EndEdit();
+                    _repo.GuardarAsigFacTipoVeh(_ds.Tables["TR_AsigFacTipoVeh"]);
+                    CargarDatos();
+                    if (selectedIndex >= 0 && selectedIndex < dgvAsigTipoFac.Rows.Count)
+                        dgvAsigTipoFac.CurrentCell = dgvAsigTipoFac.Rows[selectedIndex].Cells[2];
                     dgvAsigTipoFac.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
@@ -93,8 +128,9 @@ namespace ADIGGM.Mantenimiento
             {
                 selectedIndex = dgvAsigTipoFac.CurrentRow.Index;
 
-                this.tR_AsigFacTipoVehTableAdapter.Fill(this.dsCodeasAdiggm.TR_AsigFacTipoVeh);
-                dgvAsigTipoFac.CurrentCell = dgvAsigTipoFac.Rows[selectedIndex].Cells[2];
+                CargarDatos();
+                if (selectedIndex >= 0 && selectedIndex < dgvAsigTipoFac.Rows.Count)
+                    dgvAsigTipoFac.CurrentCell = dgvAsigTipoFac.Rows[selectedIndex].Cells[2];
                 dgvAsigTipoFac.AllowUserToAddRows = false;
 
                 dgvAsigTipoFac.ReadOnly = true;
@@ -122,12 +158,7 @@ namespace ADIGGM.Mantenimiento
 
         private void FrmAsigTpFacTpVeh_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsTransporteAdiggm.TR_TipoVehiculos' Puede moverla o quitarla según sea necesario.
-            this.tR_TipoVehiculosTableAdapter.FillByActivo(this.dsTransporteAdiggm.TR_TipoVehiculos);
-            // TODO: esta línea de código carga datos en la tabla 'dsCodeasAdiggm.TR_AsigFacTipoVeh' Puede moverla o quitarla según sea necesario.
-            this.tR_AsigFacTipoVehTableAdapter.Fill(this.dsCodeasAdiggm.TR_AsigFacTipoVeh);
-            // TODO: esta línea de código carga datos en la tabla 'dsCodeasAdiggm.TR_TipoFacturas' Puede moverla o quitarla según sea necesario.
-            this.tR_TipoFacturasTableAdapter.Fill(this.dsCodeasAdiggm.TR_TipoFacturas);
+            CargarDatos();
             lblFooter.Text = "TIPOS DE VEH ASIGNADOS AL TIPO DE FACTURA - CANTIDAD DE REGISTROS: " + dgvAsigTipoFac.RowCount;
         }
     }

@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.cboTipoFac = new System.Windows.Forms.ComboBox();
             this.tRTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCodeasAdiggm = new ADIGGM.DataSets.DsCodeasAdiggm();
             this.gboTipoVeh = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvAsigTipoFac = new System.Windows.Forms.DataGridView();
@@ -39,18 +38,12 @@
             this.idTipoFacturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idTipoVehiculo = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tRTipoVehiculosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsTransporteAdiggm = new ADIGGM.DataSets.DsTransporteAdiggm();
             this.fKTRAsigFacTipoVehTRTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tR_TipoFacturasTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.TR_TipoFacturasTableAdapter();
-            this.tR_AsigFacTipoVehTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.TR_AsigFacTipoVehTableAdapter();
-            this.tR_TipoVehiculosTableAdapter = new ADIGGM.DataSets.DsTransporteAdiggmTableAdapters.TR_TipoVehiculosTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoFacturasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).BeginInit();
             this.gboTipoVeh.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAsigTipoFac)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoVehiculosBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsTransporteAdiggm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fKTRAsigFacTipoVehTRTipoFacturasBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -137,17 +130,7 @@
             this.cboTipoFac.Size = new System.Drawing.Size(188, 24);
             this.cboTipoFac.TabIndex = 103;
             this.cboTipoFac.ValueMember = "IdTipoFactura";
-            // 
-            // tRTipoFacturasBindingSource
-            // 
-            this.tRTipoFacturasBindingSource.DataMember = "TR_TipoFacturas";
-            this.tRTipoFacturasBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // dsCodeasAdiggm
-            // 
-            this.dsCodeasAdiggm.DataSetName = "DsCodeasAdiggm";
-            this.dsCodeasAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // gboTipoVeh
             // 
             this.gboTipoVeh.Controls.Add(this.label1);
@@ -179,7 +162,6 @@
             this.idAsigFacTipoVehDataGridViewTextBoxColumn,
             this.idTipoFacturaDataGridViewTextBoxColumn,
             this.idTipoVehiculo});
-            this.dgvAsigTipoFac.DataSource = this.fKTRAsigFacTipoVehTRTipoFacturasBindingSource;
             this.dgvAsigTipoFac.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAsigTipoFac.Location = new System.Drawing.Point(0, 150);
             this.dgvAsigTipoFac.Name = "dgvAsigTipoFac";
@@ -209,7 +191,6 @@
             // 
             this.idTipoVehiculo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.idTipoVehiculo.DataPropertyName = "IdTipoVehiculo";
-            this.idTipoVehiculo.DataSource = this.tRTipoVehiculosBindingSource;
             this.idTipoVehiculo.DisplayMember = "TipoVehiculo";
             this.idTipoVehiculo.HeaderText = "Tipo de Vehiculo";
             this.idTipoVehiculo.Name = "idTipoVehiculo";
@@ -217,34 +198,7 @@
             this.idTipoVehiculo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.idTipoVehiculo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.idTipoVehiculo.ValueMember = "IdTipoVehiculo";
-            // 
-            // tRTipoVehiculosBindingSource
-            // 
-            this.tRTipoVehiculosBindingSource.DataMember = "TR_TipoVehiculos";
-            this.tRTipoVehiculosBindingSource.DataSource = this.dsTransporteAdiggm;
-            // 
-            // dsTransporteAdiggm
-            // 
-            this.dsTransporteAdiggm.DataSetName = "DsTransporteAdiggm";
-            this.dsTransporteAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // fKTRAsigFacTipoVehTRTipoFacturasBindingSource
-            // 
-            this.fKTRAsigFacTipoVehTRTipoFacturasBindingSource.DataMember = "FK_TR_AsigFacTipoVeh_TR_TipoFacturas";
-            this.fKTRAsigFacTipoVehTRTipoFacturasBindingSource.DataSource = this.tRTipoFacturasBindingSource;
-            // 
-            // tR_TipoFacturasTableAdapter
-            // 
-            this.tR_TipoFacturasTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_AsigFacTipoVehTableAdapter
-            // 
-            this.tR_AsigFacTipoVehTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_TipoVehiculosTableAdapter
-            // 
-            this.tR_TipoVehiculosTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // FrmAsigTpFacTpVeh
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -260,12 +214,10 @@
             this.pnlFooter.ResumeLayout(false);
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoFacturasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).EndInit();
             this.gboTipoVeh.ResumeLayout(false);
             this.gboTipoVeh.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAsigTipoFac)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoVehiculosBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsTransporteAdiggm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fKTRAsigFacTipoVehTRTipoFacturasBindingSource)).EndInit();
             this.ResumeLayout(false);
 
@@ -277,14 +229,9 @@
         private System.Windows.Forms.GroupBox gboTipoVeh;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgvAsigTipoFac;
-        private DataSets.DsCodeasAdiggm dsCodeasAdiggm;
         private System.Windows.Forms.BindingSource tRTipoFacturasBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.TR_TipoFacturasTableAdapter tR_TipoFacturasTableAdapter;
         private System.Windows.Forms.BindingSource fKTRAsigFacTipoVehTRTipoFacturasBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.TR_AsigFacTipoVehTableAdapter tR_AsigFacTipoVehTableAdapter;
-        private DataSets.DsTransporteAdiggm dsTransporteAdiggm;
         private System.Windows.Forms.BindingSource tRTipoVehiculosBindingSource;
-        private DataSets.DsTransporteAdiggmTableAdapters.TR_TipoVehiculosTableAdapter tR_TipoVehiculosTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn idAsigFacTipoVehDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn idTipoFacturaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewComboBoxColumn idTipoVehiculo;
