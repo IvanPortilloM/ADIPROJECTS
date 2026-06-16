@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
 using Formularios_Base;
 
 namespace ADIGGM.FAC.Mantenimiento
@@ -14,6 +15,22 @@ namespace ADIGGM.FAC.Mantenimiento
         public FAC_Productos()
         {
             InitializeComponent();
+            ConfigurarColumnas();
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre
+        /// — gotcha §11. Las 2 columnas combo reciben su DataSource en el Load tras poblar su BindingSource.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvProductos.AutoGenerateColumns = false;
+            dgvProductos.Columns.Clear();
+            dgvProductos.Columns.Add(GridColumnas.Texto("idProductoDataGridViewTextBoxColumn", "IdProducto", "IdProducto", visible: false));
+            dgvProductos.Columns.Add(GridColumnas.Texto("codProductoDataGridViewTextBoxColumn", "CodProducto", "Cod Producto"));
+            dgvProductos.Columns.Add(GridColumnas.Texto("nombreProductoDataGridViewTextBoxColumn", "NombreProducto", "Nombre Producto"));
+            dgvProductos.Columns.Add(GridColumnas.Check("activoDataGridViewCheckBoxColumn", "Activo", "Activo"));
+            dgvProductos.Columns.Add(GridColumnas.Texto("Descripcion", "Descripcion", "Descripcion"));
+            dgvProductos.Columns.Add(GridColumnas.Combo("IdTipoEx", "IdTipoEx", "Tipo", "Tipo", "IdTipoEx"));
+            dgvProductos.Columns.Add(GridColumnas.Combo("IdTipoFactura", "IdTipoFactura", "Tipo Factura", "TipoFactura", "IdTipoFactura"));
         }
 
         private void FAC_Productos_Load(object sender, EventArgs e)

@@ -36,20 +36,12 @@
             this.fACTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvNoAsig = new System.Windows.Forms.DataGridView();
-            this.idUsuarioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreApellidoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreUsuarioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Selección = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.fACTipoFacUsuarioNoAsigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel5 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.txtBusqueda1 = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dgvAsig = new System.Windows.Forms.DataGridView();
-            this.idUsuarioDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Selección2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.nombreApellidoDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreUsuarioDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fACTipoFacUsuarioAsigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel4 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -155,15 +147,10 @@
             // 
             this.dgvNoAsig.AllowUserToAddRows = false;
             this.dgvNoAsig.AllowUserToDeleteRows = false;
-            this.dgvNoAsig.AutoGenerateColumns = false;
             this.dgvNoAsig.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvNoAsig.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvNoAsig.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvNoAsig.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idUsuarioDataGridViewTextBoxColumn,
-            this.nombreApellidoDataGridViewTextBoxColumn,
-            this.nombreUsuarioDataGridViewTextBoxColumn,
-            this.Selección});
+            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvNoAsig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvNoAsig.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvNoAsig.Location = new System.Drawing.Point(0, 40);
@@ -172,34 +159,6 @@
             this.dgvNoAsig.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvNoAsig.Size = new System.Drawing.Size(327, 330);
             this.dgvNoAsig.TabIndex = 106;
-            // 
-            // idUsuarioDataGridViewTextBoxColumn
-            // 
-            this.idUsuarioDataGridViewTextBoxColumn.DataPropertyName = "IdUsuario";
-            this.idUsuarioDataGridViewTextBoxColumn.HeaderText = "IdUsuario";
-            this.idUsuarioDataGridViewTextBoxColumn.Name = "idUsuarioDataGridViewTextBoxColumn";
-            this.idUsuarioDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idUsuarioDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // nombreApellidoDataGridViewTextBoxColumn
-            // 
-            this.nombreApellidoDataGridViewTextBoxColumn.DataPropertyName = "NombreApellido";
-            this.nombreApellidoDataGridViewTextBoxColumn.HeaderText = "Nombres Apellidos";
-            this.nombreApellidoDataGridViewTextBoxColumn.Name = "nombreApellidoDataGridViewTextBoxColumn";
-            this.nombreApellidoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // nombreUsuarioDataGridViewTextBoxColumn
-            // 
-            this.nombreUsuarioDataGridViewTextBoxColumn.DataPropertyName = "NombreUsuario";
-            this.nombreUsuarioDataGridViewTextBoxColumn.HeaderText = "Nombre Usuario";
-            this.nombreUsuarioDataGridViewTextBoxColumn.Name = "nombreUsuarioDataGridViewTextBoxColumn";
-            this.nombreUsuarioDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // Selección
-            // 
-            this.Selección.FillWeight = 38.34297F;
-            this.Selección.HeaderText = "";
-            this.Selección.Name = "Selección";
             //
             // panel5
             // 
@@ -243,15 +202,10 @@
             // 
             this.dgvAsig.AllowUserToAddRows = false;
             this.dgvAsig.AllowUserToDeleteRows = false;
-            this.dgvAsig.AutoGenerateColumns = false;
             this.dgvAsig.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvAsig.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvAsig.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAsig.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idUsuarioDataGridViewTextBoxColumn1,
-            this.Selección2,
-            this.nombreApellidoDataGridViewTextBoxColumn1,
-            this.nombreUsuarioDataGridViewTextBoxColumn1});
+            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvAsig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAsig.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvAsig.Location = new System.Drawing.Point(0, 40);
@@ -260,34 +214,6 @@
             this.dgvAsig.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvAsig.Size = new System.Drawing.Size(318, 330);
             this.dgvAsig.TabIndex = 106;
-            // 
-            // idUsuarioDataGridViewTextBoxColumn1
-            // 
-            this.idUsuarioDataGridViewTextBoxColumn1.DataPropertyName = "IdUsuario";
-            this.idUsuarioDataGridViewTextBoxColumn1.HeaderText = "IdUsuario";
-            this.idUsuarioDataGridViewTextBoxColumn1.Name = "idUsuarioDataGridViewTextBoxColumn1";
-            this.idUsuarioDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.idUsuarioDataGridViewTextBoxColumn1.Visible = false;
-            // 
-            // Selección2
-            // 
-            this.Selección2.FillWeight = 36.47503F;
-            this.Selección2.HeaderText = "";
-            this.Selección2.Name = "Selección2";
-            // 
-            // nombreApellidoDataGridViewTextBoxColumn1
-            // 
-            this.nombreApellidoDataGridViewTextBoxColumn1.DataPropertyName = "NombreApellido";
-            this.nombreApellidoDataGridViewTextBoxColumn1.HeaderText = "Nombres Apellidos";
-            this.nombreApellidoDataGridViewTextBoxColumn1.Name = "nombreApellidoDataGridViewTextBoxColumn1";
-            this.nombreApellidoDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // nombreUsuarioDataGridViewTextBoxColumn1
-            // 
-            this.nombreUsuarioDataGridViewTextBoxColumn1.DataPropertyName = "NombreUsuario";
-            this.nombreUsuarioDataGridViewTextBoxColumn1.HeaderText = "Nombre Usuario";
-            this.nombreUsuarioDataGridViewTextBoxColumn1.Name = "nombreUsuarioDataGridViewTextBoxColumn1";
-            this.nombreUsuarioDataGridViewTextBoxColumn1.ReadOnly = true;
             //
             // panel4
             // 
@@ -397,13 +323,5 @@
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.BindingSource fACTipoFacUsuarioNoAsigBindingSource;
         private System.Windows.Forms.BindingSource fACTipoFacUsuarioAsigBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idUsuarioDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreApellidoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreUsuarioDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Selección;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idUsuarioDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Selección2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreApellidoDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreUsuarioDataGridViewTextBoxColumn1;
     }
 }

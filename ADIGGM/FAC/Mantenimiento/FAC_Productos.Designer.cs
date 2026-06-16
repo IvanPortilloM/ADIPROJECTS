@@ -30,14 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgvProductos = new System.Windows.Forms.DataGridView();
-            this.idProductoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codProductoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreProductoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.activoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdTipoEx = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.fACTipoExBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.IdTipoFactura = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tRTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fACProductosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pnlFooter.SuspendLayout();
@@ -126,18 +119,10 @@
             // 
             this.dgvProductos.AllowUserToAddRows = false;
             this.dgvProductos.AllowUserToDeleteRows = false;
-            this.dgvProductos.AutoGenerateColumns = false;
             this.dgvProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvProductos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProductos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idProductoDataGridViewTextBoxColumn,
-            this.codProductoDataGridViewTextBoxColumn,
-            this.nombreProductoDataGridViewTextBoxColumn,
-            this.activoDataGridViewCheckBoxColumn,
-            this.Descripcion,
-            this.IdTipoEx,
-            this.IdTipoFactura});
+            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvProductos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProductos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvProductos.Location = new System.Drawing.Point(0, 98);
@@ -148,74 +133,6 @@
             this.dgvProductos.Size = new System.Drawing.Size(903, 295);
             this.dgvProductos.TabIndex = 109;
             this.dgvProductos.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvProductos_DataError);
-            // 
-            // idProductoDataGridViewTextBoxColumn
-            // 
-            this.idProductoDataGridViewTextBoxColumn.DataPropertyName = "IdProducto";
-            this.idProductoDataGridViewTextBoxColumn.HeaderText = "IdProducto";
-            this.idProductoDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.idProductoDataGridViewTextBoxColumn.Name = "idProductoDataGridViewTextBoxColumn";
-            this.idProductoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idProductoDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // codProductoDataGridViewTextBoxColumn
-            // 
-            this.codProductoDataGridViewTextBoxColumn.DataPropertyName = "CodProducto";
-            this.codProductoDataGridViewTextBoxColumn.FillWeight = 108.5312F;
-            this.codProductoDataGridViewTextBoxColumn.HeaderText = "Cod Producto";
-            this.codProductoDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.codProductoDataGridViewTextBoxColumn.Name = "codProductoDataGridViewTextBoxColumn";
-            this.codProductoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // nombreProductoDataGridViewTextBoxColumn
-            // 
-            this.nombreProductoDataGridViewTextBoxColumn.DataPropertyName = "NombreProducto";
-            this.nombreProductoDataGridViewTextBoxColumn.FillWeight = 165.4462F;
-            this.nombreProductoDataGridViewTextBoxColumn.HeaderText = "Nombre Producto";
-            this.nombreProductoDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.nombreProductoDataGridViewTextBoxColumn.Name = "nombreProductoDataGridViewTextBoxColumn";
-            this.nombreProductoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // activoDataGridViewCheckBoxColumn
-            // 
-            this.activoDataGridViewCheckBoxColumn.DataPropertyName = "Activo";
-            this.activoDataGridViewCheckBoxColumn.FillWeight = 46.61534F;
-            this.activoDataGridViewCheckBoxColumn.HeaderText = "Activo";
-            this.activoDataGridViewCheckBoxColumn.MinimumWidth = 6;
-            this.activoDataGridViewCheckBoxColumn.Name = "activoDataGridViewCheckBoxColumn";
-            this.activoDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // Descripcion
-            // 
-            this.Descripcion.DataPropertyName = "Descripcion";
-            this.Descripcion.FillWeight = 176.1199F;
-            this.Descripcion.HeaderText = "Descripcion";
-            this.Descripcion.MinimumWidth = 6;
-            this.Descripcion.Name = "Descripcion";
-            this.Descripcion.ReadOnly = true;
-            // 
-            // IdTipoEx
-            // 
-            this.IdTipoEx.DataPropertyName = "IdTipoEx";
-            this.IdTipoEx.DisplayMember = "Tipo";
-            this.IdTipoEx.FillWeight = 87.0173F;
-            this.IdTipoEx.HeaderText = "Tipo";
-            this.IdTipoEx.MinimumWidth = 6;
-            this.IdTipoEx.Name = "IdTipoEx";
-            this.IdTipoEx.ReadOnly = true;
-            this.IdTipoEx.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.IdTipoEx.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.IdTipoEx.ValueMember = "IdTipoEx";
-            //
-            // IdTipoFactura
-            //
-            this.IdTipoFactura.DataPropertyName = "IdTipoFactura";
-            this.IdTipoFactura.DisplayMember = "TipoFactura";
-            this.IdTipoFactura.FillWeight = 148.721F;
-            this.IdTipoFactura.HeaderText = "Tipo Factura";
-            this.IdTipoFactura.Name = "IdTipoFactura";
-            this.IdTipoFactura.ReadOnly = true;
-            this.IdTipoFactura.ValueMember = "IdTipoFactura";
             //
             // FAC_Productos
             //
@@ -243,12 +160,5 @@
         private System.Windows.Forms.BindingSource fACProductosBindingSource;
         private System.Windows.Forms.BindingSource fACTipoExBindingSource;
         private System.Windows.Forms.BindingSource tRTipoFacturasBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idProductoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn codProductoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreProductoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn activoDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Descripcion;
-        private System.Windows.Forms.DataGridViewComboBoxColumn IdTipoEx;
-        private System.Windows.Forms.DataGridViewComboBoxColumn IdTipoFactura;
     }
 }
