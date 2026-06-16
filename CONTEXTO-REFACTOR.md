@@ -149,8 +149,7 @@ Para retirar un DataSet por completo hay que reemplazar TAMBIÉN estas llamadas 
 ### 13.b BARRIDO §11 — columnas de grid EN CÓDIGO en TODO form ya migrado (EN CURSO, prioridad del usuario "para que no se nos pasen por alto")
 Mover las columnas del `.Designer.cs` a `ConfigurarColumnas()` (helper `Clases/GridColumnas.cs`) en cada form MIGRADO con grid de columnas manuales, para inmunizarlos al borrado del diseñador de VS. Checklist (✅ hecho / ⬜ pendiente):
 - ✅ FrmCierresBuscar, FrmCierreCliente, FrmAsigTpFacTpVeh, FrmTipoFac, FrmSyncTransCod (5c1a727/8b14cad/cd7aca5)
-- ✅ FAC_TipoMoneda, FAC_TipoFacturas, FAC_CAI (a73f610)
-- ⬜ FAC: FAC_Productos (2 cols combo), FAC_TipoFacUsuarios (2 grids), FAC_VisorFacturas (2 grids + cols combo), FAC_BusquedaViajes, FAC_Factura (col combo en detalle)
+- ✅ **MÓDULO FAC COMPLETO**: FAC_TipoMoneda, FAC_TipoFacturas, FAC_CAI (a73f610), FAC_Productos, FAC_TipoFacUsuarios (8672256), FAC_VisorFacturas (4d4ea58), FAC_BusquedaViajes, FAC_Factura (02b2739)
 - ⬜ INV: frmTipoOp, frmBodegas, frmInventario, frmVisorExistencias
 - ⬜ Seguridad: frmMenuSistema, frmSubMenu, frmDetSubMenu, frmAsigPermisos
 - ⬜ IA/SAC/CA: frmDetProducto, frmDetCredito, frmBuscarAsociados, frmCarnetImp, frmInformacionAsoc, SAC\frmMenu, SAC\frmClientesRTN, SAC\FrmSolCred, SAC\FrmAsocBuscar
