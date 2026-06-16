@@ -44,7 +44,6 @@
             this.txtVistaPrev = new System.Windows.Forms.TextBox();
             this.txtCodTipAsiento = new System.Windows.Forms.TextBox();
             this.cODSlcTipoAsientoBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCodeasAdiggm = new ADIGGM.DataSets.DsCodeasAdiggm();
             this.cboTipoAsiento = new System.Windows.Forms.ComboBox();
             this.txtAbvFac = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -65,8 +64,6 @@
             this.nDoc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.detalle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pRSyncTransCodBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.pR_SyncTransCodTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.PR_SyncTransCodTableAdapter();
-            this.cOD_SlcTipoAsientoTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcTipoAsientoTableAdapter();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtDif = new System.Windows.Forms.TextBox();
@@ -80,7 +77,6 @@
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cODSlcTipoAsientoBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAsiento)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pRSyncTransCodBindingSource)).BeginInit();
             this.groupBox4.SuspendLayout();
@@ -290,16 +286,6 @@
             this.txtCodTipAsiento.TabIndex = 26;
             this.txtCodTipAsiento.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // cODSlcTipoAsientoBindingSource
-            // 
-            this.cODSlcTipoAsientoBindingSource.DataMember = "COD_SlcTipoAsiento";
-            this.cODSlcTipoAsientoBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // dsCodeasAdiggm
-            // 
-            this.dsCodeasAdiggm.DataSetName = "DsCodeasAdiggm";
-            this.dsCodeasAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // cboTipoAsiento
             // 
             this.cboTipoAsiento.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
@@ -427,7 +413,6 @@
             this.haber,
             this.nDoc,
             this.detalle});
-            this.dgvAsiento.DataSource = this.pRSyncTransCodBindingSource;
             this.dgvAsiento.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAsiento.Location = new System.Drawing.Point(0, 198);
             this.dgvAsiento.Name = "dgvAsiento";
@@ -491,18 +476,9 @@
             this.detalle.ReadOnly = true;
             // 
             // pRSyncTransCodBindingSource
-            // 
+            //
             this.pRSyncTransCodBindingSource.DataMember = "PR_SyncTransCod";
-            this.pRSyncTransCodBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // pR_SyncTransCodTableAdapter
-            // 
-            this.pR_SyncTransCodTableAdapter.ClearBeforeFill = true;
-            // 
-            // cOD_SlcTipoAsientoTableAdapter
-            // 
-            this.cOD_SlcTipoAsientoTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.label10);
@@ -604,7 +580,6 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cODSlcTipoAsientoBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAsiento)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pRSyncTransCodBindingSource)).EndInit();
             this.groupBox4.ResumeLayout(false);
@@ -632,11 +607,8 @@
         private System.Windows.Forms.TextBox txtFactura;
         private System.Windows.Forms.Button btnBuscarCierre;
         private System.Windows.Forms.BindingSource pRSyncTransCodBindingSource;
-        private DataSets.DsCodeasAdiggm dsCodeasAdiggm;
-        private DataSets.DsCodeasAdiggmTableAdapters.PR_SyncTransCodTableAdapter pR_SyncTransCodTableAdapter;
         private System.Windows.Forms.ComboBox cboTipoAsiento;
         private System.Windows.Forms.BindingSource cODSlcTipoAsientoBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcTipoAsientoTableAdapter cOD_SlcTipoAsientoTableAdapter;
         private System.Windows.Forms.TextBox txtCodTipAsiento;
         private System.Windows.Forms.DataGridViewTextBoxColumn cuentaContable;
         private System.Windows.Forms.DataGridViewTextBoxColumn descripcion;

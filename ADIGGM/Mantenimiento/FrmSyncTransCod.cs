@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.Mantenimiento
 {
     public partial class FrmSyncTransCod : FrmPrincipal, IContract
     {
+        private readonly RepositorioCodeas _repo = new RepositorioCodeas();
         int IdCierre, IdCliente, IdTipoFac;
         DateTime FechaInicio, FechaFin;
         string Usuario = Clases.VarGlobales.Usuario;
@@ -20,6 +18,12 @@ namespace ADIGGM.Mantenimiento
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             Clases.VarGlobales varGlobales = new Clases.VarGlobales();
             DgvStyle.EstiloDgv(dgvAsiento);
+        }
+
+        private void CargarTipoAsiento()
+        {
+            cODSlcTipoAsientoBindingSource.DataMember = "";
+            cODSlcTipoAsientoBindingSource.DataSource = _repo.ListarTipoAsiento();
         }
         public void Ejecutar1(string Var1)
         {
@@ -36,9 +40,11 @@ namespace ADIGGM.Mantenimiento
         public void LlenarDgv()
         {
             double Debe = 0, Haber = 0;
-            this.pR_SyncTransCodTableAdapter.Fill(this.dsCodeasAdiggm.PR_SyncTransCod,IdCierre,IdCliente,IdTipoFac,txtFactura.Text,txtAbvFac.Text,txtDetHeader.Text);
-            this.cOD_SlcTipoAsientoTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcTipoAsiento);
-            if (dgvAsiento.RowCount > 0) 
+            pRSyncTransCodBindingSource.DataMember = "";
+            pRSyncTransCodBindingSource.DataSource = _repo.ListarSyncTransCod(IdCierre, IdCliente, IdTipoFac, txtFactura.Text, txtAbvFac.Text, txtDetHeader.Text);
+            dgvAsiento.DataSource = pRSyncTransCodBindingSource;
+            CargarTipoAsiento();
+            if (dgvAsiento.RowCount > 0)
             {
                 btnVerificarCta.Enabled = true;
                 VistaPrev();
@@ -104,7 +110,7 @@ namespace ADIGGM.Mantenimiento
                 int NoExiste = 0;
                 foreach (DataGridViewRow row in dgvAsiento.Rows)
                 {
-                    if (Convert.ToInt32(VarGlobales.consultas.PR_VerificarCtaCont(row.Cells["cuentaContable"].Value.ToString())) == 0)
+                    if (_repo.VerificarCuentaContable(row.Cells["cuentaContable"].Value.ToString()) == 0)
                     {
                         MessageBox.Show("La siguiente Cuenta Contable no existe en el sistema de CODEAS: " + row.Cells["cuentaContable"].Value.ToString(), Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         btnSync.Enabled = false;
@@ -138,7 +144,7 @@ namespace ADIGGM.Mantenimiento
                 MessageBox.Show("Se Sincronizarán los Datos con el Sistema de CODEAS ¿Desea Continuar?", VarGlobales.nombreSistema, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    VarGlobales.consultas.PR_SyncTransCodGuardar(IdCierre, IdCliente, IdTipoFac, txtFactura.Text, txtAbvFac.Text, txtDetHeader.Text, txtNumAsiento.Text, dtpFecha.Value, Usuario);
+                    _repo.GuardarSyncTransCod(IdCierre, IdCliente, IdTipoFac, txtFactura.Text, txtAbvFac.Text, txtDetHeader.Text, txtNumAsiento.Text, dtpFecha.Value, Usuario);
                     lblFooter.Text = "Datos Sincronizados Exitosamente";
                     IdCliente = 0;
                     IdCierre = 0;
@@ -146,7 +152,7 @@ namespace ADIGGM.Mantenimiento
                     txtFactura.Text = "";
                     txtAbvFac.Text = "";
                     txtDetHeader.Text = "";
-                    this.cOD_SlcTipoAsientoTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcTipoAsiento);
+                    CargarTipoAsiento();
                     LlenarDgv();
                     txtFactura.Focus();
 
@@ -166,7 +172,7 @@ namespace ADIGGM.Mantenimiento
                 {
                     lblFooter.Text = "Favor Llene Todos los Campos Requeridos";
                     txtFactura.Focus();
-                    this.cOD_SlcTipoAsientoTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcTipoAsiento);
+                    CargarTipoAsiento();
 
                     Timer timer1 = new Timer();
                     timer1.Interval = 10000;
@@ -181,7 +187,7 @@ namespace ADIGGM.Mantenimiento
         private void FrmSyncTransCod_Load(object sender, EventArgs e)
         {
             this.Dock = DockStyle.Fill;
-            this.cOD_SlcTipoAsientoTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcTipoAsiento);
+            CargarTipoAsiento();
             txtFactura.Focus();
         }
         private void btnSalir_Click(object sender, EventArgs e)

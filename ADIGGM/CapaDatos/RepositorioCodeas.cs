@@ -15,6 +15,34 @@ namespace ADIGGM.CapaDatos
     {
         public RepositorioCodeas() : base(Conexion.TRANSPORTE) { }
 
+        // ===== Sincronización Transporte -> CODEAS (Mant\FrmSyncTransCod) =====
+
+        /// <summary>Asiento contable propuesto para sincronizar un cierre a CODEAS (SP PR_SyncTransCod).</summary>
+        public DataTable ListarSyncTransCod(int idCierre, int idCliente, int idTipoFactura, string numDoc, string numDocABV, string detalle)
+        {
+            return ConsultarTabla("dbo.PR_SyncTransCod",
+                new { IdCierre = idCierre, IdCliente = idCliente, IdTipoFactura = idTipoFactura, NumDoc = numDoc, NumDocABV = numDocABV, Detalle = detalle },
+                CommandType.StoredProcedure);
+        }
+
+        /// <summary>Tipos de asiento de CODEAS (SP COD_SlcTipoAsiento) para el combo.</summary>
+        public DataTable ListarTipoAsiento()
+        {
+            return ConsultarTabla("dbo.COD_SlcTipoAsiento", null, CommandType.StoredProcedure);
+        }
+
+        // (VerificarCuentaContable ya existe abajo — covibase.dbo.cocatalogo — se reutiliza.)
+
+        /// <summary>Guarda la sincronización del cierre hacia CODEAS (SP PR_SyncTransCodGuardar).</summary>
+        public int GuardarSyncTransCod(int idCierre, int idCliente, int idTipoFactura, string numDoc, string numDocABV,
+            string detalle, string numAsiento, DateTime fechaAsiento, string usuario)
+        {
+            return Ejecutar("dbo.PR_SyncTransCodGuardar",
+                new { IdCierre = idCierre, IdCliente = idCliente, IdTipoFactura = idTipoFactura, NumDoc = numDoc, NumDocABV = numDocABV,
+                      Detalle = detalle, cnumasient = numAsiento, dfechaasie = fechaAsiento, cusuariosi = usuario },
+                CommandType.StoredProcedure);
+        }
+
         // ===== Estado de cuenta del asociado (reporte rptASMaestra) =====
 
         public DataTable CargarASMaestras(string identidad)
