@@ -37,7 +37,6 @@
             this.dgvCierres = new System.Windows.Forms.DataGridView();
             this.idCierre = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tRCierresBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsTransporteAdiggm = new ADIGGM.DataSets.DsTransporteAdiggm();
             this.FechaInicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FechaFin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,7 +46,6 @@
             this.cerrado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.anulado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tRCierreClientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCodeasAdiggm = new ADIGGM.DataSets.DsCodeasAdiggm();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -56,16 +54,10 @@
             this.tRTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cboClientes = new System.Windows.Forms.ComboBox();
             this.tRClientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tR_CierreClientesTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.TR_CierreClientesTableAdapter();
-            this.tR_CierresTableAdapter = new ADIGGM.DataSets.DsTransporteAdiggmTableAdapters.TR_CierresTableAdapter();
-            this.tR_ClientesTableAdapter = new ADIGGM.DataSets.DsTransporteAdiggmTableAdapters.TR_ClientesTableAdapter();
-            this.tR_TipoFacturasTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.TR_TipoFacturasTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCierres)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRCierresBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsTransporteAdiggm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRCierreClientesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tRTipoFacturasBindingSource)).BeginInit();
@@ -140,7 +132,6 @@
             this.totalCierre,
             this.cerrado,
             this.anulado});
-            this.dgvCierres.DataSource = this.tRCierreClientesBindingSource;
             this.dgvCierres.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCierres.Location = new System.Drawing.Point(0, 100);
             this.dgvCierres.Name = "dgvCierres";
@@ -153,7 +144,6 @@
             // 
             this.idCierre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.idCierre.DataPropertyName = "IdCierre";
-            this.idCierre.DataSource = this.tRCierresBindingSource;
             this.idCierre.DisplayMember = "Semana";
             this.idCierre.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
             this.idCierre.HeaderText = "Cierre";
@@ -162,17 +152,7 @@
             this.idCierre.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.idCierre.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.idCierre.ValueMember = "IdCierre";
-            // 
-            // tRCierresBindingSource
-            // 
-            this.tRCierresBindingSource.DataMember = "TR_Cierres";
-            this.tRCierresBindingSource.DataSource = this.dsTransporteAdiggm;
-            // 
-            // dsTransporteAdiggm
-            // 
-            this.dsTransporteAdiggm.DataSetName = "DsTransporteAdiggm";
-            this.dsTransporteAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // FechaInicio
             // 
             this.FechaInicio.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -249,17 +229,11 @@
             this.anulado.Name = "anulado";
             this.anulado.ReadOnly = true;
             this.anulado.Visible = false;
-            // 
+            //
             // tRCierreClientesBindingSource
-            // 
+            //
             this.tRCierreClientesBindingSource.DataMember = "TR_CierreClientes";
-            this.tRCierreClientesBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // dsCodeasAdiggm
-            // 
-            this.dsCodeasAdiggm.DataSetName = "DsCodeasAdiggm";
-            this.dsCodeasAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
+            //
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnSeleccionar);
@@ -317,12 +291,7 @@
             this.cboTipoFac.TabIndex = 1;
             this.cboTipoFac.ValueMember = "IdTipoFactura";
             this.cboTipoFac.SelectedValueChanged += new System.EventHandler(this.cboTipoFac_SelectedValueChanged);
-            // 
-            // tRTipoFacturasBindingSource
-            // 
-            this.tRTipoFacturasBindingSource.DataMember = "TR_TipoFacturas";
-            this.tRTipoFacturasBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
+            //
             // cboClientes
             // 
             this.cboClientes.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
@@ -337,28 +306,7 @@
             this.cboClientes.TabIndex = 0;
             this.cboClientes.ValueMember = "IdCliente";
             this.cboClientes.SelectedValueChanged += new System.EventHandler(this.cboClientes_SelectedValueChanged);
-            // 
-            // tRClientesBindingSource
-            // 
-            this.tRClientesBindingSource.DataMember = "TR_Clientes";
-            this.tRClientesBindingSource.DataSource = this.dsTransporteAdiggm;
-            // 
-            // tR_CierreClientesTableAdapter
-            // 
-            this.tR_CierreClientesTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_CierresTableAdapter
-            // 
-            this.tR_CierresTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_ClientesTableAdapter
-            // 
-            this.tR_ClientesTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_TipoFacturasTableAdapter
-            // 
-            this.tR_TipoFacturasTableAdapter.ClearBeforeFill = true;
-            // 
+            //
             // FrmCierresBuscar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -377,9 +325,7 @@
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCierres)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRCierresBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsTransporteAdiggm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRCierreClientesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -400,15 +346,9 @@
         private System.Windows.Forms.ComboBox cboTipoFac;
         private System.Windows.Forms.ComboBox cboClientes;
         private System.Windows.Forms.BindingSource tRCierreClientesBindingSource;
-        private DataSets.DsCodeasAdiggm dsCodeasAdiggm;
-        private DataSets.DsCodeasAdiggmTableAdapters.TR_CierreClientesTableAdapter tR_CierreClientesTableAdapter;
-        private DataSets.DsTransporteAdiggm dsTransporteAdiggm;
         private System.Windows.Forms.BindingSource tRCierresBindingSource;
-        private DataSets.DsTransporteAdiggmTableAdapters.TR_CierresTableAdapter tR_CierresTableAdapter;
         private System.Windows.Forms.BindingSource tRClientesBindingSource;
-        private DataSets.DsTransporteAdiggmTableAdapters.TR_ClientesTableAdapter tR_ClientesTableAdapter;
         private System.Windows.Forms.BindingSource tRTipoFacturasBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.TR_TipoFacturasTableAdapter tR_TipoFacturasTableAdapter;
         private System.Windows.Forms.DataGridViewComboBoxColumn idCierre;
         private System.Windows.Forms.DataGridViewTextBoxColumn FechaInicio;
         private System.Windows.Forms.DataGridViewTextBoxColumn FechaFin;

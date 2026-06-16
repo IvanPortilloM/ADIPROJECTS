@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.Mantenimiento
 {
     public partial class FrmCierresBuscar : ADIGGM.FrmPrincipal
     {
+        private readonly RepositorioTransporte _repo = new RepositorioTransporte();
         public IContract contrato { get; set; }
         public FrmCierresBuscar()
         {
@@ -21,19 +18,26 @@ namespace ADIGGM.Mantenimiento
 
         private void FrmCierresBuscar_Load(object sender, EventArgs e)
         {
-            this.tR_TipoFacturasTableAdapter.Fill(this.dsCodeasAdiggm.TR_TipoFacturas);
-            this.tR_ClientesTableAdapter.FillByActivo(this.dsTransporteAdiggm.TR_Clientes);
-            this.tR_CierresTableAdapter.Fill(this.dsTransporteAdiggm.TR_Cierres);
-            
+            // Combo-columna idCierre (Semana) del grid: el DataSource se asigna aquí, no en el Designer
+            tRCierresBindingSource.DataMember = "";
+            tRCierresBindingSource.DataSource = _repo.ListarCierres();
+            idCierre.DataSource = tRCierresBindingSource;
+            // Combos selectores (disparan SelectedValueChanged -> LlenarDgv)
+            tRTipoFacturasBindingSource.DataMember = "";
+            tRTipoFacturasBindingSource.DataSource = _repo.ListarTipoFacturas();
+            tRClientesBindingSource.DataMember = "";
+            tRClientesBindingSource.DataSource = _repo.ListarClientesActivos();
         }
         public void LlenarDgv()
         {
             if(cboClientes.SelectedIndex != -1 && cboTipoFac.SelectedIndex != -1)
             {
-                int IdCliente = Convert.ToInt32(cboClientes.SelectedValue), 
+                int IdCliente = Convert.ToInt32(cboClientes.SelectedValue),
                     IdTipoFac = Convert.ToInt32(cboTipoFac.SelectedValue);
 
-                this.tR_CierreClientesTableAdapter.FillByClienteTipoFac(this.dsCodeasAdiggm.TR_CierreClientes, IdCliente, IdTipoFac);
+                tRCierreClientesBindingSource.DataMember = "";
+                tRCierreClientesBindingSource.DataSource = _repo.ListarCierreClientesPorClienteTipoFac(IdCliente, IdTipoFac);
+                dgvCierres.DataSource = tRCierreClientesBindingSource;
             }
             if (dgvCierres.RowCount > 0)
             {

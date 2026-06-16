@@ -47,6 +47,42 @@ namespace ADIGGM.CapaDatos
             return ConsultarTabla(sql);
         }
 
+        /// <summary>Clientes ACTIVOS (combo selector).</summary>
+        public DataTable ListarClientesActivos()
+        {
+            const string sql = "SELECT IdCliente, Cliente FROM dbo.TR_Clientes WHERE Activo = 1 ORDER BY Cliente";
+            return ConsultarTabla(sql);
+        }
+
+        // ===== TR_Cierres =====
+
+        /// <summary>Id/Semana de los cierres (combo-columna del grid de búsqueda de cierres).</summary>
+        public DataTable ListarCierres()
+        {
+            const string sql = "SELECT IdCierre, Semana FROM dbo.TR_Cierres ORDER BY FechaInicio DESC";
+            return ConsultarTabla(sql);
+        }
+
+        // ===== TR_CierreClientes (cierre de clientes — Mant\FrmCierreCliente, Mant\FrmCierresBuscar) =====
+
+        /// <summary>Cierres CERRADOS no anulados ni sincronizados de un cliente/tipo de factura,
+        /// agregados por cierre (SP-equivalente FillByClienteTipoFac — Mant\FrmCierresBuscar).</summary>
+        public DataTable ListarCierreClientesPorClienteTipoFac(int idCliente, int idTipoFactura)
+        {
+            const string sql =
+                "SELECT TR_CierreClientes.IdCierre, TR_CierreClientes.IdCliente, TR_Cierres.FechaInicio, TR_Cierres.FechaFin, " +
+                "SUM(TR_CierreClientes.SubTotalCierre) AS SubTotalCierre, SUM(TR_CierreClientes.ISVCierre) AS ISVCierre, " +
+                "SUM(TR_CierreClientes.TotalCierre) AS TotalCierre, TR_CierreClientes.Cerrado, TR_CierreClientes.Anulado, TR_CierreClientes.SynCodeas " +
+                "FROM dbo.TR_CierreClientes INNER JOIN dbo.TR_Cierres ON TR_CierreClientes.IdCierre = TR_Cierres.IdCierre " +
+                "WHERE TR_CierreClientes.IdCliente = @IdCliente AND TR_CierreClientes.IdTipoVehiculo IN " +
+                "(SELECT IdTipoVehiculo FROM dbo.TR_AsigFacTipoVeh WHERE IdTipoFactura = @IdTipoFactura) " +
+                "AND TR_CierreClientes.Cerrado = 1 AND TR_CierreClientes.Anulado = 0 AND TR_CierreClientes.SynCodeas = 0 " +
+                "GROUP BY TR_CierreClientes.IdCierre, TR_CierreClientes.IdCliente, TR_Cierres.FechaInicio, TR_Cierres.FechaFin, " +
+                "TR_CierreClientes.Cerrado, TR_CierreClientes.Anulado, TR_CierreClientes.SynCodeas " +
+                "ORDER BY TR_Cierres.FechaInicio DESC";
+            return ConsultarTabla(sql, new { IdCliente = idCliente, IdTipoFactura = idTipoFactura });
+        }
+
         // ===== TR_CierreClientes (cierre de clientes — Mant\FrmCierreCliente) =====
 
         /// <summary>Filas de cierre de un cierre y tipo de factura (JOIN con TR_AsigFacTipoVeh).</summary>
