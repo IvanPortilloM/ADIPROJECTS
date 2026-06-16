@@ -30,21 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCierresBuscar));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnSeleccionar = new System.Windows.Forms.Button();
             this.dgvCierres = new System.Windows.Forms.DataGridView();
-            this.idCierre = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tRCierresBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.FechaInicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FechaFin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.subTotalCierre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iSVCierre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.totalCierre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cerrado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.anulado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tRCierreClientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -120,18 +108,8 @@
             // 
             this.dgvCierres.AllowUserToAddRows = false;
             this.dgvCierres.AllowUserToDeleteRows = false;
-            this.dgvCierres.AutoGenerateColumns = false;
             this.dgvCierres.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCierres.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idCierre,
-            this.FechaInicio,
-            this.FechaFin,
-            this.idCliente,
-            this.subTotalCierre,
-            this.iSVCierre,
-            this.totalCierre,
-            this.cerrado,
-            this.anulado});
+            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvCierres.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCierres.Location = new System.Drawing.Point(0, 100);
             this.dgvCierres.Name = "dgvCierres";
@@ -139,96 +117,6 @@
             this.dgvCierres.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCierres.Size = new System.Drawing.Size(600, 259);
             this.dgvCierres.TabIndex = 104;
-            // 
-            // idCierre
-            // 
-            this.idCierre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.idCierre.DataPropertyName = "IdCierre";
-            this.idCierre.DisplayMember = "Semana";
-            this.idCierre.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.idCierre.HeaderText = "Cierre";
-            this.idCierre.Name = "idCierre";
-            this.idCierre.ReadOnly = true;
-            this.idCierre.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.idCierre.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.idCierre.ValueMember = "IdCierre";
-            //
-            // FechaInicio
-            // 
-            this.FechaInicio.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.FechaInicio.DataPropertyName = "FechaInicio";
-            this.FechaInicio.HeaderText = "F. Inicio";
-            this.FechaInicio.Name = "FechaInicio";
-            this.FechaInicio.ReadOnly = true;
-            this.FechaInicio.Width = 72;
-            // 
-            // FechaFin
-            // 
-            this.FechaFin.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.FechaFin.DataPropertyName = "FechaFin";
-            this.FechaFin.HeaderText = "F. Fin";
-            this.FechaFin.Name = "FechaFin";
-            this.FechaFin.ReadOnly = true;
-            this.FechaFin.Width = 58;
-            // 
-            // idCliente
-            // 
-            this.idCliente.DataPropertyName = "IdCliente";
-            this.idCliente.HeaderText = "IdCliente";
-            this.idCliente.Name = "idCliente";
-            this.idCliente.ReadOnly = true;
-            this.idCliente.Visible = false;
-            // 
-            // subTotalCierre
-            // 
-            this.subTotalCierre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.subTotalCierre.DataPropertyName = "SubTotalCierre";
-            dataGridViewCellStyle1.Format = "C2";
-            dataGridViewCellStyle1.NullValue = null;
-            this.subTotalCierre.DefaultCellStyle = dataGridViewCellStyle1;
-            this.subTotalCierre.HeaderText = "SubTotal";
-            this.subTotalCierre.Name = "subTotalCierre";
-            this.subTotalCierre.ReadOnly = true;
-            this.subTotalCierre.Width = 80;
-            // 
-            // iSVCierre
-            // 
-            this.iSVCierre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.iSVCierre.DataPropertyName = "ISVCierre";
-            dataGridViewCellStyle2.Format = "C2";
-            dataGridViewCellStyle2.NullValue = null;
-            this.iSVCierre.DefaultCellStyle = dataGridViewCellStyle2;
-            this.iSVCierre.HeaderText = "ISV";
-            this.iSVCierre.Name = "iSVCierre";
-            this.iSVCierre.ReadOnly = true;
-            this.iSVCierre.Width = 49;
-            // 
-            // totalCierre
-            // 
-            this.totalCierre.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.totalCierre.DataPropertyName = "TotalCierre";
-            dataGridViewCellStyle3.Format = "C2";
-            this.totalCierre.DefaultCellStyle = dataGridViewCellStyle3;
-            this.totalCierre.HeaderText = "Total";
-            this.totalCierre.Name = "totalCierre";
-            this.totalCierre.ReadOnly = true;
-            this.totalCierre.Width = 59;
-            // 
-            // cerrado
-            // 
-            this.cerrado.DataPropertyName = "Cerrado";
-            this.cerrado.HeaderText = "Cerrado";
-            this.cerrado.Name = "cerrado";
-            this.cerrado.ReadOnly = true;
-            this.cerrado.Visible = false;
-            // 
-            // anulado
-            // 
-            this.anulado.DataPropertyName = "Anulado";
-            this.anulado.HeaderText = "Anulado";
-            this.anulado.Name = "anulado";
-            this.anulado.ReadOnly = true;
-            this.anulado.Visible = false;
             //
             // tRCierreClientesBindingSource
             //
@@ -349,14 +237,5 @@
         private System.Windows.Forms.BindingSource tRCierresBindingSource;
         private System.Windows.Forms.BindingSource tRClientesBindingSource;
         private System.Windows.Forms.BindingSource tRTipoFacturasBindingSource;
-        private System.Windows.Forms.DataGridViewComboBoxColumn idCierre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FechaInicio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FechaFin;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idCliente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn subTotalCierre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iSVCierre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn totalCierre;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn cerrado;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn anulado;
     }
 }
