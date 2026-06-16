@@ -1280,6 +1280,7 @@
       <DependentUpon>FrmVehiculos.cs</DependentUpon>
     </Compile>
     <Compile Include="Clases\FuncionesGlobales.cs" />
+    <Compile Include="Clases\GridColumnas.cs" />
     <Compile Include="Clases\VarGlobales.cs" />
     <Compile Include="DataSets\DsTransporteAdiggm.cs">
       <DependentUpon>DsTransporteAdiggm.xsd</DependentUpon>

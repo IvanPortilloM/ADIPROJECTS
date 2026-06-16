@@ -24,63 +24,18 @@ namespace ADIGGM.Mantenimiento
         /// </summary>
         private void ConfigurarColumnas()
         {
+            const DataGridViewAutoSizeColumnMode dc = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvCierres.AutoGenerateColumns = false;
             dgvCierres.Columns.Clear();
-
-            var moneda = new DataGridViewCellStyle { Format = "C2" };
-
-            dgvCierres.Columns.Add(new DataGridViewComboBoxColumn
-            {
-                Name = "idCierre",
-                DataPropertyName = "IdCierre",
-                HeaderText = "Cierre",
-                DisplayMember = "Semana",
-                ValueMember = "IdCierre",
-                DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing,
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill,
-                ReadOnly = true
-            });
-            dgvCierres.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "FechaInicio", DataPropertyName = "FechaInicio", HeaderText = "F. Inicio",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells, Width = 72, ReadOnly = true
-            });
-            dgvCierres.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "FechaFin", DataPropertyName = "FechaFin", HeaderText = "F. Fin",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells, Width = 58, ReadOnly = true
-            });
-            dgvCierres.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "idCliente", DataPropertyName = "IdCliente", HeaderText = "IdCliente",
-                Visible = false, ReadOnly = true
-            });
-            dgvCierres.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "subTotalCierre", DataPropertyName = "SubTotalCierre", HeaderText = "SubTotal",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells, Width = 80, ReadOnly = true,
-                DefaultCellStyle = moneda
-            });
-            dgvCierres.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "iSVCierre", DataPropertyName = "ISVCierre", HeaderText = "ISV",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells, Width = 49, ReadOnly = true,
-                DefaultCellStyle = moneda
-            });
-            dgvCierres.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "totalCierre", DataPropertyName = "TotalCierre", HeaderText = "Total",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells, Width = 59, ReadOnly = true,
-                DefaultCellStyle = moneda
-            });
-            dgvCierres.Columns.Add(new DataGridViewCheckBoxColumn
-            {
-                Name = "cerrado", DataPropertyName = "Cerrado", HeaderText = "Cerrado", Visible = false, ReadOnly = true
-            });
-            dgvCierres.Columns.Add(new DataGridViewCheckBoxColumn
-            {
-                Name = "anulado", DataPropertyName = "Anulado", HeaderText = "Anulado", Visible = false, ReadOnly = true
-            });
+            dgvCierres.Columns.Add(GridColumnas.Combo("idCierre", "IdCierre", "Cierre", "Semana", "IdCierre", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvCierres.Columns.Add(GridColumnas.Texto("FechaInicio", "FechaInicio", "F. Inicio", width: 72, autoSize: dc));
+            dgvCierres.Columns.Add(GridColumnas.Texto("FechaFin", "FechaFin", "F. Fin", width: 58, autoSize: dc));
+            dgvCierres.Columns.Add(GridColumnas.Texto("idCliente", "IdCliente", "IdCliente", visible: false));
+            dgvCierres.Columns.Add(GridColumnas.Texto("subTotalCierre", "SubTotalCierre", "SubTotal", format: "C2", width: 80, autoSize: dc));
+            dgvCierres.Columns.Add(GridColumnas.Texto("iSVCierre", "ISVCierre", "ISV", format: "C2", width: 49, autoSize: dc));
+            dgvCierres.Columns.Add(GridColumnas.Texto("totalCierre", "TotalCierre", "Total", format: "C2", width: 59, autoSize: dc));
+            dgvCierres.Columns.Add(GridColumnas.Check("cerrado", "Cerrado", "Cerrado", visible: false));
+            dgvCierres.Columns.Add(GridColumnas.Check("anulado", "Anulado", "Anulado", visible: false));
         }
 
         private void FrmCierresBuscar_Load(object sender, EventArgs e)

@@ -29,24 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCierreCliente));
             this.dgvCierreCliente = new System.Windows.Forms.DataGridView();
-            this.idCierreCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdTipoFactura = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idCierrePK = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idCliente = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tRClientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.idTipoVehiculo = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tRTipoVehiculosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.SubTotalCierre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ISVCierre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.totalCierre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cerrado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.SynCodeas = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.anulado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cmsOpciones = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cerrarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reversarCerrarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,20 +104,8 @@
             // 
             this.dgvCierreCliente.AllowUserToAddRows = false;
             this.dgvCierreCliente.AllowUserToDeleteRows = false;
-            this.dgvCierreCliente.AutoGenerateColumns = false;
             this.dgvCierreCliente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCierreCliente.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idCierreCliente,
-            this.IdTipoFactura,
-            this.idCierrePK,
-            this.idCliente,
-            this.idTipoVehiculo,
-            this.SubTotalCierre,
-            this.ISVCierre,
-            this.totalCierre,
-            this.cerrado,
-            this.SynCodeas,
-            this.anulado});
+            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvCierreCliente.ContextMenuStrip = this.cmsOpciones;
             this.dgvCierreCliente.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dgvCierreCliente.Location = new System.Drawing.Point(0, 129);
@@ -144,133 +118,7 @@
             this.dgvCierreCliente.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCierreCliente_CellClick);
             this.dgvCierreCliente.SelectionChanged += new System.EventHandler(this.dgvCierreCliente_SelectionChanged);
             this.dgvCierreCliente.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvCierreCliente_MouseDown);
-            // 
-            // idCierreCliente
-            // 
-            this.idCierreCliente.DataPropertyName = "IdCierreCliente";
-            this.idCierreCliente.HeaderText = "IdCierreCliente";
-            this.idCierreCliente.MinimumWidth = 6;
-            this.idCierreCliente.Name = "idCierreCliente";
-            this.idCierreCliente.ReadOnly = true;
-            this.idCierreCliente.Visible = false;
-            this.idCierreCliente.Width = 125;
-            // 
-            // IdTipoFactura
-            // 
-            this.IdTipoFactura.DataPropertyName = "IdTipoFactura";
-            this.IdTipoFactura.HeaderText = "IdTipoFactura";
-            this.IdTipoFactura.MinimumWidth = 6;
-            this.IdTipoFactura.Name = "IdTipoFactura";
-            this.IdTipoFactura.ReadOnly = true;
-            this.IdTipoFactura.Visible = false;
-            this.IdTipoFactura.Width = 125;
-            // 
-            // idCierrePK
-            // 
-            this.idCierrePK.DataPropertyName = "IdCierre";
-            this.idCierrePK.HeaderText = "IdCierre";
-            this.idCierrePK.MinimumWidth = 6;
-            this.idCierrePK.Name = "idCierrePK";
-            this.idCierrePK.ReadOnly = true;
-            this.idCierrePK.Visible = false;
-            this.idCierrePK.Width = 125;
-            // 
-            // idCliente
-            // 
-            this.idCliente.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.idCliente.DataPropertyName = "IdCliente";
-            this.idCliente.DisplayMember = "Cliente";
-            this.idCliente.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.idCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.idCliente.HeaderText = "Cliente";
-            this.idCliente.MinimumWidth = 6;
-            this.idCliente.Name = "idCliente";
-            this.idCliente.ReadOnly = true;
-            this.idCliente.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.idCliente.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.idCliente.ValueMember = "IdCliente";
             //
-            // idTipoVehiculo
-            //
-            this.idTipoVehiculo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.idTipoVehiculo.DataPropertyName = "IdTipoVehiculo";
-            this.idTipoVehiculo.DisplayMember = "TipoVehiculo";
-            this.idTipoVehiculo.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.idTipoVehiculo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.idTipoVehiculo.HeaderText = "Tipo Vehículo";
-            this.idTipoVehiculo.MinimumWidth = 6;
-            this.idTipoVehiculo.Name = "idTipoVehiculo";
-            this.idTipoVehiculo.ReadOnly = true;
-            this.idTipoVehiculo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.idTipoVehiculo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.idTipoVehiculo.ValueMember = "IdTipoVehiculo";
-            //
-            // SubTotalCierre
-            // 
-            this.SubTotalCierre.DataPropertyName = "SubTotalCierre";
-            dataGridViewCellStyle1.Format = "C2";
-            dataGridViewCellStyle1.NullValue = null;
-            this.SubTotalCierre.DefaultCellStyle = dataGridViewCellStyle1;
-            this.SubTotalCierre.HeaderText = "Sub Total";
-            this.SubTotalCierre.MinimumWidth = 6;
-            this.SubTotalCierre.Name = "SubTotalCierre";
-            this.SubTotalCierre.ReadOnly = true;
-            this.SubTotalCierre.Width = 125;
-            // 
-            // ISVCierre
-            // 
-            this.ISVCierre.DataPropertyName = "ISVCierre";
-            dataGridViewCellStyle2.Format = "C2";
-            dataGridViewCellStyle2.NullValue = null;
-            this.ISVCierre.DefaultCellStyle = dataGridViewCellStyle2;
-            this.ISVCierre.HeaderText = "ISV";
-            this.ISVCierre.MinimumWidth = 6;
-            this.ISVCierre.Name = "ISVCierre";
-            this.ISVCierre.ReadOnly = true;
-            this.ISVCierre.Width = 125;
-            // 
-            // totalCierre
-            // 
-            this.totalCierre.DataPropertyName = "TotalCierre";
-            dataGridViewCellStyle3.Format = "C2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.totalCierre.DefaultCellStyle = dataGridViewCellStyle3;
-            this.totalCierre.HeaderText = "Total";
-            this.totalCierre.MinimumWidth = 6;
-            this.totalCierre.Name = "totalCierre";
-            this.totalCierre.ReadOnly = true;
-            this.totalCierre.Width = 93;
-            // 
-            // cerrado
-            // 
-            this.cerrado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.cerrado.DataPropertyName = "Cerrado";
-            this.cerrado.HeaderText = "Cerrado";
-            this.cerrado.MinimumWidth = 6;
-            this.cerrado.Name = "cerrado";
-            this.cerrado.ReadOnly = true;
-            this.cerrado.Width = 59;
-            // 
-            // SynCodeas
-            // 
-            this.SynCodeas.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.SynCodeas.DataPropertyName = "SynCodeas";
-            this.SynCodeas.HeaderText = "SynCodeas";
-            this.SynCodeas.MinimumWidth = 6;
-            this.SynCodeas.Name = "SynCodeas";
-            this.SynCodeas.ReadOnly = true;
-            this.SynCodeas.Width = 76;
-            // 
-            // anulado
-            // 
-            this.anulado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.anulado.DataPropertyName = "Anulado";
-            this.anulado.HeaderText = "Anulado";
-            this.anulado.MinimumWidth = 6;
-            this.anulado.Name = "anulado";
-            this.anulado.ReadOnly = true;
-            this.anulado.Width = 60;
-            // 
             // cmsOpciones
             // 
             this.cmsOpciones.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -460,17 +308,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.BindingSource tRTipoFacturasBindingSource;
         private System.Windows.Forms.BindingSource tRCierreClientesBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idCierreCliente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdTipoFactura;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idCierrePK;
-        private System.Windows.Forms.DataGridViewComboBoxColumn idCliente;
-        private System.Windows.Forms.DataGridViewComboBoxColumn idTipoVehiculo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SubTotalCierre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ISVCierre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn totalCierre;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn cerrado;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn SynCodeas;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn anulado;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;

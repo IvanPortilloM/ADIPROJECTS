@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
 
 namespace ADIGGM.Mantenimiento
 {
@@ -12,10 +13,30 @@ namespace ADIGGM.Mantenimiento
         public FrmCierreCliente(int IdCierre)
         {
             InitializeComponent();
+            ConfigurarColumnas();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvCierreCliente);
 
             this.IdCierre = IdCierre;
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las
+        /// borre — gotcha §11. Las columnas combo reciben su DataSource en el Load tras poblar el BindingSource.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvCierreCliente.AutoGenerateColumns = false;
+            dgvCierreCliente.Columns.Clear();
+            dgvCierreCliente.Columns.Add(GridColumnas.Texto("idCierreCliente", "IdCierreCliente", "IdCierreCliente", visible: false, width: 125));
+            dgvCierreCliente.Columns.Add(GridColumnas.Texto("IdTipoFactura", "IdTipoFactura", "IdTipoFactura", visible: false, width: 125));
+            dgvCierreCliente.Columns.Add(GridColumnas.Texto("idCierrePK", "IdCierre", "IdCierre", visible: false, width: 125));
+            dgvCierreCliente.Columns.Add(GridColumnas.Combo("idCliente", "IdCliente", "Cliente", "Cliente", "IdCliente", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvCierreCliente.Columns.Add(GridColumnas.Combo("idTipoVehiculo", "IdTipoVehiculo", "Tipo Vehículo", "TipoVehiculo", "IdTipoVehiculo", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvCierreCliente.Columns.Add(GridColumnas.Texto("SubTotalCierre", "SubTotalCierre", "Sub Total", format: "C2", width: 125));
+            dgvCierreCliente.Columns.Add(GridColumnas.Texto("ISVCierre", "ISVCierre", "ISV", format: "C2", width: 125));
+            dgvCierreCliente.Columns.Add(GridColumnas.Texto("totalCierre", "TotalCierre", "Total", format: "C2", width: 93));
+            dgvCierreCliente.Columns.Add(GridColumnas.Check("cerrado", "Cerrado", "Cerrado", visible: true));
+            dgvCierreCliente.Columns.Add(GridColumnas.Check("SynCodeas", "SynCodeas", "SynCodeas", visible: true));
+            dgvCierreCliente.Columns.Add(GridColumnas.Check("anulado", "Anulado", "Anulado", visible: true));
         }
 
         private void FrmCierreCliente_Load(object sender, EventArgs e)

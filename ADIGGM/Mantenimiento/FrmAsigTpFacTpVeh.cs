@@ -3,6 +3,7 @@ using System.Data;
 using Formularios_Base;
 using System.Windows.Forms;
 using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
 
 namespace ADIGGM.Mantenimiento
 {
@@ -14,9 +15,23 @@ namespace ADIGGM.Mantenimiento
         public FrmAsigTpFacTpVeh()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             HabilitarBtn();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvAsigTipoFac);
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre
+        /// — gotcha §11. Grid editable de mantenimiento: las columnas arrancan ReadOnly y la edición se
+        /// habilita por cascada al poner dgv.ReadOnly=false (btnNuevo/btnEditar). La columna combo recibe
+        /// su DataSource en el Load tras poblar el BindingSource.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvAsigTipoFac.AutoGenerateColumns = false;
+            dgvAsigTipoFac.Columns.Clear();
+            dgvAsigTipoFac.Columns.Add(GridColumnas.Texto("idAsigFacTipoVehDataGridViewTextBoxColumn", "IdAsigFacTipoVeh", "IdAsigFacTipoVeh", visible: false));
+            dgvAsigTipoFac.Columns.Add(GridColumnas.Texto("idTipoFacturaDataGridViewTextBoxColumn", "IdTipoFactura", "IdTipoFactura", visible: false));
+            dgvAsigTipoFac.Columns.Add(GridColumnas.Combo("idTipoVehiculo", "IdTipoVehiculo", "Tipo de Vehiculo", "TipoVehiculo", "IdTipoVehiculo", autoSize: DataGridViewAutoSizeColumnMode.Fill));
         }
 
         public void HabilitarBtn()

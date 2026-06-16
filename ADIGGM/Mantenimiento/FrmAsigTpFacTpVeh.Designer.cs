@@ -34,9 +34,6 @@
             this.gboTipoVeh = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvAsigTipoFac = new System.Windows.Forms.DataGridView();
-            this.idAsigFacTipoVehDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idTipoFacturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idTipoVehiculo = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tRTipoVehiculosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fKTRAsigFacTipoVehTRTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pnlFooter.SuspendLayout();
@@ -156,12 +153,8 @@
             // 
             this.dgvAsigTipoFac.AllowUserToAddRows = false;
             this.dgvAsigTipoFac.AllowUserToDeleteRows = false;
-            this.dgvAsigTipoFac.AutoGenerateColumns = false;
             this.dgvAsigTipoFac.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAsigTipoFac.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idAsigFacTipoVehDataGridViewTextBoxColumn,
-            this.idTipoFacturaDataGridViewTextBoxColumn,
-            this.idTipoVehiculo});
+            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvAsigTipoFac.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAsigTipoFac.Location = new System.Drawing.Point(0, 150);
             this.dgvAsigTipoFac.Name = "dgvAsigTipoFac";
@@ -170,34 +163,6 @@
             this.dgvAsigTipoFac.TabIndex = 105;
             this.dgvAsigTipoFac.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvAsigTipoFac_DataError);
             this.dgvAsigTipoFac.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvAsigTipoFac_RowsAdded);
-            // 
-            // idAsigFacTipoVehDataGridViewTextBoxColumn
-            // 
-            this.idAsigFacTipoVehDataGridViewTextBoxColumn.DataPropertyName = "IdAsigFacTipoVeh";
-            this.idAsigFacTipoVehDataGridViewTextBoxColumn.HeaderText = "IdAsigFacTipoVeh";
-            this.idAsigFacTipoVehDataGridViewTextBoxColumn.Name = "idAsigFacTipoVehDataGridViewTextBoxColumn";
-            this.idAsigFacTipoVehDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idAsigFacTipoVehDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // idTipoFacturaDataGridViewTextBoxColumn
-            // 
-            this.idTipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "IdTipoFactura";
-            this.idTipoFacturaDataGridViewTextBoxColumn.HeaderText = "IdTipoFactura";
-            this.idTipoFacturaDataGridViewTextBoxColumn.Name = "idTipoFacturaDataGridViewTextBoxColumn";
-            this.idTipoFacturaDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idTipoFacturaDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // idTipoVehiculo
-            // 
-            this.idTipoVehiculo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.idTipoVehiculo.DataPropertyName = "IdTipoVehiculo";
-            this.idTipoVehiculo.DisplayMember = "TipoVehiculo";
-            this.idTipoVehiculo.HeaderText = "Tipo de Vehiculo";
-            this.idTipoVehiculo.Name = "idTipoVehiculo";
-            this.idTipoVehiculo.ReadOnly = true;
-            this.idTipoVehiculo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.idTipoVehiculo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.idTipoVehiculo.ValueMember = "IdTipoVehiculo";
             //
             // FrmAsigTpFacTpVeh
             // 
@@ -232,8 +197,5 @@
         private System.Windows.Forms.BindingSource tRTipoFacturasBindingSource;
         private System.Windows.Forms.BindingSource fKTRAsigFacTipoVehTRTipoFacturasBindingSource;
         private System.Windows.Forms.BindingSource tRTipoVehiculosBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idAsigFacTipoVehDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idTipoFacturaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn idTipoVehiculo;
     }
 }
