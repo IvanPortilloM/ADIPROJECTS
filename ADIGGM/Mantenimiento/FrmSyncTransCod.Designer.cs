@@ -30,8 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSyncTransCod));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gboHeader = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -57,12 +55,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dtpFecha = new System.Windows.Forms.DateTimePicker();
             this.dgvAsiento = new System.Windows.Forms.DataGridView();
-            this.cuentaContable = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.debe = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.haber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nDoc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.detalle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pRSyncTransCodBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -404,77 +396,15 @@
             // 
             this.dgvAsiento.AllowUserToAddRows = false;
             this.dgvAsiento.AllowUserToDeleteRows = false;
-            this.dgvAsiento.AutoGenerateColumns = false;
             this.dgvAsiento.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAsiento.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.cuentaContable,
-            this.descripcion,
-            this.debe,
-            this.haber,
-            this.nDoc,
-            this.detalle});
+            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvAsiento.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAsiento.Location = new System.Drawing.Point(0, 198);
             this.dgvAsiento.Name = "dgvAsiento";
             this.dgvAsiento.ReadOnly = true;
             this.dgvAsiento.Size = new System.Drawing.Size(1167, 250);
             this.dgvAsiento.TabIndex = 104;
-            // 
-            // cuentaContable
-            // 
-            this.cuentaContable.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cuentaContable.DataPropertyName = "CuentaContable";
-            this.cuentaContable.HeaderText = "Cuenta Contable";
-            this.cuentaContable.Name = "cuentaContable";
-            this.cuentaContable.ReadOnly = true;
-            // 
-            // descripcion
-            // 
-            this.descripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.descripcion.DataPropertyName = "Descripcion";
-            this.descripcion.HeaderText = "Descripción";
-            this.descripcion.Name = "descripcion";
-            this.descripcion.ReadOnly = true;
-            // 
-            // debe
-            // 
-            this.debe.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.debe.DataPropertyName = "Debe";
-            dataGridViewCellStyle1.Format = "C2";
-            this.debe.DefaultCellStyle = dataGridViewCellStyle1;
-            this.debe.HeaderText = "Debe";
-            this.debe.Name = "debe";
-            this.debe.ReadOnly = true;
-            this.debe.Width = 62;
-            // 
-            // haber
-            // 
-            this.haber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.haber.DataPropertyName = "Haber";
-            dataGridViewCellStyle2.Format = "C2";
-            this.haber.DefaultCellStyle = dataGridViewCellStyle2;
-            this.haber.HeaderText = "Haber";
-            this.haber.Name = "haber";
-            this.haber.ReadOnly = true;
-            this.haber.Width = 66;
-            // 
-            // nDoc
-            // 
-            this.nDoc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.nDoc.DataPropertyName = "NDoc";
-            this.nDoc.HeaderText = "N° Doc.";
-            this.nDoc.Name = "nDoc";
-            this.nDoc.ReadOnly = true;
-            this.nDoc.Width = 72;
-            // 
-            // detalle
-            // 
-            this.detalle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.detalle.DataPropertyName = "Detalle";
-            this.detalle.HeaderText = "Detalle";
-            this.detalle.Name = "detalle";
-            this.detalle.ReadOnly = true;
-            // 
+            //
             // pRSyncTransCodBindingSource
             //
             this.pRSyncTransCodBindingSource.DataMember = "PR_SyncTransCod";
@@ -610,12 +540,6 @@
         private System.Windows.Forms.ComboBox cboTipoAsiento;
         private System.Windows.Forms.BindingSource cODSlcTipoAsientoBindingSource;
         private System.Windows.Forms.TextBox txtCodTipAsiento;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cuentaContable;
-        private System.Windows.Forms.DataGridViewTextBoxColumn descripcion;
-        private System.Windows.Forms.DataGridViewTextBoxColumn debe;
-        private System.Windows.Forms.DataGridViewTextBoxColumn haber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nDoc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn detalle;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label4;

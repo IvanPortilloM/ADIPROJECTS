@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
 using Formularios_Base;
 
 namespace ADIGGM.Mantenimiento
@@ -15,9 +16,21 @@ namespace ADIGGM.Mantenimiento
         public FrmTipoFac()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             HabilitarBtn();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvTipoFac);
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre
+        /// — gotcha §11. Grid editable de mantenimiento (edición por cascada de dgv.ReadOnly).</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvTipoFac.AutoGenerateColumns = false;
+            dgvTipoFac.Columns.Clear();
+            dgvTipoFac.Columns.Add(GridColumnas.Texto("idTipoFactura", "IdTipoFactura", "IdTipoFactura", visible: false));
+            dgvTipoFac.Columns.Add(GridColumnas.Texto("tipoFactura", "TipoFactura", "Tipo Factura", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvTipoFac.Columns.Add(GridColumnas.Check("Activo", "Activo", "Activo"));
         }
 
         public void HabilitarBtn()

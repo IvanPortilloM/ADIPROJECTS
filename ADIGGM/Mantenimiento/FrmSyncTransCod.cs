@@ -15,9 +15,26 @@ namespace ADIGGM.Mantenimiento
         public FrmSyncTransCod()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             Clases.VarGlobales varGlobales = new Clases.VarGlobales();
             DgvStyle.EstiloDgv(dgvAsiento);
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre
+        /// — gotcha §11. Grid de solo lectura (visor del asiento contable).</summary>
+        private void ConfigurarColumnas()
+        {
+            const DataGridViewAutoSizeColumnMode fill = DataGridViewAutoSizeColumnMode.Fill;
+            const DataGridViewAutoSizeColumnMode dc = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dgvAsiento.AutoGenerateColumns = false;
+            dgvAsiento.Columns.Clear();
+            dgvAsiento.Columns.Add(GridColumnas.Texto("cuentaContable", "CuentaContable", "Cuenta Contable", autoSize: fill));
+            dgvAsiento.Columns.Add(GridColumnas.Texto("descripcion", "Descripcion", "Descripción", autoSize: fill));
+            dgvAsiento.Columns.Add(GridColumnas.Texto("debe", "Debe", "Debe", format: "C2", width: 62, autoSize: dc));
+            dgvAsiento.Columns.Add(GridColumnas.Texto("haber", "Haber", "Haber", format: "C2", width: 66, autoSize: dc));
+            dgvAsiento.Columns.Add(GridColumnas.Texto("nDoc", "NDoc", "N° Doc.", width: 72, autoSize: DataGridViewAutoSizeColumnMode.ColumnHeader));
+            dgvAsiento.Columns.Add(GridColumnas.Texto("detalle", "Detalle", "Detalle", autoSize: fill));
         }
 
         private void CargarTipoAsiento()
