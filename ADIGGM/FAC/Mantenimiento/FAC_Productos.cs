@@ -18,13 +18,17 @@ namespace ADIGGM.FAC.Mantenimiento
 
         private void FAC_Productos_Load(object sender, EventArgs e)
         {
-            // Combos de las columnas (tipos de exoneración y tipos de factura)
+            // Combos de las columnas (tipos de exoneración y tipos de factura). Acceso por nombre con
+            // null-check: si el diseñador de VS borrara la columna (gotcha §11), el form degrada en
+            // vez de tronar con NullReferenceException al cargar.
             fACTipoExBindingSource.DataMember = "";
             fACTipoExBindingSource.DataSource = _repo.ListarTipoEx();
-            IdTipoEx.DataSource = fACTipoExBindingSource;
+            if (dgvProductos.Columns["IdTipoEx"] is System.Windows.Forms.DataGridViewComboBoxColumn colTipoEx)
+                colTipoEx.DataSource = fACTipoExBindingSource;
             tRTipoFacturasBindingSource.DataMember = "";
             tRTipoFacturasBindingSource.DataSource = _repo.ListarTipoFacturasCombo();
-            IdTipoFactura.DataSource = tRTipoFacturasBindingSource;
+            if (dgvProductos.Columns["IdTipoFactura"] is System.Windows.Forms.DataGridViewComboBoxColumn colTipoFac)
+                colTipoFac.DataSource = tRTipoFacturasBindingSource;
 
             CargarProductos();
             lblFooter.Text = "Productos - #Registros: " + (dgvProductos.RowCount);

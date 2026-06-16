@@ -35,9 +35,12 @@ namespace ADIGGM.Mantenimiento
             object idTipoFacSeleccionado = cboTipoFac.SelectedValue;
 
             // Combo-columna de tipo de vehículo (mismo BD TransporteAdiggm)
+            // Combo-columna por nombre con null-check: si el diseñador de VS borrara la columna
+            // (gotcha §11), el form degrada en vez de tronar con NullReferenceException al cargar.
             tRTipoVehiculosBindingSource.DataMember = "";
             tRTipoVehiculosBindingSource.DataSource = _repo.ListarTipoVehiculosActivos();
-            idTipoVehiculo.DataSource = tRTipoVehiculosBindingSource;
+            if (dgvAsigTipoFac.Columns["idTipoVehiculo"] is System.Windows.Forms.DataGridViewComboBoxColumn colVeh)
+                colVeh.DataSource = tRTipoVehiculosBindingSource;
 
             _ds = new DataSet();
             DataTable tipoFacturas = _repo.ListarTipoFacturas();

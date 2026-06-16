@@ -75,10 +75,13 @@
             fACProductosBindingSource.DataMember = "";
             fACProductosBindingSource.DataSource = _repo.ListarProductosNoTransporte();
             cboProducto.DataSource = fACProductosBindingSource;
-            // Fuente de la columna combo del grid de detalle (Id->NombreProducto)
+            // Fuente de la columna combo del grid de detalle (Id->NombreProducto). Acceso por nombre con
+            // null-check: si el diseñador de VS borrara la columna (gotcha §11), el form degrada en vez
+            // de tronar con NullReferenceException al cargar.
             fACProductosDetBindingSource.DataMember = "";
             fACProductosDetBindingSource.DataSource = _repo.ListarProductosDet();
-            Producto.DataSource = fACProductosDetBindingSource;
+            if (dgvDetalle.Columns["Producto"] is System.Windows.Forms.DataGridViewComboBoxColumn colProd)
+                colProd.DataSource = fACProductosDetBindingSource;
             // Tipos de factura del usuario (dispara cboTipoFactura_SelectedIndexChanged -> validarTipoFactura)
             fACTipoFacturasBindingSource.DataMember = "";
             fACTipoFacturasBindingSource.DataSource = _repo.ListarTipoFacturasPorUsuario(VarGlobales.Usuario);

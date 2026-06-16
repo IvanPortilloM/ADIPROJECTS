@@ -21,12 +21,16 @@ namespace ADIGGM.Mantenimiento
         private void FrmCierreCliente_Load(object sender, EventArgs e)
         {
             // Combos-columna del grid (el DataSource se asigna aquí, no en el Designer)
+            // Combo-columnas por nombre con null-check: si el diseñador de VS borrara la columna
+            // (gotcha §11), el form degrada en vez de tronar con NullReferenceException al cargar.
             tRClientesBindingSource.DataMember = "";
             tRClientesBindingSource.DataSource = _repo.ListarClientes();
-            idCliente.DataSource = tRClientesBindingSource;
+            if (dgvCierreCliente.Columns["idCliente"] is System.Windows.Forms.DataGridViewComboBoxColumn colCli)
+                colCli.DataSource = tRClientesBindingSource;
             tRTipoVehiculosBindingSource.DataMember = "";
             tRTipoVehiculosBindingSource.DataSource = _repo.ListarTipoVehiculosActivos();
-            idTipoVehiculo.DataSource = tRTipoVehiculosBindingSource;
+            if (dgvCierreCliente.Columns["idTipoVehiculo"] is System.Windows.Forms.DataGridViewComboBoxColumn colVeh)
+                colVeh.DataSource = tRTipoVehiculosBindingSource;
             // Combo filtro por Tipo de Factura (dispara cboTipoVeh_SelectedValueChanged -> LlenarDgv)
             tRTipoFacturasBindingSource.DataMember = "";
             tRTipoFacturasBindingSource.DataSource = _repo.ListarTipoFacturas();

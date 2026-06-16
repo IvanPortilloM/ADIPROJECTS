@@ -18,10 +18,13 @@ namespace ADIGGM.Mantenimiento
 
         private void FrmCierresBuscar_Load(object sender, EventArgs e)
         {
-            // Combo-columna idCierre (Semana) del grid: el DataSource se asigna aquí, no en el Designer
+            // Combo-columna idCierre (Semana) del grid: el DataSource se asigna aquí, no en el Designer.
+            // Se accede por nombre con null-check: si el diseñador de VS borrara la columna (gotcha §11),
+            // el form degrada en vez de tronar con NullReferenceException al cargar.
             tRCierresBindingSource.DataMember = "";
             tRCierresBindingSource.DataSource = _repo.ListarCierres();
-            idCierre.DataSource = tRCierresBindingSource;
+            if (dgvCierres.Columns["idCierre"] is System.Windows.Forms.DataGridViewComboBoxColumn colCierre)
+                colCierre.DataSource = tRCierresBindingSource;
             // Combos selectores (disparan SelectedValueChanged -> LlenarDgv)
             tRTipoFacturasBindingSource.DataMember = "";
             tRTipoFacturasBindingSource.DataSource = _repo.ListarTipoFacturas();
