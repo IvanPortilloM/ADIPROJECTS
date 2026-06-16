@@ -30,10 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FAC_VisorFacturas));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtFiltro = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -51,27 +47,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvFacturaDet = new System.Windows.Forms.DataGridView();
-            this.servicioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidadDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iSVDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.totalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fACFacturaDetVisorBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.fACFacturasVisorBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label5 = new System.Windows.Forms.Label();
             this.dgvFactura = new System.Windows.Forms.DataGridView();
-            this.idFactura = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.correlativoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tipoFactura = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clienteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.observacionesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.anuladoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.numProformaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cierre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AplicaISV = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.anularToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verFacturaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -302,16 +283,10 @@
             // 
             this.dgvFacturaDet.AllowUserToAddRows = false;
             this.dgvFacturaDet.AllowUserToDeleteRows = false;
-            this.dgvFacturaDet.AutoGenerateColumns = false;
             this.dgvFacturaDet.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvFacturaDet.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvFacturaDet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvFacturaDet.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.servicioDataGridViewTextBoxColumn,
-            this.cantidadDataGridViewTextBoxColumn,
-            this.precioDataGridViewTextBoxColumn,
-            this.iSVDataGridViewTextBoxColumn,
-            this.totalDataGridViewTextBoxColumn});
+            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvFacturaDet.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFacturaDet.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvFacturaDet.Location = new System.Drawing.Point(0, 0);
@@ -320,54 +295,6 @@
             this.dgvFacturaDet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvFacturaDet.Size = new System.Drawing.Size(933, 127);
             this.dgvFacturaDet.TabIndex = 107;
-            // 
-            // servicioDataGridViewTextBoxColumn
-            // 
-            this.servicioDataGridViewTextBoxColumn.DataPropertyName = "Servicio";
-            this.servicioDataGridViewTextBoxColumn.FillWeight = 171.0068F;
-            this.servicioDataGridViewTextBoxColumn.HeaderText = "Servicio";
-            this.servicioDataGridViewTextBoxColumn.Name = "servicioDataGridViewTextBoxColumn";
-            this.servicioDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // cantidadDataGridViewTextBoxColumn
-            // 
-            this.cantidadDataGridViewTextBoxColumn.DataPropertyName = "Cantidad";
-            dataGridViewCellStyle1.Format = "N2";
-            this.cantidadDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.cantidadDataGridViewTextBoxColumn.FillWeight = 99.42258F;
-            this.cantidadDataGridViewTextBoxColumn.HeaderText = "Cantidad";
-            this.cantidadDataGridViewTextBoxColumn.Name = "cantidadDataGridViewTextBoxColumn";
-            this.cantidadDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // precioDataGridViewTextBoxColumn
-            // 
-            this.precioDataGridViewTextBoxColumn.DataPropertyName = "Precio";
-            dataGridViewCellStyle2.Format = "N2";
-            this.precioDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.precioDataGridViewTextBoxColumn.FillWeight = 89.01789F;
-            this.precioDataGridViewTextBoxColumn.HeaderText = "Precio";
-            this.precioDataGridViewTextBoxColumn.Name = "precioDataGridViewTextBoxColumn";
-            this.precioDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // iSVDataGridViewTextBoxColumn
-            // 
-            this.iSVDataGridViewTextBoxColumn.DataPropertyName = "ISV";
-            dataGridViewCellStyle3.Format = "N2";
-            this.iSVDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.iSVDataGridViewTextBoxColumn.FillWeight = 77.1009F;
-            this.iSVDataGridViewTextBoxColumn.HeaderText = "ISV";
-            this.iSVDataGridViewTextBoxColumn.Name = "iSVDataGridViewTextBoxColumn";
-            this.iSVDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // totalDataGridViewTextBoxColumn
-            // 
-            this.totalDataGridViewTextBoxColumn.DataPropertyName = "Total";
-            dataGridViewCellStyle4.Format = "N2";
-            this.totalDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
-            this.totalDataGridViewTextBoxColumn.FillWeight = 63.45178F;
-            this.totalDataGridViewTextBoxColumn.HeaderText = "Total";
-            this.totalDataGridViewTextBoxColumn.Name = "totalDataGridViewTextBoxColumn";
-            this.totalDataGridViewTextBoxColumn.ReadOnly = true;
             //
             // panel3
             // 
@@ -404,21 +331,10 @@
             // 
             this.dgvFactura.AllowUserToAddRows = false;
             this.dgvFactura.AllowUserToDeleteRows = false;
-            this.dgvFactura.AutoGenerateColumns = false;
             this.dgvFactura.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvFactura.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvFactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvFactura.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idFactura,
-            this.correlativoDataGridViewTextBoxColumn,
-            this.fechaDataGridViewTextBoxColumn,
-            this.tipoFactura,
-            this.clienteDataGridViewTextBoxColumn,
-            this.observacionesDataGridViewTextBoxColumn,
-            this.anuladoDataGridViewCheckBoxColumn,
-            this.numProformaDataGridViewTextBoxColumn,
-            this.Cierre,
-            this.AplicaISV});
+            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvFactura.ContextMenuStrip = this.contextMenuStrip1;
             this.dgvFactura.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFactura.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
@@ -430,88 +346,7 @@
             this.dgvFactura.TabIndex = 111;
             this.dgvFactura.SelectionChanged += new System.EventHandler(this.dgvOC_SelectionChanged);
             this.dgvFactura.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvFactura_MouseDown);
-            // 
-            // idFactura
-            // 
-            this.idFactura.DataPropertyName = "IdFactura";
-            this.idFactura.HeaderText = "IdFactura";
-            this.idFactura.Name = "idFactura";
-            this.idFactura.ReadOnly = true;
-            this.idFactura.Visible = false;
-            // 
-            // correlativoDataGridViewTextBoxColumn
-            // 
-            this.correlativoDataGridViewTextBoxColumn.DataPropertyName = "Correlativo";
-            this.correlativoDataGridViewTextBoxColumn.FillWeight = 64.63407F;
-            this.correlativoDataGridViewTextBoxColumn.HeaderText = "Correlativo";
-            this.correlativoDataGridViewTextBoxColumn.Name = "correlativoDataGridViewTextBoxColumn";
-            this.correlativoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // fechaDataGridViewTextBoxColumn
-            // 
-            this.fechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha";
-            this.fechaDataGridViewTextBoxColumn.FillWeight = 59.78704F;
-            this.fechaDataGridViewTextBoxColumn.HeaderText = "Fecha";
-            this.fechaDataGridViewTextBoxColumn.Name = "fechaDataGridViewTextBoxColumn";
-            this.fechaDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // tipoFactura
-            // 
-            this.tipoFactura.DataPropertyName = "TipoFactura";
-            this.tipoFactura.FillWeight = 167.6028F;
-            this.tipoFactura.HeaderText = "Tipo Factura";
-            this.tipoFactura.Name = "tipoFactura";
-            this.tipoFactura.ReadOnly = true;
-            // 
-            // clienteDataGridViewTextBoxColumn
-            // 
-            this.clienteDataGridViewTextBoxColumn.DataPropertyName = "Cliente";
-            this.clienteDataGridViewTextBoxColumn.FillWeight = 167.6028F;
-            this.clienteDataGridViewTextBoxColumn.HeaderText = "Cliente";
-            this.clienteDataGridViewTextBoxColumn.Name = "clienteDataGridViewTextBoxColumn";
-            this.clienteDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // observacionesDataGridViewTextBoxColumn
-            // 
-            this.observacionesDataGridViewTextBoxColumn.DataPropertyName = "Observaciones";
-            this.observacionesDataGridViewTextBoxColumn.FillWeight = 110.7675F;
-            this.observacionesDataGridViewTextBoxColumn.HeaderText = "Observaciones";
-            this.observacionesDataGridViewTextBoxColumn.Name = "observacionesDataGridViewTextBoxColumn";
-            this.observacionesDataGridViewTextBoxColumn.ReadOnly = true;
-            this.observacionesDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // anuladoDataGridViewCheckBoxColumn
-            // 
-            this.anuladoDataGridViewCheckBoxColumn.DataPropertyName = "Anulado";
-            this.anuladoDataGridViewCheckBoxColumn.FillWeight = 51.8554F;
-            this.anuladoDataGridViewCheckBoxColumn.HeaderText = "Anulado";
-            this.anuladoDataGridViewCheckBoxColumn.Name = "anuladoDataGridViewCheckBoxColumn";
-            this.anuladoDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // numProformaDataGridViewTextBoxColumn
-            // 
-            this.numProformaDataGridViewTextBoxColumn.DataPropertyName = "NumProforma";
-            this.numProformaDataGridViewTextBoxColumn.FillWeight = 69.60816F;
-            this.numProformaDataGridViewTextBoxColumn.HeaderText = "#Proforma";
-            this.numProformaDataGridViewTextBoxColumn.Name = "numProformaDataGridViewTextBoxColumn";
-            this.numProformaDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // Cierre
-            // 
-            this.Cierre.DataPropertyName = "Cierre";
-            this.Cierre.FillWeight = 148.0485F;
-            this.Cierre.HeaderText = "Cierre";
-            this.Cierre.Name = "Cierre";
-            this.Cierre.ReadOnly = true;
-            // 
-            // AplicaISV
-            // 
-            this.AplicaISV.DataPropertyName = "AplicaISV";
-            this.AplicaISV.FillWeight = 60.09385F;
-            this.AplicaISV.HeaderText = "Paga ISV";
-            this.AplicaISV.Name = "AplicaISV";
-            this.AplicaISV.ReadOnly = true;
-            // 
+            //
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -642,22 +477,7 @@
         private System.Windows.Forms.ToolStripMenuItem verFacturaToolStripMenuItem;
         private System.Windows.Forms.Button btnReporte2;
         private System.Windows.Forms.Button btnReporte1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn servicioDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantidadDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precioDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iSVDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn totalDataGridViewTextBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem actualizarDatosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem verFacturaCondescipcionToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idFactura;
-        private System.Windows.Forms.DataGridViewTextBoxColumn correlativoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fechaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tipoFactura;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clienteDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn observacionesDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn anuladoDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn numProformaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cierre;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn AplicaISV;
     }
 }

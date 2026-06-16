@@ -1,4 +1,5 @@
 using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
 using ADIGGM.FAC.Transacciones;
 using System;
 using System.Windows.Forms;
@@ -12,6 +13,34 @@ namespace ADIGGM.FAC.Visores
         public FAC_VisorFacturas()
         {
             InitializeComponent();
+            ConfigurarColumnas();
+        }
+
+        /// <summary>Columnas de los 2 grids (maestro+detalle) EN CÓDIGO (no en el Designer) para que el
+        /// diseñador de VS no las borre — gotcha §11. Visor de solo lectura. Se preservan los nombres usados
+        /// por código (Cells[0]=IdFactura, Cells[6]=Anulado, Cells["tipoFactura"]).</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvFactura.AutoGenerateColumns = false;
+            dgvFactura.Columns.Clear();
+            dgvFactura.Columns.Add(GridColumnas.Texto("idFactura", "IdFactura", "IdFactura", visible: false));
+            dgvFactura.Columns.Add(GridColumnas.Texto("correlativoDataGridViewTextBoxColumn", "Correlativo", "Correlativo"));
+            dgvFactura.Columns.Add(GridColumnas.Texto("fechaDataGridViewTextBoxColumn", "Fecha", "Fecha"));
+            dgvFactura.Columns.Add(GridColumnas.Texto("tipoFactura", "TipoFactura", "Tipo Factura"));
+            dgvFactura.Columns.Add(GridColumnas.Texto("clienteDataGridViewTextBoxColumn", "Cliente", "Cliente"));
+            dgvFactura.Columns.Add(GridColumnas.Texto("observacionesDataGridViewTextBoxColumn", "Observaciones", "Observaciones", visible: false));
+            dgvFactura.Columns.Add(GridColumnas.Check("anuladoDataGridViewCheckBoxColumn", "Anulado", "Anulado"));
+            dgvFactura.Columns.Add(GridColumnas.Texto("numProformaDataGridViewTextBoxColumn", "NumProforma", "#Proforma"));
+            dgvFactura.Columns.Add(GridColumnas.Texto("Cierre", "Cierre", "Cierre"));
+            dgvFactura.Columns.Add(GridColumnas.Check("AplicaISV", "AplicaISV", "Paga ISV"));
+
+            dgvFacturaDet.AutoGenerateColumns = false;
+            dgvFacturaDet.Columns.Clear();
+            dgvFacturaDet.Columns.Add(GridColumnas.Texto("servicioDataGridViewTextBoxColumn", "Servicio", "Servicio"));
+            dgvFacturaDet.Columns.Add(GridColumnas.Texto("cantidadDataGridViewTextBoxColumn", "Cantidad", "Cantidad", format: "N2"));
+            dgvFacturaDet.Columns.Add(GridColumnas.Texto("precioDataGridViewTextBoxColumn", "Precio", "Precio", format: "N2"));
+            dgvFacturaDet.Columns.Add(GridColumnas.Texto("iSVDataGridViewTextBoxColumn", "ISV", "ISV", format: "N2"));
+            dgvFacturaDet.Columns.Add(GridColumnas.Texto("totalDataGridViewTextBoxColumn", "Total", "Total", format: "N2"));
         }
 
         private void FAC_VisorFacturas_Load(object sender, EventArgs e)
