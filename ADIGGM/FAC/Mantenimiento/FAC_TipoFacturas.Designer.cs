@@ -31,11 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.dgvTipoFactura = new System.Windows.Forms.DataGridView();
             this.fACTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.idTipoFacturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codTipoFacturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tipoFacturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.activoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.EsTransporte = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTipoFactura)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACTipoFacturasBindingSource)).BeginInit();
@@ -118,16 +113,10 @@
             // 
             this.dgvTipoFactura.AllowUserToAddRows = false;
             this.dgvTipoFactura.AllowUserToDeleteRows = false;
-            this.dgvTipoFactura.AutoGenerateColumns = false;
             this.dgvTipoFactura.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvTipoFactura.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvTipoFactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTipoFactura.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idTipoFacturaDataGridViewTextBoxColumn,
-            this.codTipoFacturaDataGridViewTextBoxColumn,
-            this.tipoFacturaDataGridViewTextBoxColumn,
-            this.activoDataGridViewCheckBoxColumn,
-            this.EsTransporte});
+            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvTipoFactura.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTipoFactura.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvTipoFactura.Location = new System.Drawing.Point(0, 98);
@@ -137,46 +126,6 @@
             this.dgvTipoFactura.Size = new System.Drawing.Size(577, 242);
             this.dgvTipoFactura.TabIndex = 110;
             //
-            // idTipoFacturaDataGridViewTextBoxColumn
-            // 
-            this.idTipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "IdTipoFactura";
-            this.idTipoFacturaDataGridViewTextBoxColumn.HeaderText = "IdTipoFactura";
-            this.idTipoFacturaDataGridViewTextBoxColumn.Name = "idTipoFacturaDataGridViewTextBoxColumn";
-            this.idTipoFacturaDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idTipoFacturaDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // codTipoFacturaDataGridViewTextBoxColumn
-            // 
-            this.codTipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "CodTipoFactura";
-            this.codTipoFacturaDataGridViewTextBoxColumn.FillWeight = 100.5413F;
-            this.codTipoFacturaDataGridViewTextBoxColumn.HeaderText = "Cod Tipo Factura";
-            this.codTipoFacturaDataGridViewTextBoxColumn.Name = "codTipoFacturaDataGridViewTextBoxColumn";
-            this.codTipoFacturaDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // tipoFacturaDataGridViewTextBoxColumn
-            // 
-            this.tipoFacturaDataGridViewTextBoxColumn.DataPropertyName = "TipoFactura";
-            this.tipoFacturaDataGridViewTextBoxColumn.FillWeight = 202.1742F;
-            this.tipoFacturaDataGridViewTextBoxColumn.HeaderText = "Tipo Factura";
-            this.tipoFacturaDataGridViewTextBoxColumn.Name = "tipoFacturaDataGridViewTextBoxColumn";
-            this.tipoFacturaDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // activoDataGridViewCheckBoxColumn
-            // 
-            this.activoDataGridViewCheckBoxColumn.DataPropertyName = "Activo";
-            this.activoDataGridViewCheckBoxColumn.FillWeight = 36.3709F;
-            this.activoDataGridViewCheckBoxColumn.HeaderText = "Activo";
-            this.activoDataGridViewCheckBoxColumn.Name = "activoDataGridViewCheckBoxColumn";
-            this.activoDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // EsTransporte
-            // 
-            this.EsTransporte.DataPropertyName = "EsTransporte";
-            this.EsTransporte.FillWeight = 60.91371F;
-            this.EsTransporte.HeaderText = "Es Transporte";
-            this.EsTransporte.Name = "EsTransporte";
-            this.EsTransporte.ReadOnly = true;
-            // 
             // FAC_TipoFacturas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -198,10 +147,5 @@
 
         private System.Windows.Forms.DataGridView dgvTipoFactura;
         private System.Windows.Forms.BindingSource fACTipoFacturasBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idTipoFacturaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn codTipoFacturaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tipoFacturaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn activoDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn EsTransporte;
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
 using Formularios_Base;
 
 namespace ADIGGM.FAC.Mantenimiento
@@ -14,6 +15,18 @@ namespace ADIGGM.FAC.Mantenimiento
         public FAC_TipoMoneda()
         {
             InitializeComponent();
+            ConfigurarColumnas();
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre — gotcha §11.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvTipoMoneda.AutoGenerateColumns = false;
+            dgvTipoMoneda.Columns.Clear();
+            dgvTipoMoneda.Columns.Add(GridColumnas.Texto("idTipoMonedaDataGridViewTextBoxColumn", "IdTipoMoneda", "IdTipoMoneda", visible: false));
+            dgvTipoMoneda.Columns.Add(GridColumnas.Texto("tipoMonedaDataGridViewTextBoxColumn", "TipoMoneda", "TipoMoneda"));
+            dgvTipoMoneda.Columns.Add(GridColumnas.Texto("simboloDataGridViewTextBoxColumn", "Simbolo", "Simbolo"));
+            dgvTipoMoneda.Columns.Add(GridColumnas.Texto("valorLempirasDataGridViewTextBoxColumn", "ValorLempiras", "ValorLempiras", format: "N2"));
         }
 
         private void FAC_TipoMoneda_Load(object sender, EventArgs e)

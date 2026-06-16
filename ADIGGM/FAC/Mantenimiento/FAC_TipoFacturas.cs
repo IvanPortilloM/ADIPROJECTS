@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
 using Formularios_Base;
 
 namespace ADIGGM.FAC.Mantenimiento
@@ -14,6 +15,19 @@ namespace ADIGGM.FAC.Mantenimiento
         public FAC_TipoFacturas()
         {
             InitializeComponent();
+            ConfigurarColumnas();
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre — gotcha §11.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvTipoFactura.AutoGenerateColumns = false;
+            dgvTipoFactura.Columns.Clear();
+            dgvTipoFactura.Columns.Add(GridColumnas.Texto("idTipoFacturaDataGridViewTextBoxColumn", "IdTipoFactura", "IdTipoFactura", visible: false));
+            dgvTipoFactura.Columns.Add(GridColumnas.Texto("codTipoFacturaDataGridViewTextBoxColumn", "CodTipoFactura", "Cod Tipo Factura"));
+            dgvTipoFactura.Columns.Add(GridColumnas.Texto("tipoFacturaDataGridViewTextBoxColumn", "TipoFactura", "Tipo Factura"));
+            dgvTipoFactura.Columns.Add(GridColumnas.Check("activoDataGridViewCheckBoxColumn", "Activo", "Activo"));
+            dgvTipoFactura.Columns.Add(GridColumnas.Check("EsTransporte", "EsTransporte", "Es Transporte"));
         }
 
         private void FAC_TipoFacturas_Load(object sender, EventArgs e)

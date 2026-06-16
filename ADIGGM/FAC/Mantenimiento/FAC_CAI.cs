@@ -15,6 +15,26 @@ namespace ADIGGM.FAC.Mantenimiento
         public FAC_CAI()
         {
             InitializeComponent();
+            ConfigurarColumnas();
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre — gotcha §11.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvCAI.AutoGenerateColumns = false;
+            dgvCAI.Columns.Clear();
+            dgvCAI.Columns.Add(GridColumnas.Texto("idCaiDataGridViewTextBoxColumn", "IdCai", "IdCai", visible: false));
+            dgvCAI.Columns.Add(GridColumnas.Texto("caiDataGridViewTextBoxColumn", "Cai", "Cai"));
+            dgvCAI.Columns.Add(GridColumnas.Texto("fragmentoSARDataGridViewTextBoxColumn", "FragmentoSAR", "FragmentoSAR"));
+            dgvCAI.Columns.Add(GridColumnas.Texto("fechaDesdeDataGridViewTextBoxColumn", "FechaDesde", "FechaDesde"));
+            dgvCAI.Columns.Add(GridColumnas.Texto("fechaHastaDataGridViewTextBoxColumn", "FechaHasta", "FechaHasta"));
+            dgvCAI.Columns.Add(GridColumnas.Texto("numeroDesdeDataGridViewTextBoxColumn", "NumeroDesde", "NumeroDesde"));
+            dgvCAI.Columns.Add(GridColumnas.Texto("numeroHastaDataGridViewTextBoxColumn", "NumeroHasta", "NumeroHasta"));
+            dgvCAI.Columns.Add(GridColumnas.Check("activoDataGridViewCheckBoxColumn", "Activo", "Activo"));
+            dgvCAI.Columns.Add(GridColumnas.Check("anuladoDataGridViewCheckBoxColumn", "Anulado", "Anulado", visible: false));
+            dgvCAI.Columns.Add(GridColumnas.Texto("usuarioDataGridViewTextBoxColumn", "Usuario", "Usuario", visible: false));
+            dgvCAI.Columns.Add(GridColumnas.Texto("nombreEquipoDataGridViewTextBoxColumn", "NombreEquipo", "NombreEquipo", visible: false));
+            dgvCAI.Columns.Add(GridColumnas.Texto("idSucursalDataGridViewTextBoxColumn", "IdSucursal", "IdSucursal", visible: false));
         }
 
         private void FAC_CAI_Load(object sender, EventArgs e)
