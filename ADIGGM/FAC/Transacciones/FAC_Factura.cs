@@ -24,6 +24,31 @@
         public FAC_Factura()
         {
             InitializeComponent();
+            ConfigurarColumnas();
+        }
+
+        /// <summary>Columnas del grid de detalle EN CÓDIGO (no en el Designer) para que el diseñador de VS no
+        /// las borre — gotcha §11. Grid UNBOUND (filas por Rows.Add): columnas sin DataPropertyName; el orden
+        /// (0=Producto,1=Cantidad,2=Precio,3=ISV,4=Total) lo usan btnGuardar/btnAgregar. La columna combo
+        /// recibe su DataSource en el Load. "Quitar" es columna link.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvDetalle.AutoGenerateColumns = false;
+            dgvDetalle.Columns.Clear();
+            dgvDetalle.Columns.Add(GridColumnas.Combo("Producto", null, "Servicio", "NombreProducto", "IdProducto"));
+            dgvDetalle.Columns.Add(GridColumnas.Texto("Cantidad", null, "Cantidad", format: "N2"));
+            dgvDetalle.Columns.Add(GridColumnas.Texto("Precio", null, "Precio", format: "N2"));
+            dgvDetalle.Columns.Add(GridColumnas.Texto("ISV", null, "ISV", format: "N2"));
+            dgvDetalle.Columns.Add(GridColumnas.Texto("Total", null, "Sub-Total", format: "N2"));
+            dgvDetalle.Columns.Add(new DataGridViewLinkColumn
+            {
+                Name = "Quitar",
+                HeaderText = "Quitar",
+                Text = "Quitar",
+                LinkColor = System.Drawing.Color.Red,
+                UseColumnTextForLinkValue = true,
+                ReadOnly = true
+            });
         }
 
         private void cboTipoFactura_SelectedIndexChanged(object sender, EventArgs e)

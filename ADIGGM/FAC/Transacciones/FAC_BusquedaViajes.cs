@@ -19,7 +19,26 @@ namespace ADIGGM.FAC.Transacciones
         public FAC_BusquedaViajes(int IdCliente)
         {
             InitializeComponent();
+            ConfigurarColumnas();
             this.IdCliente = IdCliente;
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre
+        /// — gotcha §11. Visor de solo lectura; se preservan los índices de celda (6=Cantidad, 8=ISV, 9=Total).</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvBoletas.AutoGenerateColumns = false;
+            dgvBoletas.Columns.Clear();
+            dgvBoletas.Columns.Add(GridColumnas.Texto("fechaDataGridViewTextBoxColumn", "Fecha", "Fecha"));
+            dgvBoletas.Columns.Add(GridColumnas.Texto("clienteDataGridViewTextBoxColumn", "Cliente", "Cliente"));
+            dgvBoletas.Columns.Add(GridColumnas.Texto("tipoVehiculoDataGridViewTextBoxColumn", "TipoVehiculo", "T. Vehiculo"));
+            dgvBoletas.Columns.Add(GridColumnas.Texto("prefijoDataGridViewTextBoxColumn", "Prefijo", "Prefijo"));
+            dgvBoletas.Columns.Add(GridColumnas.Texto("numBoletaDataGridViewTextBoxColumn", "NumBoleta", "#Boleta"));
+            dgvBoletas.Columns.Add(GridColumnas.Texto("claseTrabajoDataGridViewTextBoxColumn", "ClaseTrabajo", "Clase Trabajo"));
+            dgvBoletas.Columns.Add(GridColumnas.Texto("cantidadDataGridViewTextBoxColumn", "Cantidad", "Cantidad"));
+            dgvBoletas.Columns.Add(GridColumnas.Texto("tarifaDataGridViewTextBoxColumn", "Tarifa", "Tarifa", format: "N2"));
+            dgvBoletas.Columns.Add(GridColumnas.Texto("iSVDataGridViewTextBoxColumn", "ISV", "ISV", format: "N2"));
+            dgvBoletas.Columns.Add(GridColumnas.Texto("totalDataGridViewTextBoxColumn", "Total", "Total", format: "N2"));
         }
 
         private void FAC_BusquedaViajes_Load(object sender, EventArgs e)

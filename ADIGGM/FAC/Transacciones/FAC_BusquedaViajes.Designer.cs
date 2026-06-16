@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtCantidad = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -52,16 +49,6 @@
             this.cboCalendarizacion = new System.Windows.Forms.ComboBox();
             this.fACCierresBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dgvBoletas = new System.Windows.Forms.DataGridView();
-            this.fechaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clienteDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tipoVehiculoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.prefijoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numBoletaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.claseTrabajoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidadDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tarifaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iSVDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.totalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fACVisorBoletasBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnAceptar = new System.Windows.Forms.Button();
@@ -275,21 +262,10 @@
             // 
             this.dgvBoletas.AllowUserToAddRows = false;
             this.dgvBoletas.AllowUserToDeleteRows = false;
-            this.dgvBoletas.AutoGenerateColumns = false;
             this.dgvBoletas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvBoletas.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvBoletas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBoletas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.fechaDataGridViewTextBoxColumn,
-            this.clienteDataGridViewTextBoxColumn,
-            this.tipoVehiculoDataGridViewTextBoxColumn,
-            this.prefijoDataGridViewTextBoxColumn,
-            this.numBoletaDataGridViewTextBoxColumn,
-            this.claseTrabajoDataGridViewTextBoxColumn,
-            this.cantidadDataGridViewTextBoxColumn,
-            this.tarifaDataGridViewTextBoxColumn,
-            this.iSVDataGridViewTextBoxColumn,
-            this.totalDataGridViewTextBoxColumn});
+            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvBoletas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvBoletas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvBoletas.Location = new System.Drawing.Point(0, 130);
@@ -298,82 +274,6 @@
             this.dgvBoletas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvBoletas.Size = new System.Drawing.Size(842, 286);
             this.dgvBoletas.TabIndex = 107;
-            // 
-            // fechaDataGridViewTextBoxColumn
-            // 
-            this.fechaDataGridViewTextBoxColumn.DataPropertyName = "Fecha";
-            this.fechaDataGridViewTextBoxColumn.FillWeight = 97.58509F;
-            this.fechaDataGridViewTextBoxColumn.HeaderText = "Fecha";
-            this.fechaDataGridViewTextBoxColumn.Name = "fechaDataGridViewTextBoxColumn";
-            // 
-            // clienteDataGridViewTextBoxColumn
-            // 
-            this.clienteDataGridViewTextBoxColumn.DataPropertyName = "Cliente";
-            this.clienteDataGridViewTextBoxColumn.FillWeight = 157.7723F;
-            this.clienteDataGridViewTextBoxColumn.HeaderText = "Cliente";
-            this.clienteDataGridViewTextBoxColumn.Name = "clienteDataGridViewTextBoxColumn";
-            // 
-            // tipoVehiculoDataGridViewTextBoxColumn
-            // 
-            this.tipoVehiculoDataGridViewTextBoxColumn.DataPropertyName = "TipoVehiculo";
-            this.tipoVehiculoDataGridViewTextBoxColumn.FillWeight = 117.977F;
-            this.tipoVehiculoDataGridViewTextBoxColumn.HeaderText = "T. Vehiculo";
-            this.tipoVehiculoDataGridViewTextBoxColumn.Name = "tipoVehiculoDataGridViewTextBoxColumn";
-            // 
-            // prefijoDataGridViewTextBoxColumn
-            // 
-            this.prefijoDataGridViewTextBoxColumn.DataPropertyName = "Prefijo";
-            this.prefijoDataGridViewTextBoxColumn.FillWeight = 51.27513F;
-            this.prefijoDataGridViewTextBoxColumn.HeaderText = "Prefijo";
-            this.prefijoDataGridViewTextBoxColumn.Name = "prefijoDataGridViewTextBoxColumn";
-            // 
-            // numBoletaDataGridViewTextBoxColumn
-            // 
-            this.numBoletaDataGridViewTextBoxColumn.DataPropertyName = "NumBoleta";
-            this.numBoletaDataGridViewTextBoxColumn.FillWeight = 97.58509F;
-            this.numBoletaDataGridViewTextBoxColumn.HeaderText = "#Boleta";
-            this.numBoletaDataGridViewTextBoxColumn.Name = "numBoletaDataGridViewTextBoxColumn";
-            // 
-            // claseTrabajoDataGridViewTextBoxColumn
-            // 
-            this.claseTrabajoDataGridViewTextBoxColumn.DataPropertyName = "ClaseTrabajo";
-            this.claseTrabajoDataGridViewTextBoxColumn.FillWeight = 163.9284F;
-            this.claseTrabajoDataGridViewTextBoxColumn.HeaderText = "Clase Trabajo";
-            this.claseTrabajoDataGridViewTextBoxColumn.Name = "claseTrabajoDataGridViewTextBoxColumn";
-            // 
-            // cantidadDataGridViewTextBoxColumn
-            // 
-            this.cantidadDataGridViewTextBoxColumn.DataPropertyName = "Cantidad";
-            this.cantidadDataGridViewTextBoxColumn.FillWeight = 80.6768F;
-            this.cantidadDataGridViewTextBoxColumn.HeaderText = "Cantidad";
-            this.cantidadDataGridViewTextBoxColumn.Name = "cantidadDataGridViewTextBoxColumn";
-            // 
-            // tarifaDataGridViewTextBoxColumn
-            // 
-            this.tarifaDataGridViewTextBoxColumn.DataPropertyName = "Tarifa";
-            dataGridViewCellStyle1.Format = "N2";
-            this.tarifaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.tarifaDataGridViewTextBoxColumn.FillWeight = 79.28324F;
-            this.tarifaDataGridViewTextBoxColumn.HeaderText = "Tarifa";
-            this.tarifaDataGridViewTextBoxColumn.Name = "tarifaDataGridViewTextBoxColumn";
-            // 
-            // iSVDataGridViewTextBoxColumn
-            // 
-            this.iSVDataGridViewTextBoxColumn.DataPropertyName = "ISV";
-            dataGridViewCellStyle2.Format = "N2";
-            this.iSVDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.iSVDataGridViewTextBoxColumn.FillWeight = 77.77485F;
-            this.iSVDataGridViewTextBoxColumn.HeaderText = "ISV";
-            this.iSVDataGridViewTextBoxColumn.Name = "iSVDataGridViewTextBoxColumn";
-            // 
-            // totalDataGridViewTextBoxColumn
-            // 
-            this.totalDataGridViewTextBoxColumn.DataPropertyName = "Total";
-            dataGridViewCellStyle3.Format = "N2";
-            this.totalDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.totalDataGridViewTextBoxColumn.FillWeight = 76.14214F;
-            this.totalDataGridViewTextBoxColumn.HeaderText = "Total";
-            this.totalDataGridViewTextBoxColumn.Name = "totalDataGridViewTextBoxColumn";
             //
             // panel2
             // 
@@ -458,16 +358,6 @@
         private System.Windows.Forms.BindingSource tRClientesBindingSource;
         private System.Windows.Forms.BindingSource fACProformasBindingSource;
         private System.Windows.Forms.BindingSource fACVisorBoletasBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fechaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clienteDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tipoVehiculoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn prefijoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn numBoletaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn claseTrabajoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantidadDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tarifaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iSVDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn totalDataGridViewTextBoxColumn;
         private System.Windows.Forms.ComboBox cboProducto;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cboTipoFac;

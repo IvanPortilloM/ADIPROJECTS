@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.cboTipoFactura = new System.Windows.Forms.ComboBox();
             this.fACTipoFacturasBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -43,13 +39,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.dtpFecha = new System.Windows.Forms.DateTimePicker();
             this.dgvDetalle = new System.Windows.Forms.DataGridView();
-            this.Producto = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.fACProductosDetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ISV = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Quitar = new System.Windows.Forms.DataGridViewLinkColumn();
             this.lblTotal = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
@@ -207,13 +197,7 @@
             this.dgvDetalle.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvDetalle.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dgvDetalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDetalle.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Producto,
-            this.Cantidad,
-            this.Precio,
-            this.ISV,
-            this.Total,
-            this.Quitar});
+            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDetalle.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvDetalle.Location = new System.Drawing.Point(0, 347);
@@ -225,69 +209,7 @@
             this.dgvDetalle.TabIndex = 111;
             this.dgvDetalle.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDetalle_CellContentClick);
             this.dgvDetalle.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvDetalle_DataError);
-            // 
-            // Producto
             //
-            this.Producto.DisplayMember = "NombreProducto";
-            this.Producto.FillWeight = 235.93F;
-            this.Producto.HeaderText = "Servicio";
-            this.Producto.MinimumWidth = 6;
-            this.Producto.Name = "Producto";
-            this.Producto.ReadOnly = true;
-            this.Producto.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Producto.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Producto.ValueMember = "IdProducto";
-            //
-            // Cantidad
-            // 
-            dataGridViewCellStyle1.Format = "N2";
-            this.Cantidad.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Cantidad.FillWeight = 77.14291F;
-            this.Cantidad.HeaderText = "Cantidad";
-            this.Cantidad.MinimumWidth = 6;
-            this.Cantidad.Name = "Cantidad";
-            this.Cantidad.ReadOnly = true;
-            // 
-            // Precio
-            // 
-            dataGridViewCellStyle2.Format = "N2";
-            this.Precio.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Precio.FillWeight = 71.40144F;
-            this.Precio.HeaderText = "Precio";
-            this.Precio.MinimumWidth = 6;
-            this.Precio.Name = "Precio";
-            this.Precio.ReadOnly = true;
-            // 
-            // ISV
-            // 
-            dataGridViewCellStyle3.Format = "N2";
-            this.ISV.DefaultCellStyle = dataGridViewCellStyle3;
-            this.ISV.FillWeight = 67.00507F;
-            this.ISV.HeaderText = "ISV";
-            this.ISV.MinimumWidth = 6;
-            this.ISV.Name = "ISV";
-            this.ISV.ReadOnly = true;
-            // 
-            // Total
-            // 
-            dataGridViewCellStyle4.Format = "N2";
-            this.Total.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Total.FillWeight = 87.54143F;
-            this.Total.HeaderText = "Sub-Total";
-            this.Total.MinimumWidth = 6;
-            this.Total.Name = "Total";
-            this.Total.ReadOnly = true;
-            // 
-            // Quitar
-            // 
-            this.Quitar.FillWeight = 60.97913F;
-            this.Quitar.HeaderText = "Quitar";
-            this.Quitar.LinkColor = System.Drawing.Color.Red;
-            this.Quitar.MinimumWidth = 6;
-            this.Quitar.Name = "Quitar";
-            this.Quitar.Text = "Quitar";
-            this.Quitar.UseColumnTextForLinkValue = true;
-            // 
             // lblTotal
             // 
             this.lblTotal.BackColor = System.Drawing.Color.Peru;
@@ -650,11 +572,5 @@
         private System.Windows.Forms.TextBox txtOrdenExenta;
         private System.Windows.Forms.Label lblExenta;
         private System.Windows.Forms.CheckBox chkAplica;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Producto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ISV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Total;
-        private System.Windows.Forms.DataGridViewLinkColumn Quitar;
     }
 }
