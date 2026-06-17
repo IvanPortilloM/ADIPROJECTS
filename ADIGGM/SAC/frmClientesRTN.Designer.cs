@@ -32,11 +32,6 @@ namespace ADIGGM.SAC
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClientesRTN));
             this.dgvRTN = new System.Windows.Forms.DataGridView();
-            this.empresaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rTNDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.direccionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contactoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.telefonoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fACRTNBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tbRTN = new System.Windows.Forms.TabControl();
             this.tpRTN = new System.Windows.Forms.TabPage();
@@ -45,11 +40,6 @@ namespace ADIGGM.SAC
             this.label1 = new System.Windows.Forms.Label();
             this.txtBuscarRTN = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRTN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fACRTNBindingSource)).BeginInit();
@@ -137,14 +127,7 @@ namespace ADIGGM.SAC
             // 
             this.dgvRTN.AllowUserToAddRows = false;
             this.dgvRTN.AllowUserToDeleteRows = false;
-            this.dgvRTN.AutoGenerateColumns = false;
             this.dgvRTN.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRTN.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.empresaDataGridViewTextBoxColumn,
-            this.rTNDataGridViewTextBoxColumn,
-            this.direccionDataGridViewTextBoxColumn,
-            this.contactoDataGridViewTextBoxColumn,
-            this.telefonoDataGridViewTextBoxColumn});
             this.dgvRTN.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvRTN.Location = new System.Drawing.Point(3, 3);
             this.dgvRTN.MultiSelect = false;
@@ -155,45 +138,7 @@ namespace ADIGGM.SAC
             this.dgvRTN.TabIndex = 103;
             this.dgvRTN.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvRTN_RowsAdded);
             this.dgvRTN.SelectionChanged += new System.EventHandler(this.dgvRTN_SelectionChanged);
-            // 
-            // empresaDataGridViewTextBoxColumn
-            // 
-            this.empresaDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.empresaDataGridViewTextBoxColumn.DataPropertyName = "Empresa";
-            this.empresaDataGridViewTextBoxColumn.HeaderText = "Empresa";
-            this.empresaDataGridViewTextBoxColumn.Name = "empresaDataGridViewTextBoxColumn";
-            this.empresaDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // rTNDataGridViewTextBoxColumn
-            // 
-            this.rTNDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.rTNDataGridViewTextBoxColumn.DataPropertyName = "RTN";
-            this.rTNDataGridViewTextBoxColumn.HeaderText = "RTN";
-            this.rTNDataGridViewTextBoxColumn.Name = "rTNDataGridViewTextBoxColumn";
-            this.rTNDataGridViewTextBoxColumn.ReadOnly = true;
-            this.rTNDataGridViewTextBoxColumn.Width = 53;
-            // 
-            // direccionDataGridViewTextBoxColumn
-            // 
-            this.direccionDataGridViewTextBoxColumn.DataPropertyName = "Direccion";
-            this.direccionDataGridViewTextBoxColumn.HeaderText = "Direccion";
-            this.direccionDataGridViewTextBoxColumn.Name = "direccionDataGridViewTextBoxColumn";
-            this.direccionDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // contactoDataGridViewTextBoxColumn
-            // 
-            this.contactoDataGridViewTextBoxColumn.DataPropertyName = "Contacto";
-            this.contactoDataGridViewTextBoxColumn.HeaderText = "Contacto";
-            this.contactoDataGridViewTextBoxColumn.Name = "contactoDataGridViewTextBoxColumn";
-            this.contactoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // telefonoDataGridViewTextBoxColumn
-            // 
-            this.telefonoDataGridViewTextBoxColumn.DataPropertyName = "Telefono";
-            this.telefonoDataGridViewTextBoxColumn.HeaderText = "Telefono";
-            this.telefonoDataGridViewTextBoxColumn.Name = "telefonoDataGridViewTextBoxColumn";
-            this.telefonoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
+            //
             // fACRTNBindingSource
             //
             // 
@@ -268,14 +213,7 @@ namespace ADIGGM.SAC
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5});
             this.dataGridView1.Location = new System.Drawing.Point(3, 64);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
@@ -283,47 +221,9 @@ namespace ADIGGM.SAC
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(814, 326);
             this.dataGridView1.TabIndex = 104;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "Empresa";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Empresa";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "RTN";
-            this.dataGridViewTextBoxColumn2.HeaderText = "RTN";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 53;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Direccion";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Direccion";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Contacto";
-            this.dataGridViewTextBoxColumn4.HeaderText = "Contacto";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Telefono";
-            this.dataGridViewTextBoxColumn5.HeaderText = "Telefono";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            // 
+            //
             // frmClientesRTN
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.ClientSize = new System.Drawing.Size(828, 543);
             this.Controls.Add(this.tbRTN);
@@ -348,21 +248,11 @@ namespace ADIGGM.SAC
 
         private System.Windows.Forms.DataGridView dgvRTN;
         private System.Windows.Forms.BindingSource fACRTNBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn empresaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn rTNDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn direccionDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn contactoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn telefonoDataGridViewTextBoxColumn;
         private System.Windows.Forms.TabControl tbRTN;
         private System.Windows.Forms.TabPage tpRTN;
         private System.Windows.Forms.TabPage tpBuscarRTN;
         private System.Windows.Forms.TextBox txtBuscarRTN;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnBuscar;
     }

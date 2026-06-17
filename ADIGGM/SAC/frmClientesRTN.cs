@@ -15,9 +15,31 @@ namespace ADIGGM.SAC
         public frmClientesRTN()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             HabilitarBtn();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvRTN);
+        }
+
+        /// <summary>Columnas de ambos grids EN CÓDIGO (no en el Designer) para que el diseñador de VS no las
+        /// borre — gotcha §11. dgvRTN es editable (edición vía GridColumnas.Edicion); dataGridView1 es visor.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvRTN.AutoGenerateColumns = false;
+            dgvRTN.Columns.Clear();
+            dgvRTN.Columns.Add(Clases.GridColumnas.Texto("empresaDataGridViewTextBoxColumn", "Empresa", "Empresa", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvRTN.Columns.Add(Clases.GridColumnas.Texto("rTNDataGridViewTextBoxColumn", "RTN", "RTN", width: 53, autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells));
+            dgvRTN.Columns.Add(Clases.GridColumnas.Texto("direccionDataGridViewTextBoxColumn", "Direccion", "Direccion"));
+            dgvRTN.Columns.Add(Clases.GridColumnas.Texto("contactoDataGridViewTextBoxColumn", "Contacto", "Contacto"));
+            dgvRTN.Columns.Add(Clases.GridColumnas.Texto("telefonoDataGridViewTextBoxColumn", "Telefono", "Telefono"));
+
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.Columns.Clear();
+            dataGridView1.Columns.Add(Clases.GridColumnas.Texto("dataGridViewTextBoxColumn1", "Empresa", "Empresa", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dataGridView1.Columns.Add(Clases.GridColumnas.Texto("dataGridViewTextBoxColumn2", "RTN", "RTN", width: 53, autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells));
+            dataGridView1.Columns.Add(Clases.GridColumnas.Texto("dataGridViewTextBoxColumn3", "Direccion", "Direccion"));
+            dataGridView1.Columns.Add(Clases.GridColumnas.Texto("dataGridViewTextBoxColumn4", "Contacto", "Contacto"));
+            dataGridView1.Columns.Add(Clases.GridColumnas.Texto("dataGridViewTextBoxColumn5", "Telefono", "Telefono"));
         }
 
         public void HabilitarBtn()
@@ -47,7 +69,7 @@ namespace ADIGGM.SAC
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvRTN.AllowUserToAddRows = true;
-            dgvRTN.ReadOnly = false;
+            Clases.GridColumnas.Edicion(dgvRTN, true);
             dgvRTN.FirstDisplayedScrollingRowIndex = dgvRTN.RowCount - 1;
             var cantidadRow = dgvRTN.RowCount - 1;
             dgvRTN.CurrentCell = dgvRTN.Rows[cantidadRow].Cells[1];
@@ -90,7 +112,7 @@ namespace ADIGGM.SAC
             if (dgvRTN.Rows.Count > 0 && dgvRTN.FirstDisplayedCell != null)
             {
                 saveRow = dgvRTN.FirstDisplayedCell.RowIndex;
-                dgvRTN.ReadOnly = false;
+                Clases.GridColumnas.Edicion(dgvRTN, true);
                 dgvRTN.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;
