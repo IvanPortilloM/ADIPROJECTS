@@ -62,7 +62,7 @@ namespace ADIGGM.FAC.Mantenimiento
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvProductos.AllowUserToAddRows = true;
-            dgvProductos.ReadOnly = false;
+            Clases.GridColumnas.Edicion(dgvProductos, true);
             dgvProductos.FirstDisplayedScrollingRowIndex = dgvProductos.RowCount - 1;
             var cantidadRow = dgvProductos.RowCount - 1;
             dgvProductos.CurrentCell = dgvProductos.Rows[cantidadRow].Cells[1];
@@ -104,7 +104,7 @@ namespace ADIGGM.FAC.Mantenimiento
             if (dgvProductos.Rows.Count > 0 && dgvProductos.FirstDisplayedCell != null)
             {
                 saveRow = dgvProductos.FirstDisplayedCell.RowIndex;
-                dgvProductos.ReadOnly = false;
+                Clases.GridColumnas.Edicion(dgvProductos, true);
                 dgvProductos.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;

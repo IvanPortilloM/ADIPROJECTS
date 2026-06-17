@@ -92,7 +92,7 @@ namespace ADIGGM.Seguridad
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvdetSubMenu.AllowUserToAddRows = true;
-            dgvdetSubMenu.ReadOnly = false;
+            Clases.GridColumnas.Edicion(dgvdetSubMenu, true);
             dgvdetSubMenu.FirstDisplayedScrollingRowIndex = dgvdetSubMenu.RowCount - 1;
             var cantidadRow = dgvdetSubMenu.RowCount - 1;
             dgvdetSubMenu.CurrentCell = dgvdetSubMenu.Rows[cantidadRow].Cells[2];
@@ -138,7 +138,7 @@ namespace ADIGGM.Seguridad
             if (dgvdetSubMenu.Rows.Count > 0 && dgvdetSubMenu.FirstDisplayedCell != null)
             {
                 saveRow = dgvdetSubMenu.FirstDisplayedCell.RowIndex;
-                dgvdetSubMenu.ReadOnly = false;
+                Clases.GridColumnas.Edicion(dgvdetSubMenu, true);
                 dgvdetSubMenu.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;

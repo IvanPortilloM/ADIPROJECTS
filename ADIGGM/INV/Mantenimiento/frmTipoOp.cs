@@ -61,7 +61,7 @@ namespace ADIGGM.INV.Mantenimiento
             try
             {
                 dgvTipoOp.AllowUserToAddRows = true;
-                dgvTipoOp.ReadOnly = false;
+                Clases.GridColumnas.Edicion(dgvTipoOp, true);
                 if (dgvTipoOp.Rows.Count > 0 && dgvTipoOp.FirstDisplayedCell != null)
                 {
                     dgvTipoOp.FirstDisplayedScrollingRowIndex = dgvTipoOp.RowCount - 1;
@@ -126,7 +126,7 @@ namespace ADIGGM.INV.Mantenimiento
             if (dgvTipoOp.Rows.Count > 0 && dgvTipoOp.FirstDisplayedCell != null)
             {
                 saveRow = dgvTipoOp.FirstDisplayedCell.RowIndex;
-                dgvTipoOp.ReadOnly = false;
+                Clases.GridColumnas.Edicion(dgvTipoOp, true);
                 dgvTipoOp.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;

@@ -54,7 +54,7 @@ namespace ADIGGM.Mantenimiento
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvTipoFac.AllowUserToAddRows = true;
-            dgvTipoFac.ReadOnly = false;
+            Clases.GridColumnas.Edicion(dgvTipoFac, true);
             dgvTipoFac.FirstDisplayedScrollingRowIndex = dgvTipoFac.RowCount - 1;
             var cantidadRow = dgvTipoFac.RowCount - 1;
             dgvTipoFac.CurrentCell = dgvTipoFac.Rows[cantidadRow].Cells[1];
@@ -98,7 +98,7 @@ namespace ADIGGM.Mantenimiento
             if (dgvTipoFac.Rows.Count > 0 && dgvTipoFac.FirstDisplayedCell != null)
             {
                 saveRow = dgvTipoFac.FirstDisplayedCell.RowIndex;
-                dgvTipoFac.ReadOnly = false;
+                Clases.GridColumnas.Edicion(dgvTipoFac, true);
                 dgvTipoFac.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;

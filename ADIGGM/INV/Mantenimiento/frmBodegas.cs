@@ -62,7 +62,7 @@ namespace ADIGGM.INV.Mantenimiento
             try
             {
                 dgvBodegas.AllowUserToAddRows = true;
-                dgvBodegas.ReadOnly = false;
+                Clases.GridColumnas.Edicion(dgvBodegas, true);
                 if (dgvBodegas.Rows.Count > 0 && dgvBodegas.FirstDisplayedCell != null)
                 {
                     dgvBodegas.FirstDisplayedScrollingRowIndex = dgvBodegas.RowCount - 1;
@@ -127,7 +127,7 @@ namespace ADIGGM.INV.Mantenimiento
             if (dgvBodegas.Rows.Count > 0 && dgvBodegas.FirstDisplayedCell != null)
             {
                 saveRow = dgvBodegas.FirstDisplayedCell.RowIndex;
-                dgvBodegas.ReadOnly = false;
+                Clases.GridColumnas.Edicion(dgvBodegas, true);
                 dgvBodegas.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;

@@ -54,7 +54,7 @@ namespace ADIGGM.FAC.Mantenimiento
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvCAI.AllowUserToAddRows = true;
-            dgvCAI.ReadOnly = false;
+            Clases.GridColumnas.Edicion(dgvCAI, true);
             dgvCAI.FirstDisplayedScrollingRowIndex = dgvCAI.RowCount - 1;
             var cantidadRow = dgvCAI.RowCount - 1;
             dgvCAI.CurrentCell = dgvCAI.Rows[cantidadRow].Cells[1];
@@ -103,7 +103,7 @@ namespace ADIGGM.FAC.Mantenimiento
             if (dgvCAI.Rows.Count > 0 && dgvCAI.FirstDisplayedCell != null)
             {
                 saveRow = dgvCAI.FirstDisplayedCell.RowIndex;
-                dgvCAI.ReadOnly = false;
+                Clases.GridColumnas.Edicion(dgvCAI, true);
                 dgvCAI.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;

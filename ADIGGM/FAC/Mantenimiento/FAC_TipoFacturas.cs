@@ -47,7 +47,7 @@ namespace ADIGGM.FAC.Mantenimiento
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvTipoFactura.AllowUserToAddRows = true;
-            dgvTipoFactura.ReadOnly = false;
+            Clases.GridColumnas.Edicion(dgvTipoFactura, true);
             dgvTipoFactura.FirstDisplayedScrollingRowIndex = dgvTipoFactura.RowCount - 1;
             var cantidadRow = dgvTipoFactura.RowCount - 1;
             dgvTipoFactura.CurrentCell = dgvTipoFactura.Rows[cantidadRow].Cells[1];
@@ -89,7 +89,7 @@ namespace ADIGGM.FAC.Mantenimiento
             if (dgvTipoFactura.Rows.Count > 0 && dgvTipoFactura.FirstDisplayedCell != null)
             {
                 saveRow = dgvTipoFactura.FirstDisplayedCell.RowIndex;
-                dgvTipoFactura.ReadOnly = false;
+                Clases.GridColumnas.Edicion(dgvTipoFactura, true);
                 dgvTipoFactura.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;

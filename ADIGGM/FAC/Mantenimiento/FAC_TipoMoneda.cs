@@ -45,7 +45,7 @@ namespace ADIGGM.FAC.Mantenimiento
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvTipoMoneda.AllowUserToAddRows = true;
-            dgvTipoMoneda.ReadOnly = false;
+            Clases.GridColumnas.Edicion(dgvTipoMoneda, true);
             dgvTipoMoneda.FirstDisplayedScrollingRowIndex = dgvTipoMoneda.RowCount - 1;
             var cantidadRow = dgvTipoMoneda.RowCount - 1;
             dgvTipoMoneda.CurrentCell = dgvTipoMoneda.Rows[cantidadRow].Cells[1];
@@ -87,7 +87,7 @@ namespace ADIGGM.FAC.Mantenimiento
             if (dgvTipoMoneda.Rows.Count > 0 && dgvTipoMoneda.FirstDisplayedCell != null)
             {
                 saveRow = dgvTipoMoneda.FirstDisplayedCell.RowIndex;
-                dgvTipoMoneda.ReadOnly = false;
+                Clases.GridColumnas.Edicion(dgvTipoMoneda, true);
                 dgvTipoMoneda.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;
