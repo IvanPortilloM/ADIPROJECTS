@@ -16,9 +16,20 @@ namespace ADIGGM.INV.Mantenimiento
         public frmTipoOp()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             HabilitarBtn();
             FuncionesGlobales DgvStyle = new FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvTipoOp);
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre
+        /// — gotcha §11. Grid editable de mantenimiento (edición por cascada de dgv.ReadOnly).</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvTipoOp.AutoGenerateColumns = false;
+            dgvTipoOp.Columns.Clear();
+            dgvTipoOp.Columns.Add(GridColumnas.Texto("idTipoOperacion", "IdTipoOperacion", "IdTipoOperacion", visible: false));
+            dgvTipoOp.Columns.Add(GridColumnas.Texto("nombreOperacion", "NombreOperacion", "Operación", autoSize: DataGridViewAutoSizeColumnMode.Fill));
         }
 
         public void HabilitarBtn()

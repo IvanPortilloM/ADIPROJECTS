@@ -16,9 +16,21 @@ namespace ADIGGM.INV.Mantenimiento
         public frmBodegas()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             HabilitarBtn();
             FuncionesGlobales DgvStyle = new FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvBodegas);
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre
+        /// — gotcha §11. Grid editable de mantenimiento (edición por cascada de dgv.ReadOnly).</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvBodegas.AutoGenerateColumns = false;
+            dgvBodegas.Columns.Clear();
+            dgvBodegas.Columns.Add(GridColumnas.Texto("idBodega", "IdBodega", "IdBodega", visible: false));
+            dgvBodegas.Columns.Add(GridColumnas.Texto("nombreBodega", "NombreBodega", "Bodega", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvBodegas.Columns.Add(GridColumnas.Check("activo", "Activo", "Activo"));
         }
 
         public void HabilitarBtn()

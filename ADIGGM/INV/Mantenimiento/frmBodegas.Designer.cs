@@ -32,9 +32,6 @@ namespace ADIGGM.INV.Mantenimiento
             this.components = new System.ComponentModel.Container();
             this.dgvBodegas = new System.Windows.Forms.DataGridView();
             this.iNBodegasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.idBodega = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreBodega = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.activo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBodegas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNBodegasBindingSource)).BeginInit();
@@ -117,43 +114,13 @@ namespace ADIGGM.INV.Mantenimiento
             // 
             this.dgvBodegas.AllowUserToAddRows = false;
             this.dgvBodegas.AllowUserToDeleteRows = false;
-            this.dgvBodegas.AutoGenerateColumns = false;
             this.dgvBodegas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBodegas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idBodega,
-            this.nombreBodega,
-            this.activo});
             this.dgvBodegas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvBodegas.Location = new System.Drawing.Point(0, 98);
             this.dgvBodegas.Name = "dgvBodegas";
             this.dgvBodegas.ReadOnly = true;
             this.dgvBodegas.Size = new System.Drawing.Size(433, 329);
             this.dgvBodegas.TabIndex = 103;
-            //
-            // idBodega
-            //
-            this.idBodega.DataPropertyName = "IdBodega";
-            this.idBodega.HeaderText = "IdBodega";
-            this.idBodega.Name = "idBodega";
-            this.idBodega.ReadOnly = true;
-            this.idBodega.Visible = false;
-            //
-            // nombreBodega
-            //
-            this.nombreBodega.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombreBodega.DataPropertyName = "NombreBodega";
-            this.nombreBodega.HeaderText = "Bodega";
-            this.nombreBodega.Name = "nombreBodega";
-            this.nombreBodega.ReadOnly = true;
-            //
-            // activo
-            //
-            this.activo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.activo.DataPropertyName = "Activo";
-            this.activo.HeaderText = "Activo";
-            this.activo.Name = "activo";
-            this.activo.ReadOnly = true;
-            this.activo.Width = 48;
             //
             // frmBodegas
             //
@@ -178,8 +145,5 @@ namespace ADIGGM.INV.Mantenimiento
 
         private System.Windows.Forms.DataGridView dgvBodegas;
         private System.Windows.Forms.BindingSource iNBodegasBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idBodega;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreBodega;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn activo;
     }
 }
