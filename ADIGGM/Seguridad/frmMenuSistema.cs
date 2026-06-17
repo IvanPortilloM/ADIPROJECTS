@@ -14,9 +14,23 @@ namespace ADIGGM.Seguridad
         public frmMenuSistema()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             HabilitarBtn();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvMenuSistema);
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre
+        /// — gotcha §11. Grid editable de mantenimiento (edición por cascada de dgv.ReadOnly).</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvMenuSistema.AutoGenerateColumns = false;
+            dgvMenuSistema.Columns.Clear();
+            dgvMenuSistema.Columns.Add(Clases.GridColumnas.Texto("idMenuDataGridViewTextBoxColumn", "IdMenu", "IdMenu", visible: false));
+            dgvMenuSistema.Columns.Add(Clases.GridColumnas.Texto("nombreDataGridViewTextBoxColumn", "Nombre", "Texto", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvMenuSistema.Columns.Add(Clases.GridColumnas.Texto("NombreFormulario", "NombreFormulario", "Formulario", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvMenuSistema.Columns.Add(Clases.GridColumnas.Texto("NombreMenu", "NombreMenu", "Menu", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvMenuSistema.Columns.Add(Clases.GridColumnas.Texto("iconoDataGridViewTextBoxColumn", "Icono", "Icono"));
         }
 
         public void HabilitarBtn()

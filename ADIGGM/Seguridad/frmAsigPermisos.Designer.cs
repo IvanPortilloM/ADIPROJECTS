@@ -32,13 +32,6 @@ namespace ADIGGM.Seguridad
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAsigPermisos));
             this.dgvPermisosAsig = new System.Windows.Forms.DataGridView();
-            this.idMenu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idSubMenu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idDetSubMenu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreMenu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreSubMenu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreDetSubMenu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.habilitado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.uspCargarPermisosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -92,16 +85,7 @@ namespace ADIGGM.Seguridad
             this.dgvPermisosAsig.AllowUserToAddRows = false;
             this.dgvPermisosAsig.AllowUserToDeleteRows = false;
             this.dgvPermisosAsig.AllowUserToResizeRows = false;
-            this.dgvPermisosAsig.AutoGenerateColumns = false;
             this.dgvPermisosAsig.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPermisosAsig.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idMenu,
-            this.idSubMenu,
-            this.idDetSubMenu,
-            this.nombreMenu,
-            this.nombreSubMenu,
-            this.nombreDetSubMenu,
-            this.habilitado});
             this.dgvPermisosAsig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPermisosAsig.Location = new System.Drawing.Point(0, 131);
             this.dgvPermisosAsig.Name = "dgvPermisosAsig";
@@ -109,66 +93,9 @@ namespace ADIGGM.Seguridad
             this.dgvPermisosAsig.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPermisosAsig.Size = new System.Drawing.Size(811, 587);
             this.dgvPermisosAsig.TabIndex = 103;
-            // 
-            // idMenu
-            // 
-            this.idMenu.DataPropertyName = "IdMenu";
-            this.idMenu.HeaderText = "IdMenu";
-            this.idMenu.Name = "idMenu";
-            this.idMenu.ReadOnly = true;
-            this.idMenu.Visible = false;
-            // 
-            // idSubMenu
-            // 
-            this.idSubMenu.DataPropertyName = "IdSubMenu";
-            this.idSubMenu.HeaderText = "IdSubMenu";
-            this.idSubMenu.Name = "idSubMenu";
-            this.idSubMenu.ReadOnly = true;
-            this.idSubMenu.Visible = false;
-            // 
-            // idDetSubMenu
-            // 
-            this.idDetSubMenu.DataPropertyName = "IdDetSubMenu";
-            this.idDetSubMenu.HeaderText = "IdDetSubMenu";
-            this.idDetSubMenu.Name = "idDetSubMenu";
-            this.idDetSubMenu.ReadOnly = true;
-            this.idDetSubMenu.Visible = false;
-            // 
-            // nombreMenu
-            // 
-            this.nombreMenu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nombreMenu.DataPropertyName = "NombreMenu";
-            this.nombreMenu.HeaderText = "Menu Padre";
-            this.nombreMenu.Name = "nombreMenu";
-            this.nombreMenu.ReadOnly = true;
-            // 
-            // nombreSubMenu
-            // 
-            this.nombreSubMenu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombreSubMenu.DataPropertyName = "NombreSubMenu";
-            this.nombreSubMenu.HeaderText = "Menu Hijo";
-            this.nombreSubMenu.Name = "nombreSubMenu";
-            this.nombreSubMenu.ReadOnly = true;
-            // 
-            // nombreDetSubMenu
-            // 
-            this.nombreDetSubMenu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombreDetSubMenu.DataPropertyName = "NombreDetSubMenu";
-            this.nombreDetSubMenu.HeaderText = "Menu Nieto";
-            this.nombreDetSubMenu.Name = "nombreDetSubMenu";
-            this.nombreDetSubMenu.ReadOnly = true;
-            // 
-            // habilitado
-            // 
-            this.habilitado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.habilitado.DataPropertyName = "Habilitado";
-            this.habilitado.HeaderText = "Habilitado";
-            this.habilitado.Name = "habilitado";
-            this.habilitado.ReadOnly = true;
-            this.habilitado.Width = 70;
             //
             // groupBox2
-            // 
+            //
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.cboUsuarios);
             this.groupBox2.Controls.Add(this.btnImp);
@@ -290,13 +217,6 @@ namespace ADIGGM.Seguridad
         private System.Windows.Forms.Button btnImp;
         private System.Windows.Forms.Button btnRecargar;
         private System.Windows.Forms.Button btnGuardar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idMenu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idSubMenu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDetSubMenu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreMenu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreSubMenu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreDetSubMenu;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn habilitado;
         private System.Windows.Forms.ComboBox cboUsuarios;
         private System.Windows.Forms.BindingSource tRUsuariosBindingSource;
         private System.Windows.Forms.Label label1;

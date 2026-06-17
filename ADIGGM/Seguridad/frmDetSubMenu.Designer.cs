@@ -38,11 +38,6 @@ namespace ADIGGM.Seguridad
             this.label1 = new System.Windows.Forms.Label();
             this.cboMenuPadre = new System.Windows.Forms.ComboBox();
             this.dgvdetSubMenu = new System.Windows.Forms.DataGridView();
-            this.idDetSubMenuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idSubMenuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreFormularioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreMenuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fKDetSubMenuSubMenuBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pnlFooter.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -189,14 +184,7 @@ namespace ADIGGM.Seguridad
             // 
             this.dgvdetSubMenu.AllowUserToAddRows = false;
             this.dgvdetSubMenu.AllowUserToDeleteRows = false;
-            this.dgvdetSubMenu.AutoGenerateColumns = false;
             this.dgvdetSubMenu.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvdetSubMenu.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idDetSubMenuDataGridViewTextBoxColumn,
-            this.idSubMenuDataGridViewTextBoxColumn,
-            this.nombreDataGridViewTextBoxColumn,
-            this.nombreFormularioDataGridViewTextBoxColumn,
-            this.nombreMenuDataGridViewTextBoxColumn});
             this.dgvdetSubMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvdetSubMenu.Location = new System.Drawing.Point(0, 135);
             this.dgvdetSubMenu.Name = "dgvdetSubMenu";
@@ -206,47 +194,7 @@ namespace ADIGGM.Seguridad
             this.dgvdetSubMenu.TabIndex = 107;
             this.dgvdetSubMenu.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvdetSubMenu_DataError);
             this.dgvdetSubMenu.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvdetSubMenu_RowsAdded);
-            // 
-            // idDetSubMenuDataGridViewTextBoxColumn
-            // 
-            this.idDetSubMenuDataGridViewTextBoxColumn.DataPropertyName = "IdDetSubMenu";
-            this.idDetSubMenuDataGridViewTextBoxColumn.HeaderText = "IdDetSubMenu";
-            this.idDetSubMenuDataGridViewTextBoxColumn.Name = "idDetSubMenuDataGridViewTextBoxColumn";
-            this.idDetSubMenuDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idDetSubMenuDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // idSubMenuDataGridViewTextBoxColumn
-            // 
-            this.idSubMenuDataGridViewTextBoxColumn.DataPropertyName = "IdSubMenu";
-            this.idSubMenuDataGridViewTextBoxColumn.HeaderText = "IdSubMenu";
-            this.idSubMenuDataGridViewTextBoxColumn.Name = "idSubMenuDataGridViewTextBoxColumn";
-            this.idSubMenuDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idSubMenuDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // nombreDataGridViewTextBoxColumn
-            // 
-            this.nombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre";
-            this.nombreDataGridViewTextBoxColumn.HeaderText = "Texto";
-            this.nombreDataGridViewTextBoxColumn.Name = "nombreDataGridViewTextBoxColumn";
-            this.nombreDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // nombreFormularioDataGridViewTextBoxColumn
-            // 
-            this.nombreFormularioDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombreFormularioDataGridViewTextBoxColumn.DataPropertyName = "NombreFormulario";
-            this.nombreFormularioDataGridViewTextBoxColumn.HeaderText = "Formulario";
-            this.nombreFormularioDataGridViewTextBoxColumn.Name = "nombreFormularioDataGridViewTextBoxColumn";
-            this.nombreFormularioDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // nombreMenuDataGridViewTextBoxColumn
-            // 
-            this.nombreMenuDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombreMenuDataGridViewTextBoxColumn.DataPropertyName = "NombreMenu";
-            this.nombreMenuDataGridViewTextBoxColumn.HeaderText = "Menú";
-            this.nombreMenuDataGridViewTextBoxColumn.Name = "nombreMenuDataGridViewTextBoxColumn";
-            this.nombreMenuDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
+            //
             // frmDetSubMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -283,10 +231,5 @@ namespace ADIGGM.Seguridad
         private System.Windows.Forms.BindingSource fKSubMenuMenuBindingSource;
         private System.Windows.Forms.DataGridView dgvdetSubMenu;
         private System.Windows.Forms.BindingSource fKDetSubMenuSubMenuBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDetSubMenuDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idSubMenuDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreFormularioDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreMenuDataGridViewTextBoxColumn;
     }
 }

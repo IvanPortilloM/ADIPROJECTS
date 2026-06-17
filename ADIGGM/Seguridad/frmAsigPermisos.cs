@@ -15,6 +15,22 @@ namespace ADIGGM.Seguridad
         public frmAsigPermisos()
         {
             InitializeComponent();
+            ConfigurarColumnas();
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre
+        /// — gotcha §11. Solo "habilitado" es editable y se habilita en cargarDgv() (Columns["habilitado"].ReadOnly=false).</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvPermisosAsig.AutoGenerateColumns = false;
+            dgvPermisosAsig.Columns.Clear();
+            dgvPermisosAsig.Columns.Add(Clases.GridColumnas.Texto("idMenu", "IdMenu", "IdMenu", visible: false));
+            dgvPermisosAsig.Columns.Add(Clases.GridColumnas.Texto("idSubMenu", "IdSubMenu", "IdSubMenu", visible: false));
+            dgvPermisosAsig.Columns.Add(Clases.GridColumnas.Texto("idDetSubMenu", "IdDetSubMenu", "IdDetSubMenu", visible: false));
+            dgvPermisosAsig.Columns.Add(Clases.GridColumnas.Texto("nombreMenu", "NombreMenu", "Menu Padre", autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells));
+            dgvPermisosAsig.Columns.Add(Clases.GridColumnas.Texto("nombreSubMenu", "NombreSubMenu", "Menu Hijo", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvPermisosAsig.Columns.Add(Clases.GridColumnas.Texto("nombreDetSubMenu", "NombreDetSubMenu", "Menu Nieto", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvPermisosAsig.Columns.Add(Clases.GridColumnas.Check("habilitado", "Habilitado", "Habilitado", autoSize: DataGridViewAutoSizeColumnMode.ColumnHeader, width: 70));
         }
 
         private void btnImp_Click(object sender, EventArgs e)

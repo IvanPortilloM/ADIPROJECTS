@@ -30,9 +30,10 @@ namespace ADIGGM.Clases
         }
 
         public static DataGridViewCheckBoxColumn Check(string name, string prop, string header,
-            bool visible = true, bool readOnly = true)
+            bool visible = true, int width = 0,
+            DataGridViewAutoSizeColumnMode autoSize = DataGridViewAutoSizeColumnMode.NotSet, bool readOnly = true)
         {
-            return new DataGridViewCheckBoxColumn
+            var c = new DataGridViewCheckBoxColumn
             {
                 Name = name,
                 DataPropertyName = prop,
@@ -40,6 +41,9 @@ namespace ADIGGM.Clases
                 Visible = visible,
                 ReadOnly = readOnly
             };
+            if (width > 0) c.Width = width;
+            if (autoSize != DataGridViewAutoSizeColumnMode.NotSet) c.AutoSizeMode = autoSize;
+            return c;
         }
 
         /// <summary>Columna combo (muestra DisplayMember a partir del Id en DataPropertyName/ValueMember).

@@ -31,11 +31,6 @@ namespace ADIGGM.Seguridad
         {
             this.components = new System.ComponentModel.Container();
             this.dgvMenuSistema = new System.Windows.Forms.DataGridView();
-            this.idMenuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NombreFormulario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NombreMenu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iconoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMenuSistema)).BeginInit();
@@ -119,14 +114,7 @@ namespace ADIGGM.Seguridad
             // 
             this.dgvMenuSistema.AllowUserToAddRows = false;
             this.dgvMenuSistema.AllowUserToDeleteRows = false;
-            this.dgvMenuSistema.AutoGenerateColumns = false;
             this.dgvMenuSistema.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMenuSistema.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idMenuDataGridViewTextBoxColumn,
-            this.nombreDataGridViewTextBoxColumn,
-            this.NombreFormulario,
-            this.NombreMenu,
-            this.iconoDataGridViewTextBoxColumn});
             this.dgvMenuSistema.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMenuSistema.Location = new System.Drawing.Point(0, 98);
             this.dgvMenuSistema.Name = "dgvMenuSistema";
@@ -137,48 +125,9 @@ namespace ADIGGM.Seguridad
             this.dgvMenuSistema.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvMenuSistema_DataError);
             this.dgvMenuSistema.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvMenuSistema_RowsAdded);
             this.dgvMenuSistema.SelectionChanged += new System.EventHandler(this.dgvMenuSistema_SelectionChanged);
-            // 
-            // idMenuDataGridViewTextBoxColumn
-            // 
-            this.idMenuDataGridViewTextBoxColumn.DataPropertyName = "IdMenu";
-            this.idMenuDataGridViewTextBoxColumn.HeaderText = "IdMenu";
-            this.idMenuDataGridViewTextBoxColumn.Name = "idMenuDataGridViewTextBoxColumn";
-            this.idMenuDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idMenuDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // nombreDataGridViewTextBoxColumn
-            // 
-            this.nombreDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre";
-            this.nombreDataGridViewTextBoxColumn.HeaderText = "Texto";
-            this.nombreDataGridViewTextBoxColumn.Name = "nombreDataGridViewTextBoxColumn";
-            this.nombreDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // NombreFormulario
-            // 
-            this.NombreFormulario.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.NombreFormulario.DataPropertyName = "NombreFormulario";
-            this.NombreFormulario.HeaderText = "Formulario";
-            this.NombreFormulario.Name = "NombreFormulario";
-            this.NombreFormulario.ReadOnly = true;
-            // 
-            // NombreMenu
-            // 
-            this.NombreMenu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.NombreMenu.DataPropertyName = "NombreMenu";
-            this.NombreMenu.HeaderText = "Menu";
-            this.NombreMenu.Name = "NombreMenu";
-            this.NombreMenu.ReadOnly = true;
-            // 
-            // iconoDataGridViewTextBoxColumn
-            // 
-            this.iconoDataGridViewTextBoxColumn.DataPropertyName = "Icono";
-            this.iconoDataGridViewTextBoxColumn.HeaderText = "Icono";
-            this.iconoDataGridViewTextBoxColumn.Name = "iconoDataGridViewTextBoxColumn";
-            this.iconoDataGridViewTextBoxColumn.ReadOnly = true;
             //
             // frmMenuSistema
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 450);
@@ -200,10 +149,5 @@ namespace ADIGGM.Seguridad
 
         private System.Windows.Forms.DataGridView dgvMenuSistema;
         private System.Windows.Forms.BindingSource menuBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idMenuDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NombreFormulario;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NombreMenu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iconoDataGridViewTextBoxColumn;
     }
 }

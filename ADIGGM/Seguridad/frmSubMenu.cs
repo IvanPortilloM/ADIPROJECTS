@@ -14,9 +14,23 @@ namespace ADIGGM.Seguridad
         public frmSubMenu()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             HabilitarBtn();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvSubMenu);
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre
+        /// — gotcha §11. Grid editable de mantenimiento (edición por cascada de dgv.ReadOnly).</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvSubMenu.AutoGenerateColumns = false;
+            dgvSubMenu.Columns.Clear();
+            dgvSubMenu.Columns.Add(Clases.GridColumnas.Texto("idSubMenuDataGridViewTextBoxColumn", "IdSubMenu", "IdSubMenu", visible: false));
+            dgvSubMenu.Columns.Add(Clases.GridColumnas.Texto("idMenuDataGridViewTextBoxColumn", "IdMenu", "IdMenu", visible: false));
+            dgvSubMenu.Columns.Add(Clases.GridColumnas.Texto("nombreDataGridViewTextBoxColumn", "Nombre", "Texto", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvSubMenu.Columns.Add(Clases.GridColumnas.Texto("nombreFormularioDataGridViewTextBoxColumn", "NombreFormulario", "Formulario", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvSubMenu.Columns.Add(Clases.GridColumnas.Texto("nombreMenuDataGridViewTextBoxColumn", "NombreMenu", "Menú", autoSize: DataGridViewAutoSizeColumnMode.Fill));
         }
 
         public void HabilitarBtn()
