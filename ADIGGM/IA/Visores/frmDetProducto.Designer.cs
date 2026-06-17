@@ -31,41 +31,11 @@ namespace ADIGGM.IA.Visores
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDetProducto));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgvDetProd = new System.Windows.Forms.DataGridView();
-            this.dfechamovi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nnumconsec = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmontomovi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nintermovi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtocargos = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ncomisinte = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nsaldprinc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nporctasa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumrecibo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumasient = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ctipasient = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ctipasient1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccodmovimi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombretip = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.corigmovim = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdescmovim = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnomusuari = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumoperac = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cctabancar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nnumdocume = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ctipodocum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumdeducc1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdescrip01 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdescrip02 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uSPSelCobrosCargarMovimientosProductosFilterBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnObs = new System.Windows.Forms.Button();
@@ -165,35 +135,9 @@ namespace ADIGGM.IA.Visores
             this.dgvDetProd.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.YellowGreen;
             this.dgvDetProd.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvDetProd.AutoGenerateColumns = false;
             this.dgvDetProd.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvDetProd.BackgroundColor = System.Drawing.Color.White;
             this.dgvDetProd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDetProd.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dfechamovi,
-            this.nnumconsec,
-            this.nmontomovi,
-            this.nintermovi,
-            this.nmtocargos,
-            this.ncomisinte,
-            this.nsaldprinc,
-            this.nporctasa,
-            this.cnumrecibo,
-            this.cnumasient,
-            this.ctipasient,
-            this.ctipasient1,
-            this.ccodmovimi,
-            this.cnombretip,
-            this.corigmovim,
-            this.cdescmovim,
-            this.cnomusuari,
-            this.cnumoperac,
-            this.cctabancar,
-            this.nnumdocume,
-            this.ctipodocum,
-            this.cnumdeducc1,
-            this.cdescrip01,
-            this.cdescrip02});
             this.dgvDetProd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDetProd.Location = new System.Drawing.Point(3, 3);
             this.dgvDetProd.Name = "dgvDetProd";
@@ -201,210 +145,6 @@ namespace ADIGGM.IA.Visores
             this.dgvDetProd.RowHeadersVisible = false;
             this.dgvDetProd.Size = new System.Drawing.Size(770, 267);
             this.dgvDetProd.TabIndex = 0;
-            // 
-            // dfechamovi
-            // 
-            this.dfechamovi.DataPropertyName = "dfechamovi";
-            this.dfechamovi.HeaderText = "Fecha";
-            this.dfechamovi.Name = "dfechamovi";
-            this.dfechamovi.ReadOnly = true;
-            this.dfechamovi.Width = 66;
-            // 
-            // nnumconsec
-            // 
-            this.nnumconsec.DataPropertyName = "nnumconsec";
-            this.nnumconsec.HeaderText = "Recibo";
-            this.nnumconsec.Name = "nnumconsec";
-            this.nnumconsec.ReadOnly = true;
-            this.nnumconsec.Width = 70;
-            // 
-            // nmontomovi
-            // 
-            this.nmontomovi.DataPropertyName = "nmontomovi";
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = null;
-            this.nmontomovi.DefaultCellStyle = dataGridViewCellStyle2;
-            this.nmontomovi.HeaderText = "Monto";
-            this.nmontomovi.Name = "nmontomovi";
-            this.nmontomovi.ReadOnly = true;
-            this.nmontomovi.Width = 68;
-            // 
-            // nintermovi
-            // 
-            this.nintermovi.DataPropertyName = "nintermovi";
-            dataGridViewCellStyle3.Format = "N2";
-            this.nintermovi.DefaultCellStyle = dataGridViewCellStyle3;
-            this.nintermovi.HeaderText = "Interés";
-            this.nintermovi.Name = "nintermovi";
-            this.nintermovi.ReadOnly = true;
-            this.nintermovi.Width = 67;
-            // 
-            // nmtocargos
-            // 
-            this.nmtocargos.DataPropertyName = "nmtocargos";
-            dataGridViewCellStyle4.NullValue = "N2";
-            this.nmtocargos.DefaultCellStyle = dataGridViewCellStyle4;
-            this.nmtocargos.HeaderText = "Cargos";
-            this.nmtocargos.Name = "nmtocargos";
-            this.nmtocargos.ReadOnly = true;
-            this.nmtocargos.Width = 70;
-            // 
-            // ncomisinte
-            // 
-            this.ncomisinte.DataPropertyName = "ncomisinte";
-            dataGridViewCellStyle5.Format = "N2";
-            this.ncomisinte.DefaultCellStyle = dataGridViewCellStyle5;
-            this.ncomisinte.HeaderText = "Comisión";
-            this.ncomisinte.Name = "ncomisinte";
-            this.ncomisinte.ReadOnly = true;
-            this.ncomisinte.Width = 80;
-            // 
-            // nsaldprinc
-            // 
-            this.nsaldprinc.DataPropertyName = "nsaldprinc";
-            dataGridViewCellStyle6.Format = "N2";
-            this.nsaldprinc.DefaultCellStyle = dataGridViewCellStyle6;
-            this.nsaldprinc.HeaderText = "Saldo";
-            this.nsaldprinc.Name = "nsaldprinc";
-            this.nsaldprinc.ReadOnly = true;
-            this.nsaldprinc.Width = 63;
-            // 
-            // nporctasa
-            // 
-            this.nporctasa.DataPropertyName = "nporctasa";
-            dataGridViewCellStyle7.Format = "N2";
-            this.nporctasa.DefaultCellStyle = dataGridViewCellStyle7;
-            this.nporctasa.HeaderText = "Tasa";
-            this.nporctasa.Name = "nporctasa";
-            this.nporctasa.ReadOnly = true;
-            this.nporctasa.Width = 57;
-            // 
-            // cnumrecibo
-            // 
-            this.cnumrecibo.DataPropertyName = "cnumrecibo";
-            this.cnumrecibo.HeaderText = "Recibo.Caja";
-            this.cnumrecibo.Name = "cnumrecibo";
-            this.cnumrecibo.ReadOnly = true;
-            // 
-            // cnumasient
-            // 
-            this.cnumasient.DataPropertyName = "cnumasient";
-            this.cnumasient.HeaderText = "Asiento";
-            this.cnumasient.Name = "cnumasient";
-            this.cnumasient.ReadOnly = true;
-            this.cnumasient.Width = 70;
-            // 
-            // ctipasient
-            // 
-            this.ctipasient.DataPropertyName = "ctipasient";
-            this.ctipasient.HeaderText = "Tip.Asi.";
-            this.ctipasient.Name = "ctipasient";
-            this.ctipasient.ReadOnly = true;
-            this.ctipasient.Width = 66;
-            // 
-            // ctipasient1
-            // 
-            this.ctipasient1.DataPropertyName = "ctipasient1";
-            this.ctipasient1.HeaderText = "ctipasient1";
-            this.ctipasient1.Name = "ctipasient1";
-            this.ctipasient1.ReadOnly = true;
-            this.ctipasient1.Visible = false;
-            // 
-            // ccodmovimi
-            // 
-            this.ccodmovimi.DataPropertyName = "ccodmovimi";
-            this.ccodmovimi.HeaderText = "Cod.Mov.";
-            this.ccodmovimi.Name = "ccodmovimi";
-            this.ccodmovimi.ReadOnly = true;
-            this.ccodmovimi.Width = 88;
-            // 
-            // cnombretip
-            // 
-            this.cnombretip.DataPropertyName = "cnombretip";
-            this.cnombretip.HeaderText = "Desc.Mov.";
-            this.cnombretip.Name = "cnombretip";
-            this.cnombretip.ReadOnly = true;
-            this.cnombretip.Width = 90;
-            // 
-            // corigmovim
-            // 
-            this.corigmovim.DataPropertyName = "corigmovim";
-            this.corigmovim.HeaderText = "Cod.Origen";
-            this.corigmovim.Name = "corigmovim";
-            this.corigmovim.ReadOnly = true;
-            this.corigmovim.Width = 95;
-            // 
-            // cdescmovim
-            // 
-            this.cdescmovim.DataPropertyName = "cdescmovim";
-            this.cdescmovim.HeaderText = "Desc.Origen";
-            this.cdescmovim.Name = "cdescmovim";
-            this.cdescmovim.ReadOnly = true;
-            this.cdescmovim.Width = 97;
-            // 
-            // cnomusuari
-            // 
-            this.cnomusuari.DataPropertyName = "cnomusuari";
-            this.cnomusuari.HeaderText = "Usuario";
-            this.cnomusuari.Name = "cnomusuari";
-            this.cnomusuari.ReadOnly = true;
-            this.cnomusuari.Width = 71;
-            // 
-            // cnumoperac
-            // 
-            this.cnumoperac.DataPropertyName = "cnumoperac";
-            this.cnumoperac.HeaderText = "Referencia";
-            this.cnumoperac.Name = "cnumoperac";
-            this.cnumoperac.ReadOnly = true;
-            this.cnumoperac.Width = 90;
-            // 
-            // cctabancar
-            // 
-            this.cctabancar.DataPropertyName = "cctabancar";
-            this.cctabancar.HeaderText = "Cta.Bancaria";
-            this.cctabancar.Name = "cctabancar";
-            this.cctabancar.ReadOnly = true;
-            this.cctabancar.Width = 105;
-            // 
-            // nnumdocume
-            // 
-            this.nnumdocume.DataPropertyName = "nnumdocume";
-            this.nnumdocume.HeaderText = "Documento";
-            this.nnumdocume.Name = "nnumdocume";
-            this.nnumdocume.ReadOnly = true;
-            this.nnumdocume.Width = 96;
-            // 
-            // ctipodocum
-            // 
-            this.ctipodocum.DataPropertyName = "ctipodocum";
-            this.ctipodocum.HeaderText = "Tipo.Docum.";
-            this.ctipodocum.Name = "ctipodocum";
-            this.ctipodocum.ReadOnly = true;
-            this.ctipodocum.Width = 99;
-            // 
-            // cnumdeducc1
-            // 
-            this.cnumdeducc1.DataPropertyName = "cnumdeducc";
-            this.cnumdeducc1.HeaderText = "cnumdeducc";
-            this.cnumdeducc1.Name = "cnumdeducc1";
-            this.cnumdeducc1.ReadOnly = true;
-            this.cnumdeducc1.Visible = false;
-            // 
-            // cdescrip01
-            // 
-            this.cdescrip01.DataPropertyName = "cdescrip01";
-            this.cdescrip01.HeaderText = "cdescrip01";
-            this.cdescrip01.Name = "cdescrip01";
-            this.cdescrip01.ReadOnly = true;
-            this.cdescrip01.Visible = false;
-            // 
-            // cdescrip02
-            // 
-            this.cdescrip02.DataPropertyName = "cdescrip02";
-            this.cdescrip02.HeaderText = "cdescrip02";
-            this.cdescrip02.Name = "cdescrip02";
-            this.cdescrip02.ReadOnly = true;
-            this.cdescrip02.Visible = false;
             //
             // btnSalir
             // 
@@ -491,30 +231,6 @@ namespace ADIGGM.IA.Visores
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtcdesdeducc;
         private System.Windows.Forms.BindingSource uSPSelCobrosCargarMovimientosProductosFilterBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechamovi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nnumconsec;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmontomovi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nintermovi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtocargos;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ncomisinte;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nsaldprinc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nporctasa;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumrecibo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumasient;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ctipasient;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ctipasient1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccodmovimi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombretip;
-        private System.Windows.Forms.DataGridViewTextBoxColumn corigmovim;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdescmovim;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnomusuari;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumoperac;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cctabancar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nnumdocume;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ctipodocum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumdeducc1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdescrip01;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdescrip02;
         private System.Windows.Forms.Button btnObs;
         private System.Windows.Forms.Button btnSalir;
     }
