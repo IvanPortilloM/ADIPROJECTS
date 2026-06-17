@@ -1,3 +1,4 @@
+using System.Data;
 using System.Windows.Forms;
 
 namespace ADIGGM.Clases
@@ -55,8 +56,37 @@ namespace ADIGGM.Clases
         public static void Edicion(DataGridView dgv, bool habilitar)
         {
             dgv.ReadOnly = !habilitar;
+            // Al habilitar, una columna enlazada a un DataColumn de SOLO LECTURA (p.ej. el PK
+            // identity que DataTable.Load marca ReadOnly, o columnas calculadas — gotcha §11)
+            // DEBE permanecer en ReadOnly=true: ponerla en false lanza InvalidOperationException
+            // ("...enlazada a un campo de solo lectura debe tener ReadOnly en True"). Solo se
+            // habilitan las columnas cuyo campo es editable.
+            DataTable tabla = habilitar ? TablaDe(dgv) : null;
             foreach (DataGridViewColumn col in dgv.Columns)
-                col.ReadOnly = !habilitar;
+            {
+                if (!habilitar)
+                {
+                    col.ReadOnly = true;
+                    continue;
+                }
+                bool campoSoloLectura = tabla != null
+                    && !string.IsNullOrEmpty(col.DataPropertyName)
+                    && tabla.Columns.Contains(col.DataPropertyName)
+                    && tabla.Columns[col.DataPropertyName].ReadOnly;
+                col.ReadOnly = campoSoloLectura;
+            }
+        }
+
+        /// <summary>DataTable subyacente al grid, ya sea enlazado directo o vía BindingSource/DataView
+        /// (incluye binding por DataRelation, donde List es el DataView de la tabla hija).</summary>
+        private static DataTable TablaDe(DataGridView dgv)
+        {
+            if (dgv.DataSource is BindingSource bs)
+            {
+                if (bs.List is DataView dv) return dv.Table;
+                if (bs.DataSource is DataTable t) return t;
+            }
+            return dgv.DataSource as DataTable;
         }
 
         /// <summary>Columna combo (muestra DisplayMember a partir del Id en DataPropertyName/ValueMember).
