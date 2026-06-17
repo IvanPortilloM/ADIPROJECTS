@@ -17,6 +17,24 @@ namespace ADIGGM.IA.Busquedas
         public frmBuscarAsociados()
         {
             InitializeComponent();
+            ConfigurarColumnas();
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre
+        /// — gotcha §11. Visor de búsqueda (solo lectura); orden preservado (Sort usa Columns[0]/[1];
+        /// Aceptar lee Cells["cidasociad"]). 23 columnas ocultas (header = nombre de campo).</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvAsociados.AutoGenerateColumns = false;
+            dgvAsociados.Columns.Clear();
+            dgvAsociados.Columns.Add(Clases.GridColumnas.Texto("cidasociad", "cidasociad", "Identificación"));
+            dgvAsociados.Columns.Add(Clases.GridColumnas.Texto("cnombreasoDataGridViewTextBoxColumn", "cnombreaso", "Nombre", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvAsociados.Columns.Add(Clases.GridColumnas.Texto("ccedulasocDataGridViewTextBoxColumn", "ccedulasoc", "DNI"));
+            dgvAsociados.Columns.Add(Clases.GridColumnas.Texto("dfechaingaDataGridViewTextBoxColumn", "dfechainga", "dfechainga", visible: false));
+            dgvAsociados.Columns.Add(Clases.GridColumnas.Texto("dfechasaliDataGridViewTextBoxColumn", "dfechasali", "dfechasali", visible: false));
+            dgvAsociados.Columns.Add(Clases.GridColumnas.Texto("cnombcondaDataGridViewTextBoxColumn", "cnombconda", "Estátus"));
+            foreach (var p in new[] { "cnombinsti", "cnombdepto", "cnombdivis", "cnombtipop", "cteletraba", "ctelecelul", "cextentrab", "cteledomic", "cdireccaso", "dfechanaci", "nsalarioas", "nsalarione", "cmuestclav", "dfechaingc", "cconoccomo", "cemailasoc", "anios", "meses", "dias", "cnombrecom", "ccoddelega", "cnombredel" })
+                dgvAsociados.Columns.Add(Clases.GridColumnas.Texto(p + "DataGridViewTextBoxColumn", p, p, visible: false));
         }
         private frmInformacionAsoc informacionAsoc;
         private void frmBuscarAsociados_Load(object sender, EventArgs e)

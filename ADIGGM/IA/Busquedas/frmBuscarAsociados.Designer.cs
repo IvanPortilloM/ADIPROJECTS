@@ -46,34 +46,6 @@ namespace ADIGGM.IA.Busquedas
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.dgvAsociados = new System.Windows.Forms.DataGridView();
-            this.cidasociad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombreasoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccedulasocDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechaingaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechasaliDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombcondaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombinstiDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombdeptoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombdivisDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombtipopDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cteletrabaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ctelecelulDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cextentrabDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cteledomicDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdireccasoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechanaciDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nsalarioasDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nsalarioneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmuestclavDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechaingcDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cconoccomoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cemailasocDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.aniosDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mesesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.diasDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombrecomDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccoddelegaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombredelDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cABuscarAsocBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudRegistros)).BeginInit();
@@ -296,37 +268,7 @@ namespace ADIGGM.IA.Busquedas
             this.dgvAsociados.AllowUserToAddRows = false;
             this.dgvAsociados.AllowUserToDeleteRows = false;
             this.dgvAsociados.AllowUserToOrderColumns = true;
-            this.dgvAsociados.AutoGenerateColumns = false;
             this.dgvAsociados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAsociados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.cidasociad,
-            this.cnombreasoDataGridViewTextBoxColumn,
-            this.ccedulasocDataGridViewTextBoxColumn,
-            this.dfechaingaDataGridViewTextBoxColumn,
-            this.dfechasaliDataGridViewTextBoxColumn,
-            this.cnombcondaDataGridViewTextBoxColumn,
-            this.cnombinstiDataGridViewTextBoxColumn,
-            this.cnombdeptoDataGridViewTextBoxColumn,
-            this.cnombdivisDataGridViewTextBoxColumn,
-            this.cnombtipopDataGridViewTextBoxColumn,
-            this.cteletrabaDataGridViewTextBoxColumn,
-            this.ctelecelulDataGridViewTextBoxColumn,
-            this.cextentrabDataGridViewTextBoxColumn,
-            this.cteledomicDataGridViewTextBoxColumn,
-            this.cdireccasoDataGridViewTextBoxColumn,
-            this.dfechanaciDataGridViewTextBoxColumn,
-            this.nsalarioasDataGridViewTextBoxColumn,
-            this.nsalarioneDataGridViewTextBoxColumn,
-            this.cmuestclavDataGridViewTextBoxColumn,
-            this.dfechaingcDataGridViewTextBoxColumn,
-            this.cconoccomoDataGridViewTextBoxColumn,
-            this.cemailasocDataGridViewTextBoxColumn,
-            this.aniosDataGridViewTextBoxColumn,
-            this.mesesDataGridViewTextBoxColumn,
-            this.diasDataGridViewTextBoxColumn,
-            this.cnombrecomDataGridViewTextBoxColumn,
-            this.ccoddelegaDataGridViewTextBoxColumn,
-            this.cnombredelDataGridViewTextBoxColumn});
             this.dgvAsociados.Location = new System.Drawing.Point(39, 123);
             this.dgvAsociados.Name = "dgvAsociados";
             this.dgvAsociados.ReadOnly = true;
@@ -334,226 +276,61 @@ namespace ADIGGM.IA.Busquedas
             this.dgvAsociados.TabIndex = 109;
             this.dgvAsociados.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvAsociados_KeyDown);
             // 
-            // cidasociad
             // 
-            this.cidasociad.DataPropertyName = "cidasociad";
-            this.cidasociad.HeaderText = "Identificación";
-            this.cidasociad.Name = "cidasociad";
-            this.cidasociad.ReadOnly = true;
             // 
-            // cnombreasoDataGridViewTextBoxColumn
             // 
-            this.cnombreasoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cnombreasoDataGridViewTextBoxColumn.DataPropertyName = "cnombreaso";
-            this.cnombreasoDataGridViewTextBoxColumn.HeaderText = "Nombre";
-            this.cnombreasoDataGridViewTextBoxColumn.Name = "cnombreasoDataGridViewTextBoxColumn";
-            this.cnombreasoDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // ccedulasocDataGridViewTextBoxColumn
             // 
-            this.ccedulasocDataGridViewTextBoxColumn.DataPropertyName = "ccedulasoc";
-            this.ccedulasocDataGridViewTextBoxColumn.HeaderText = "DNI";
-            this.ccedulasocDataGridViewTextBoxColumn.Name = "ccedulasocDataGridViewTextBoxColumn";
-            this.ccedulasocDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // dfechaingaDataGridViewTextBoxColumn
             // 
-            this.dfechaingaDataGridViewTextBoxColumn.DataPropertyName = "dfechainga";
-            this.dfechaingaDataGridViewTextBoxColumn.HeaderText = "dfechainga";
-            this.dfechaingaDataGridViewTextBoxColumn.Name = "dfechaingaDataGridViewTextBoxColumn";
-            this.dfechaingaDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dfechaingaDataGridViewTextBoxColumn.Visible = false;
             // 
-            // dfechasaliDataGridViewTextBoxColumn
             // 
-            this.dfechasaliDataGridViewTextBoxColumn.DataPropertyName = "dfechasali";
-            this.dfechasaliDataGridViewTextBoxColumn.HeaderText = "dfechasali";
-            this.dfechasaliDataGridViewTextBoxColumn.Name = "dfechasaliDataGridViewTextBoxColumn";
-            this.dfechasaliDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dfechasaliDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cnombcondaDataGridViewTextBoxColumn
             // 
-            this.cnombcondaDataGridViewTextBoxColumn.DataPropertyName = "cnombconda";
-            this.cnombcondaDataGridViewTextBoxColumn.HeaderText = "Estátus";
-            this.cnombcondaDataGridViewTextBoxColumn.Name = "cnombcondaDataGridViewTextBoxColumn";
-            this.cnombcondaDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // cnombinstiDataGridViewTextBoxColumn
             // 
-            this.cnombinstiDataGridViewTextBoxColumn.DataPropertyName = "cnombinsti";
-            this.cnombinstiDataGridViewTextBoxColumn.HeaderText = "cnombinsti";
-            this.cnombinstiDataGridViewTextBoxColumn.Name = "cnombinstiDataGridViewTextBoxColumn";
-            this.cnombinstiDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cnombinstiDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cnombdeptoDataGridViewTextBoxColumn
             // 
-            this.cnombdeptoDataGridViewTextBoxColumn.DataPropertyName = "cnombdepto";
-            this.cnombdeptoDataGridViewTextBoxColumn.HeaderText = "cnombdepto";
-            this.cnombdeptoDataGridViewTextBoxColumn.Name = "cnombdeptoDataGridViewTextBoxColumn";
-            this.cnombdeptoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cnombdeptoDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cnombdivisDataGridViewTextBoxColumn
             // 
-            this.cnombdivisDataGridViewTextBoxColumn.DataPropertyName = "cnombdivis";
-            this.cnombdivisDataGridViewTextBoxColumn.HeaderText = "cnombdivis";
-            this.cnombdivisDataGridViewTextBoxColumn.Name = "cnombdivisDataGridViewTextBoxColumn";
-            this.cnombdivisDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cnombdivisDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cnombtipopDataGridViewTextBoxColumn
             // 
-            this.cnombtipopDataGridViewTextBoxColumn.DataPropertyName = "cnombtipop";
-            this.cnombtipopDataGridViewTextBoxColumn.HeaderText = "cnombtipop";
-            this.cnombtipopDataGridViewTextBoxColumn.Name = "cnombtipopDataGridViewTextBoxColumn";
-            this.cnombtipopDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cnombtipopDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cteletrabaDataGridViewTextBoxColumn
             // 
-            this.cteletrabaDataGridViewTextBoxColumn.DataPropertyName = "cteletraba";
-            this.cteletrabaDataGridViewTextBoxColumn.HeaderText = "cteletraba";
-            this.cteletrabaDataGridViewTextBoxColumn.Name = "cteletrabaDataGridViewTextBoxColumn";
-            this.cteletrabaDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cteletrabaDataGridViewTextBoxColumn.Visible = false;
             // 
-            // ctelecelulDataGridViewTextBoxColumn
             // 
-            this.ctelecelulDataGridViewTextBoxColumn.DataPropertyName = "ctelecelul";
-            this.ctelecelulDataGridViewTextBoxColumn.HeaderText = "ctelecelul";
-            this.ctelecelulDataGridViewTextBoxColumn.Name = "ctelecelulDataGridViewTextBoxColumn";
-            this.ctelecelulDataGridViewTextBoxColumn.ReadOnly = true;
-            this.ctelecelulDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cextentrabDataGridViewTextBoxColumn
             // 
-            this.cextentrabDataGridViewTextBoxColumn.DataPropertyName = "cextentrab";
-            this.cextentrabDataGridViewTextBoxColumn.HeaderText = "cextentrab";
-            this.cextentrabDataGridViewTextBoxColumn.Name = "cextentrabDataGridViewTextBoxColumn";
-            this.cextentrabDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cextentrabDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cteledomicDataGridViewTextBoxColumn
             // 
-            this.cteledomicDataGridViewTextBoxColumn.DataPropertyName = "cteledomic";
-            this.cteledomicDataGridViewTextBoxColumn.HeaderText = "cteledomic";
-            this.cteledomicDataGridViewTextBoxColumn.Name = "cteledomicDataGridViewTextBoxColumn";
-            this.cteledomicDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cteledomicDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cdireccasoDataGridViewTextBoxColumn
             // 
-            this.cdireccasoDataGridViewTextBoxColumn.DataPropertyName = "cdireccaso";
-            this.cdireccasoDataGridViewTextBoxColumn.HeaderText = "cdireccaso";
-            this.cdireccasoDataGridViewTextBoxColumn.Name = "cdireccasoDataGridViewTextBoxColumn";
-            this.cdireccasoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cdireccasoDataGridViewTextBoxColumn.Visible = false;
             // 
-            // dfechanaciDataGridViewTextBoxColumn
             // 
-            this.dfechanaciDataGridViewTextBoxColumn.DataPropertyName = "dfechanaci";
-            this.dfechanaciDataGridViewTextBoxColumn.HeaderText = "dfechanaci";
-            this.dfechanaciDataGridViewTextBoxColumn.Name = "dfechanaciDataGridViewTextBoxColumn";
-            this.dfechanaciDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dfechanaciDataGridViewTextBoxColumn.Visible = false;
             // 
-            // nsalarioasDataGridViewTextBoxColumn
             // 
-            this.nsalarioasDataGridViewTextBoxColumn.DataPropertyName = "nsalarioas";
-            this.nsalarioasDataGridViewTextBoxColumn.HeaderText = "nsalarioas";
-            this.nsalarioasDataGridViewTextBoxColumn.Name = "nsalarioasDataGridViewTextBoxColumn";
-            this.nsalarioasDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nsalarioasDataGridViewTextBoxColumn.Visible = false;
             // 
-            // nsalarioneDataGridViewTextBoxColumn
             // 
-            this.nsalarioneDataGridViewTextBoxColumn.DataPropertyName = "nsalarione";
-            this.nsalarioneDataGridViewTextBoxColumn.HeaderText = "nsalarione";
-            this.nsalarioneDataGridViewTextBoxColumn.Name = "nsalarioneDataGridViewTextBoxColumn";
-            this.nsalarioneDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nsalarioneDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cmuestclavDataGridViewTextBoxColumn
             // 
-            this.cmuestclavDataGridViewTextBoxColumn.DataPropertyName = "cmuestclav";
-            this.cmuestclavDataGridViewTextBoxColumn.HeaderText = "cmuestclav";
-            this.cmuestclavDataGridViewTextBoxColumn.Name = "cmuestclavDataGridViewTextBoxColumn";
-            this.cmuestclavDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cmuestclavDataGridViewTextBoxColumn.Visible = false;
             // 
-            // dfechaingcDataGridViewTextBoxColumn
             // 
-            this.dfechaingcDataGridViewTextBoxColumn.DataPropertyName = "dfechaingc";
-            this.dfechaingcDataGridViewTextBoxColumn.HeaderText = "dfechaingc";
-            this.dfechaingcDataGridViewTextBoxColumn.Name = "dfechaingcDataGridViewTextBoxColumn";
-            this.dfechaingcDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dfechaingcDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cconoccomoDataGridViewTextBoxColumn
             // 
-            this.cconoccomoDataGridViewTextBoxColumn.DataPropertyName = "cconoccomo";
-            this.cconoccomoDataGridViewTextBoxColumn.HeaderText = "cconoccomo";
-            this.cconoccomoDataGridViewTextBoxColumn.Name = "cconoccomoDataGridViewTextBoxColumn";
-            this.cconoccomoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cconoccomoDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cemailasocDataGridViewTextBoxColumn
             // 
-            this.cemailasocDataGridViewTextBoxColumn.DataPropertyName = "cemailasoc";
-            this.cemailasocDataGridViewTextBoxColumn.HeaderText = "cemailasoc";
-            this.cemailasocDataGridViewTextBoxColumn.Name = "cemailasocDataGridViewTextBoxColumn";
-            this.cemailasocDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cemailasocDataGridViewTextBoxColumn.Visible = false;
             // 
-            // aniosDataGridViewTextBoxColumn
             // 
-            this.aniosDataGridViewTextBoxColumn.DataPropertyName = "anios";
-            this.aniosDataGridViewTextBoxColumn.HeaderText = "anios";
-            this.aniosDataGridViewTextBoxColumn.Name = "aniosDataGridViewTextBoxColumn";
-            this.aniosDataGridViewTextBoxColumn.ReadOnly = true;
-            this.aniosDataGridViewTextBoxColumn.Visible = false;
             // 
-            // mesesDataGridViewTextBoxColumn
             // 
-            this.mesesDataGridViewTextBoxColumn.DataPropertyName = "meses";
-            this.mesesDataGridViewTextBoxColumn.HeaderText = "meses";
-            this.mesesDataGridViewTextBoxColumn.Name = "mesesDataGridViewTextBoxColumn";
-            this.mesesDataGridViewTextBoxColumn.ReadOnly = true;
-            this.mesesDataGridViewTextBoxColumn.Visible = false;
             // 
-            // diasDataGridViewTextBoxColumn
             // 
-            this.diasDataGridViewTextBoxColumn.DataPropertyName = "dias";
-            this.diasDataGridViewTextBoxColumn.HeaderText = "dias";
-            this.diasDataGridViewTextBoxColumn.Name = "diasDataGridViewTextBoxColumn";
-            this.diasDataGridViewTextBoxColumn.ReadOnly = true;
-            this.diasDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cnombrecomDataGridViewTextBoxColumn
             // 
-            this.cnombrecomDataGridViewTextBoxColumn.DataPropertyName = "cnombrecom";
-            this.cnombrecomDataGridViewTextBoxColumn.HeaderText = "cnombrecom";
-            this.cnombrecomDataGridViewTextBoxColumn.Name = "cnombrecomDataGridViewTextBoxColumn";
-            this.cnombrecomDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cnombrecomDataGridViewTextBoxColumn.Visible = false;
             // 
-            // ccoddelegaDataGridViewTextBoxColumn
             // 
-            this.ccoddelegaDataGridViewTextBoxColumn.DataPropertyName = "ccoddelega";
-            this.ccoddelegaDataGridViewTextBoxColumn.HeaderText = "ccoddelega";
-            this.ccoddelegaDataGridViewTextBoxColumn.Name = "ccoddelegaDataGridViewTextBoxColumn";
-            this.ccoddelegaDataGridViewTextBoxColumn.ReadOnly = true;
-            this.ccoddelegaDataGridViewTextBoxColumn.Visible = false;
             // 
-            // cnombredelDataGridViewTextBoxColumn
             // 
-            this.cnombredelDataGridViewTextBoxColumn.DataPropertyName = "cnombredel";
-            this.cnombredelDataGridViewTextBoxColumn.HeaderText = "cnombredel";
-            this.cnombredelDataGridViewTextBoxColumn.Name = "cnombredelDataGridViewTextBoxColumn";
-            this.cnombredelDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cnombredelDataGridViewTextBoxColumn.Visible = false;
             //
             // frmBuscarAsociados
             // 
@@ -612,33 +389,5 @@ namespace ADIGGM.IA.Busquedas
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView dgvAsociados;
         private System.Windows.Forms.BindingSource cABuscarAsocBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cidasociad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombreasoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccedulasocDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechaingaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechasaliDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombcondaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombinstiDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombdeptoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombdivisDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombtipopDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cteletrabaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ctelecelulDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cextentrabDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cteledomicDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdireccasoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechanaciDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nsalarioasDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nsalarioneDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cmuestclavDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechaingcDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cconoccomoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cemailasocDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn aniosDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mesesDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn diasDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombrecomDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccoddelegaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombredelDataGridViewTextBoxColumn;
     }
 }
