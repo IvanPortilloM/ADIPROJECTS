@@ -92,7 +92,7 @@ namespace ADIGGM.Clases
         /// <summary>Columna combo (muestra DisplayMember a partir del Id en DataPropertyName/ValueMember).
         /// El DataSource se asigna por separado en el form, tras poblar su BindingSource vía repositorio.</summary>
         public static DataGridViewComboBoxColumn Combo(string name, string prop, string header,
-            string displayMember, string valueMember, bool visible = true,
+            string displayMember, string valueMember, bool visible = true, int width = 0,
             DataGridViewAutoSizeColumnMode autoSize = DataGridViewAutoSizeColumnMode.NotSet, bool readOnly = true)
         {
             var c = new DataGridViewComboBoxColumn
@@ -106,6 +106,7 @@ namespace ADIGGM.Clases
                 Visible = visible,
                 ReadOnly = readOnly
             };
+            if (width > 0) c.Width = width;
             if (autoSize != DataGridViewAutoSizeColumnMode.NotSet) c.AutoSizeMode = autoSize;
             return c;
         }

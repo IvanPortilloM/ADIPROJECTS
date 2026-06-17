@@ -26,6 +26,34 @@ namespace ADIGGM.SAC
         public frmMenu()
         {
             InitializeComponent();
+            ConfigurarColumnas();
+        }
+
+        /// <summary>Columnas de los 3 grids (Desayuno/Almuerzo/Bocadillos, estructura idéntica) EN CÓDIGO
+        /// para que el diseñador de VS no las borre — gotcha §11. Clave/Día/Tiempo son ReadOnly; Descripción/
+        /// Fecha/Activo editables (el form no usa toggle dgv.ReadOnly, gatea por botón). El orden importa:
+        /// Guardar lee celdas por índice (0=clave, 3=descripción, 4=fecha, 5=activo).</summary>
+        private void ConfigurarColumnas()
+        {
+            ConfigurarGridMenu(dgvDesayuno, "");
+            ConfigurarGridMenu(dgvAlmuerzo, "1");
+            ConfigurarGridMenu(dgvBocadillos, "2");
+        }
+
+        private void ConfigurarGridMenu(DataGridView dgv, string sufijo)
+        {
+            dgv.AutoGenerateColumns = false;
+            dgv.Columns.Clear();
+            dgv.Columns.Add(GridColumnas.Texto("nconsemenu" + sufijo, "nconsemenu", "Clave", width: 66, autoSize: DataGridViewAutoSizeColumnMode.ColumnHeader));
+            var colDia = GridColumnas.Combo("nnumdiasem" + sufijo, "nnumdiasem", "Día", "cnomdiasem", "nnumdiasem", width: 50, autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells);
+            colDia.DataSource = cFDiasSemBindingSource;
+            dgv.Columns.Add(colDia);
+            var colTiempo = GridColumnas.Combo("nnumtiempo" + sufijo, "nnumtiempo", "Tiempo", "ctiempocom", "nnumtiempo", width: 71, autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells);
+            colTiempo.DataSource = cFTiempoComBindingSource;
+            dgv.Columns.Add(colTiempo);
+            dgv.Columns.Add(GridColumnas.Texto("cnomcomida" + sufijo, "cnomcomida", "Descripción del tiempo de comida", autoSize: DataGridViewAutoSizeColumnMode.Fill, readOnly: false));
+            dgv.Columns.Add(GridColumnas.Texto("dfechacrea" + sufijo, "dfechacrea", "Fecha", width: 66, autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells, readOnly: false));
+            dgv.Columns.Add(GridColumnas.Check("bestaactiv" + sufijo, "bestaactiv", "Activo", width: 48, autoSize: DataGridViewAutoSizeColumnMode.ColumnHeader, readOnly: false));
         }
 
         private void frmMenu_Load(object sender, EventArgs e)

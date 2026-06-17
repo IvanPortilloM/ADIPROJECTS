@@ -40,32 +40,14 @@ namespace ADIGGM.SAC
             this.tbMenu = new System.Windows.Forms.TabControl();
             this.tpDesayuno = new System.Windows.Forms.TabPage();
             this.dgvDesayuno = new System.Windows.Forms.DataGridView();
-            this.nconsemenu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nnumdiasem = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.cFDiasSemBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.nnumtiempo = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.cFTiempoComBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cnomcomida = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechacrea = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bestaactiv = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cFMenuBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tpAlmuerzo = new System.Windows.Forms.TabPage();
             this.dgvAlmuerzo = new System.Windows.Forms.DataGridView();
-            this.nconsemenu1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nnumdiasem1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.nnumtiempo1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.cnomcomida1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechacrea1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bestaactiv1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cFMenu1BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tpBocadillos = new System.Windows.Forms.TabPage();
             this.dgvBocadillos = new System.Windows.Forms.DataGridView();
-            this.nconsemenu2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nnumdiasem2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.nnumtiempo2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.cnomcomida2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechacrea2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bestaactiv2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cFMenu2BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -203,15 +185,7 @@ namespace ADIGGM.SAC
             this.dgvDesayuno.AllowUserToAddRows = false;
             this.dgvDesayuno.AllowUserToDeleteRows = false;
             this.dgvDesayuno.AllowUserToResizeRows = false;
-            this.dgvDesayuno.AutoGenerateColumns = false;
             this.dgvDesayuno.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDesayuno.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nconsemenu,
-            this.nnumdiasem,
-            this.nnumtiempo,
-            this.cnomcomida,
-            this.dfechacrea,
-            this.bestaactiv});
             this.dgvDesayuno.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDesayuno.Location = new System.Drawing.Point(3, 3);
             this.dgvDesayuno.Name = "dgvDesayuno";
@@ -221,73 +195,23 @@ namespace ADIGGM.SAC
             this.dgvDesayuno.TabIndex = 0;
             this.dgvDesayuno.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvDesayuno_DataError);
             // 
-            // nconsemenu
             // 
-            this.nconsemenu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.nconsemenu.DataPropertyName = "nconsemenu";
-            this.nconsemenu.HeaderText = "Clave";
-            this.nconsemenu.Name = "nconsemenu";
-            this.nconsemenu.ReadOnly = true;
-            this.nconsemenu.Width = 66;
             // 
-            // nnumdiasem
             // 
-            this.nnumdiasem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nnumdiasem.DataPropertyName = "nnumdiasem";
-            this.nnumdiasem.DataSource = this.cFDiasSemBindingSource;
-            this.nnumdiasem.DisplayMember = "cnomdiasem";
-            this.nnumdiasem.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.nnumdiasem.HeaderText = "Día";
-            this.nnumdiasem.Name = "nnumdiasem";
-            this.nnumdiasem.ReadOnly = true;
-            this.nnumdiasem.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.nnumdiasem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.nnumdiasem.ValueMember = "nnumdiasem";
-            this.nnumdiasem.Width = 50;
             // 
             // cFDiasSemBindingSource
             // 
             // 
-            // nnumtiempo
             // 
-            this.nnumtiempo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nnumtiempo.DataPropertyName = "nnumtiempo";
-            this.nnumtiempo.DataSource = this.cFTiempoComBindingSource;
-            this.nnumtiempo.DisplayMember = "ctiempocom";
-            this.nnumtiempo.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.nnumtiempo.HeaderText = "Tiempo";
-            this.nnumtiempo.Name = "nnumtiempo";
-            this.nnumtiempo.ReadOnly = true;
-            this.nnumtiempo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.nnumtiempo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.nnumtiempo.ValueMember = "nnumtiempo";
-            this.nnumtiempo.Width = 71;
             // 
             // cFTiempoComBindingSource
             // 
             // 
-            // cnomcomida
             // 
-            this.cnomcomida.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cnomcomida.DataPropertyName = "cnomcomida";
-            this.cnomcomida.HeaderText = "Descripción del tiempo de comida";
-            this.cnomcomida.Name = "cnomcomida";
             // 
-            // dfechacrea
             // 
-            this.dfechacrea.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfechacrea.DataPropertyName = "dfechacrea";
-            this.dfechacrea.HeaderText = "Fecha";
-            this.dfechacrea.Name = "dfechacrea";
-            this.dfechacrea.Width = 66;
             // 
-            // bestaactiv
             // 
-            this.bestaactiv.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.bestaactiv.DataPropertyName = "bestaactiv";
-            this.bestaactiv.HeaderText = "Activo";
-            this.bestaactiv.Name = "bestaactiv";
-            this.bestaactiv.Width = 48;
             // 
             // cFMenuBindingSource
             // 
@@ -308,15 +232,7 @@ namespace ADIGGM.SAC
             this.dgvAlmuerzo.AllowUserToAddRows = false;
             this.dgvAlmuerzo.AllowUserToDeleteRows = false;
             this.dgvAlmuerzo.AllowUserToResizeRows = false;
-            this.dgvAlmuerzo.AutoGenerateColumns = false;
             this.dgvAlmuerzo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAlmuerzo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nconsemenu1,
-            this.nnumdiasem1,
-            this.nnumtiempo1,
-            this.cnomcomida1,
-            this.dfechacrea1,
-            this.bestaactiv1});
             this.dgvAlmuerzo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAlmuerzo.Location = new System.Drawing.Point(3, 3);
             this.dgvAlmuerzo.Name = "dgvAlmuerzo";
@@ -325,67 +241,17 @@ namespace ADIGGM.SAC
             this.dgvAlmuerzo.Size = new System.Drawing.Size(908, 252);
             this.dgvAlmuerzo.TabIndex = 2;
             // 
-            // nconsemenu1
             // 
-            this.nconsemenu1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.nconsemenu1.DataPropertyName = "nconsemenu";
-            this.nconsemenu1.HeaderText = "Clave";
-            this.nconsemenu1.Name = "nconsemenu1";
-            this.nconsemenu1.ReadOnly = true;
-            this.nconsemenu1.Width = 66;
             // 
-            // nnumdiasem1
             // 
-            this.nnumdiasem1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nnumdiasem1.DataPropertyName = "nnumdiasem";
-            this.nnumdiasem1.DataSource = this.cFDiasSemBindingSource;
-            this.nnumdiasem1.DisplayMember = "cnomdiasem";
-            this.nnumdiasem1.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.nnumdiasem1.HeaderText = "Día";
-            this.nnumdiasem1.Name = "nnumdiasem1";
-            this.nnumdiasem1.ReadOnly = true;
-            this.nnumdiasem1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.nnumdiasem1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.nnumdiasem1.ValueMember = "nnumdiasem";
-            this.nnumdiasem1.Width = 50;
             // 
-            // nnumtiempo1
             // 
-            this.nnumtiempo1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nnumtiempo1.DataPropertyName = "nnumtiempo";
-            this.nnumtiempo1.DataSource = this.cFTiempoComBindingSource;
-            this.nnumtiempo1.DisplayMember = "ctiempocom";
-            this.nnumtiempo1.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.nnumtiempo1.HeaderText = "Tiempo";
-            this.nnumtiempo1.Name = "nnumtiempo1";
-            this.nnumtiempo1.ReadOnly = true;
-            this.nnumtiempo1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.nnumtiempo1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.nnumtiempo1.ValueMember = "nnumtiempo";
-            this.nnumtiempo1.Width = 71;
             // 
-            // cnomcomida1
             // 
-            this.cnomcomida1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cnomcomida1.DataPropertyName = "cnomcomida";
-            this.cnomcomida1.HeaderText = "Descripción del tiempo de comida";
-            this.cnomcomida1.Name = "cnomcomida1";
             // 
-            // dfechacrea1
             // 
-            this.dfechacrea1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfechacrea1.DataPropertyName = "dfechacrea";
-            this.dfechacrea1.HeaderText = "Fecha";
-            this.dfechacrea1.Name = "dfechacrea1";
-            this.dfechacrea1.Width = 66;
             // 
-            // bestaactiv1
             // 
-            this.bestaactiv1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.bestaactiv1.DataPropertyName = "bestaactiv";
-            this.bestaactiv1.HeaderText = "Activo";
-            this.bestaactiv1.Name = "bestaactiv1";
-            this.bestaactiv1.Width = 48;
             // 
             // cFMenu1BindingSource
             // 
@@ -406,15 +272,7 @@ namespace ADIGGM.SAC
             this.dgvBocadillos.AllowUserToAddRows = false;
             this.dgvBocadillos.AllowUserToDeleteRows = false;
             this.dgvBocadillos.AllowUserToResizeRows = false;
-            this.dgvBocadillos.AutoGenerateColumns = false;
             this.dgvBocadillos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBocadillos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nconsemenu2,
-            this.nnumdiasem2,
-            this.nnumtiempo2,
-            this.cnomcomida2,
-            this.dfechacrea2,
-            this.bestaactiv2});
             this.dgvBocadillos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvBocadillos.Location = new System.Drawing.Point(3, 3);
             this.dgvBocadillos.Name = "dgvBocadillos";
@@ -424,67 +282,17 @@ namespace ADIGGM.SAC
             this.dgvBocadillos.TabIndex = 1;
             this.dgvBocadillos.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvBocadillos_DataError);
             // 
-            // nconsemenu2
             // 
-            this.nconsemenu2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.nconsemenu2.DataPropertyName = "nconsemenu";
-            this.nconsemenu2.HeaderText = "Clave";
-            this.nconsemenu2.Name = "nconsemenu2";
-            this.nconsemenu2.ReadOnly = true;
-            this.nconsemenu2.Width = 66;
             // 
-            // nnumdiasem2
             // 
-            this.nnumdiasem2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nnumdiasem2.DataPropertyName = "nnumdiasem";
-            this.nnumdiasem2.DataSource = this.cFDiasSemBindingSource;
-            this.nnumdiasem2.DisplayMember = "cnomdiasem";
-            this.nnumdiasem2.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.nnumdiasem2.HeaderText = "Día";
-            this.nnumdiasem2.Name = "nnumdiasem2";
-            this.nnumdiasem2.ReadOnly = true;
-            this.nnumdiasem2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.nnumdiasem2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.nnumdiasem2.ValueMember = "nnumdiasem";
-            this.nnumdiasem2.Width = 50;
             // 
-            // nnumtiempo2
             // 
-            this.nnumtiempo2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nnumtiempo2.DataPropertyName = "nnumtiempo";
-            this.nnumtiempo2.DataSource = this.cFTiempoComBindingSource;
-            this.nnumtiempo2.DisplayMember = "ctiempocom";
-            this.nnumtiempo2.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.nnumtiempo2.HeaderText = "Tiempo";
-            this.nnumtiempo2.Name = "nnumtiempo2";
-            this.nnumtiempo2.ReadOnly = true;
-            this.nnumtiempo2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.nnumtiempo2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.nnumtiempo2.ValueMember = "nnumtiempo";
-            this.nnumtiempo2.Width = 71;
             // 
-            // cnomcomida2
             // 
-            this.cnomcomida2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cnomcomida2.DataPropertyName = "cnomcomida";
-            this.cnomcomida2.HeaderText = "Descripción del tiempo de comida";
-            this.cnomcomida2.Name = "cnomcomida2";
             // 
-            // dfechacrea2
             // 
-            this.dfechacrea2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfechacrea2.DataPropertyName = "dfechacrea";
-            this.dfechacrea2.HeaderText = "Fecha";
-            this.dfechacrea2.Name = "dfechacrea2";
-            this.dfechacrea2.Width = 66;
             // 
-            // bestaactiv2
             // 
-            this.bestaactiv2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.bestaactiv2.DataPropertyName = "bestaactiv";
-            this.bestaactiv2.HeaderText = "Activo";
-            this.bestaactiv2.Name = "bestaactiv2";
-            this.bestaactiv2.Width = 48;
             // 
             // cFMenu2BindingSource
             // 
@@ -715,23 +523,5 @@ namespace ADIGGM.SAC
         private System.Windows.Forms.DataGridView dgvAlmuerzo;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.Button btnExportar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nconsemenu;
-        private System.Windows.Forms.DataGridViewComboBoxColumn nnumdiasem;
-        private System.Windows.Forms.DataGridViewComboBoxColumn nnumtiempo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnomcomida;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechacrea;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn bestaactiv;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nconsemenu1;
-        private System.Windows.Forms.DataGridViewComboBoxColumn nnumdiasem1;
-        private System.Windows.Forms.DataGridViewComboBoxColumn nnumtiempo1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnomcomida1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechacrea1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn bestaactiv1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nconsemenu2;
-        private System.Windows.Forms.DataGridViewComboBoxColumn nnumdiasem2;
-        private System.Windows.Forms.DataGridViewComboBoxColumn nnumtiempo2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnomcomida2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechacrea2;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn bestaactiv2;
     }
 }
