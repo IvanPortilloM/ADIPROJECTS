@@ -31,44 +31,9 @@ namespace ADIGGM.IA.Visores
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDetCredito));
             this.txtdfechaform = new System.Windows.Forms.TextBox();
             this.txtnmontoapro = new System.Windows.Forms.TextBox();
@@ -125,25 +90,6 @@ namespace ADIGGM.IA.Visores
             this.label29 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvMovAplic = new System.Windows.Forms.DataGridView();
-            this.dfetransacDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumreciboDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdetatipabDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdetaOriMovDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmontotranDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.namorprincDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ninterescorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ninteresmoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmontotrosDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nsaldoactuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ctipasientDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumasientDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccodigousuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumoprefuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumdocumeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfepagrealDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmonpolizaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombreasoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cobserva01DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cACreditosDetMovAplicBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.txtcdetactivi = new System.Windows.Forms.TextBox();
             this.txtccomentari = new System.Windows.Forms.TextBox();
@@ -161,48 +107,12 @@ namespace ADIGGM.IA.Visores
             this.tbpMovAplic = new System.Windows.Forms.TabPage();
             this.tbpProyTransito = new System.Windows.Forms.TabPage();
             this.dgvProyTransito = new System.Windows.Forms.DataGridView();
-            this.dfecinicorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechacortDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cestatusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ncuotaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtointereDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtoamortiDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtocargosDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtomoratoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ncuotarealDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ncuotapagaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nsaldoactuDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cidasociadDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uSPSelCobrosConsUsuPlanCredFilterBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tbpProyPend = new System.Windows.Forms.TabPage();
             this.dgvProyPend = new System.Windows.Forms.DataGridView();
-            this.dfecinicorDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechacortDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cestatusDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ncuotaDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtointereDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtoamortiDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtocargosDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtomoratoDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ncuotarealDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ncuotapagaDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nsaldoactuDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cidasociadDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uSPSelCobrosConsUsuPlanCredFilter1BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tbpProyAplic = new System.Windows.Forms.TabPage();
             this.dgvProyAplic = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uSPSelCobrosConsUsuPlanCredFilter2BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnSalir = new System.Windows.Forms.Button();
@@ -789,30 +699,9 @@ namespace ADIGGM.IA.Visores
             this.dgvMovAplic.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.YellowGreen;
             this.dgvMovAplic.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvMovAplic.AutoGenerateColumns = false;
             this.dgvMovAplic.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvMovAplic.BackgroundColor = System.Drawing.Color.White;
             this.dgvMovAplic.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMovAplic.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dfetransacDataGridViewTextBoxColumn,
-            this.cnumreciboDataGridViewTextBoxColumn,
-            this.cdetatipabDataGridViewTextBoxColumn,
-            this.cdetaOriMovDataGridViewTextBoxColumn,
-            this.nmontotranDataGridViewTextBoxColumn,
-            this.namorprincDataGridViewTextBoxColumn,
-            this.ninterescorDataGridViewTextBoxColumn,
-            this.ninteresmoDataGridViewTextBoxColumn,
-            this.nmontotrosDataGridViewTextBoxColumn,
-            this.nsaldoactuDataGridViewTextBoxColumn,
-            this.ctipasientDataGridViewTextBoxColumn,
-            this.cnumasientDataGridViewTextBoxColumn,
-            this.ccodigousuDataGridViewTextBoxColumn,
-            this.cnumoprefuDataGridViewTextBoxColumn,
-            this.cnumdocumeDataGridViewTextBoxColumn,
-            this.dfepagrealDataGridViewTextBoxColumn,
-            this.nmonpolizaDataGridViewTextBoxColumn,
-            this.cnombreasoDataGridViewTextBoxColumn,
-            this.cobserva01DataGridViewTextBoxColumn});
             this.dgvMovAplic.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMovAplic.Location = new System.Drawing.Point(3, 3);
             this.dgvMovAplic.Name = "dgvMovAplic";
@@ -821,178 +710,43 @@ namespace ADIGGM.IA.Visores
             this.dgvMovAplic.Size = new System.Drawing.Size(756, 200);
             this.dgvMovAplic.TabIndex = 168;
             // 
-            // dfetransacDataGridViewTextBoxColumn
             // 
-            this.dfetransacDataGridViewTextBoxColumn.DataPropertyName = "dfetransac";
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            this.dfetransacDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dfetransacDataGridViewTextBoxColumn.HeaderText = "Fecha";
-            this.dfetransacDataGridViewTextBoxColumn.Name = "dfetransacDataGridViewTextBoxColumn";
-            this.dfetransacDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dfetransacDataGridViewTextBoxColumn.Width = 66;
             // 
-            // cnumreciboDataGridViewTextBoxColumn
             // 
-            this.cnumreciboDataGridViewTextBoxColumn.DataPropertyName = "cnumrecibo";
-            this.cnumreciboDataGridViewTextBoxColumn.HeaderText = "Recibo";
-            this.cnumreciboDataGridViewTextBoxColumn.Name = "cnumreciboDataGridViewTextBoxColumn";
-            this.cnumreciboDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cnumreciboDataGridViewTextBoxColumn.Width = 70;
             // 
-            // cdetatipabDataGridViewTextBoxColumn
             // 
-            this.cdetatipabDataGridViewTextBoxColumn.DataPropertyName = "cdetatipab";
-            this.cdetatipabDataGridViewTextBoxColumn.HeaderText = "Tipo.Abono";
-            this.cdetatipabDataGridViewTextBoxColumn.Name = "cdetatipabDataGridViewTextBoxColumn";
-            this.cdetatipabDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cdetatipabDataGridViewTextBoxColumn.Width = 93;
             // 
-            // cdetaOriMovDataGridViewTextBoxColumn
             // 
-            this.cdetaOriMovDataGridViewTextBoxColumn.DataPropertyName = "cdetaOriMov";
-            this.cdetaOriMovDataGridViewTextBoxColumn.HeaderText = "Origen.Mov.";
-            this.cdetaOriMovDataGridViewTextBoxColumn.Name = "cdetaOriMovDataGridViewTextBoxColumn";
-            this.cdetaOriMovDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // nmontotranDataGridViewTextBoxColumn
             // 
-            this.nmontotranDataGridViewTextBoxColumn.DataPropertyName = "nmontotran";
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.nmontotranDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.nmontotranDataGridViewTextBoxColumn.HeaderText = "Total.Pagado";
-            this.nmontotranDataGridViewTextBoxColumn.Name = "nmontotranDataGridViewTextBoxColumn";
-            this.nmontotranDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nmontotranDataGridViewTextBoxColumn.Width = 106;
             // 
-            // namorprincDataGridViewTextBoxColumn
             // 
-            this.namorprincDataGridViewTextBoxColumn.DataPropertyName = "namorprinc";
-            dataGridViewCellStyle4.Format = "N2";
-            this.namorprincDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
-            this.namorprincDataGridViewTextBoxColumn.HeaderText = "Amortización";
-            this.namorprincDataGridViewTextBoxColumn.Name = "namorprincDataGridViewTextBoxColumn";
-            this.namorprincDataGridViewTextBoxColumn.ReadOnly = true;
-            this.namorprincDataGridViewTextBoxColumn.Width = 101;
             // 
-            // ninterescorDataGridViewTextBoxColumn
             // 
-            this.ninterescorDataGridViewTextBoxColumn.DataPropertyName = "ninterescor";
-            dataGridViewCellStyle5.Format = "N2";
-            this.ninterescorDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
-            this.ninterescorDataGridViewTextBoxColumn.HeaderText = "Interés";
-            this.ninterescorDataGridViewTextBoxColumn.Name = "ninterescorDataGridViewTextBoxColumn";
-            this.ninterescorDataGridViewTextBoxColumn.ReadOnly = true;
-            this.ninterescorDataGridViewTextBoxColumn.Width = 67;
             // 
-            // ninteresmoDataGridViewTextBoxColumn
             // 
-            this.ninteresmoDataGridViewTextBoxColumn.DataPropertyName = "ninteresmo";
-            dataGridViewCellStyle6.Format = "N2";
-            this.ninteresmoDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
-            this.ninteresmoDataGridViewTextBoxColumn.HeaderText = "Mora";
-            this.ninteresmoDataGridViewTextBoxColumn.Name = "ninteresmoDataGridViewTextBoxColumn";
-            this.ninteresmoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.ninteresmoDataGridViewTextBoxColumn.Width = 61;
             // 
-            // nmontotrosDataGridViewTextBoxColumn
             // 
-            this.nmontotrosDataGridViewTextBoxColumn.DataPropertyName = "nmontotros";
-            dataGridViewCellStyle7.Format = "N2";
-            this.nmontotrosDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle7;
-            this.nmontotrosDataGridViewTextBoxColumn.HeaderText = "Cargos";
-            this.nmontotrosDataGridViewTextBoxColumn.Name = "nmontotrosDataGridViewTextBoxColumn";
-            this.nmontotrosDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nmontotrosDataGridViewTextBoxColumn.Width = 70;
             // 
-            // nsaldoactuDataGridViewTextBoxColumn
             // 
-            this.nsaldoactuDataGridViewTextBoxColumn.DataPropertyName = "nsaldoactu";
-            dataGridViewCellStyle8.Format = "N2";
-            this.nsaldoactuDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle8;
-            this.nsaldoactuDataGridViewTextBoxColumn.HeaderText = "Saldo";
-            this.nsaldoactuDataGridViewTextBoxColumn.Name = "nsaldoactuDataGridViewTextBoxColumn";
-            this.nsaldoactuDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nsaldoactuDataGridViewTextBoxColumn.Width = 63;
             // 
-            // ctipasientDataGridViewTextBoxColumn
             // 
-            this.ctipasientDataGridViewTextBoxColumn.DataPropertyName = "ctipasient";
-            this.ctipasientDataGridViewTextBoxColumn.HeaderText = "Tipo.Asiento";
-            this.ctipasientDataGridViewTextBoxColumn.Name = "ctipasientDataGridViewTextBoxColumn";
-            this.ctipasientDataGridViewTextBoxColumn.ReadOnly = true;
-            this.ctipasientDataGridViewTextBoxColumn.Width = 95;
             // 
-            // cnumasientDataGridViewTextBoxColumn
             // 
-            this.cnumasientDataGridViewTextBoxColumn.DataPropertyName = "cnumasient";
-            this.cnumasientDataGridViewTextBoxColumn.HeaderText = "Num.Asiento";
-            this.cnumasientDataGridViewTextBoxColumn.Name = "cnumasientDataGridViewTextBoxColumn";
-            this.cnumasientDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cnumasientDataGridViewTextBoxColumn.Width = 98;
             // 
-            // ccodigousuDataGridViewTextBoxColumn
             // 
-            this.ccodigousuDataGridViewTextBoxColumn.DataPropertyName = "ccodigousu";
-            this.ccodigousuDataGridViewTextBoxColumn.HeaderText = "Usuario";
-            this.ccodigousuDataGridViewTextBoxColumn.Name = "ccodigousuDataGridViewTextBoxColumn";
-            this.ccodigousuDataGridViewTextBoxColumn.ReadOnly = true;
-            this.ccodigousuDataGridViewTextBoxColumn.Width = 71;
             // 
-            // cnumoprefuDataGridViewTextBoxColumn
             // 
-            this.cnumoprefuDataGridViewTextBoxColumn.DataPropertyName = "cnumoprefu";
-            this.cnumoprefuDataGridViewTextBoxColumn.HeaderText = "Refinanc.";
-            this.cnumoprefuDataGridViewTextBoxColumn.Name = "cnumoprefuDataGridViewTextBoxColumn";
-            this.cnumoprefuDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cnumoprefuDataGridViewTextBoxColumn.Width = 83;
             // 
-            // cnumdocumeDataGridViewTextBoxColumn
             // 
-            this.cnumdocumeDataGridViewTextBoxColumn.DataPropertyName = "cnumdocume";
-            this.cnumdocumeDataGridViewTextBoxColumn.HeaderText = "Factura";
-            this.cnumdocumeDataGridViewTextBoxColumn.Name = "cnumdocumeDataGridViewTextBoxColumn";
-            this.cnumdocumeDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cnumdocumeDataGridViewTextBoxColumn.Width = 74;
             // 
-            // dfepagrealDataGridViewTextBoxColumn
             // 
-            this.dfepagrealDataGridViewTextBoxColumn.DataPropertyName = "dfepagreal";
-            dataGridViewCellStyle9.Format = "d";
-            dataGridViewCellStyle9.NullValue = null;
-            this.dfepagrealDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dfepagrealDataGridViewTextBoxColumn.HeaderText = "Fecha.Pago.Real";
-            this.dfepagrealDataGridViewTextBoxColumn.Name = "dfepagrealDataGridViewTextBoxColumn";
-            this.dfepagrealDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dfepagrealDataGridViewTextBoxColumn.Width = 125;
             // 
-            // nmonpolizaDataGridViewTextBoxColumn
             // 
-            this.nmonpolizaDataGridViewTextBoxColumn.DataPropertyName = "nmonpoliza";
-            this.nmonpolizaDataGridViewTextBoxColumn.HeaderText = "nmonpoliza";
-            this.nmonpolizaDataGridViewTextBoxColumn.Name = "nmonpolizaDataGridViewTextBoxColumn";
-            this.nmonpolizaDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nmonpolizaDataGridViewTextBoxColumn.Visible = false;
-            this.nmonpolizaDataGridViewTextBoxColumn.Width = 96;
             // 
-            // cnombreasoDataGridViewTextBoxColumn
             // 
-            this.cnombreasoDataGridViewTextBoxColumn.DataPropertyName = "cnombreaso";
-            this.cnombreasoDataGridViewTextBoxColumn.HeaderText = "cnombreaso";
-            this.cnombreasoDataGridViewTextBoxColumn.Name = "cnombreasoDataGridViewTextBoxColumn";
-            this.cnombreasoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cnombreasoDataGridViewTextBoxColumn.Visible = false;
-            this.cnombreasoDataGridViewTextBoxColumn.Width = 101;
             // 
-            // cobserva01DataGridViewTextBoxColumn
             // 
-            this.cobserva01DataGridViewTextBoxColumn.DataPropertyName = "cobserva01";
-            this.cobserva01DataGridViewTextBoxColumn.HeaderText = "cobserva01";
-            this.cobserva01DataGridViewTextBoxColumn.Name = "cobserva01DataGridViewTextBoxColumn";
-            this.cobserva01DataGridViewTextBoxColumn.ReadOnly = true;
-            this.cobserva01DataGridViewTextBoxColumn.Visible = false;
-            this.cobserva01DataGridViewTextBoxColumn.Width = 97;
             //
             // txtcdetactivi
             // 
@@ -1156,23 +910,9 @@ namespace ADIGGM.IA.Visores
             this.dgvProyTransito.AllowUserToResizeRows = false;
             dataGridViewCellStyle10.BackColor = System.Drawing.Color.YellowGreen;
             this.dgvProyTransito.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
-            this.dgvProyTransito.AutoGenerateColumns = false;
             this.dgvProyTransito.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvProyTransito.BackgroundColor = System.Drawing.Color.White;
             this.dgvProyTransito.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProyTransito.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dfecinicorDataGridViewTextBoxColumn,
-            this.dfechacortDataGridViewTextBoxColumn,
-            this.cestatusDataGridViewTextBoxColumn,
-            this.ncuotaDataGridViewTextBoxColumn,
-            this.nmtointereDataGridViewTextBoxColumn,
-            this.nmtoamortiDataGridViewTextBoxColumn,
-            this.nmtocargosDataGridViewTextBoxColumn,
-            this.nmtomoratoDataGridViewTextBoxColumn,
-            this.ncuotarealDataGridViewTextBoxColumn,
-            this.ncuotapagaDataGridViewTextBoxColumn,
-            this.nsaldoactuDataGridViewTextBoxColumn1,
-            this.cidasociadDataGridViewTextBoxColumn});
             this.dgvProyTransito.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProyTransito.Location = new System.Drawing.Point(3, 3);
             this.dgvProyTransito.Name = "dgvProyTransito";
@@ -1181,124 +921,29 @@ namespace ADIGGM.IA.Visores
             this.dgvProyTransito.Size = new System.Drawing.Size(756, 200);
             this.dgvProyTransito.TabIndex = 0;
             // 
-            // dfecinicorDataGridViewTextBoxColumn
             // 
-            this.dfecinicorDataGridViewTextBoxColumn.DataPropertyName = "dfecinicor";
-            dataGridViewCellStyle11.Format = "d";
-            dataGridViewCellStyle11.NullValue = null;
-            this.dfecinicorDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle11;
-            this.dfecinicorDataGridViewTextBoxColumn.HeaderText = "Inicio";
-            this.dfecinicorDataGridViewTextBoxColumn.Name = "dfecinicorDataGridViewTextBoxColumn";
-            this.dfecinicorDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dfecinicorDataGridViewTextBoxColumn.Width = 60;
             // 
-            // dfechacortDataGridViewTextBoxColumn
             // 
-            this.dfechacortDataGridViewTextBoxColumn.DataPropertyName = "dfechacort";
-            dataGridViewCellStyle12.Format = "d";
-            this.dfechacortDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle12;
-            this.dfechacortDataGridViewTextBoxColumn.HeaderText = "Corte";
-            this.dfechacortDataGridViewTextBoxColumn.Name = "dfechacortDataGridViewTextBoxColumn";
-            this.dfechacortDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dfechacortDataGridViewTextBoxColumn.Width = 62;
             // 
-            // cestatusDataGridViewTextBoxColumn
             // 
-            this.cestatusDataGridViewTextBoxColumn.DataPropertyName = "cestatus";
-            this.cestatusDataGridViewTextBoxColumn.HeaderText = "Estatus";
-            this.cestatusDataGridViewTextBoxColumn.Name = "cestatusDataGridViewTextBoxColumn";
-            this.cestatusDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cestatusDataGridViewTextBoxColumn.Width = 69;
             // 
-            // ncuotaDataGridViewTextBoxColumn
             // 
-            this.ncuotaDataGridViewTextBoxColumn.DataPropertyName = "ncuota";
-            dataGridViewCellStyle13.Format = "N2";
-            dataGridViewCellStyle13.NullValue = null;
-            this.ncuotaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle13;
-            this.ncuotaDataGridViewTextBoxColumn.HeaderText = "Cuota";
-            this.ncuotaDataGridViewTextBoxColumn.Name = "ncuotaDataGridViewTextBoxColumn";
-            this.ncuotaDataGridViewTextBoxColumn.ReadOnly = true;
-            this.ncuotaDataGridViewTextBoxColumn.Width = 67;
             // 
-            // nmtointereDataGridViewTextBoxColumn
             // 
-            this.nmtointereDataGridViewTextBoxColumn.DataPropertyName = "nmtointere";
-            dataGridViewCellStyle14.Format = "N2";
-            this.nmtointereDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle14;
-            this.nmtointereDataGridViewTextBoxColumn.HeaderText = "Interés";
-            this.nmtointereDataGridViewTextBoxColumn.Name = "nmtointereDataGridViewTextBoxColumn";
-            this.nmtointereDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nmtointereDataGridViewTextBoxColumn.Width = 67;
             // 
-            // nmtoamortiDataGridViewTextBoxColumn
             // 
-            this.nmtoamortiDataGridViewTextBoxColumn.DataPropertyName = "nmtoamorti";
-            dataGridViewCellStyle15.Format = "N2";
-            this.nmtoamortiDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle15;
-            this.nmtoamortiDataGridViewTextBoxColumn.HeaderText = "Amortización";
-            this.nmtoamortiDataGridViewTextBoxColumn.Name = "nmtoamortiDataGridViewTextBoxColumn";
-            this.nmtoamortiDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nmtoamortiDataGridViewTextBoxColumn.Width = 101;
             // 
-            // nmtocargosDataGridViewTextBoxColumn
             // 
-            this.nmtocargosDataGridViewTextBoxColumn.DataPropertyName = "nmtocargos";
-            dataGridViewCellStyle16.Format = "N2";
-            this.nmtocargosDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle16;
-            this.nmtocargosDataGridViewTextBoxColumn.HeaderText = "Cargos";
-            this.nmtocargosDataGridViewTextBoxColumn.Name = "nmtocargosDataGridViewTextBoxColumn";
-            this.nmtocargosDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nmtocargosDataGridViewTextBoxColumn.Width = 70;
             // 
-            // nmtomoratoDataGridViewTextBoxColumn
             // 
-            this.nmtomoratoDataGridViewTextBoxColumn.DataPropertyName = "nmtomorato";
-            dataGridViewCellStyle17.Format = "N2";
-            this.nmtomoratoDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle17;
-            this.nmtomoratoDataGridViewTextBoxColumn.HeaderText = "Mora";
-            this.nmtomoratoDataGridViewTextBoxColumn.Name = "nmtomoratoDataGridViewTextBoxColumn";
-            this.nmtomoratoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nmtomoratoDataGridViewTextBoxColumn.Width = 61;
             // 
-            // ncuotarealDataGridViewTextBoxColumn
             // 
-            this.ncuotarealDataGridViewTextBoxColumn.DataPropertyName = "ncuotareal";
-            dataGridViewCellStyle18.Format = "N2";
-            this.ncuotarealDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle18;
-            this.ncuotarealDataGridViewTextBoxColumn.HeaderText = "Real";
-            this.ncuotarealDataGridViewTextBoxColumn.Name = "ncuotarealDataGridViewTextBoxColumn";
-            this.ncuotarealDataGridViewTextBoxColumn.ReadOnly = true;
-            this.ncuotarealDataGridViewTextBoxColumn.Width = 56;
             // 
-            // ncuotapagaDataGridViewTextBoxColumn
             // 
-            this.ncuotapagaDataGridViewTextBoxColumn.DataPropertyName = "ncuotapaga";
-            dataGridViewCellStyle19.Format = "N2";
-            this.ncuotapagaDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle19;
-            this.ncuotapagaDataGridViewTextBoxColumn.HeaderText = "Pagado";
-            this.ncuotapagaDataGridViewTextBoxColumn.Name = "ncuotapagaDataGridViewTextBoxColumn";
-            this.ncuotapagaDataGridViewTextBoxColumn.ReadOnly = true;
-            this.ncuotapagaDataGridViewTextBoxColumn.Width = 77;
             // 
-            // nsaldoactuDataGridViewTextBoxColumn1
             // 
-            this.nsaldoactuDataGridViewTextBoxColumn1.DataPropertyName = "nsaldoactu";
-            dataGridViewCellStyle20.Format = "N2";
-            this.nsaldoactuDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle20;
-            this.nsaldoactuDataGridViewTextBoxColumn1.HeaderText = "Saldo";
-            this.nsaldoactuDataGridViewTextBoxColumn1.Name = "nsaldoactuDataGridViewTextBoxColumn1";
-            this.nsaldoactuDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.nsaldoactuDataGridViewTextBoxColumn1.Width = 63;
             // 
-            // cidasociadDataGridViewTextBoxColumn
             // 
-            this.cidasociadDataGridViewTextBoxColumn.DataPropertyName = "cidasociad";
-            this.cidasociadDataGridViewTextBoxColumn.HeaderText = "cidasociad";
-            this.cidasociadDataGridViewTextBoxColumn.Name = "cidasociadDataGridViewTextBoxColumn";
-            this.cidasociadDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cidasociadDataGridViewTextBoxColumn.Visible = false;
-            this.cidasociadDataGridViewTextBoxColumn.Width = 94;
             //
             // tbpProyPend
             // 
@@ -1320,23 +965,9 @@ namespace ADIGGM.IA.Visores
             this.dgvProyPend.AllowUserToResizeRows = false;
             dataGridViewCellStyle21.BackColor = System.Drawing.Color.YellowGreen;
             this.dgvProyPend.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
-            this.dgvProyPend.AutoGenerateColumns = false;
             this.dgvProyPend.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvProyPend.BackgroundColor = System.Drawing.Color.White;
             this.dgvProyPend.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProyPend.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dfecinicorDataGridViewTextBoxColumn1,
-            this.dfechacortDataGridViewTextBoxColumn1,
-            this.cestatusDataGridViewTextBoxColumn1,
-            this.ncuotaDataGridViewTextBoxColumn1,
-            this.nmtointereDataGridViewTextBoxColumn1,
-            this.nmtoamortiDataGridViewTextBoxColumn1,
-            this.nmtocargosDataGridViewTextBoxColumn1,
-            this.nmtomoratoDataGridViewTextBoxColumn1,
-            this.ncuotarealDataGridViewTextBoxColumn1,
-            this.ncuotapagaDataGridViewTextBoxColumn1,
-            this.nsaldoactuDataGridViewTextBoxColumn2,
-            this.cidasociadDataGridViewTextBoxColumn1});
             this.dgvProyPend.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProyPend.Location = new System.Drawing.Point(3, 3);
             this.dgvProyPend.Name = "dgvProyPend";
@@ -1345,119 +976,29 @@ namespace ADIGGM.IA.Visores
             this.dgvProyPend.Size = new System.Drawing.Size(756, 200);
             this.dgvProyPend.TabIndex = 0;
             // 
-            // dfecinicorDataGridViewTextBoxColumn1
             // 
-            this.dfecinicorDataGridViewTextBoxColumn1.DataPropertyName = "dfecinicor";
-            this.dfecinicorDataGridViewTextBoxColumn1.HeaderText = "Inicio";
-            this.dfecinicorDataGridViewTextBoxColumn1.Name = "dfecinicorDataGridViewTextBoxColumn1";
-            this.dfecinicorDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dfecinicorDataGridViewTextBoxColumn1.Width = 60;
             // 
-            // dfechacortDataGridViewTextBoxColumn1
             // 
-            this.dfechacortDataGridViewTextBoxColumn1.DataPropertyName = "dfechacort";
-            this.dfechacortDataGridViewTextBoxColumn1.HeaderText = "Corte";
-            this.dfechacortDataGridViewTextBoxColumn1.Name = "dfechacortDataGridViewTextBoxColumn1";
-            this.dfechacortDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dfechacortDataGridViewTextBoxColumn1.Width = 62;
             // 
-            // cestatusDataGridViewTextBoxColumn1
             // 
-            this.cestatusDataGridViewTextBoxColumn1.DataPropertyName = "cestatus";
-            this.cestatusDataGridViewTextBoxColumn1.HeaderText = "Estatus";
-            this.cestatusDataGridViewTextBoxColumn1.Name = "cestatusDataGridViewTextBoxColumn1";
-            this.cestatusDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.cestatusDataGridViewTextBoxColumn1.Width = 69;
             // 
-            // ncuotaDataGridViewTextBoxColumn1
             // 
-            this.ncuotaDataGridViewTextBoxColumn1.DataPropertyName = "ncuota";
-            dataGridViewCellStyle22.Format = "N2";
-            dataGridViewCellStyle22.NullValue = null;
-            this.ncuotaDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle22;
-            this.ncuotaDataGridViewTextBoxColumn1.HeaderText = "Cuota";
-            this.ncuotaDataGridViewTextBoxColumn1.Name = "ncuotaDataGridViewTextBoxColumn1";
-            this.ncuotaDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.ncuotaDataGridViewTextBoxColumn1.Width = 67;
             // 
-            // nmtointereDataGridViewTextBoxColumn1
             // 
-            this.nmtointereDataGridViewTextBoxColumn1.DataPropertyName = "nmtointere";
-            dataGridViewCellStyle23.Format = "N2";
-            this.nmtointereDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle23;
-            this.nmtointereDataGridViewTextBoxColumn1.HeaderText = "Interés";
-            this.nmtointereDataGridViewTextBoxColumn1.Name = "nmtointereDataGridViewTextBoxColumn1";
-            this.nmtointereDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.nmtointereDataGridViewTextBoxColumn1.Width = 67;
             // 
-            // nmtoamortiDataGridViewTextBoxColumn1
             // 
-            this.nmtoamortiDataGridViewTextBoxColumn1.DataPropertyName = "nmtoamorti";
-            dataGridViewCellStyle24.Format = "N2";
-            this.nmtoamortiDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle24;
-            this.nmtoamortiDataGridViewTextBoxColumn1.HeaderText = "Amortización";
-            this.nmtoamortiDataGridViewTextBoxColumn1.Name = "nmtoamortiDataGridViewTextBoxColumn1";
-            this.nmtoamortiDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.nmtoamortiDataGridViewTextBoxColumn1.Width = 101;
             // 
-            // nmtocargosDataGridViewTextBoxColumn1
             // 
-            this.nmtocargosDataGridViewTextBoxColumn1.DataPropertyName = "nmtocargos";
-            dataGridViewCellStyle25.Format = "N2";
-            this.nmtocargosDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle25;
-            this.nmtocargosDataGridViewTextBoxColumn1.HeaderText = "Cargos";
-            this.nmtocargosDataGridViewTextBoxColumn1.Name = "nmtocargosDataGridViewTextBoxColumn1";
-            this.nmtocargosDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.nmtocargosDataGridViewTextBoxColumn1.Width = 70;
             // 
-            // nmtomoratoDataGridViewTextBoxColumn1
             // 
-            this.nmtomoratoDataGridViewTextBoxColumn1.DataPropertyName = "nmtomorato";
-            dataGridViewCellStyle26.Format = "N2";
-            this.nmtomoratoDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle26;
-            this.nmtomoratoDataGridViewTextBoxColumn1.HeaderText = "Mora";
-            this.nmtomoratoDataGridViewTextBoxColumn1.Name = "nmtomoratoDataGridViewTextBoxColumn1";
-            this.nmtomoratoDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.nmtomoratoDataGridViewTextBoxColumn1.Width = 61;
             // 
-            // ncuotarealDataGridViewTextBoxColumn1
             // 
-            this.ncuotarealDataGridViewTextBoxColumn1.DataPropertyName = "ncuotareal";
-            dataGridViewCellStyle27.Format = "N2";
-            this.ncuotarealDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle27;
-            this.ncuotarealDataGridViewTextBoxColumn1.HeaderText = "Real";
-            this.ncuotarealDataGridViewTextBoxColumn1.Name = "ncuotarealDataGridViewTextBoxColumn1";
-            this.ncuotarealDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.ncuotarealDataGridViewTextBoxColumn1.Width = 56;
             // 
-            // ncuotapagaDataGridViewTextBoxColumn1
             // 
-            this.ncuotapagaDataGridViewTextBoxColumn1.DataPropertyName = "ncuotapaga";
-            dataGridViewCellStyle28.Format = "N2";
-            this.ncuotapagaDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle28;
-            this.ncuotapagaDataGridViewTextBoxColumn1.HeaderText = "Pagado";
-            this.ncuotapagaDataGridViewTextBoxColumn1.Name = "ncuotapagaDataGridViewTextBoxColumn1";
-            this.ncuotapagaDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.ncuotapagaDataGridViewTextBoxColumn1.Width = 77;
             // 
-            // nsaldoactuDataGridViewTextBoxColumn2
             // 
-            this.nsaldoactuDataGridViewTextBoxColumn2.DataPropertyName = "nsaldoactu";
-            dataGridViewCellStyle29.Format = "N2";
-            this.nsaldoactuDataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle29;
-            this.nsaldoactuDataGridViewTextBoxColumn2.HeaderText = "Saldo";
-            this.nsaldoactuDataGridViewTextBoxColumn2.Name = "nsaldoactuDataGridViewTextBoxColumn2";
-            this.nsaldoactuDataGridViewTextBoxColumn2.ReadOnly = true;
-            this.nsaldoactuDataGridViewTextBoxColumn2.Width = 63;
             // 
-            // cidasociadDataGridViewTextBoxColumn1
             // 
-            this.cidasociadDataGridViewTextBoxColumn1.DataPropertyName = "cidasociad";
-            this.cidasociadDataGridViewTextBoxColumn1.HeaderText = "cidasociad";
-            this.cidasociadDataGridViewTextBoxColumn1.Name = "cidasociadDataGridViewTextBoxColumn1";
-            this.cidasociadDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.cidasociadDataGridViewTextBoxColumn1.Visible = false;
-            this.cidasociadDataGridViewTextBoxColumn1.Width = 94;
             // 
             // uSPSelCobrosConsUsuPlanCredFilter1BindingSource
             // 
@@ -1482,23 +1023,9 @@ namespace ADIGGM.IA.Visores
             this.dgvProyAplic.AllowUserToResizeRows = false;
             dataGridViewCellStyle30.BackColor = System.Drawing.Color.YellowGreen;
             this.dgvProyAplic.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle30;
-            this.dgvProyAplic.AutoGenerateColumns = false;
             this.dgvProyAplic.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvProyAplic.BackgroundColor = System.Drawing.Color.White;
             this.dgvProyAplic.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProyAplic.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn6,
-            this.dataGridViewTextBoxColumn7,
-            this.dataGridViewTextBoxColumn8,
-            this.dataGridViewTextBoxColumn9,
-            this.dataGridViewTextBoxColumn10,
-            this.dataGridViewTextBoxColumn11,
-            this.dataGridViewTextBoxColumn12});
             this.dgvProyAplic.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProyAplic.Location = new System.Drawing.Point(3, 3);
             this.dgvProyAplic.Name = "dgvProyAplic";
@@ -1507,122 +1034,29 @@ namespace ADIGGM.IA.Visores
             this.dgvProyAplic.Size = new System.Drawing.Size(756, 200);
             this.dgvProyAplic.TabIndex = 1;
             // 
-            // dataGridViewTextBoxColumn1
             // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "dfecinicor";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Inicio";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 60;
             // 
-            // dataGridViewTextBoxColumn2
             // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "dfechacort";
-            dataGridViewCellStyle31.Format = "d";
-            dataGridViewCellStyle31.NullValue = null;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle31;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Corte";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 62;
             // 
-            // dataGridViewTextBoxColumn3
             // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "cestatus";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Estatus";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 69;
             // 
-            // dataGridViewTextBoxColumn4
             // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "ncuota";
-            dataGridViewCellStyle32.Format = "N2";
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle32;
-            this.dataGridViewTextBoxColumn4.HeaderText = "Cuota";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Width = 67;
             // 
-            // dataGridViewTextBoxColumn5
             // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "nmtointere";
-            dataGridViewCellStyle33.Format = "N2";
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle33;
-            this.dataGridViewTextBoxColumn5.HeaderText = "Interés";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            this.dataGridViewTextBoxColumn5.Width = 67;
             // 
-            // dataGridViewTextBoxColumn6
             // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "nmtoamorti";
-            dataGridViewCellStyle34.Format = "N2";
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle34;
-            this.dataGridViewTextBoxColumn6.HeaderText = "Amortización";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            this.dataGridViewTextBoxColumn6.Width = 101;
             // 
-            // dataGridViewTextBoxColumn7
             // 
-            this.dataGridViewTextBoxColumn7.DataPropertyName = "nmtocargos";
-            dataGridViewCellStyle35.Format = "N2";
-            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle35;
-            this.dataGridViewTextBoxColumn7.HeaderText = "Cargos";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
-            this.dataGridViewTextBoxColumn7.Width = 70;
             // 
-            // dataGridViewTextBoxColumn8
             // 
-            this.dataGridViewTextBoxColumn8.DataPropertyName = "nmtomorato";
-            dataGridViewCellStyle36.Format = "N2";
-            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle36;
-            this.dataGridViewTextBoxColumn8.HeaderText = "Mora";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.ReadOnly = true;
-            this.dataGridViewTextBoxColumn8.Width = 61;
             // 
-            // dataGridViewTextBoxColumn9
             // 
-            this.dataGridViewTextBoxColumn9.DataPropertyName = "ncuotareal";
-            dataGridViewCellStyle37.Format = "N2";
-            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle37;
-            this.dataGridViewTextBoxColumn9.HeaderText = "Real";
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.ReadOnly = true;
-            this.dataGridViewTextBoxColumn9.Width = 56;
             // 
-            // dataGridViewTextBoxColumn10
             // 
-            this.dataGridViewTextBoxColumn10.DataPropertyName = "ncuotapaga";
-            dataGridViewCellStyle38.Format = "N2";
-            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle38;
-            this.dataGridViewTextBoxColumn10.HeaderText = "Pagado";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.ReadOnly = true;
-            this.dataGridViewTextBoxColumn10.Width = 77;
             // 
-            // dataGridViewTextBoxColumn11
             // 
-            this.dataGridViewTextBoxColumn11.DataPropertyName = "nsaldoactu";
-            dataGridViewCellStyle39.Format = "N2";
-            dataGridViewCellStyle39.NullValue = null;
-            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle39;
-            this.dataGridViewTextBoxColumn11.HeaderText = "Saldo";
-            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            this.dataGridViewTextBoxColumn11.ReadOnly = true;
-            this.dataGridViewTextBoxColumn11.Width = 63;
             // 
-            // dataGridViewTextBoxColumn12
             // 
-            this.dataGridViewTextBoxColumn12.DataPropertyName = "cidasociad";
-            this.dataGridViewTextBoxColumn12.HeaderText = "cidasociad";
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            this.dataGridViewTextBoxColumn12.ReadOnly = true;
-            this.dataGridViewTextBoxColumn12.Visible = false;
-            this.dataGridViewTextBoxColumn12.Width = 94;
             // 
             // uSPSelCobrosConsUsuPlanCredFilter2BindingSource
             // 
@@ -1876,66 +1310,11 @@ namespace ADIGGM.IA.Visores
         private System.Windows.Forms.TabPage tbpProyPend;
         private System.Windows.Forms.DataGridView dgvProyPend;
         private System.Windows.Forms.BindingSource uSPSelCobrosConsUsuPlanCredFilterBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfetransacDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumreciboDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdetatipabDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdetaOriMovDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmontotranDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn namorprincDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ninterescorDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ninteresmoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmontotrosDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nsaldoactuDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ctipasientDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumasientDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccodigousuDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumoprefuDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumdocumeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfepagrealDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmonpolizaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombreasoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cobserva01DataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource uSPSelCobrosConsUsuPlanCredFilter1BindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfecinicorDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechacortDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cestatusDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ncuotaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtointereDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtoamortiDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtocargosDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtomoratoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ncuotarealDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ncuotapagaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nsaldoactuDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cidasociadDataGridViewTextBoxColumn;
         private System.Windows.Forms.TabPage tbpProyAplic;
         private System.Windows.Forms.DataGridView dgvProyAplic;
         private System.Windows.Forms.BindingSource uSPSelCobrosConsUsuPlanCredFilter2BindingSource;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnSalir;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfecinicorDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechacortDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cestatusDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ncuotaDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtointereDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtoamortiDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtocargosDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtomoratoDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ncuotarealDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ncuotapagaDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nsaldoactuDataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cidasociadDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
     }
 }

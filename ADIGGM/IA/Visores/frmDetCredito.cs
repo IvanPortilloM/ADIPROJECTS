@@ -17,8 +17,64 @@ namespace ADIGGM.IA.Visores
         public frmDetCredito(string cnumoperac, string cidasociad)
         {
             InitializeComponent();
+            ConfigurarColumnas();
             this.prmcnumoperac = cnumoperac;
             this.prmcidasociad = cidasociad;
+        }
+
+        /// <summary>Columnas de los 4 grids EN CÓDIGO (no en el Designer) para que el diseñador de VS no las
+        /// borre — gotcha §11. Visores de solo lectura; el .cs no referencia columnas por Name (solo asigna
+        /// DataSource), así que se usan nombres simples = DataPropertyName. Los 3 grids de proyección
+        /// (Tránsito/Pendientes/Aplicados) comparten estructura salvo el formato de fechas.</summary>
+        private void ConfigurarColumnas()
+        {
+            ConfigurarGridMovAplic();
+            ConfigurarGridProy(dgvProyTransito, "d", "d");
+            ConfigurarGridProy(dgvProyPend, null, null);
+            ConfigurarGridProy(dgvProyAplic, null, "d");
+        }
+
+        private void ConfigurarGridMovAplic()
+        {
+            dgvMovAplic.AutoGenerateColumns = false;
+            dgvMovAplic.Columns.Clear();
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("dfetransac", "dfetransac", "Fecha", format: "d", width: 66));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("cnumrecibo", "cnumrecibo", "Recibo", width: 70));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("cdetatipab", "cdetatipab", "Tipo.Abono", width: 93));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("cdetaOriMov", "cdetaOriMov", "Origen.Mov."));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("nmontotran", "nmontotran", "Total.Pagado", format: "N2", width: 106));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("namorprinc", "namorprinc", "Amortización", format: "N2", width: 101));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("ninterescor", "ninterescor", "Interés", format: "N2", width: 67));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("ninteresmo", "ninteresmo", "Mora", format: "N2", width: 61));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("nmontotros", "nmontotros", "Cargos", format: "N2", width: 70));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("nsaldoactu", "nsaldoactu", "Saldo", format: "N2", width: 63));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("ctipasient", "ctipasient", "Tipo.Asiento", width: 95));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("cnumasient", "cnumasient", "Num.Asiento", width: 98));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("ccodigousu", "ccodigousu", "Usuario", width: 71));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("cnumoprefu", "cnumoprefu", "Refinanc.", width: 83));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("cnumdocume", "cnumdocume", "Factura", width: 74));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("dfepagreal", "dfepagreal", "Fecha.Pago.Real", format: "d", width: 125));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("nmonpoliza", "nmonpoliza", "nmonpoliza", visible: false, width: 96));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("cnombreaso", "cnombreaso", "cnombreaso", visible: false, width: 101));
+            dgvMovAplic.Columns.Add(Clases.GridColumnas.Texto("cobserva01", "cobserva01", "cobserva01", visible: false, width: 97));
+        }
+
+        private void ConfigurarGridProy(DataGridView dgv, string inicioFmt, string corteFmt)
+        {
+            dgv.AutoGenerateColumns = false;
+            dgv.Columns.Clear();
+            dgv.Columns.Add(Clases.GridColumnas.Texto("dfecinicor", "dfecinicor", "Inicio", format: inicioFmt, width: 60));
+            dgv.Columns.Add(Clases.GridColumnas.Texto("dfechacort", "dfechacort", "Corte", format: corteFmt, width: 62));
+            dgv.Columns.Add(Clases.GridColumnas.Texto("cestatus", "cestatus", "Estatus", width: 69));
+            dgv.Columns.Add(Clases.GridColumnas.Texto("ncuota", "ncuota", "Cuota", format: "N2", width: 67));
+            dgv.Columns.Add(Clases.GridColumnas.Texto("nmtointere", "nmtointere", "Interés", format: "N2", width: 67));
+            dgv.Columns.Add(Clases.GridColumnas.Texto("nmtoamorti", "nmtoamorti", "Amortización", format: "N2", width: 101));
+            dgv.Columns.Add(Clases.GridColumnas.Texto("nmtocargos", "nmtocargos", "Cargos", format: "N2", width: 70));
+            dgv.Columns.Add(Clases.GridColumnas.Texto("nmtomorato", "nmtomorato", "Mora", format: "N2", width: 61));
+            dgv.Columns.Add(Clases.GridColumnas.Texto("ncuotareal", "ncuotareal", "Real", format: "N2", width: 56));
+            dgv.Columns.Add(Clases.GridColumnas.Texto("ncuotapaga", "ncuotapaga", "Pagado", format: "N2", width: 77));
+            dgv.Columns.Add(Clases.GridColumnas.Texto("nsaldoactu", "nsaldoactu", "Saldo", format: "N2", width: 63));
+            dgv.Columns.Add(Clases.GridColumnas.Texto("cidasociad", "cidasociad", "cidasociad", visible: false, width: 94));
         }
 
         private void frmDetCredito_Load(object sender, EventArgs e)
