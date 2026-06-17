@@ -30,20 +30,9 @@ namespace ADIGGM.IA.Visores
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCarnetImp));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvCarnetsImp = new System.Windows.Forms.DataGridView();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.number = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.barcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.company = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dept = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.provided = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.image = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.nconsecarn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cACarnetsAsocImpBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnImpCarnets = new System.Windows.Forms.Button();
@@ -106,19 +95,7 @@ namespace ADIGGM.IA.Visores
             this.dgvCarnetsImp.AllowUserToAddRows = false;
             this.dgvCarnetsImp.AllowUserToDeleteRows = false;
             this.dgvCarnetsImp.AllowUserToResizeRows = false;
-            this.dgvCarnetsImp.AutoGenerateColumns = false;
             this.dgvCarnetsImp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCarnetsImp.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.name,
-            this.code,
-            this.number,
-            this.barcode,
-            this.company,
-            this.dept,
-            this.provided,
-            this.image,
-            this.select,
-            this.nconsecarn});
             this.dgvCarnetsImp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCarnetsImp.Location = new System.Drawing.Point(3, 17);
             this.dgvCarnetsImp.Name = "dgvCarnetsImp";
@@ -126,99 +103,9 @@ namespace ADIGGM.IA.Visores
             this.dgvCarnetsImp.Size = new System.Drawing.Size(1055, 290);
             this.dgvCarnetsImp.TabIndex = 0;
             this.dgvCarnetsImp.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvCarnetsImp_DataError);
-            // 
-            // name
-            // 
-            this.name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.name.DataPropertyName = "name";
-            this.name.HeaderText = "Nombre";
-            this.name.Name = "name";
-            this.name.ReadOnly = true;
-            // 
-            // code
-            // 
-            this.code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.code.DataPropertyName = "code";
-            this.code.HeaderText = "PIN";
-            this.code.Name = "code";
-            this.code.ReadOnly = true;
-            this.code.Width = 51;
-            // 
-            // number
-            // 
-            this.number.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.number.DataPropertyName = "number";
-            this.number.HeaderText = "Identidad";
-            this.number.Name = "number";
-            this.number.ReadOnly = true;
-            this.number.Width = 88;
-            // 
-            // barcode
-            // 
-            this.barcode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.barcode.DataPropertyName = "barcode";
-            this.barcode.HeaderText = "Código.Barra";
-            this.barcode.Name = "barcode";
-            this.barcode.ReadOnly = true;
-            this.barcode.Visible = false;
-            // 
-            // company
-            // 
-            this.company.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.company.DataPropertyName = "company";
-            this.company.HeaderText = "Dependencia";
-            this.company.Name = "company";
-            this.company.ReadOnly = true;
-            this.company.Width = 109;
-            // 
-            // dept
-            // 
-            this.dept.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dept.DataPropertyName = "dept";
-            this.dept.HeaderText = "Departamento";
-            this.dept.Name = "dept";
-            this.dept.ReadOnly = true;
-            this.dept.Width = 114;
-            // 
-            // provided
-            // 
-            this.provided.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.provided.DataPropertyName = "provided";
-            this.provided.HeaderText = "Fecha.Creación";
-            this.provided.Name = "provided";
-            this.provided.ReadOnly = true;
-            this.provided.Width = 120;
-            // 
-            // image
-            // 
-            this.image.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.image.DataPropertyName = "image";
-            this.image.HeaderText = "Ruta.Imagen";
-            this.image.Name = "image";
-            this.image.ReadOnly = true;
-            this.image.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.image.Visible = false;
-            // 
-            // select
-            // 
-            this.select.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.NullValue = "False";
-            this.select.DefaultCellStyle = dataGridViewCellStyle1;
-            this.select.HeaderText = "Selecc.";
-            this.select.Name = "select";
-            this.select.Width = 53;
-            // 
-            // nconsecarn
-            // 
-            this.nconsecarn.DataPropertyName = "nconsecarn";
-            this.nconsecarn.HeaderText = "nconsecarn";
-            this.nconsecarn.Name = "nconsecarn";
-            this.nconsecarn.ReadOnly = true;
-            this.nconsecarn.Visible = false;
             //
             // groupBox2
-            // 
+            //
             this.groupBox2.Controls.Add(this.btnImpCarnets);
             this.groupBox2.Controls.Add(this.btnImp);
             this.groupBox2.Controls.Add(this.btnRecargar);
@@ -334,15 +221,5 @@ namespace ADIGGM.IA.Visores
         private System.Windows.Forms.Button btnImpCarnets;
         private System.Windows.Forms.Button btnRecargar;
         private System.Windows.Forms.DataGridViewTextBoxColumn type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn code;
-        private System.Windows.Forms.DataGridViewTextBoxColumn number;
-        private System.Windows.Forms.DataGridViewTextBoxColumn barcode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn company;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dept;
-        private System.Windows.Forms.DataGridViewTextBoxColumn provided;
-        private System.Windows.Forms.DataGridViewTextBoxColumn image;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn select;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nconsecarn;
     }
 }

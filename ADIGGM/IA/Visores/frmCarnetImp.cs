@@ -18,6 +18,28 @@ namespace ADIGGM.IA.Visores
         public frmCarnetImp()
         {
             InitializeComponent();
+            ConfigurarColumnas();
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para que el diseñador de VS no las borre
+        /// — gotcha §11. Visor; la columna "select" es un checkbox NO enlazado y editable (marcar/desmarcar).
+        /// Se conservan los Name exactos: el Export a Excel usa Columns[i].Name como cabecera y filtra por nombre.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvCarnetsImp.AutoGenerateColumns = false;
+            dgvCarnetsImp.Columns.Clear();
+            dgvCarnetsImp.Columns.Add(Clases.GridColumnas.Texto("name", "name", "Nombre", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvCarnetsImp.Columns.Add(Clases.GridColumnas.Texto("code", "code", "PIN", width: 51, autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells));
+            dgvCarnetsImp.Columns.Add(Clases.GridColumnas.Texto("number", "number", "Identidad", width: 88, autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells));
+            dgvCarnetsImp.Columns.Add(Clases.GridColumnas.Texto("barcode", "barcode", "Código.Barra", visible: false, autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells));
+            dgvCarnetsImp.Columns.Add(Clases.GridColumnas.Texto("company", "company", "Dependencia", width: 109, autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells));
+            dgvCarnetsImp.Columns.Add(Clases.GridColumnas.Texto("dept", "dept", "Departamento", width: 114, autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells));
+            dgvCarnetsImp.Columns.Add(Clases.GridColumnas.Texto("provided", "provided", "Fecha.Creación", width: 120, autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells));
+            dgvCarnetsImp.Columns.Add(Clases.GridColumnas.Texto("image", "image", "Ruta.Imagen", visible: false, autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            var colSelect = Clases.GridColumnas.Check("select", "", "Selecc.", width: 53, autoSize: DataGridViewAutoSizeColumnMode.ColumnHeader, readOnly: false);
+            colSelect.DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleCenter, NullValue = "False" };
+            dgvCarnetsImp.Columns.Add(colSelect);
+            dgvCarnetsImp.Columns.Add(Clases.GridColumnas.Texto("nconsecarn", "nconsecarn", "nconsecarn", visible: false));
         }
         public void ExportarExcel()
         {
