@@ -25,7 +25,123 @@
         public frmInformacionAsoc(string cidasociad)
         {
             InitializeComponent();
-            this.cidasociad = cidasociad;            
+            ConfigurarColumnas();
+            this.cidasociad = cidasociad;
+        }
+
+        /// <summary>Columnas de los 3 grids EN CÓDIGO (no en el Designer) para que el diseñador de VS no las
+        /// borre — gotcha §11. Visores de solo lectura; el .cs referencia MUCHAS columnas por Name (case-
+        /// sensitive) → se preservan los Name exactos. En dgvCred, "Transito" y "Pendientes" son columnas
+        /// NO enlazadas (sin DataPropertyName) que se calculan en código.</summary>
+        private void ConfigurarColumnas()
+        {
+            ConfigurarColsProd();
+            ConfigurarColsCred();
+            ConfigurarColsAutorizados();
+        }
+
+        private void ConfigurarColsProd()
+        {
+            var DC = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            var CH = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dgvProd.AutoGenerateColumns = false;
+            dgvProd.Columns.Clear();
+            dgvProd.Columns.Add(GridColumnas.Texto("cprodconge", "cprodconge", "*", width: 39));
+            dgvProd.Columns.Add(GridColumnas.Texto("codigo", "codigo", "Código", width: 73));
+            dgvProd.Columns.Add(GridColumnas.Texto("cdesdeducc", "cdesdeducc", "Detalle", width: 70, autoSize: DC));
+            dgvProd.Columns.Add(GridColumnas.Texto("nmtocuotas", "nmtocuotas", "Cuota/Porc.", format: "N2"));
+            dgvProd.Columns.Add(GridColumnas.Texto("nmtoprinci", "nmtoprinci", "Saldo", format: "N2", width: 63, autoSize: DC));
+            dgvProd.Columns.Add(GridColumnas.Texto("nmtointere", "nmtointere", "Interés", format: "N2", width: 68));
+            dgvProd.Columns.Add(GridColumnas.Texto("total", "total", "Total", format: "N2", width: 58, autoSize: DC));
+            dgvProd.Columns.Add(GridColumnas.Texto("cnumepagos", "cnumepagos", "Pagos", width: 66));
+            dgvProd.Columns.Add(GridColumnas.Texto("nultsalcal", "nultsalcal", "Saldo.Calc.Inter.", width: 122, autoSize: CH));
+            dgvProd.Columns.Add(GridColumnas.Texto("dfechainic", "dfechainic", "Inicio", width: 61));
+            dgvProd.Columns.Add(GridColumnas.Texto("dfecactman", "dfecactman", "Ult.Pago", format: "d", width: 78, autoSize: DC));
+            dgvProd.Columns.Add(GridColumnas.Texto("dfecactpla", "dfecactpla", "Ult.Proyecc.", width: 96, autoSize: DC));
+            dgvProd.Columns.Add(GridColumnas.Texto("dfecultcap", "dfecultcap", "Ult.Capital.", format: "d", width: 93, autoSize: DC));
+            dgvProd.Columns.Add(GridColumnas.Texto("dfechafina", "dfechafina", "Fin.Periodo", format: "d", width: 90, autoSize: DC));
+            dgvProd.Columns.Add(GridColumnas.Texto("nplazodedu", "nplazodedu", "Plazo", width: 61, autoSize: CH));
+            dgvProd.Columns.Add(GridColumnas.Texto("dfechconge", "dfechconge", "Congelamiento", format: "d", width: 116, autoSize: DC));
+            dgvProd.Columns.Add(GridColumnas.Texto("dfechdesco", "dfechdesco", "Descongelam.", format: "d", width: 109, autoSize: DC));
+            dgvProd.Columns.Add(GridColumnas.Texto("cnombusuar", "cnombusuar", "Usu.Incluye", width: 93, autoSize: DC));
+            dgvProd.Columns.Add(GridColumnas.Texto("cdescripci", "cdescripci", "Comentarios", width: 101));
+            dgvProd.Columns.Add(GridColumnas.Texto("cCODIGOGES", "CCODIGOGES", "Código", width: 73));
+            dgvProd.Columns.Add(GridColumnas.Texto("cdetagesti", "cdetagesti", "Gestión", width: 74));
+            dgvProd.Columns.Add(GridColumnas.Texto("cnumdeducc", "cnumdeducc", "cnumdeducc", visible: false, width: 108));
+            dgvProd.Columns.Add(GridColumnas.Texto("cidasociad1", "cidasociad", "cidasociad", visible: false));
+            dgvProd.Columns.Add(GridColumnas.Texto("ccoddeducc", "ccoddeducc", "ccoddeducc", visible: false));
+            dgvProd.Columns.Add(GridColumnas.Texto("ccolorgest", "ccolorgest", "ccolorgest", visible: false));
+            dgvProd.Columns.Add(GridColumnas.Texto("nmtocuotar", "nmtocuotar", "nmtocuotar", visible: false));
+            dgvProd.Columns.Add(GridColumnas.Texto("ccodmoneda", "ccodmoneda", "ccodmoneda", visible: false));
+        }
+
+        private void ConfigurarColsCred()
+        {
+            var DC = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dgvCred.AutoGenerateColumns = false;
+            dgvCred.Columns.Clear();
+            dgvCred.Columns.Add(GridColumnas.Texto("cbloqplani", "cbloqplani", "*", visible: false, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("cnumoperac", "cnumoperac", "Operación", width: 91, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("ccodigolinDataGridViewTextBoxColumn", "ccodigolin", "Línea", visible: false, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("cdetalleli", "cdetalleli", "Descripción", width: 94, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("ncuotapres", "ncuotapres", "Cuota", format: "N2", width: 67, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("nmontoapro", "nmontoapro", "Principal", format: "N2", width: 78, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("nsaldocred", "nsaldocred", "Saldo", format: "N2", width: 63, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("Transito", "", "EnTránsito", format: "N2", width: 85, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("Pendientes", "", "C. Pend.", format: "N2", width: 79, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("nintereact", "nintereact", "Int.Actual", format: "N2", width: 84, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("ntasainter", "ntasainter", "Tasa", width: 57, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("nnumcuotas", "nnumcuotas", "Plazo", width: 61, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("npagosefec", "npagosefec", "Pagos", width: 65, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("nfrecupago", "nfrecupago", "Frecuencia", width: 92, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("dfepagrealDataGridViewTextBoxColumn", "dfepagreal", "Pago Real", width: 88, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("dfechaform", "dfechaform", "Inicio", format: "d", width: 60, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("dfeprimabo", "dfeprimabo", "1er.Abono", width: 87, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("dFecUlAbon", "dFecUlAbon", "Ult.Abono", width: 85, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("dfeproxabo", "dfeproxabo", "Prox.Pago", width: 87, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("dfecalcintDataGridViewTextBoxColumn", "dfecalcint", "dfecalcint", visible: false, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("dfechavenc", "dfechavenc", "Vencimiento", width: 99, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("dfechconge1", "dfechconge", "Congela.", width: 82, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("dfechdesco1", "dfechdesco", "Descongela.", width: 99, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("ccodigousu", "ccodigousu", "Usu.Aprob.", width: 90, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("ccomentariDataGridViewTextBoxColumn", "ccomentari", "Comentarios"));
+            dgvCred.Columns.Add(GridColumnas.Texto("ccodigogest", "ccodigoges", "Cod.Gestión", autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("cdetagesti1", "cdetagesti", "Gestión", width: 73, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("ccodifuentDataGridViewTextBoxColumn", "ccodifuent", "ccodifuent", visible: false, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("cdetafuent", "cdetafuent", "Det.Fuente.Rec.", width: 118, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("carregload", "carregload", "Arreglo", width: 68, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("csolicrefu", "csolicrefu", "Solic.Refunde", width: 105, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("coperarefu", "coperarefu", "Op.Refunde", width: 99, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("nmontrefun", "nmontrefun", "Monto.Refunde", format: "N2", width: 117, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("cstaturefu", "cstaturefu", "Est.Refunde", width: 95, autoSize: DC));
+            dgvCred.Columns.Add(GridColumnas.Texto("cnombtipop", "cnombtipop", "cnombtipop", visible: false));
+            dgvCred.Columns.Add(GridColumnas.Texto("cidasociadDataGridViewTextBoxColumn1", "cidasociad", "cidasociad", visible: false));
+            dgvCred.Columns.Add(GridColumnas.Texto("cinstuasoc", "cinstuasoc", "cinstuasoc", visible: false));
+            dgvCred.Columns.Add(GridColumnas.Texto("ctipoplani", "ctipoplani", "ctipoplani", visible: false));
+            dgvCred.Columns.Add(GridColumnas.Texto("ccolorgest1", "ccolorgest", "ccolorgest", visible: false));
+            dgvCred.Columns.Add(GridColumnas.Texto("cmodcalcin", "cmodcalcin", "cmodcalcin", visible: false));
+            dgvCred.Columns.Add(GridColumnas.Texto("nddiasbase", "nddiasbase", "nddiasbase", visible: false));
+            dgvCred.Columns.Add(GridColumnas.Texto("ninterevol", "ninterevol", "ninterevol", visible: false));
+            dgvCred.Columns.Add(GridColumnas.Texto("ccrerevolu", "ccrerevolu", "ccrerevolu", visible: false));
+            dgvCred.Columns.Add(GridColumnas.Texto("cestasocio", "cestasocio", "cestasocio", visible: false));
+            dgvCred.Columns.Add(GridColumnas.Texto("dfecharenu", "dfecharenu", "dfecharenu", visible: false));
+            dgvCred.Columns.Add(GridColumnas.Texto("ccodmoneda1", "ccodmoneda", "ccodmoneda", visible: false));
+            dgvCred.Columns.Add(GridColumnas.Texto("cnumdocume", "cnumdocume", "Factura", width: 74, autoSize: DC));
+        }
+
+        private void ConfigurarColsAutorizados()
+        {
+            var DC = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            var CH = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dgvAutorizados.AutoGenerateColumns = false;
+            dgvAutorizados.Columns.Clear();
+            dgvAutorizados.Columns.Add(GridColumnas.Check("bestaactiv", "bestaactiv", "Activo", width: 47, autoSize: CH));
+            dgvAutorizados.Columns.Add(GridColumnas.Texto("cidautoriz", "cidautoriz", "Identidad", width: 82, autoSize: DC));
+            dgvAutorizados.Columns.Add(GridColumnas.Texto("cnombreaut", "cnombreaut", "Nombre", width: 75, autoSize: DC));
+            dgvAutorizados.Columns.Add(GridColumnas.Texto("cparentezc", "cparentezc", "Parentezco"));
+            dgvAutorizados.Columns.Add(GridColumnas.Texto("cdomicilio", "cdomicilio", "Domicilio", width: 82, autoSize: CH));
+            dgvAutorizados.Columns.Add(GridColumnas.Texto("cnumtelefo", "cnumtelefo", "Teléfono"));
+            dgvAutorizados.Columns.Add(GridColumnas.Texto("ffechacrea", "ffechacrea", "Creado"));
         }
         private void cargarDgv()
         {

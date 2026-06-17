@@ -31,27 +31,6 @@ namespace ADIGGM.IA.Transaccionales
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInformacionAsoc));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -83,33 +62,6 @@ namespace ADIGGM.IA.Transaccionales
             this.rdbTodosProd = new System.Windows.Forms.RadioButton();
             this.rdbConSaldoProd = new System.Windows.Forms.RadioButton();
             this.dgvProd = new System.Windows.Forms.DataGridView();
-            this.cprodconge = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdesdeducc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtocuotas = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtoprinci = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtointere = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.total = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumepagos = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nultsalcal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechainic = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfecactman = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfecactpla = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfecultcap = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechafina = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nplazodedu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechconge = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechdesco = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombusuar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdescripci = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cCODIGOGES = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdetagesti = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumdeducc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cidasociad1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccoddeducc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccolorgest = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmtocuotar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccodmoneda = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cAAportesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTotalProd = new System.Windows.Forms.Label();
@@ -120,53 +72,6 @@ namespace ADIGGM.IA.Transaccionales
             this.rdbTodosCred = new System.Windows.Forms.RadioButton();
             this.rdbConSaldoCred = new System.Windows.Forms.RadioButton();
             this.dgvCred = new System.Windows.Forms.DataGridView();
-            this.cbloqplani = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumoperac = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccodigolinDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdetalleli = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ncuotapres = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmontoapro = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nsaldocred = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Transito = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Pendientes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nintereact = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ntasainter = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nnumcuotas = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.npagosefec = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nfrecupago = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfepagrealDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechaform = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfeprimabo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dFecUlAbon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfeproxabo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfecalcintDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechavenc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechconge1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfechdesco1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccodigousu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccomentariDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccodigogest = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdetagesti1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccodifuentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdetafuent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.carregload = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.csolicrefu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.coperarefu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nmontrefun = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cstaturefu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombtipop = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cidasociadDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cinstuasoc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ctipoplani = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccolorgest1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmodcalcin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nddiasbase = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ninterevol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccrerevolu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cestasocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dfecharenu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ccodmoneda1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumdocume = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cACreditosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblPosFin = new System.Windows.Forms.Label();
@@ -192,13 +97,6 @@ namespace ADIGGM.IA.Transaccionales
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.dgvAutorizados = new System.Windows.Forms.DataGridView();
-            this.bestaactiv = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.cidautoriz = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnombreaut = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cparentezc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cdomicilio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnumtelefo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ffechacrea = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cAAutorizadosCreditoAsocSelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.splitContainer7 = new System.Windows.Forms.SplitContainer();
             this.gboOpciones = new System.Windows.Forms.GroupBox();
@@ -683,36 +581,7 @@ namespace ADIGGM.IA.Transaccionales
             this.dgvProd.AllowUserToDeleteRows = false;
             this.dgvProd.AllowUserToResizeColumns = false;
             this.dgvProd.AllowUserToResizeRows = false;
-            this.dgvProd.AutoGenerateColumns = false;
             this.dgvProd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProd.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.cprodconge,
-            this.codigo,
-            this.cdesdeducc,
-            this.nmtocuotas,
-            this.nmtoprinci,
-            this.nmtointere,
-            this.total,
-            this.cnumepagos,
-            this.nultsalcal,
-            this.dfechainic,
-            this.dfecactman,
-            this.dfecactpla,
-            this.dfecultcap,
-            this.dfechafina,
-            this.nplazodedu,
-            this.dfechconge,
-            this.dfechdesco,
-            this.cnombusuar,
-            this.cdescripci,
-            this.cCODIGOGES,
-            this.cdetagesti,
-            this.cnumdeducc,
-            this.cidasociad1,
-            this.ccoddeducc,
-            this.ccolorgest,
-            this.nmtocuotar,
-            this.ccodmoneda});
             this.dgvProd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProd.Location = new System.Drawing.Point(0, 0);
             this.dgvProd.Name = "dgvProd";
@@ -723,262 +592,59 @@ namespace ADIGGM.IA.Transaccionales
             this.dgvProd.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvProd_CellFormatting);
             this.dgvProd.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvProd_DataError);
             // 
-            // cprodconge
             // 
-            this.cprodconge.DataPropertyName = "cprodconge";
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cprodconge.DefaultCellStyle = dataGridViewCellStyle1;
-            this.cprodconge.HeaderText = "*";
-            this.cprodconge.Name = "cprodconge";
-            this.cprodconge.ReadOnly = true;
-            this.cprodconge.Width = 39;
             // 
-            // codigo
             // 
-            this.codigo.DataPropertyName = "codigo";
-            this.codigo.HeaderText = "Código";
-            this.codigo.Name = "codigo";
-            this.codigo.ReadOnly = true;
-            this.codigo.Width = 73;
             // 
-            // cdesdeducc
             // 
-            this.cdesdeducc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.cdesdeducc.DataPropertyName = "cdesdeducc";
-            this.cdesdeducc.HeaderText = "Detalle";
-            this.cdesdeducc.Name = "cdesdeducc";
-            this.cdesdeducc.ReadOnly = true;
-            this.cdesdeducc.Width = 70;
             // 
-            // nmtocuotas
             // 
-            this.nmtocuotas.DataPropertyName = "nmtocuotas";
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = null;
-            this.nmtocuotas.DefaultCellStyle = dataGridViewCellStyle2;
-            this.nmtocuotas.HeaderText = "Cuota/Porc.";
-            this.nmtocuotas.Name = "nmtocuotas";
-            this.nmtocuotas.ReadOnly = true;
             // 
-            // nmtoprinci
             // 
-            this.nmtoprinci.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nmtoprinci.DataPropertyName = "nmtoprinci";
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.nmtoprinci.DefaultCellStyle = dataGridViewCellStyle3;
-            this.nmtoprinci.HeaderText = "Saldo";
-            this.nmtoprinci.Name = "nmtoprinci";
-            this.nmtoprinci.ReadOnly = true;
-            this.nmtoprinci.Width = 63;
             // 
-            // nmtointere
             // 
-            this.nmtointere.DataPropertyName = "nmtointere";
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = null;
-            this.nmtointere.DefaultCellStyle = dataGridViewCellStyle4;
-            this.nmtointere.HeaderText = "Interés";
-            this.nmtointere.Name = "nmtointere";
-            this.nmtointere.ReadOnly = true;
-            this.nmtointere.Width = 68;
             // 
-            // total
             // 
-            this.total.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.total.DataPropertyName = "total";
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = null;
-            this.total.DefaultCellStyle = dataGridViewCellStyle5;
-            this.total.HeaderText = "Total";
-            this.total.Name = "total";
-            this.total.ReadOnly = true;
-            this.total.Width = 58;
             // 
-            // cnumepagos
             // 
-            this.cnumepagos.DataPropertyName = "cnumepagos";
-            this.cnumepagos.HeaderText = "Pagos";
-            this.cnumepagos.Name = "cnumepagos";
-            this.cnumepagos.ReadOnly = true;
-            this.cnumepagos.Width = 66;
             // 
-            // nultsalcal
             // 
-            this.nultsalcal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.nultsalcal.DataPropertyName = "nultsalcal";
-            this.nultsalcal.HeaderText = "Saldo.Calc.Inter.";
-            this.nultsalcal.Name = "nultsalcal";
-            this.nultsalcal.ReadOnly = true;
-            this.nultsalcal.Width = 122;
             // 
-            // dfechainic
             // 
-            this.dfechainic.DataPropertyName = "dfechainic";
-            this.dfechainic.HeaderText = "Inicio";
-            this.dfechainic.Name = "dfechainic";
-            this.dfechainic.ReadOnly = true;
-            this.dfechainic.Width = 61;
             // 
-            // dfecactman
             // 
-            this.dfecactman.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfecactman.DataPropertyName = "dfecactman";
-            dataGridViewCellStyle6.Format = "d";
-            this.dfecactman.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dfecactman.HeaderText = "Ult.Pago";
-            this.dfecactman.Name = "dfecactman";
-            this.dfecactman.ReadOnly = true;
-            this.dfecactman.Width = 78;
             // 
-            // dfecactpla
             // 
-            this.dfecactpla.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfecactpla.DataPropertyName = "dfecactpla";
-            dataGridViewCellStyle7.NullValue = null;
-            this.dfecactpla.DefaultCellStyle = dataGridViewCellStyle7;
-            this.dfecactpla.HeaderText = "Ult.Proyecc.";
-            this.dfecactpla.Name = "dfecactpla";
-            this.dfecactpla.ReadOnly = true;
-            this.dfecactpla.Width = 96;
             // 
-            // dfecultcap
             // 
-            this.dfecultcap.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfecultcap.DataPropertyName = "dfecultcap";
-            dataGridViewCellStyle8.Format = "d";
-            dataGridViewCellStyle8.NullValue = null;
-            this.dfecultcap.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dfecultcap.HeaderText = "Ult.Capital.";
-            this.dfecultcap.Name = "dfecultcap";
-            this.dfecultcap.ReadOnly = true;
-            this.dfecultcap.Width = 93;
             // 
-            // dfechafina
             // 
-            this.dfechafina.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfechafina.DataPropertyName = "dfechafina";
-            dataGridViewCellStyle9.Format = "d";
-            this.dfechafina.DefaultCellStyle = dataGridViewCellStyle9;
-            this.dfechafina.HeaderText = "Fin.Periodo";
-            this.dfechafina.Name = "dfechafina";
-            this.dfechafina.ReadOnly = true;
-            this.dfechafina.Width = 90;
             // 
-            // nplazodedu
             // 
-            this.nplazodedu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.nplazodedu.DataPropertyName = "nplazodedu";
-            this.nplazodedu.HeaderText = "Plazo";
-            this.nplazodedu.Name = "nplazodedu";
-            this.nplazodedu.ReadOnly = true;
-            this.nplazodedu.Width = 61;
             // 
-            // dfechconge
             // 
-            this.dfechconge.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfechconge.DataPropertyName = "dfechconge";
-            dataGridViewCellStyle10.Format = "d";
-            dataGridViewCellStyle10.NullValue = null;
-            this.dfechconge.DefaultCellStyle = dataGridViewCellStyle10;
-            this.dfechconge.HeaderText = "Congelamiento";
-            this.dfechconge.Name = "dfechconge";
-            this.dfechconge.ReadOnly = true;
-            this.dfechconge.Width = 116;
             // 
-            // dfechdesco
             // 
-            this.dfechdesco.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfechdesco.DataPropertyName = "dfechdesco";
-            dataGridViewCellStyle11.Format = "d";
-            dataGridViewCellStyle11.NullValue = null;
-            this.dfechdesco.DefaultCellStyle = dataGridViewCellStyle11;
-            this.dfechdesco.HeaderText = "Descongelam.";
-            this.dfechdesco.Name = "dfechdesco";
-            this.dfechdesco.ReadOnly = true;
-            this.dfechdesco.Width = 109;
             // 
-            // cnombusuar
             // 
-            this.cnombusuar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.cnombusuar.DataPropertyName = "cnombusuar";
-            this.cnombusuar.HeaderText = "Usu.Incluye";
-            this.cnombusuar.Name = "cnombusuar";
-            this.cnombusuar.ReadOnly = true;
-            this.cnombusuar.Width = 93;
             // 
-            // cdescripci
             // 
-            this.cdescripci.DataPropertyName = "cdescripci";
-            this.cdescripci.HeaderText = "Comentarios";
-            this.cdescripci.Name = "cdescripci";
-            this.cdescripci.ReadOnly = true;
-            this.cdescripci.Width = 101;
             // 
-            // cCODIGOGES
             // 
-            this.cCODIGOGES.DataPropertyName = "CCODIGOGES";
-            this.cCODIGOGES.HeaderText = "Código";
-            this.cCODIGOGES.Name = "cCODIGOGES";
-            this.cCODIGOGES.ReadOnly = true;
-            this.cCODIGOGES.Width = 73;
             // 
-            // cdetagesti
             // 
-            this.cdetagesti.DataPropertyName = "cdetagesti";
-            this.cdetagesti.HeaderText = "Gestión";
-            this.cdetagesti.Name = "cdetagesti";
-            this.cdetagesti.ReadOnly = true;
-            this.cdetagesti.Width = 74;
             // 
-            // cnumdeducc
             // 
-            this.cnumdeducc.DataPropertyName = "cnumdeducc";
-            this.cnumdeducc.HeaderText = "cnumdeducc";
-            this.cnumdeducc.Name = "cnumdeducc";
-            this.cnumdeducc.ReadOnly = true;
-            this.cnumdeducc.Visible = false;
-            this.cnumdeducc.Width = 108;
             // 
-            // cidasociad1
             // 
-            this.cidasociad1.DataPropertyName = "cidasociad";
-            this.cidasociad1.HeaderText = "cidasociad";
-            this.cidasociad1.Name = "cidasociad1";
-            this.cidasociad1.ReadOnly = true;
-            this.cidasociad1.Visible = false;
             // 
-            // ccoddeducc
             // 
-            this.ccoddeducc.DataPropertyName = "ccoddeducc";
-            this.ccoddeducc.HeaderText = "ccoddeducc";
-            this.ccoddeducc.Name = "ccoddeducc";
-            this.ccoddeducc.ReadOnly = true;
-            this.ccoddeducc.Visible = false;
             // 
-            // ccolorgest
             // 
-            this.ccolorgest.DataPropertyName = "ccolorgest";
-            this.ccolorgest.HeaderText = "ccolorgest";
-            this.ccolorgest.Name = "ccolorgest";
-            this.ccolorgest.ReadOnly = true;
-            this.ccolorgest.Visible = false;
             // 
-            // nmtocuotar
             // 
-            this.nmtocuotar.DataPropertyName = "nmtocuotar";
-            this.nmtocuotar.HeaderText = "nmtocuotar";
-            this.nmtocuotar.Name = "nmtocuotar";
-            this.nmtocuotar.ReadOnly = true;
-            this.nmtocuotar.Visible = false;
             // 
-            // ccodmoneda
             // 
-            this.ccodmoneda.DataPropertyName = "ccodmoneda";
-            this.ccodmoneda.HeaderText = "ccodmoneda";
-            this.ccodmoneda.Name = "ccodmoneda";
-            this.ccodmoneda.ReadOnly = true;
-            this.ccodmoneda.Visible = false;
             // 
             // cAAportesBindingSource
             // 
@@ -1114,56 +780,7 @@ namespace ADIGGM.IA.Transaccionales
             this.dgvCred.AllowUserToDeleteRows = false;
             this.dgvCred.AllowUserToResizeColumns = false;
             this.dgvCred.AllowUserToResizeRows = false;
-            this.dgvCred.AutoGenerateColumns = false;
             this.dgvCred.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCred.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.cbloqplani,
-            this.cnumoperac,
-            this.ccodigolinDataGridViewTextBoxColumn,
-            this.cdetalleli,
-            this.ncuotapres,
-            this.nmontoapro,
-            this.nsaldocred,
-            this.Transito,
-            this.Pendientes,
-            this.nintereact,
-            this.ntasainter,
-            this.nnumcuotas,
-            this.npagosefec,
-            this.nfrecupago,
-            this.dfepagrealDataGridViewTextBoxColumn,
-            this.dfechaform,
-            this.dfeprimabo,
-            this.dFecUlAbon,
-            this.dfeproxabo,
-            this.dfecalcintDataGridViewTextBoxColumn,
-            this.dfechavenc,
-            this.dfechconge1,
-            this.dfechdesco1,
-            this.ccodigousu,
-            this.ccomentariDataGridViewTextBoxColumn,
-            this.ccodigogest,
-            this.cdetagesti1,
-            this.ccodifuentDataGridViewTextBoxColumn,
-            this.cdetafuent,
-            this.carregload,
-            this.csolicrefu,
-            this.coperarefu,
-            this.nmontrefun,
-            this.cstaturefu,
-            this.cnombtipop,
-            this.cidasociadDataGridViewTextBoxColumn1,
-            this.cinstuasoc,
-            this.ctipoplani,
-            this.ccolorgest1,
-            this.cmodcalcin,
-            this.nddiasbase,
-            this.ninterevol,
-            this.ccrerevolu,
-            this.cestasocio,
-            this.dfecharenu,
-            this.ccodmoneda1,
-            this.cnumdocume});
             this.dgvCred.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCred.Location = new System.Drawing.Point(0, 0);
             this.dgvCred.Name = "dgvCred";
@@ -1174,435 +791,99 @@ namespace ADIGGM.IA.Transaccionales
             this.dgvCred.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvCred_CellFormatting);
             this.dgvCred.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvCred_DataError);
             // 
-            // cbloqplani
-            // 
-            this.cbloqplani.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.cbloqplani.DataPropertyName = "cbloqplani";
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbloqplani.DefaultCellStyle = dataGridViewCellStyle12;
-            this.cbloqplani.HeaderText = "*";
-            this.cbloqplani.Name = "cbloqplani";
-            this.cbloqplani.ReadOnly = true;
-            this.cbloqplani.Visible = false;
-            // 
-            // cnumoperac
-            // 
-            this.cnumoperac.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.cnumoperac.DataPropertyName = "cnumoperac";
-            this.cnumoperac.HeaderText = "Operación";
-            this.cnumoperac.Name = "cnumoperac";
-            this.cnumoperac.ReadOnly = true;
-            this.cnumoperac.Width = 91;
-            // 
-            // ccodigolinDataGridViewTextBoxColumn
-            // 
-            this.ccodigolinDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.ccodigolinDataGridViewTextBoxColumn.DataPropertyName = "ccodigolin";
-            this.ccodigolinDataGridViewTextBoxColumn.HeaderText = "Línea";
-            this.ccodigolinDataGridViewTextBoxColumn.Name = "ccodigolinDataGridViewTextBoxColumn";
-            this.ccodigolinDataGridViewTextBoxColumn.ReadOnly = true;
-            this.ccodigolinDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // cdetalleli
-            // 
-            this.cdetalleli.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.cdetalleli.DataPropertyName = "cdetalleli";
-            this.cdetalleli.HeaderText = "Descripción";
-            this.cdetalleli.Name = "cdetalleli";
-            this.cdetalleli.ReadOnly = true;
-            this.cdetalleli.Width = 94;
-            // 
-            // ncuotapres
-            // 
-            this.ncuotapres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.ncuotapres.DataPropertyName = "ncuotapres";
-            dataGridViewCellStyle13.Format = "N2";
-            dataGridViewCellStyle13.NullValue = null;
-            this.ncuotapres.DefaultCellStyle = dataGridViewCellStyle13;
-            this.ncuotapres.HeaderText = "Cuota";
-            this.ncuotapres.Name = "ncuotapres";
-            this.ncuotapres.ReadOnly = true;
-            this.ncuotapres.Width = 67;
-            // 
-            // nmontoapro
-            // 
-            this.nmontoapro.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nmontoapro.DataPropertyName = "nmontoapro";
-            dataGridViewCellStyle14.Format = "N2";
-            this.nmontoapro.DefaultCellStyle = dataGridViewCellStyle14;
-            this.nmontoapro.HeaderText = "Principal";
-            this.nmontoapro.Name = "nmontoapro";
-            this.nmontoapro.ReadOnly = true;
-            this.nmontoapro.Width = 78;
-            // 
-            // nsaldocred
-            // 
-            this.nsaldocred.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nsaldocred.DataPropertyName = "nsaldocred";
-            dataGridViewCellStyle15.Format = "N2";
-            this.nsaldocred.DefaultCellStyle = dataGridViewCellStyle15;
-            this.nsaldocred.HeaderText = "Saldo";
-            this.nsaldocred.Name = "nsaldocred";
-            this.nsaldocred.ReadOnly = true;
-            this.nsaldocred.Width = 63;
-            // 
-            // Transito
-            // 
-            this.Transito.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewCellStyle16.Format = "N2";
-            dataGridViewCellStyle16.NullValue = null;
-            this.Transito.DefaultCellStyle = dataGridViewCellStyle16;
-            this.Transito.HeaderText = "EnTránsito";
-            this.Transito.Name = "Transito";
-            this.Transito.ReadOnly = true;
-            this.Transito.Width = 85;
-            // 
-            // Pendientes
-            // 
-            this.Pendientes.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewCellStyle17.Format = "N2";
-            this.Pendientes.DefaultCellStyle = dataGridViewCellStyle17;
-            this.Pendientes.HeaderText = "C. Pend.";
-            this.Pendientes.Name = "Pendientes";
-            this.Pendientes.ReadOnly = true;
-            this.Pendientes.Width = 79;
-            // 
-            // nintereact
-            // 
-            this.nintereact.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nintereact.DataPropertyName = "nintereact";
-            dataGridViewCellStyle18.Format = "N2";
-            this.nintereact.DefaultCellStyle = dataGridViewCellStyle18;
-            this.nintereact.HeaderText = "Int.Actual";
-            this.nintereact.Name = "nintereact";
-            this.nintereact.ReadOnly = true;
-            this.nintereact.Width = 84;
-            // 
-            // ntasainter
-            // 
-            this.ntasainter.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.ntasainter.DataPropertyName = "ntasainter";
-            this.ntasainter.HeaderText = "Tasa";
-            this.ntasainter.Name = "ntasainter";
-            this.ntasainter.ReadOnly = true;
-            this.ntasainter.Width = 57;
-            // 
-            // nnumcuotas
-            // 
-            this.nnumcuotas.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nnumcuotas.DataPropertyName = "nnumcuotas";
-            this.nnumcuotas.HeaderText = "Plazo";
-            this.nnumcuotas.Name = "nnumcuotas";
-            this.nnumcuotas.ReadOnly = true;
-            this.nnumcuotas.Width = 61;
-            // 
-            // npagosefec
-            // 
-            this.npagosefec.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.npagosefec.DataPropertyName = "npagosefec";
-            this.npagosefec.HeaderText = "Pagos";
-            this.npagosefec.Name = "npagosefec";
-            this.npagosefec.ReadOnly = true;
-            this.npagosefec.Width = 65;
-            // 
-            // nfrecupago
-            // 
-            this.nfrecupago.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nfrecupago.DataPropertyName = "nfrecupago";
-            this.nfrecupago.HeaderText = "Frecuencia";
-            this.nfrecupago.Name = "nfrecupago";
-            this.nfrecupago.ReadOnly = true;
-            this.nfrecupago.Width = 92;
-            // 
-            // dfepagrealDataGridViewTextBoxColumn
-            // 
-            this.dfepagrealDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfepagrealDataGridViewTextBoxColumn.DataPropertyName = "dfepagreal";
-            dataGridViewCellStyle19.NullValue = "N2";
-            this.dfepagrealDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle19;
-            this.dfepagrealDataGridViewTextBoxColumn.HeaderText = "Pago Real";
-            this.dfepagrealDataGridViewTextBoxColumn.Name = "dfepagrealDataGridViewTextBoxColumn";
-            this.dfepagrealDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dfepagrealDataGridViewTextBoxColumn.Width = 88;
-            // 
-            // dfechaform
-            // 
-            this.dfechaform.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfechaform.DataPropertyName = "dfechaform";
-            dataGridViewCellStyle20.Format = "d";
-            dataGridViewCellStyle20.NullValue = null;
-            this.dfechaform.DefaultCellStyle = dataGridViewCellStyle20;
-            this.dfechaform.HeaderText = "Inicio";
-            this.dfechaform.Name = "dfechaform";
-            this.dfechaform.ReadOnly = true;
-            this.dfechaform.Width = 60;
-            // 
-            // dfeprimabo
-            // 
-            this.dfeprimabo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfeprimabo.DataPropertyName = "dfeprimabo";
-            this.dfeprimabo.HeaderText = "1er.Abono";
-            this.dfeprimabo.Name = "dfeprimabo";
-            this.dfeprimabo.ReadOnly = true;
-            this.dfeprimabo.Width = 87;
-            // 
-            // dFecUlAbon
-            // 
-            this.dFecUlAbon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dFecUlAbon.DataPropertyName = "dFecUlAbon";
-            this.dFecUlAbon.HeaderText = "Ult.Abono";
-            this.dFecUlAbon.Name = "dFecUlAbon";
-            this.dFecUlAbon.ReadOnly = true;
-            this.dFecUlAbon.Width = 85;
-            // 
-            // dfeproxabo
-            // 
-            this.dfeproxabo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfeproxabo.DataPropertyName = "dfeproxabo";
-            this.dfeproxabo.HeaderText = "Prox.Pago";
-            this.dfeproxabo.Name = "dfeproxabo";
-            this.dfeproxabo.ReadOnly = true;
-            this.dfeproxabo.Width = 87;
-            // 
-            // dfecalcintDataGridViewTextBoxColumn
-            // 
-            this.dfecalcintDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfecalcintDataGridViewTextBoxColumn.DataPropertyName = "dfecalcint";
-            this.dfecalcintDataGridViewTextBoxColumn.HeaderText = "dfecalcint";
-            this.dfecalcintDataGridViewTextBoxColumn.Name = "dfecalcintDataGridViewTextBoxColumn";
-            this.dfecalcintDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dfecalcintDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // dfechavenc
-            // 
-            this.dfechavenc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfechavenc.DataPropertyName = "dfechavenc";
-            this.dfechavenc.HeaderText = "Vencimiento";
-            this.dfechavenc.Name = "dfechavenc";
-            this.dfechavenc.ReadOnly = true;
-            this.dfechavenc.Width = 99;
-            // 
-            // dfechconge1
-            // 
-            this.dfechconge1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfechconge1.DataPropertyName = "dfechconge";
-            this.dfechconge1.HeaderText = "Congela.";
-            this.dfechconge1.Name = "dfechconge1";
-            this.dfechconge1.ReadOnly = true;
-            this.dfechconge1.Width = 82;
-            // 
-            // dfechdesco1
-            // 
-            this.dfechdesco1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dfechdesco1.DataPropertyName = "dfechdesco";
-            this.dfechdesco1.HeaderText = "Descongela.";
-            this.dfechdesco1.Name = "dfechdesco1";
-            this.dfechdesco1.ReadOnly = true;
-            this.dfechdesco1.Width = 99;
-            // 
-            // ccodigousu
-            // 
-            this.ccodigousu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.ccodigousu.DataPropertyName = "ccodigousu";
-            this.ccodigousu.HeaderText = "Usu.Aprob.";
-            this.ccodigousu.Name = "ccodigousu";
-            this.ccodigousu.ReadOnly = true;
-            this.ccodigousu.Width = 90;
-            // 
-            // ccomentariDataGridViewTextBoxColumn
-            // 
-            this.ccomentariDataGridViewTextBoxColumn.DataPropertyName = "ccomentari";
-            this.ccomentariDataGridViewTextBoxColumn.HeaderText = "Comentarios";
-            this.ccomentariDataGridViewTextBoxColumn.Name = "ccomentariDataGridViewTextBoxColumn";
-            this.ccomentariDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // ccodigogest
-            // 
-            this.ccodigogest.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.ccodigogest.DataPropertyName = "ccodigoges";
-            this.ccodigogest.HeaderText = "Cod.Gestión";
-            this.ccodigogest.Name = "ccodigogest";
-            this.ccodigogest.ReadOnly = true;
-            // 
-            // cdetagesti1
-            // 
-            this.cdetagesti1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.cdetagesti1.DataPropertyName = "cdetagesti";
-            this.cdetagesti1.HeaderText = "Gestión";
-            this.cdetagesti1.Name = "cdetagesti1";
-            this.cdetagesti1.ReadOnly = true;
-            this.cdetagesti1.Width = 73;
-            // 
-            // ccodifuentDataGridViewTextBoxColumn
-            // 
-            this.ccodifuentDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.ccodifuentDataGridViewTextBoxColumn.DataPropertyName = "ccodifuent";
-            this.ccodifuentDataGridViewTextBoxColumn.HeaderText = "ccodifuent";
-            this.ccodifuentDataGridViewTextBoxColumn.Name = "ccodifuentDataGridViewTextBoxColumn";
-            this.ccodifuentDataGridViewTextBoxColumn.ReadOnly = true;
-            this.ccodifuentDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // cdetafuent
-            // 
-            this.cdetafuent.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.cdetafuent.DataPropertyName = "cdetafuent";
-            this.cdetafuent.HeaderText = "Det.Fuente.Rec.";
-            this.cdetafuent.Name = "cdetafuent";
-            this.cdetafuent.ReadOnly = true;
-            this.cdetafuent.Width = 118;
-            // 
-            // carregload
-            // 
-            this.carregload.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.carregload.DataPropertyName = "carregload";
-            this.carregload.HeaderText = "Arreglo";
-            this.carregload.Name = "carregload";
-            this.carregload.ReadOnly = true;
-            this.carregload.Width = 68;
-            // 
-            // csolicrefu
-            // 
-            this.csolicrefu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.csolicrefu.DataPropertyName = "csolicrefu";
-            this.csolicrefu.HeaderText = "Solic.Refunde";
-            this.csolicrefu.Name = "csolicrefu";
-            this.csolicrefu.ReadOnly = true;
-            this.csolicrefu.Width = 105;
-            // 
-            // coperarefu
-            // 
-            this.coperarefu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.coperarefu.DataPropertyName = "coperarefu";
-            this.coperarefu.HeaderText = "Op.Refunde";
-            this.coperarefu.Name = "coperarefu";
-            this.coperarefu.ReadOnly = true;
-            this.coperarefu.Width = 99;
-            // 
-            // nmontrefun
-            // 
-            this.nmontrefun.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nmontrefun.DataPropertyName = "nmontrefun";
-            dataGridViewCellStyle21.Format = "N2";
-            dataGridViewCellStyle21.NullValue = null;
-            this.nmontrefun.DefaultCellStyle = dataGridViewCellStyle21;
-            this.nmontrefun.HeaderText = "Monto.Refunde";
-            this.nmontrefun.Name = "nmontrefun";
-            this.nmontrefun.ReadOnly = true;
-            this.nmontrefun.Width = 117;
-            // 
-            // cstaturefu
-            // 
-            this.cstaturefu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.cstaturefu.DataPropertyName = "cstaturefu";
-            this.cstaturefu.HeaderText = "Est.Refunde";
-            this.cstaturefu.Name = "cstaturefu";
-            this.cstaturefu.ReadOnly = true;
-            this.cstaturefu.Width = 95;
-            // 
-            // cnombtipop
-            // 
-            this.cnombtipop.DataPropertyName = "cnombtipop";
-            this.cnombtipop.HeaderText = "cnombtipop";
-            this.cnombtipop.Name = "cnombtipop";
-            this.cnombtipop.ReadOnly = true;
-            this.cnombtipop.Visible = false;
-            // 
-            // cidasociadDataGridViewTextBoxColumn1
-            // 
-            this.cidasociadDataGridViewTextBoxColumn1.DataPropertyName = "cidasociad";
-            this.cidasociadDataGridViewTextBoxColumn1.HeaderText = "cidasociad";
-            this.cidasociadDataGridViewTextBoxColumn1.Name = "cidasociadDataGridViewTextBoxColumn1";
-            this.cidasociadDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.cidasociadDataGridViewTextBoxColumn1.Visible = false;
-            // 
-            // cinstuasoc
-            // 
-            this.cinstuasoc.DataPropertyName = "cinstuasoc";
-            this.cinstuasoc.HeaderText = "cinstuasoc";
-            this.cinstuasoc.Name = "cinstuasoc";
-            this.cinstuasoc.ReadOnly = true;
-            this.cinstuasoc.Visible = false;
-            // 
-            // ctipoplani
-            // 
-            this.ctipoplani.DataPropertyName = "ctipoplani";
-            this.ctipoplani.HeaderText = "ctipoplani";
-            this.ctipoplani.Name = "ctipoplani";
-            this.ctipoplani.ReadOnly = true;
-            this.ctipoplani.Visible = false;
-            // 
-            // ccolorgest1
-            // 
-            this.ccolorgest1.DataPropertyName = "ccolorgest";
-            this.ccolorgest1.HeaderText = "ccolorgest";
-            this.ccolorgest1.Name = "ccolorgest1";
-            this.ccolorgest1.ReadOnly = true;
-            this.ccolorgest1.Visible = false;
-            // 
-            // cmodcalcin
-            // 
-            this.cmodcalcin.DataPropertyName = "cmodcalcin";
-            this.cmodcalcin.HeaderText = "cmodcalcin";
-            this.cmodcalcin.Name = "cmodcalcin";
-            this.cmodcalcin.ReadOnly = true;
-            this.cmodcalcin.Visible = false;
-            // 
-            // nddiasbase
-            // 
-            this.nddiasbase.DataPropertyName = "nddiasbase";
-            this.nddiasbase.HeaderText = "nddiasbase";
-            this.nddiasbase.Name = "nddiasbase";
-            this.nddiasbase.ReadOnly = true;
-            this.nddiasbase.Visible = false;
-            // 
-            // ninterevol
-            // 
-            this.ninterevol.DataPropertyName = "ninterevol";
-            this.ninterevol.HeaderText = "ninterevol";
-            this.ninterevol.Name = "ninterevol";
-            this.ninterevol.ReadOnly = true;
-            this.ninterevol.Visible = false;
-            // 
-            // ccrerevolu
-            // 
-            this.ccrerevolu.DataPropertyName = "ccrerevolu";
-            this.ccrerevolu.HeaderText = "ccrerevolu";
-            this.ccrerevolu.Name = "ccrerevolu";
-            this.ccrerevolu.ReadOnly = true;
-            this.ccrerevolu.Visible = false;
-            // 
-            // cestasocio
-            // 
-            this.cestasocio.DataPropertyName = "cestasocio";
-            this.cestasocio.HeaderText = "cestasocio";
-            this.cestasocio.Name = "cestasocio";
-            this.cestasocio.ReadOnly = true;
-            this.cestasocio.Visible = false;
-            // 
-            // dfecharenu
-            // 
-            this.dfecharenu.DataPropertyName = "dfecharenu";
-            this.dfecharenu.HeaderText = "dfecharenu";
-            this.dfecharenu.Name = "dfecharenu";
-            this.dfecharenu.ReadOnly = true;
-            this.dfecharenu.Visible = false;
-            // 
-            // ccodmoneda1
-            // 
-            this.ccodmoneda1.DataPropertyName = "ccodmoneda";
-            this.ccodmoneda1.HeaderText = "ccodmoneda";
-            this.ccodmoneda1.Name = "ccodmoneda1";
-            this.ccodmoneda1.ReadOnly = true;
-            this.ccodmoneda1.Visible = false;
-            // 
-            // cnumdocume
-            // 
-            this.cnumdocume.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.cnumdocume.DataPropertyName = "cnumdocume";
-            this.cnumdocume.HeaderText = "Factura";
-            this.cnumdocume.Name = "cnumdocume";
-            this.cnumdocume.ReadOnly = true;
-            this.cnumdocume.Width = 74;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
             // 
             // cACreditosBindingSource
             // 
@@ -1934,16 +1215,7 @@ namespace ADIGGM.IA.Transaccionales
             this.dgvAutorizados.AllowUserToAddRows = false;
             this.dgvAutorizados.AllowUserToDeleteRows = false;
             this.dgvAutorizados.AllowUserToResizeRows = false;
-            this.dgvAutorizados.AutoGenerateColumns = false;
             this.dgvAutorizados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAutorizados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.bestaactiv,
-            this.cidautoriz,
-            this.cnombreaut,
-            this.cparentezc,
-            this.cdomicilio,
-            this.cnumtelefo,
-            this.ffechacrea});
             this.dgvAutorizados.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dgvAutorizados.Location = new System.Drawing.Point(3, 190);
             this.dgvAutorizados.Name = "dgvAutorizados";
@@ -1959,62 +1231,19 @@ namespace ADIGGM.IA.Transaccionales
             this.dgvAutorizados.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvAutorizados_DataError);
             this.dgvAutorizados.SelectionChanged += new System.EventHandler(this.dgvAutorizados_SelectionChanged);
             // 
-            // bestaactiv
             // 
-            this.bestaactiv.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.bestaactiv.DataPropertyName = "bestaactiv";
-            this.bestaactiv.HeaderText = "Activo";
-            this.bestaactiv.Name = "bestaactiv";
-            this.bestaactiv.ReadOnly = true;
-            this.bestaactiv.Width = 47;
             // 
-            // cidautoriz
             // 
-            this.cidautoriz.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.cidautoriz.DataPropertyName = "cidautoriz";
-            this.cidautoriz.HeaderText = "Identidad";
-            this.cidautoriz.Name = "cidautoriz";
-            this.cidautoriz.ReadOnly = true;
-            this.cidautoriz.Width = 82;
             // 
-            // cnombreaut
             // 
-            this.cnombreaut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.cnombreaut.DataPropertyName = "cnombreaut";
-            this.cnombreaut.HeaderText = "Nombre";
-            this.cnombreaut.Name = "cnombreaut";
-            this.cnombreaut.ReadOnly = true;
-            this.cnombreaut.Width = 75;
             // 
-            // cparentezc
             // 
-            this.cparentezc.DataPropertyName = "cparentezc";
-            this.cparentezc.HeaderText = "Parentezco";
-            this.cparentezc.Name = "cparentezc";
-            this.cparentezc.ReadOnly = true;
             // 
-            // cdomicilio
             // 
-            this.cdomicilio.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.cdomicilio.DataPropertyName = "cdomicilio";
-            this.cdomicilio.HeaderText = "Domicilio";
-            this.cdomicilio.Name = "cdomicilio";
-            this.cdomicilio.ReadOnly = true;
-            this.cdomicilio.Width = 82;
             // 
-            // cnumtelefo
             // 
-            this.cnumtelefo.DataPropertyName = "cnumtelefo";
-            this.cnumtelefo.HeaderText = "Teléfono";
-            this.cnumtelefo.Name = "cnumtelefo";
-            this.cnumtelefo.ReadOnly = true;
             // 
-            // ffechacrea
             // 
-            this.ffechacrea.DataPropertyName = "ffechacrea";
-            this.ffechacrea.HeaderText = "Creado";
-            this.ffechacrea.Name = "ffechacrea";
-            this.ffechacrea.ReadOnly = true;
             // 
             // cAAutorizadosCreditoAsocSelBindingSource
             // 
@@ -2359,33 +1588,6 @@ namespace ADIGGM.IA.Transaccionales
         private System.Windows.Forms.GroupBox gboDetalles;
         private System.Windows.Forms.Button btnReportar;
         private System.Windows.Forms.MaskedTextBox mktPIN;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cprodconge;
-        private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdesdeducc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtocuotas;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtoprinci;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtointere;
-        private System.Windows.Forms.DataGridViewTextBoxColumn total;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumepagos;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nultsalcal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechainic;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfecactman;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfecactpla;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfecultcap;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechafina;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nplazodedu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechconge;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechdesco;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombusuar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdescripci;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cCODIGOGES;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdetagesti;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumdeducc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cidasociad1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccoddeducc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccolorgest;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmtocuotar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccodmoneda;
         private System.Windows.Forms.Button btnBloqDesbloq;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnNuevo;
@@ -2402,65 +1604,11 @@ namespace ADIGGM.IA.Transaccionales
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.MaskedTextBox mktcnumtelefo;
         private System.Windows.Forms.BindingSource cAAutorizadosCreditoAsocSelBindingSource;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn bestaactiv;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cidautoriz;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombreaut;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cparentezc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdomicilio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumtelefo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ffechacrea;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label lblEstado;
         private System.Windows.Forms.Button btnActDesact;
         private System.Windows.Forms.Button btnVisorCarnets;
         private System.Windows.Forms.Label lblPosFin;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cbloqplani;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumoperac;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccodigolinDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdetalleli;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ncuotapres;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmontoapro;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nsaldocred;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Transito;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Pendientes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nintereact;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ntasainter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nnumcuotas;
-        private System.Windows.Forms.DataGridViewTextBoxColumn npagosefec;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nfrecupago;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfepagrealDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechaform;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfeprimabo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dFecUlAbon;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfeproxabo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfecalcintDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechavenc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechconge1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfechdesco1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccodigousu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccomentariDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccodigogest;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdetagesti1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccodifuentDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cdetafuent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn carregload;
-        private System.Windows.Forms.DataGridViewTextBoxColumn csolicrefu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn coperarefu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nmontrefun;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cstaturefu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnombtipop;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cidasociadDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cinstuasoc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ctipoplani;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccolorgest1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cmodcalcin;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nddiasbase;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ninterevol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccrerevolu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cestasocio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dfecharenu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ccodmoneda1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cnumdocume;
     }
 }
