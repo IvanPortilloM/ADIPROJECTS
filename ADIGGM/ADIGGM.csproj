@@ -1250,6 +1250,12 @@
     <Compile Include="Mantenimiento\FrmRutas.Designer.cs">
       <DependentUpon>FrmRutas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mantenimiento\FrmActualizarTarifas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mantenimiento\FrmActualizarTarifas.Designer.cs">
+      <DependentUpon>FrmActualizarTarifas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mantenimiento\FrmAsigTarifas.cs">
       <SubType>Form</SubType>
     </Compile>
