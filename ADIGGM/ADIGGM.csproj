@@ -429,6 +429,7 @@
     <Compile Include="CapaDatos\RepositorioCodeas.cs" />
     <Compile Include="CapaDatos\RepositorioTransporte.cs" />
     <Compile Include="CapaDatos\RepositorioFAC.cs" />
+    <Compile Include="CapaModelo\FilasTarifa.cs" />
     <Compile Include="CapaModelo\SubMenuNieto.cs" />
     <Compile Include="CapaModelo\Menu.cs" />
     <Compile Include="CapaModelo\SubMenu.cs" />

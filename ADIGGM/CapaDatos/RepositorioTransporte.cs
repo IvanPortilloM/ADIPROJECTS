@@ -1,4 +1,8 @@
+using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+using ADIGGM.CapaModelo;
+using Dapper;
 
 namespace ADIGGM.CapaDatos
 {
@@ -135,6 +139,178 @@ namespace ADIGGM.CapaDatos
             const string update = "UPDATE dbo.TR_AsigFacTipoVeh SET IdTipoFactura = @IdTipoFactura, IdTipoVehiculo = @IdTipoVehiculo WHERE IdAsigFacTipoVeh = @IdAsigFacTipoVeh";
             const string delete = "DELETE FROM dbo.TR_AsigFacTipoVeh WHERE IdAsigFacTipoVeh = @IdAsigFacTipoVeh";
             return GuardarCambios(tabla, insert, update, delete);
+        }
+
+        // ===== TR_ClaseTrabajos =====
+
+        /// <summary>Clases de trabajo ACTIVAS (combo selector).</summary>
+        public DataTable ListarClaseTrabajosActivos()
+        {
+            const string sql = "SELECT IdClaseTrabajo, ClaseTrabajo FROM dbo.TR_ClaseTrabajos WHERE Activo = 1 ORDER BY ClaseTrabajo";
+            return ConsultarTabla(sql);
+        }
+
+        // ===== Actualización masiva de tarifas por porcentaje (Mant\FrmActualizarTarifas) =====
+        // Tres procesos INDEPENDIENTES: tarifas base (TR_AsigRutaTipoVeh), tarifas asignadas
+        // (TR_TarifaRutas) y precio en boletas ya digitadas (TR_Viajes). Cada "Aplicar" persiste
+        // en UNA transacción (todo-o-nada) y deja registro en TR_AuditoriaTarifas.
+
+        /// <summary>Vista previa de tarifas BASE (TR_AsigRutaTipoVeh): solo filtra por tipo de vehículo
+        /// (esta tabla no maneja cliente ni clase de trabajo) y, opcionalmente, por texto de ruta.</summary>
+        public List<FilaTarifa> PreviewTarifasBase(int idTipoVehiculo, string filtroRuta)
+        {
+            const string sql =
+                "SELECT a.IdAsigRutaTipoVeh AS Id, tv.TipoVehiculo, r.Ruta, a.Tarifa AS TarifaActual " +
+                "FROM dbo.TR_AsigRutaTipoVeh a " +
+                "INNER JOIN dbo.TR_TipoVehiculos tv ON tv.IdTipoVehiculo = a.IdTipoVehiculo " +
+                "INNER JOIN dbo.TR_Rutas r ON r.IdRuta = a.IdRuta " +
+                "WHERE a.IdTipoVehiculo = @IdTipoVehiculo " +
+                "AND (@FiltroRuta = '' OR r.Ruta LIKE '%' + @FiltroRuta + '%') " +
+                "ORDER BY r.Ruta";
+            return Consultar<FilaTarifa>(sql, new { IdTipoVehiculo = idTipoVehiculo, FiltroRuta = filtroRuta ?? "" });
+        }
+
+        /// <summary>Vista previa de tarifas ASIGNADAS (TR_TarifaRutas) filtradas por cliente, clase de
+        /// trabajo y tipo de vehículo (y opcionalmente por texto de ruta).</summary>
+        public List<FilaTarifa> PreviewTarifasAsignadas(int idCliente, int idClaseTrabajo, int idTipoVehiculo, string filtroRuta)
+        {
+            const string sql =
+                "SELECT t.IdTarifaRuta AS Id, c.Cliente, ct.ClaseTrabajo, tv.TipoVehiculo, r.Ruta, t.Tarifa AS TarifaActual " +
+                "FROM dbo.TR_TarifaRutas t " +
+                "INNER JOIN dbo.TR_Clientes c ON c.IdCliente = t.IdCliente " +
+                "INNER JOIN dbo.TR_ClaseTrabajos ct ON ct.IdClaseTrabajo = t.IdClaseTrabajo " +
+                "INNER JOIN dbo.TR_TipoVehiculos tv ON tv.IdTipoVehiculo = t.IdTipoVehiculo " +
+                "INNER JOIN dbo.TR_Rutas r ON r.IdRuta = t.IdRuta " +
+                "WHERE t.IdCliente = @IdCliente AND t.IdClaseTrabajo = @IdClaseTrabajo AND t.IdTipoVehiculo = @IdTipoVehiculo " +
+                "AND (@FiltroRuta = '' OR r.Ruta LIKE '%' + @FiltroRuta + '%') " +
+                "ORDER BY r.Ruta";
+            return Consultar<FilaTarifa>(sql, new { IdCliente = idCliente, IdClaseTrabajo = idClaseTrabajo, IdTipoVehiculo = idTipoVehiculo, FiltroRuta = filtroRuta ?? "" });
+        }
+
+        /// <summary>Vista previa de boletas (TR_Viajes) en el rango de fechas que coinciden con los filtros,
+        /// EXCLUYENDO las anuladas y las que pertenecen a un cierre ya cerrado (TR_CierreClientes.Cerrado).</summary>
+        public List<FilaViaje> PreviewViajes(int idCliente, int idClaseTrabajo, int idTipoVehiculo, string filtroRuta, System.DateTime fechaInicio, System.DateTime fechaFin)
+        {
+            const string sql =
+                "SELECT v.IdViaje, v.Fecha, v.NumBoleta, c.Cliente, tv.TipoVehiculo, r.Ruta, v.Cantidad, " +
+                "v.Tarifa AS TarifaActual, v.Subtotal AS SubtotalActual, v.ISV AS IsvActual, v.Total AS TotalActual " +
+                "FROM dbo.TR_Viajes v " +
+                "INNER JOIN dbo.TR_Clientes c ON c.IdCliente = v.IdCliente " +
+                "INNER JOIN dbo.TR_TipoVehiculos tv ON tv.IdTipoVehiculo = v.IdTipoVeh " +
+                "INNER JOIN dbo.TR_Rutas r ON r.IdRuta = v.IdRuta " +
+                "WHERE v.IdCliente = @IdCliente AND v.IdClaseTrabajo = @IdClaseTrabajo AND v.IdTipoVeh = @IdTipoVehiculo " +
+                "AND v.Fecha >= @FechaInicio AND v.Fecha <= @FechaFin AND v.Anulado = 0 " +
+                "AND (@FiltroRuta = '' OR r.Ruta LIKE '%' + @FiltroRuta + '%') " +
+                "AND NOT EXISTS (SELECT 1 FROM dbo.TR_CierreClientes cc " +
+                "                WHERE cc.IdCierre = v.IdCierre AND cc.IdCliente = v.IdCliente " +
+                "                AND cc.IdTipoVehiculo = v.IdTipoVeh AND cc.Cerrado = 1 AND cc.Anulado = 0) " +
+                "ORDER BY v.Fecha, v.NumBoleta";
+            return Consultar<FilaViaje>(sql, new { IdCliente = idCliente, IdClaseTrabajo = idClaseTrabajo, IdTipoVehiculo = idTipoVehiculo, FiltroRuta = filtroRuta ?? "", FechaInicio = fechaInicio, FechaFin = fechaFin });
+        }
+
+        private const string SqlAuditoriaTarifa =
+            "INSERT INTO dbo.TR_AuditoriaTarifas (Usuario, Proceso, Tabla, IdRegistro, Porcentaje, TarifaAnterior, TarifaNueva, Observacion) " +
+            "VALUES (@Usuario, @Proceso, @Tabla, @IdRegistro, @Porcentaje, @TarifaAnterior, @TarifaNueva, @Observacion)";
+
+        /// <summary>Aplica las tarifas nuevas a TR_AsigRutaTipoVeh (base) en UNA transacción + auditoría.
+        /// Solo persiste las filas cuya tarifa realmente cambió. Devuelve cuántas se actualizaron.</summary>
+        public int AplicarTarifasBase(IList<FilaTarifa> filas, decimal? porcentaje, string usuario, string observacion)
+        {
+            const string update = "UPDATE dbo.TR_AsigRutaTipoVeh SET Tarifa = @Tarifa WHERE IdAsigRutaTipoVeh = @Id";
+            return AplicarTarifasInterno(filas, update, "BASE", "TR_AsigRutaTipoVeh", porcentaje, usuario, observacion);
+        }
+
+        /// <summary>Aplica las tarifas nuevas a TR_TarifaRutas (asignadas) en UNA transacción + auditoría.</summary>
+        public int AplicarTarifasAsignadas(IList<FilaTarifa> filas, decimal? porcentaje, string usuario, string observacion)
+        {
+            const string update = "UPDATE dbo.TR_TarifaRutas SET Tarifa = @Tarifa WHERE IdTarifaRuta = @Id";
+            return AplicarTarifasInterno(filas, update, "ASIGNADA", "TR_TarifaRutas", porcentaje, usuario, observacion);
+        }
+
+        private int AplicarTarifasInterno(IList<FilaTarifa> filas, string updateSql, string proceso, string tabla, decimal? porcentaje, string usuario, string observacion)
+        {
+            using (DbConnection con = CrearConexion())
+            {
+                con.Open();
+                using (IDbTransaction trans = con.BeginTransaction())
+                {
+                    try
+                    {
+                        int n = 0;
+                        foreach (FilaTarifa f in filas)
+                        {
+                            if (f.TarifaNueva == f.TarifaActual) continue; // sin cambio: no tocar ni auditar
+                            n += con.Execute(updateSql, new { Tarifa = f.TarifaNueva, Id = f.Id }, trans);
+                            con.Execute(SqlAuditoriaTarifa, new
+                            {
+                                Usuario = usuario,
+                                Proceso = proceso,
+                                Tabla = tabla,
+                                IdRegistro = f.Id,
+                                Porcentaje = porcentaje,
+                                TarifaAnterior = f.TarifaActual,
+                                TarifaNueva = f.TarifaNueva,
+                                Observacion = observacion
+                            }, trans);
+                        }
+                        trans.Commit();
+                        return n;
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        /// <summary>Aplica el precio nuevo a las boletas (TR_Viajes), recalculando Subtotal/ISV/Total,
+        /// en UNA transacción + auditoría. Solo persiste las filas cuya tarifa cambió.</summary>
+        public int AplicarViajes(IList<FilaViaje> filas, decimal? porcentaje, string usuario, string observacion)
+        {
+            const string update = "UPDATE dbo.TR_Viajes SET Tarifa = @Tarifa, Subtotal = @Subtotal, ISV = @ISV, Total = @Total WHERE IdViaje = @Id";
+            using (DbConnection con = CrearConexion())
+            {
+                con.Open();
+                using (IDbTransaction trans = con.BeginTransaction())
+                {
+                    try
+                    {
+                        int n = 0;
+                        foreach (FilaViaje f in filas)
+                        {
+                            if (f.TarifaNueva == f.TarifaActual) continue;
+                            n += con.Execute(update, new
+                            {
+                                Tarifa = f.TarifaNueva,
+                                Subtotal = f.SubtotalNuevo,
+                                ISV = f.IsvNuevo,
+                                Total = f.TotalNuevo,
+                                Id = f.IdViaje
+                            }, trans);
+                            con.Execute(SqlAuditoriaTarifa, new
+                            {
+                                Usuario = usuario,
+                                Proceso = "VIAJE",
+                                Tabla = "TR_Viajes",
+                                IdRegistro = f.IdViaje,
+                                Porcentaje = porcentaje,
+                                TarifaAnterior = f.TarifaActual,
+                                TarifaNueva = f.TarifaNueva,
+                                Observacion = observacion
+                            }, trans);
+                        }
+                        trans.Commit();
+                        return n;
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
         }
     }
 }
