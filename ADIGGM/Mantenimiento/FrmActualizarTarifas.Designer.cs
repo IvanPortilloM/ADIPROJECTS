@@ -19,19 +19,24 @@ namespace ADIGGM.Mantenimiento
 
         private void InitializeComponent()
         {
-            this.gbFiltros = new System.Windows.Forms.GroupBox();
-            this.lblProceso = new System.Windows.Forms.Label();
-            this.rbBase = new System.Windows.Forms.RadioButton();
-            this.rbAsignada = new System.Windows.Forms.RadioButton();
-            this.rbViajes = new System.Windows.Forms.RadioButton();
-            this.lblCliente = new System.Windows.Forms.Label();
-            this.cboCliente = new System.Windows.Forms.ComboBox();
-            this.lblTipoVeh = new System.Windows.Forms.Label();
-            this.cboTipoVehiculo = new System.Windows.Forms.ComboBox();
-            this.lblClase = new System.Windows.Forms.Label();
-            this.cboClaseTrabajo = new System.Windows.Forms.ComboBox();
-            this.lblRuta = new System.Windows.Forms.Label();
-            this.txtRuta = new System.Windows.Forms.TextBox();
+            this.tabsProceso = new System.Windows.Forms.TabControl();
+            this.tpBase = new System.Windows.Forms.TabPage();
+            this.lblTvBase = new System.Windows.Forms.Label();
+            this.cboTvBase = new System.Windows.Forms.ComboBox();
+            this.tpAsig = new System.Windows.Forms.TabPage();
+            this.lblClienteA = new System.Windows.Forms.Label();
+            this.cboClienteAsig = new System.Windows.Forms.ComboBox();
+            this.lblTvA = new System.Windows.Forms.Label();
+            this.cboTvAsig = new System.Windows.Forms.ComboBox();
+            this.lblClaseA = new System.Windows.Forms.Label();
+            this.cboClaseAsig = new System.Windows.Forms.ComboBox();
+            this.tpViaje = new System.Windows.Forms.TabPage();
+            this.lblClienteV = new System.Windows.Forms.Label();
+            this.cboClienteViaje = new System.Windows.Forms.ComboBox();
+            this.lblTvV = new System.Windows.Forms.Label();
+            this.cboTvViaje = new System.Windows.Forms.ComboBox();
+            this.lblClaseV = new System.Windows.Forms.Label();
+            this.cboClaseViaje = new System.Windows.Forms.ComboBox();
             this.lblDesde = new System.Windows.Forms.Label();
             this.dtpDesde = new System.Windows.Forms.DateTimePicker();
             this.lblHasta = new System.Windows.Forms.Label();
@@ -44,316 +49,345 @@ namespace ADIGGM.Mantenimiento
             this.btnAplicar = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.pnlFooter.SuspendLayout();
-            this.gbFiltros.SuspendLayout();
+            this.tabsProceso.SuspendLayout();
+            this.tpBase.SuspendLayout();
+            this.tpAsig.SuspendLayout();
+            this.tpViaje.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPorcentaje)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrevia)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // lblFooter
-            // 
+            //
             this.lblFooter.Size = new System.Drawing.Size(303, 19);
             this.lblFooter.Text = "ACTUALIZAR TARIFAS POR PORCENTAJE";
-            // 
+            //
             // btnMax
-            // 
-            this.btnMax.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
-            this.btnMax.FlatAppearance.BorderSize = 0;
-            this.btnMax.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMax.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonHighlight;
+            //
             this.btnMax.Location = new System.Drawing.Point(740, 0);
-            // 
+            //
             // btnMin
-            // 
-            this.btnMin.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
-            this.btnMin.FlatAppearance.BorderSize = 0;
-            this.btnMin.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMin.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonHighlight;
+            //
             this.btnMin.Location = new System.Drawing.Point(700, 0);
-            // 
+            //
             // btnCerrar
-            // 
-            this.btnCerrar.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
-            this.btnCerrar.FlatAppearance.BorderSize = 0;
-            this.btnCerrar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnCerrar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
+            //
             this.btnCerrar.Location = new System.Drawing.Point(780, 0);
-            // 
+            //
             // pgbProcesos
-            // 
+            //
             this.pgbProcesos.Location = new System.Drawing.Point(640, 0);
-            // 
+            //
             // pnlFooter
-            // 
+            //
             this.pnlFooter.Location = new System.Drawing.Point(0, 537);
             this.pnlFooter.Size = new System.Drawing.Size(820, 23);
-            // 
-            // gbFiltros
-            // 
-            this.gbFiltros.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.gbFiltros.Controls.Add(this.lblProceso);
-            this.gbFiltros.Controls.Add(this.rbBase);
-            this.gbFiltros.Controls.Add(this.rbAsignada);
-            this.gbFiltros.Controls.Add(this.rbViajes);
-            this.gbFiltros.Controls.Add(this.lblCliente);
-            this.gbFiltros.Controls.Add(this.cboCliente);
-            this.gbFiltros.Controls.Add(this.lblTipoVeh);
-            this.gbFiltros.Controls.Add(this.cboTipoVehiculo);
-            this.gbFiltros.Controls.Add(this.lblClase);
-            this.gbFiltros.Controls.Add(this.cboClaseTrabajo);
-            this.gbFiltros.Controls.Add(this.lblRuta);
-            this.gbFiltros.Controls.Add(this.txtRuta);
-            this.gbFiltros.Controls.Add(this.lblDesde);
-            this.gbFiltros.Controls.Add(this.dtpDesde);
-            this.gbFiltros.Controls.Add(this.lblHasta);
-            this.gbFiltros.Controls.Add(this.dtpHasta);
-            this.gbFiltros.Controls.Add(this.lblPorcentaje);
-            this.gbFiltros.Controls.Add(this.nudPorcentaje);
-            this.gbFiltros.Controls.Add(this.btnPrevia);
-            this.gbFiltros.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.gbFiltros.Location = new System.Drawing.Point(6, 38);
-            this.gbFiltros.Name = "gbFiltros";
-            this.gbFiltros.Size = new System.Drawing.Size(806, 152);
-            this.gbFiltros.TabIndex = 0;
-            this.gbFiltros.TabStop = false;
-            this.gbFiltros.Text = "Filtros";
-            // 
-            // lblProceso
-            // 
-            this.lblProceso.AutoSize = true;
-            this.lblProceso.Location = new System.Drawing.Point(12, 26);
-            this.lblProceso.Name = "lblProceso";
-            this.lblProceso.Size = new System.Drawing.Size(57, 13);
-            this.lblProceso.TabIndex = 0;
-            this.lblProceso.Text = "Proceso:";
-            // 
-            // rbBase
-            // 
-            this.rbBase.AutoSize = true;
-            this.rbBase.Checked = true;
-            this.rbBase.Location = new System.Drawing.Point(95, 24);
-            this.rbBase.Name = "rbBase";
-            this.rbBase.Size = new System.Drawing.Size(89, 17);
-            this.rbBase.TabIndex = 1;
-            this.rbBase.TabStop = true;
-            this.rbBase.Text = "Tarifa base";
-            this.rbBase.UseVisualStyleBackColor = true;
-            this.rbBase.CheckedChanged += new System.EventHandler(this.Proceso_CheckedChanged);
-            // 
-            // rbAsignada
-            // 
-            this.rbAsignada.AutoSize = true;
-            this.rbAsignada.Location = new System.Drawing.Point(210, 24);
-            this.rbAsignada.Name = "rbAsignada";
-            this.rbAsignada.Size = new System.Drawing.Size(113, 17);
-            this.rbAsignada.TabIndex = 2;
-            this.rbAsignada.Text = "Tarifa asignada";
-            this.rbAsignada.UseVisualStyleBackColor = true;
-            this.rbAsignada.CheckedChanged += new System.EventHandler(this.Proceso_CheckedChanged);
-            // 
-            // rbViajes
-            // 
-            this.rbViajes.AutoSize = true;
-            this.rbViajes.Location = new System.Drawing.Point(360, 24);
-            this.rbViajes.Name = "rbViajes";
-            this.rbViajes.Size = new System.Drawing.Size(112, 17);
-            this.rbViajes.TabIndex = 3;
-            this.rbViajes.Text = "Boletas (viajes)";
-            this.rbViajes.UseVisualStyleBackColor = true;
-            this.rbViajes.CheckedChanged += new System.EventHandler(this.Proceso_CheckedChanged);
-            // 
-            // lblCliente
-            // 
-            this.lblCliente.AutoSize = true;
-            this.lblCliente.Location = new System.Drawing.Point(12, 61);
-            this.lblCliente.Name = "lblCliente";
-            this.lblCliente.Size = new System.Drawing.Size(50, 13);
-            this.lblCliente.TabIndex = 4;
-            this.lblCliente.Text = "Cliente:";
-            // 
-            // cboCliente
-            // 
-            this.cboCliente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboCliente.FormattingEnabled = true;
-            this.cboCliente.Location = new System.Drawing.Point(95, 58);
-            this.cboCliente.Name = "cboCliente";
-            this.cboCliente.Size = new System.Drawing.Size(190, 21);
-            this.cboCliente.TabIndex = 5;
-            // 
-            // lblTipoVeh
-            // 
-            this.lblTipoVeh.AutoSize = true;
-            this.lblTipoVeh.Location = new System.Drawing.Point(300, 61);
-            this.lblTipoVeh.Name = "lblTipoVeh";
-            this.lblTipoVeh.Size = new System.Drawing.Size(66, 13);
-            this.lblTipoVeh.TabIndex = 6;
-            this.lblTipoVeh.Text = "Tipo Veh.:";
-            // 
-            // cboTipoVehiculo
-            // 
-            this.cboTipoVehiculo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTipoVehiculo.FormattingEnabled = true;
-            this.cboTipoVehiculo.Location = new System.Drawing.Point(365, 58);
-            this.cboTipoVehiculo.Name = "cboTipoVehiculo";
-            this.cboTipoVehiculo.Size = new System.Drawing.Size(160, 21);
-            this.cboTipoVehiculo.TabIndex = 7;
-            // 
-            // lblClase
-            // 
-            this.lblClase.AutoSize = true;
-            this.lblClase.Location = new System.Drawing.Point(540, 61);
-            this.lblClase.Name = "lblClase";
-            this.lblClase.Size = new System.Drawing.Size(76, 13);
-            this.lblClase.TabIndex = 8;
-            this.lblClase.Text = "Clase Trab.:";
-            // 
-            // cboClaseTrabajo
-            // 
-            this.cboClaseTrabajo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboClaseTrabajo.FormattingEnabled = true;
-            this.cboClaseTrabajo.Location = new System.Drawing.Point(615, 58);
-            this.cboClaseTrabajo.Name = "cboClaseTrabajo";
-            this.cboClaseTrabajo.Size = new System.Drawing.Size(180, 21);
-            this.cboClaseTrabajo.TabIndex = 9;
-            // 
-            // lblRuta
-            // 
-            this.lblRuta.AutoSize = true;
-            this.lblRuta.Location = new System.Drawing.Point(12, 93);
-            this.lblRuta.Name = "lblRuta";
-            this.lblRuta.Size = new System.Drawing.Size(38, 13);
-            this.lblRuta.TabIndex = 10;
-            this.lblRuta.Text = "Ruta (opc.):";
-            // 
-            // txtRuta
-            // 
-            this.txtRuta.Location = new System.Drawing.Point(95, 90);
-            this.txtRuta.Name = "txtRuta";
-            this.txtRuta.Size = new System.Drawing.Size(190, 20);
-            this.txtRuta.TabIndex = 11;
-            // 
+            //
+            // tabsProceso
+            //
+            this.tabsProceso.Controls.Add(this.tpBase);
+            this.tabsProceso.Controls.Add(this.tpAsig);
+            this.tabsProceso.Controls.Add(this.tpViaje);
+            this.tabsProceso.Location = new System.Drawing.Point(6, 40);
+            this.tabsProceso.Name = "tabsProceso";
+            this.tabsProceso.SelectedIndex = 0;
+            this.tabsProceso.Size = new System.Drawing.Size(806, 108);
+            this.tabsProceso.TabIndex = 0;
+            this.tabsProceso.SelectedIndexChanged += new System.EventHandler(this.tabsProceso_SelectedIndexChanged);
+            //
+            // tpBase
+            //
+            this.tpBase.BackColor = System.Drawing.SystemColors.Control;
+            this.tpBase.Controls.Add(this.lblTvBase);
+            this.tpBase.Controls.Add(this.cboTvBase);
+            this.tpBase.Location = new System.Drawing.Point(4, 22);
+            this.tpBase.Name = "tpBase";
+            this.tpBase.Padding = new System.Windows.Forms.Padding(3);
+            this.tpBase.Size = new System.Drawing.Size(798, 82);
+            this.tpBase.TabIndex = 0;
+            this.tpBase.Text = "Tarifa base";
+            //
+            // lblTvBase
+            //
+            this.lblTvBase.AutoSize = true;
+            this.lblTvBase.Location = new System.Drawing.Point(15, 28);
+            this.lblTvBase.Name = "lblTvBase";
+            this.lblTvBase.Size = new System.Drawing.Size(91, 13);
+            this.lblTvBase.TabIndex = 0;
+            this.lblTvBase.Text = "Tipo de Vehículo:";
+            //
+            // cboTvBase
+            //
+            this.cboTvBase.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTvBase.FormattingEnabled = true;
+            this.cboTvBase.Location = new System.Drawing.Point(140, 25);
+            this.cboTvBase.Name = "cboTvBase";
+            this.cboTvBase.Size = new System.Drawing.Size(220, 21);
+            this.cboTvBase.TabIndex = 1;
+            //
+            // tpAsig
+            //
+            this.tpAsig.BackColor = System.Drawing.SystemColors.Control;
+            this.tpAsig.Controls.Add(this.lblClienteA);
+            this.tpAsig.Controls.Add(this.cboClienteAsig);
+            this.tpAsig.Controls.Add(this.lblTvA);
+            this.tpAsig.Controls.Add(this.cboTvAsig);
+            this.tpAsig.Controls.Add(this.lblClaseA);
+            this.tpAsig.Controls.Add(this.cboClaseAsig);
+            this.tpAsig.Location = new System.Drawing.Point(4, 22);
+            this.tpAsig.Name = "tpAsig";
+            this.tpAsig.Padding = new System.Windows.Forms.Padding(3);
+            this.tpAsig.Size = new System.Drawing.Size(798, 82);
+            this.tpAsig.TabIndex = 1;
+            this.tpAsig.Text = "Tarifa asignada";
+            //
+            // lblClienteA
+            //
+            this.lblClienteA.AutoSize = true;
+            this.lblClienteA.Location = new System.Drawing.Point(15, 31);
+            this.lblClienteA.Name = "lblClienteA";
+            this.lblClienteA.Size = new System.Drawing.Size(44, 13);
+            this.lblClienteA.TabIndex = 0;
+            this.lblClienteA.Text = "Cliente:";
+            //
+            // cboClienteAsig
+            //
+            this.cboClienteAsig.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboClienteAsig.FormattingEnabled = true;
+            this.cboClienteAsig.Location = new System.Drawing.Point(80, 28);
+            this.cboClienteAsig.Name = "cboClienteAsig";
+            this.cboClienteAsig.Size = new System.Drawing.Size(190, 21);
+            this.cboClienteAsig.TabIndex = 1;
+            //
+            // lblTvA
+            //
+            this.lblTvA.AutoSize = true;
+            this.lblTvA.Location = new System.Drawing.Point(285, 31);
+            this.lblTvA.Name = "lblTvA";
+            this.lblTvA.Size = new System.Drawing.Size(57, 13);
+            this.lblTvA.TabIndex = 2;
+            this.lblTvA.Text = "Tipo Veh.:";
+            //
+            // cboTvAsig
+            //
+            this.cboTvAsig.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTvAsig.FormattingEnabled = true;
+            this.cboTvAsig.Location = new System.Drawing.Point(355, 28);
+            this.cboTvAsig.Name = "cboTvAsig";
+            this.cboTvAsig.Size = new System.Drawing.Size(150, 21);
+            this.cboTvAsig.TabIndex = 3;
+            //
+            // lblClaseA
+            //
+            this.lblClaseA.AutoSize = true;
+            this.lblClaseA.Location = new System.Drawing.Point(520, 31);
+            this.lblClaseA.Name = "lblClaseA";
+            this.lblClaseA.Size = new System.Drawing.Size(64, 13);
+            this.lblClaseA.TabIndex = 4;
+            this.lblClaseA.Text = "Clase Trab.:";
+            //
+            // cboClaseAsig
+            //
+            this.cboClaseAsig.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboClaseAsig.FormattingEnabled = true;
+            this.cboClaseAsig.Location = new System.Drawing.Point(600, 28);
+            this.cboClaseAsig.Name = "cboClaseAsig";
+            this.cboClaseAsig.Size = new System.Drawing.Size(185, 21);
+            this.cboClaseAsig.TabIndex = 5;
+            //
+            // tpViaje
+            //
+            this.tpViaje.BackColor = System.Drawing.SystemColors.Control;
+            this.tpViaje.Controls.Add(this.lblClienteV);
+            this.tpViaje.Controls.Add(this.cboClienteViaje);
+            this.tpViaje.Controls.Add(this.lblTvV);
+            this.tpViaje.Controls.Add(this.cboTvViaje);
+            this.tpViaje.Controls.Add(this.lblClaseV);
+            this.tpViaje.Controls.Add(this.cboClaseViaje);
+            this.tpViaje.Controls.Add(this.lblDesde);
+            this.tpViaje.Controls.Add(this.dtpDesde);
+            this.tpViaje.Controls.Add(this.lblHasta);
+            this.tpViaje.Controls.Add(this.dtpHasta);
+            this.tpViaje.Location = new System.Drawing.Point(4, 22);
+            this.tpViaje.Name = "tpViaje";
+            this.tpViaje.Padding = new System.Windows.Forms.Padding(3);
+            this.tpViaje.Size = new System.Drawing.Size(798, 82);
+            this.tpViaje.TabIndex = 2;
+            this.tpViaje.Text = "Boletas (viajes)";
+            //
+            // lblClienteV
+            //
+            this.lblClienteV.AutoSize = true;
+            this.lblClienteV.Location = new System.Drawing.Point(15, 18);
+            this.lblClienteV.Name = "lblClienteV";
+            this.lblClienteV.Size = new System.Drawing.Size(44, 13);
+            this.lblClienteV.TabIndex = 0;
+            this.lblClienteV.Text = "Cliente:";
+            //
+            // cboClienteViaje
+            //
+            this.cboClienteViaje.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboClienteViaje.FormattingEnabled = true;
+            this.cboClienteViaje.Location = new System.Drawing.Point(80, 15);
+            this.cboClienteViaje.Name = "cboClienteViaje";
+            this.cboClienteViaje.Size = new System.Drawing.Size(190, 21);
+            this.cboClienteViaje.TabIndex = 1;
+            //
+            // lblTvV
+            //
+            this.lblTvV.AutoSize = true;
+            this.lblTvV.Location = new System.Drawing.Point(285, 18);
+            this.lblTvV.Name = "lblTvV";
+            this.lblTvV.Size = new System.Drawing.Size(57, 13);
+            this.lblTvV.TabIndex = 2;
+            this.lblTvV.Text = "Tipo Veh.:";
+            //
+            // cboTvViaje
+            //
+            this.cboTvViaje.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTvViaje.FormattingEnabled = true;
+            this.cboTvViaje.Location = new System.Drawing.Point(355, 15);
+            this.cboTvViaje.Name = "cboTvViaje";
+            this.cboTvViaje.Size = new System.Drawing.Size(150, 21);
+            this.cboTvViaje.TabIndex = 3;
+            //
+            // lblClaseV
+            //
+            this.lblClaseV.AutoSize = true;
+            this.lblClaseV.Location = new System.Drawing.Point(520, 18);
+            this.lblClaseV.Name = "lblClaseV";
+            this.lblClaseV.Size = new System.Drawing.Size(64, 13);
+            this.lblClaseV.TabIndex = 4;
+            this.lblClaseV.Text = "Clase Trab.:";
+            //
+            // cboClaseViaje
+            //
+            this.cboClaseViaje.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboClaseViaje.FormattingEnabled = true;
+            this.cboClaseViaje.Location = new System.Drawing.Point(600, 15);
+            this.cboClaseViaje.Name = "cboClaseViaje";
+            this.cboClaseViaje.Size = new System.Drawing.Size(185, 21);
+            this.cboClaseViaje.TabIndex = 5;
+            //
             // lblDesde
-            // 
+            //
             this.lblDesde.AutoSize = true;
-            this.lblDesde.Location = new System.Drawing.Point(300, 93);
+            this.lblDesde.Location = new System.Drawing.Point(15, 52);
             this.lblDesde.Name = "lblDesde";
-            this.lblDesde.Size = new System.Drawing.Size(47, 13);
-            this.lblDesde.TabIndex = 12;
+            this.lblDesde.Size = new System.Drawing.Size(41, 13);
+            this.lblDesde.TabIndex = 6;
             this.lblDesde.Text = "Desde:";
-            // 
+            //
             // dtpDesde
-            // 
+            //
             this.dtpDesde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDesde.Location = new System.Drawing.Point(365, 90);
+            this.dtpDesde.Location = new System.Drawing.Point(80, 49);
             this.dtpDesde.Name = "dtpDesde";
-            this.dtpDesde.Size = new System.Drawing.Size(110, 20);
-            this.dtpDesde.TabIndex = 13;
-            // 
+            this.dtpDesde.Size = new System.Drawing.Size(120, 20);
+            this.dtpDesde.TabIndex = 7;
+            //
             // lblHasta
-            // 
+            //
             this.lblHasta.AutoSize = true;
-            this.lblHasta.Location = new System.Drawing.Point(490, 93);
+            this.lblHasta.Location = new System.Drawing.Point(220, 52);
             this.lblHasta.Name = "lblHasta";
-            this.lblHasta.Size = new System.Drawing.Size(44, 13);
-            this.lblHasta.TabIndex = 14;
+            this.lblHasta.Size = new System.Drawing.Size(38, 13);
+            this.lblHasta.TabIndex = 8;
             this.lblHasta.Text = "Hasta:";
-            // 
+            //
             // dtpHasta
-            // 
+            //
             this.dtpHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpHasta.Location = new System.Drawing.Point(545, 90);
+            this.dtpHasta.Location = new System.Drawing.Point(275, 49);
             this.dtpHasta.Name = "dtpHasta";
-            this.dtpHasta.Size = new System.Drawing.Size(110, 20);
-            this.dtpHasta.TabIndex = 15;
-            // 
+            this.dtpHasta.Size = new System.Drawing.Size(120, 20);
+            this.dtpHasta.TabIndex = 9;
+            //
             // lblPorcentaje
-            // 
+            //
             this.lblPorcentaje.AutoSize = true;
-            this.lblPorcentaje.Location = new System.Drawing.Point(12, 124);
+            this.lblPorcentaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblPorcentaje.Location = new System.Drawing.Point(12, 160);
             this.lblPorcentaje.Name = "lblPorcentaje";
-            this.lblPorcentaje.Size = new System.Drawing.Size(85, 13);
-            this.lblPorcentaje.TabIndex = 16;
+            this.lblPorcentaje.Size = new System.Drawing.Size(83, 13);
+            this.lblPorcentaje.TabIndex = 1;
             this.lblPorcentaje.Text = "Porcentaje %:";
-            // 
+            //
             // nudPorcentaje
-            // 
+            //
             this.nudPorcentaje.DecimalPlaces = 2;
-            this.nudPorcentaje.Location = new System.Drawing.Point(110, 121);
-            this.nudPorcentaje.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.nudPorcentaje.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
+            this.nudPorcentaje.Location = new System.Drawing.Point(110, 157);
+            this.nudPorcentaje.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            this.nudPorcentaje.Minimum = new decimal(new int[] { 100, 0, 0, -2147483648 });
             this.nudPorcentaje.Name = "nudPorcentaje";
             this.nudPorcentaje.Size = new System.Drawing.Size(90, 20);
-            this.nudPorcentaje.TabIndex = 17;
+            this.nudPorcentaje.TabIndex = 2;
             this.nudPorcentaje.ThousandsSeparator = true;
             this.nudPorcentaje.ValueChanged += new System.EventHandler(this.nudPorcentaje_ValueChanged);
-            // 
+            //
             // btnPrevia
-            // 
-            this.btnPrevia.Location = new System.Drawing.Point(230, 117);
+            //
+            this.btnPrevia.Location = new System.Drawing.Point(230, 153);
             this.btnPrevia.Name = "btnPrevia";
             this.btnPrevia.Size = new System.Drawing.Size(120, 28);
-            this.btnPrevia.TabIndex = 18;
+            this.btnPrevia.TabIndex = 3;
             this.btnPrevia.Text = "Vista previa";
             this.btnPrevia.UseVisualStyleBackColor = true;
             this.btnPrevia.Click += new System.EventHandler(this.btnPrevia_Click);
-            // 
+            //
             // dgvPrevia
-            // 
+            //
             this.dgvPrevia.AllowUserToAddRows = false;
             this.dgvPrevia.AllowUserToDeleteRows = false;
             this.dgvPrevia.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPrevia.Location = new System.Drawing.Point(6, 197);
+            this.dgvPrevia.Location = new System.Drawing.Point(6, 188);
             this.dgvPrevia.Name = "dgvPrevia";
             this.dgvPrevia.RowHeadersVisible = false;
             this.dgvPrevia.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPrevia.Size = new System.Drawing.Size(806, 300);
-            this.dgvPrevia.TabIndex = 19;
+            this.dgvPrevia.TabIndex = 4;
             this.dgvPrevia.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPrevia_CellEndEdit);
-            // 
+            //
             // lblRegistros
-            // 
+            //
             this.lblRegistros.AutoSize = true;
             this.lblRegistros.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblRegistros.Location = new System.Drawing.Point(12, 508);
+            this.lblRegistros.Location = new System.Drawing.Point(12, 500);
             this.lblRegistros.Name = "lblRegistros";
-            this.lblRegistros.Size = new System.Drawing.Size(75, 13);
-            this.lblRegistros.TabIndex = 20;
+            this.lblRegistros.Size = new System.Drawing.Size(72, 13);
+            this.lblRegistros.TabIndex = 5;
             this.lblRegistros.Text = "Registros: 0";
-            // 
+            //
             // btnAplicar
-            // 
-            this.btnAplicar.Location = new System.Drawing.Point(610, 502);
+            //
+            this.btnAplicar.Location = new System.Drawing.Point(610, 495);
             this.btnAplicar.Name = "btnAplicar";
             this.btnAplicar.Size = new System.Drawing.Size(95, 30);
-            this.btnAplicar.TabIndex = 21;
+            this.btnAplicar.TabIndex = 6;
             this.btnAplicar.Text = "Aplicar";
             this.btnAplicar.UseVisualStyleBackColor = true;
             this.btnAplicar.Click += new System.EventHandler(this.btnAplicar_Click);
-            // 
+            //
             // btnSalir
-            // 
-            this.btnSalir.Location = new System.Drawing.Point(712, 502);
+            //
+            this.btnSalir.Location = new System.Drawing.Point(712, 495);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(95, 30);
-            this.btnSalir.TabIndex = 22;
+            this.btnSalir.TabIndex = 7;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
-            // 
+            //
             // FrmActualizarTarifas
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(820, 560);
-            this.Controls.Add(this.gbFiltros);
+            this.Controls.Add(this.tabsProceso);
+            this.Controls.Add(this.lblPorcentaje);
+            this.Controls.Add(this.nudPorcentaje);
+            this.Controls.Add(this.btnPrevia);
             this.Controls.Add(this.dgvPrevia);
             this.Controls.Add(this.lblRegistros);
             this.Controls.Add(this.btnAplicar);
@@ -366,33 +400,44 @@ namespace ADIGGM.Mantenimiento
             this.Controls.SetChildIndex(this.btnAplicar, 0);
             this.Controls.SetChildIndex(this.lblRegistros, 0);
             this.Controls.SetChildIndex(this.dgvPrevia, 0);
-            this.Controls.SetChildIndex(this.gbFiltros, 0);
+            this.Controls.SetChildIndex(this.btnPrevia, 0);
+            this.Controls.SetChildIndex(this.nudPorcentaje, 0);
+            this.Controls.SetChildIndex(this.lblPorcentaje, 0);
+            this.Controls.SetChildIndex(this.tabsProceso, 0);
             this.pnlFooter.ResumeLayout(false);
             this.pnlFooter.PerformLayout();
-            this.gbFiltros.ResumeLayout(false);
-            this.gbFiltros.PerformLayout();
+            this.tabsProceso.ResumeLayout(false);
+            this.tpBase.ResumeLayout(false);
+            this.tpBase.PerformLayout();
+            this.tpAsig.ResumeLayout(false);
+            this.tpAsig.PerformLayout();
+            this.tpViaje.ResumeLayout(false);
+            this.tpViaje.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPorcentaje)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrevia)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
-
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox gbFiltros;
-        private System.Windows.Forms.Label lblProceso;
-        private System.Windows.Forms.RadioButton rbBase;
-        private System.Windows.Forms.RadioButton rbAsignada;
-        private System.Windows.Forms.RadioButton rbViajes;
-        private System.Windows.Forms.Label lblCliente;
-        private System.Windows.Forms.ComboBox cboCliente;
-        private System.Windows.Forms.Label lblTipoVeh;
-        private System.Windows.Forms.ComboBox cboTipoVehiculo;
-        private System.Windows.Forms.Label lblClase;
-        private System.Windows.Forms.ComboBox cboClaseTrabajo;
-        private System.Windows.Forms.Label lblRuta;
-        private System.Windows.Forms.TextBox txtRuta;
+        private System.Windows.Forms.TabControl tabsProceso;
+        private System.Windows.Forms.TabPage tpBase;
+        private System.Windows.Forms.Label lblTvBase;
+        private System.Windows.Forms.ComboBox cboTvBase;
+        private System.Windows.Forms.TabPage tpAsig;
+        private System.Windows.Forms.Label lblClienteA;
+        private System.Windows.Forms.ComboBox cboClienteAsig;
+        private System.Windows.Forms.Label lblTvA;
+        private System.Windows.Forms.ComboBox cboTvAsig;
+        private System.Windows.Forms.Label lblClaseA;
+        private System.Windows.Forms.ComboBox cboClaseAsig;
+        private System.Windows.Forms.TabPage tpViaje;
+        private System.Windows.Forms.Label lblClienteV;
+        private System.Windows.Forms.ComboBox cboClienteViaje;
+        private System.Windows.Forms.Label lblTvV;
+        private System.Windows.Forms.ComboBox cboTvViaje;
+        private System.Windows.Forms.Label lblClaseV;
+        private System.Windows.Forms.ComboBox cboClaseViaje;
         private System.Windows.Forms.Label lblDesde;
         private System.Windows.Forms.DateTimePicker dtpDesde;
         private System.Windows.Forms.Label lblHasta;

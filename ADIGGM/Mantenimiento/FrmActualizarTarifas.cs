@@ -12,14 +12,14 @@ namespace ADIGGM.Mantenimiento
 {
     /// <summary>
     /// Actualización masiva de tarifas aplicando un porcentaje (subir/bajar). Tres procesos
-    /// INDEPENDIENTES: tarifa base (TR_AsigRutaTipoVeh), tarifa asignada (TR_TarifaRutas) y precio
-    /// en boletas ya digitadas (TR_Viajes). Filtros estilo FrmAsigTarifas. La vista previa muestra
-    /// "tarifa actual → tarifa nueva" y permite ajustar cada fila a mano antes de aplicar.
-    /// Cada "Aplicar" persiste en UNA transacción (todo-o-nada) y registra en ADI_Auditoria.
+    /// INDEPENDIENTES en pestañas: tarifa base (TR_AsigRutaTipoVeh, solo tipo de vehículo), tarifa
+    /// asignada (TR_TarifaRutas: cliente+tipo veh.+clase) y boletas (TR_Viajes: lo mismo + rango de
+    /// fechas). La vista previa muestra "tarifa actual → tarifa nueva" y permite ajustar cada fila a
+    /// mano. Cada "Aplicar" persiste en UNA transacción (todo-o-nada) y registra en ADI_Auditoria.
     /// </summary>
     public partial class FrmActualizarTarifas : FrmPrincipal
     {
-        private enum Modo { Base, Asignada, Viajes }
+        private enum Modo { Base = 0, Asignada = 1, Viajes = 2 }
 
         private readonly RepositorioTransporte _repo = new RepositorioTransporte();
         private BindingList<FilaTarifa> _previaTarifas;
@@ -33,21 +33,23 @@ namespace ADIGGM.Mantenimiento
             dgvPrevia.DataError += dgvPrevia_DataError;
         }
 
-        private Modo ModoActual
-        {
-            get { return rbAsignada.Checked ? Modo.Asignada : (rbViajes.Checked ? Modo.Viajes : Modo.Base); }
-        }
+        private Modo ModoActual { get { return (Modo)tabsProceso.SelectedIndex; } }
 
         private void FrmActualizarTarifas_Load(object sender, EventArgs e)
         {
-            CargarCombo(cboCliente, _repo.ListarClientesActivos(), "Cliente", "IdCliente");
-            CargarCombo(cboTipoVehiculo, _repo.ListarTipoVehiculosActivos(), "TipoVehiculo", "IdTipoVehiculo");
-            CargarCombo(cboClaseTrabajo, _repo.ListarClaseTrabajosActivos(), "ClaseTrabajo", "IdClaseTrabajo");
+            // Cada combo con su propio DataTable (evita que combos del mismo DataSource compartan selección).
+            CargarCombo(cboTvBase, _repo.ListarTipoVehiculosActivos(), "TipoVehiculo", "IdTipoVehiculo");
+
+            CargarCombo(cboClienteAsig, _repo.ListarClientesActivos(), "Cliente", "IdCliente");
+            CargarCombo(cboTvAsig, _repo.ListarTipoVehiculosActivos(), "TipoVehiculo", "IdTipoVehiculo");
+            CargarCombo(cboClaseAsig, _repo.ListarClaseTrabajosActivos(), "ClaseTrabajo", "IdClaseTrabajo");
+
+            CargarCombo(cboClienteViaje, _repo.ListarClientesActivos(), "Cliente", "IdCliente");
+            CargarCombo(cboTvViaje, _repo.ListarTipoVehiculosActivos(), "TipoVehiculo", "IdTipoVehiculo");
+            CargarCombo(cboClaseViaje, _repo.ListarClaseTrabajosActivos(), "ClaseTrabajo", "IdClaseTrabajo");
 
             dtpDesde.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             dtpHasta.Value = DateTime.Today;
-
-            AjustarModo();
         }
 
         private static void CargarCombo(ComboBox combo, System.Data.DataTable datos, string display, string value)
@@ -58,32 +60,8 @@ namespace ADIGGM.Mantenimiento
             combo.SelectedIndex = -1;
         }
 
-        private void Proceso_CheckedChanged(object sender, EventArgs e)
+        private void tabsProceso_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // CheckedChanged dispara dos veces (el que se apaga y el que se enciende): reaccionar solo al activo.
-            RadioButton rb = sender as RadioButton;
-            if (rb != null && !rb.Checked) return;
-            AjustarModo();
-        }
-
-        /// <summary>Ajusta los filtros visibles/habilitados según el proceso y limpia la vista previa.</summary>
-        private void AjustarModo()
-        {
-            Modo m = ModoActual;
-            bool clienteClase = m != Modo.Base;   // base (TR_AsigRutaTipoVeh) no maneja cliente ni clase
-            bool fechas = m == Modo.Viajes;
-
-            lblCliente.Enabled = cboCliente.Enabled = clienteClase;
-            lblClase.Enabled = cboClaseTrabajo.Enabled = clienteClase;
-            lblDesde.Visible = dtpDesde.Visible = fechas;
-            lblHasta.Visible = dtpHasta.Visible = fechas;
-
-            if (!clienteClase)
-            {
-                cboCliente.SelectedIndex = -1;
-                cboClaseTrabajo.SelectedIndex = -1;
-            }
-
             LimpiarPrevia();
         }
 
@@ -95,49 +73,6 @@ namespace ADIGGM.Mantenimiento
             _previaViajes = null;
             btnAplicar.Enabled = false;
             lblRegistros.Text = "Registros: 0";
-        }
-
-        private void btnPrevia_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Modo m = ModoActual;
-                if (cboTipoVehiculo.SelectedIndex < 0) { Aviso("Seleccione el tipo de vehículo."); return; }
-                if (m != Modo.Base && (cboCliente.SelectedIndex < 0 || cboClaseTrabajo.SelectedIndex < 0))
-                { Aviso("Seleccione cliente y clase de trabajo."); return; }
-
-                int idTipoVeh = Convert.ToInt32(cboTipoVehiculo.SelectedValue);
-                string ruta = txtRuta.Text.Trim();
-                decimal pct = nudPorcentaje.Value;
-
-                if (m == Modo.Viajes)
-                {
-                    DateTime ini = dtpDesde.Value.Date, fin = dtpHasta.Value.Date;
-                    if (ini > fin) { Aviso("La fecha 'Desde' no puede ser mayor que 'Hasta'."); return; }
-
-                    List<FilaViaje> filas = _repo.PreviewViajes(
-                        Convert.ToInt32(cboCliente.SelectedValue), Convert.ToInt32(cboClaseTrabajo.SelectedValue),
-                        idTipoVeh, ruta, ini, fin);
-                    foreach (FilaViaje f in filas) RecalcularViaje(f, pct);
-                    _previaViajes = new BindingList<FilaViaje>(filas);
-                    ConfigurarColumnasViaje();
-                    dgvPrevia.DataSource = _previaViajes;
-                    FinalizarPrevia(filas.Count);
-                }
-                else
-                {
-                    List<FilaTarifa> filas = (m == Modo.Base)
-                        ? _repo.PreviewTarifasBase(idTipoVeh, ruta)
-                        : _repo.PreviewTarifasAsignadas(Convert.ToInt32(cboCliente.SelectedValue),
-                              Convert.ToInt32(cboClaseTrabajo.SelectedValue), idTipoVeh, ruta);
-                    foreach (FilaTarifa f in filas) f.TarifaNueva = Redondear(f.TarifaActual * (1 + pct / 100m));
-                    _previaTarifas = new BindingList<FilaTarifa>(filas);
-                    ConfigurarColumnasTarifa(m != Modo.Base);
-                    dgvPrevia.DataSource = _previaTarifas;
-                    FinalizarPrevia(filas.Count);
-                }
-            }
-            catch (Exception ex) { Error(ex); }
         }
 
         /// <summary>Si ya hay una previa cargada, recalcula la "tarifa nueva" de todas las filas con el
@@ -155,6 +90,60 @@ namespace ADIGGM.Mantenimiento
                 foreach (FilaTarifa f in _previaTarifas) f.TarifaNueva = Redondear(f.TarifaActual * (1 + pct / 100m));
                 _previaTarifas.ResetBindings();
             }
+        }
+
+        private void btnPrevia_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Modo m = ModoActual;
+                decimal pct = nudPorcentaje.Value;
+
+                if (m == Modo.Base)
+                {
+                    if (cboTvBase.SelectedIndex < 0) { Aviso("Seleccione el tipo de vehículo."); return; }
+                    List<FilaTarifa> filas = _repo.PreviewTarifasBase(Convert.ToInt32(cboTvBase.SelectedValue));
+                    AplicarPctTarifas(filas, pct);
+                    _previaTarifas = new BindingList<FilaTarifa>(filas);
+                    ConfigurarColumnasTarifa(false);
+                    dgvPrevia.DataSource = _previaTarifas;
+                    FinalizarPrevia(filas.Count);
+                }
+                else if (m == Modo.Asignada)
+                {
+                    if (cboClienteAsig.SelectedIndex < 0 || cboTvAsig.SelectedIndex < 0 || cboClaseAsig.SelectedIndex < 0)
+                    { Aviso("Seleccione cliente, tipo de vehículo y clase de trabajo."); return; }
+                    List<FilaTarifa> filas = _repo.PreviewTarifasAsignadas(
+                        Convert.ToInt32(cboClienteAsig.SelectedValue), Convert.ToInt32(cboClaseAsig.SelectedValue),
+                        Convert.ToInt32(cboTvAsig.SelectedValue));
+                    AplicarPctTarifas(filas, pct);
+                    _previaTarifas = new BindingList<FilaTarifa>(filas);
+                    ConfigurarColumnasTarifa(true);
+                    dgvPrevia.DataSource = _previaTarifas;
+                    FinalizarPrevia(filas.Count);
+                }
+                else // Viajes
+                {
+                    if (cboClienteViaje.SelectedIndex < 0 || cboTvViaje.SelectedIndex < 0 || cboClaseViaje.SelectedIndex < 0)
+                    { Aviso("Seleccione cliente, tipo de vehículo y clase de trabajo."); return; }
+                    DateTime ini = dtpDesde.Value.Date, fin = dtpHasta.Value.Date;
+                    if (ini > fin) { Aviso("La fecha 'Desde' no puede ser mayor que 'Hasta'."); return; }
+                    List<FilaViaje> filas = _repo.PreviewViajes(
+                        Convert.ToInt32(cboClienteViaje.SelectedValue), Convert.ToInt32(cboClaseViaje.SelectedValue),
+                        Convert.ToInt32(cboTvViaje.SelectedValue), ini, fin);
+                    foreach (FilaViaje f in filas) RecalcularViaje(f, pct);
+                    _previaViajes = new BindingList<FilaViaje>(filas);
+                    ConfigurarColumnasViaje();
+                    dgvPrevia.DataSource = _previaViajes;
+                    FinalizarPrevia(filas.Count);
+                }
+            }
+            catch (Exception ex) { Error(ex); }
+        }
+
+        private static void AplicarPctTarifas(List<FilaTarifa> filas, decimal pct)
+        {
+            foreach (FilaTarifa f in filas) f.TarifaNueva = Redondear(f.TarifaActual * (1 + pct / 100m));
         }
 
         private void FinalizarPrevia(int n)
@@ -301,12 +290,20 @@ namespace ADIGGM.Mantenimiento
 
         private string ConstruirDetalle(Modo m)
         {
-            string s = "Proceso=" + m + "; %=" + nudPorcentaje.Value.ToString(CultureInfo.InvariantCulture) +
-                       "; TipoVeh=" + cboTipoVehiculo.Text;
-            if (m != Modo.Base) s += "; Cliente=" + cboCliente.Text + "; Clase=" + cboClaseTrabajo.Text;
-            if (!string.IsNullOrWhiteSpace(txtRuta.Text)) s += "; Ruta~" + txtRuta.Text.Trim();
-            if (m == Modo.Viajes)
-                s += "; Fechas=" + dtpDesde.Value.ToString("yyyy-MM-dd") + ".." + dtpHasta.Value.ToString("yyyy-MM-dd");
+            string s = "Proceso=" + m + "; %=" + nudPorcentaje.Value.ToString(CultureInfo.InvariantCulture);
+            switch (m)
+            {
+                case Modo.Base:
+                    s += "; TipoVeh=" + cboTvBase.Text;
+                    break;
+                case Modo.Asignada:
+                    s += "; Cliente=" + cboClienteAsig.Text + "; TipoVeh=" + cboTvAsig.Text + "; Clase=" + cboClaseAsig.Text;
+                    break;
+                default:
+                    s += "; Cliente=" + cboClienteViaje.Text + "; TipoVeh=" + cboTvViaje.Text + "; Clase=" + cboClaseViaje.Text +
+                         "; Fechas=" + dtpDesde.Value.ToString("yyyy-MM-dd") + ".." + dtpHasta.Value.ToString("yyyy-MM-dd");
+                    break;
+            }
             return s;
         }
 
