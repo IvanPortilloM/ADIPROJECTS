@@ -208,26 +208,45 @@ namespace ADIGGM.CapaDatos
             return Consultar<FilaViaje>(sql, new { IdCliente = idCliente, IdClaseTrabajo = idClaseTrabajo, IdTipoVehiculo = idTipoVehiculo, FiltroRuta = filtroRuta ?? "", FechaInicio = fechaInicio, FechaFin = fechaFin });
         }
 
-        private const string SqlAuditoriaTarifa =
-            "INSERT INTO dbo.TR_AuditoriaTarifas (Usuario, Proceso, Tabla, IdRegistro, Porcentaje, TarifaAnterior, TarifaNueva, Observacion) " +
-            "VALUES (@Usuario, @Proceso, @Tabla, @IdRegistro, @Porcentaje, @TarifaAnterior, @TarifaNueva, @Observacion)";
+        // INSERT genérico a la bitácora de auditoría del sistema (ADI_Auditoria, reutilizable en todo el
+        // proyecto). Cada cambio = una fila: Accion describe qué pasó, Tabla/IdRegistro identifican el
+        // registro, ValorAnterior/ValorNuevo guardan el antes/después y Detalle el contexto (%, filtros…).
+        private const string SqlAuditoria =
+            "INSERT INTO dbo.ADI_Auditoria (Usuario, Modulo, Accion, Tabla, IdRegistro, ValorAnterior, ValorNuevo, Detalle) " +
+            "VALUES (@Usuario, @Modulo, @Accion, @Tabla, @IdRegistro, @ValorAnterior, @ValorNuevo, @Detalle)";
+
+        private static object ParamsAuditoria(string usuario, string proceso, string tabla, int id, decimal valorAnterior, decimal valorNuevo, string detalle)
+        {
+            System.Globalization.CultureInfo inv = System.Globalization.CultureInfo.InvariantCulture;
+            return new
+            {
+                Usuario = usuario,
+                Modulo = "Transporte",
+                Accion = "Actualizar tarifa (" + proceso + ")",
+                Tabla = tabla,
+                IdRegistro = id.ToString(inv),
+                ValorAnterior = valorAnterior.ToString(inv),
+                ValorNuevo = valorNuevo.ToString(inv),
+                Detalle = detalle
+            };
+        }
 
         /// <summary>Aplica las tarifas nuevas a TR_AsigRutaTipoVeh (base) en UNA transacción + auditoría.
         /// Solo persiste las filas cuya tarifa realmente cambió. Devuelve cuántas se actualizaron.</summary>
-        public int AplicarTarifasBase(IList<FilaTarifa> filas, decimal? porcentaje, string usuario, string observacion)
+        public int AplicarTarifasBase(IList<FilaTarifa> filas, string usuario, string detalle)
         {
             const string update = "UPDATE dbo.TR_AsigRutaTipoVeh SET Tarifa = @Tarifa WHERE IdAsigRutaTipoVeh = @Id";
-            return AplicarTarifasInterno(filas, update, "BASE", "TR_AsigRutaTipoVeh", porcentaje, usuario, observacion);
+            return AplicarTarifasInterno(filas, update, "BASE", "TR_AsigRutaTipoVeh", usuario, detalle);
         }
 
         /// <summary>Aplica las tarifas nuevas a TR_TarifaRutas (asignadas) en UNA transacción + auditoría.</summary>
-        public int AplicarTarifasAsignadas(IList<FilaTarifa> filas, decimal? porcentaje, string usuario, string observacion)
+        public int AplicarTarifasAsignadas(IList<FilaTarifa> filas, string usuario, string detalle)
         {
             const string update = "UPDATE dbo.TR_TarifaRutas SET Tarifa = @Tarifa WHERE IdTarifaRuta = @Id";
-            return AplicarTarifasInterno(filas, update, "ASIGNADA", "TR_TarifaRutas", porcentaje, usuario, observacion);
+            return AplicarTarifasInterno(filas, update, "ASIGNADA", "TR_TarifaRutas", usuario, detalle);
         }
 
-        private int AplicarTarifasInterno(IList<FilaTarifa> filas, string updateSql, string proceso, string tabla, decimal? porcentaje, string usuario, string observacion)
+        private int AplicarTarifasInterno(IList<FilaTarifa> filas, string updateSql, string proceso, string tabla, string usuario, string detalle)
         {
             using (DbConnection con = CrearConexion())
             {
@@ -241,17 +260,7 @@ namespace ADIGGM.CapaDatos
                         {
                             if (f.TarifaNueva == f.TarifaActual) continue; // sin cambio: no tocar ni auditar
                             n += con.Execute(updateSql, new { Tarifa = f.TarifaNueva, Id = f.Id }, trans);
-                            con.Execute(SqlAuditoriaTarifa, new
-                            {
-                                Usuario = usuario,
-                                Proceso = proceso,
-                                Tabla = tabla,
-                                IdRegistro = f.Id,
-                                Porcentaje = porcentaje,
-                                TarifaAnterior = f.TarifaActual,
-                                TarifaNueva = f.TarifaNueva,
-                                Observacion = observacion
-                            }, trans);
+                            con.Execute(SqlAuditoria, ParamsAuditoria(usuario, proceso, tabla, f.Id, f.TarifaActual, f.TarifaNueva, detalle), trans);
                         }
                         trans.Commit();
                         return n;
@@ -267,7 +276,7 @@ namespace ADIGGM.CapaDatos
 
         /// <summary>Aplica el precio nuevo a las boletas (TR_Viajes), recalculando Subtotal/ISV/Total,
         /// en UNA transacción + auditoría. Solo persiste las filas cuya tarifa cambió.</summary>
-        public int AplicarViajes(IList<FilaViaje> filas, decimal? porcentaje, string usuario, string observacion)
+        public int AplicarViajes(IList<FilaViaje> filas, string usuario, string detalle)
         {
             const string update = "UPDATE dbo.TR_Viajes SET Tarifa = @Tarifa, Subtotal = @Subtotal, ISV = @ISV, Total = @Total WHERE IdViaje = @Id";
             using (DbConnection con = CrearConexion())
@@ -289,17 +298,7 @@ namespace ADIGGM.CapaDatos
                                 Total = f.TotalNuevo,
                                 Id = f.IdViaje
                             }, trans);
-                            con.Execute(SqlAuditoriaTarifa, new
-                            {
-                                Usuario = usuario,
-                                Proceso = "VIAJE",
-                                Tabla = "TR_Viajes",
-                                IdRegistro = f.IdViaje,
-                                Porcentaje = porcentaje,
-                                TarifaAnterior = f.TarifaActual,
-                                TarifaNueva = f.TarifaNueva,
-                                Observacion = observacion
-                            }, trans);
+                            con.Execute(SqlAuditoria, ParamsAuditoria(usuario, "VIAJE", "TR_Viajes", f.IdViaje, f.TarifaActual, f.TarifaNueva, detalle), trans);
                         }
                         trans.Commit();
                         return n;
