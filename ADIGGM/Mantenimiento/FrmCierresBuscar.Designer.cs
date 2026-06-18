@@ -109,7 +109,6 @@
             this.dgvCierres.AllowUserToAddRows = false;
             this.dgvCierres.AllowUserToDeleteRows = false;
             this.dgvCierres.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            // Las columnas se definen en codigo (ConfigurarColumnas), no aqui, para que el disenador de VS no las borre.
             this.dgvCierres.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCierres.Location = new System.Drawing.Point(0, 100);
             this.dgvCierres.Name = "dgvCierres";
@@ -117,11 +116,11 @@
             this.dgvCierres.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCierres.Size = new System.Drawing.Size(600, 259);
             this.dgvCierres.TabIndex = 104;
-            //
+            // 
             // tRCierreClientesBindingSource
-            //
+            // 
             this.tRCierreClientesBindingSource.DataMember = "TR_CierreClientes";
-            //
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnSeleccionar);
@@ -152,7 +151,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(320, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(123, 16);
+            this.label2.Size = new System.Drawing.Size(122, 16);
             this.label2.TabIndex = 3;
             this.label2.Text = "Elegir Tipo de Factura";
             // 
@@ -161,7 +160,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 16);
+            this.label1.Size = new System.Drawing.Size(75, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "Elegir Cliente";
             // 
@@ -179,7 +178,7 @@
             this.cboTipoFac.TabIndex = 1;
             this.cboTipoFac.ValueMember = "IdTipoFactura";
             this.cboTipoFac.SelectedValueChanged += new System.EventHandler(this.cboTipoFac_SelectedValueChanged);
-            //
+            // 
             // cboClientes
             // 
             this.cboClientes.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
@@ -194,7 +193,7 @@
             this.cboClientes.TabIndex = 0;
             this.cboClientes.ValueMember = "IdCliente";
             this.cboClientes.SelectedValueChanged += new System.EventHandler(this.cboClientes_SelectedValueChanged);
-            //
+            // 
             // FrmCierresBuscar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
