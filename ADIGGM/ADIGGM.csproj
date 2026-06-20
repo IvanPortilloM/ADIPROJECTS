@@ -16,7 +16,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <PublishUrl>\\ADIGGM\Publish\ADIPROJECTS\</PublishUrl>
+    <PublishUrl>\\192.168.2.77\Publish\ADIPROJECTS\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -26,11 +26,11 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <UpdateUrl>\\ADIGGM\Publish\ADIPROJECTS\</UpdateUrl>
+    <UpdateUrl>\\192.168.2.77\Publish\ADIPROJECTS\</UpdateUrl>
     <MinimumRequiredVersion>1.0.0.3</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>66</ApplicationRevision>
+    <ApplicationRevision>68</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -1559,6 +1559,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="INV\Visores\frmVisorInventarioSync.resx">
       <DependentUpon>frmVisorInventarioSync.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mantenimiento\FrmActualizarTarifas.resx">
+      <DependentUpon>FrmActualizarTarifas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Mantenimiento\FrmAgregarCierre.resx">
       <DependentUpon>FrmAgregarCierre.cs</DependentUpon>
