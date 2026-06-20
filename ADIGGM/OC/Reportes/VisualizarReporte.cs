@@ -50,7 +50,15 @@ namespace ADIGGM.OC.Reportes
         }
 
         private void VisualizarReporte_Load(object sender, EventArgs e)
-        {        
+        {
+            try
+            {
+            // Si las credenciales del servidor de reportes están vacías (p. ej. secrets.config no se
+            // desplegó junto al ejecutable), SSRS responde 401 Unauthorized. Avisar claro en vez de
+            // dejar que reviente como "excepción no controlada".
+            if (string.IsNullOrWhiteSpace(usuarioDominio))
+                throw new Exception("Faltan las credenciales del servidor de reportes. Verifique que 'secrets.config' esté desplegado junto al ejecutable.");
+
             if (ID == 0)
             {
                 reportViewer1.ServerReport.ReportServerUrl = new Uri(VarGlobales.urlReportes);
@@ -190,6 +198,16 @@ namespace ADIGGM.OC.Reportes
                 reportViewer1.ServerReport.SetParameters(parameters);
             }
             this.reportViewer1.RefreshReport();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(
+                    "No se pudo generar el reporte." + Environment.NewLine + ex.Message,
+                    VarGlobales.nombreSistema,
+                    System.Windows.Forms.MessageBoxButtons.OK,
+                    System.Windows.Forms.MessageBoxIcon.Error);
+                this.Close();
+            }
         }
     }
 }
