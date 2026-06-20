@@ -50,6 +50,7 @@ namespace ADIGGM.Mantenimiento
 
             dtpDesde.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             dtpHasta.Value = DateTime.Today;
+            cboModoCalculo.SelectedIndex = 0; // Reversible por defecto
         }
 
         private static void CargarCombo(ComboBox combo, System.Data.DataTable datos, string display, string value)
@@ -75,22 +76,31 @@ namespace ADIGGM.Mantenimiento
             lblRegistros.Text = "Registros: 0";
         }
 
-        /// <summary>Si ya hay una previa cargada, recalcula la "tarifa nueva" de todas las filas con el
-        /// nuevo %. (Cambiar el % es el "baseline": reaplica a todo, sobrescribiendo ajustes por fila.)</summary>
-        private void nudPorcentaje_ValueChanged(object sender, EventArgs e)
+        /// <summary>Modo de cálculo del %: Reversible (índice 0, -P% deshace un +P%) o Directo (índice 1,
+        /// -P% deja la tarifa al (1-P/100)).</summary>
+        private bool EsReversible { get { return cboModoCalculo.SelectedIndex != 1; } }
+
+        /// <summary>Recalcula la "tarifa nueva" de toda la previa con el % y el modo actuales. Cambiar el %
+        /// o el modo es el "baseline": reaplica a todo (sobrescribe ajustes por fila).</summary>
+        private void RecomputarPrevia()
         {
             decimal pct = nudPorcentaje.Value;
+            bool rev = EsReversible;
             if (_previaViajes != null)
             {
-                foreach (FilaViaje f in _previaViajes) RecalcularViaje(f, pct);
+                foreach (FilaViaje f in _previaViajes) RecalcularViaje(f, pct, rev);
                 _previaViajes.ResetBindings();
             }
             else if (_previaTarifas != null)
             {
-                foreach (FilaTarifa f in _previaTarifas) f.TarifaNueva = NuevaTarifa(f.TarifaActual, pct);
+                foreach (FilaTarifa f in _previaTarifas) f.TarifaNueva = NuevaTarifa(f.TarifaActual, pct, rev);
                 _previaTarifas.ResetBindings();
             }
         }
+
+        private void nudPorcentaje_ValueChanged(object sender, EventArgs e) { RecomputarPrevia(); }
+
+        private void cboModoCalculo_SelectedIndexChanged(object sender, EventArgs e) { RecomputarPrevia(); }
 
         private void btnPrevia_Click(object sender, EventArgs e)
         {
@@ -98,12 +108,13 @@ namespace ADIGGM.Mantenimiento
             {
                 Modo m = ModoActual;
                 decimal pct = nudPorcentaje.Value;
+                bool rev = EsReversible;
 
                 if (m == Modo.Base)
                 {
                     if (cboTvBase.SelectedIndex < 0) { Aviso("Seleccione el tipo de vehículo."); return; }
                     List<FilaTarifa> filas = _repo.PreviewTarifasBase(Convert.ToInt32(cboTvBase.SelectedValue));
-                    AplicarPctTarifas(filas, pct);
+                    AplicarPctTarifas(filas, pct, rev);
                     _previaTarifas = new BindingList<FilaTarifa>(filas);
                     ConfigurarColumnasTarifa(false);
                     dgvPrevia.DataSource = _previaTarifas;
@@ -116,7 +127,7 @@ namespace ADIGGM.Mantenimiento
                     List<FilaTarifa> filas = _repo.PreviewTarifasAsignadas(
                         Convert.ToInt32(cboClienteAsig.SelectedValue), Convert.ToInt32(cboClaseAsig.SelectedValue),
                         Convert.ToInt32(cboTvAsig.SelectedValue));
-                    AplicarPctTarifas(filas, pct);
+                    AplicarPctTarifas(filas, pct, rev);
                     _previaTarifas = new BindingList<FilaTarifa>(filas);
                     ConfigurarColumnasTarifa(true);
                     dgvPrevia.DataSource = _previaTarifas;
@@ -131,7 +142,7 @@ namespace ADIGGM.Mantenimiento
                     List<FilaViaje> filas = _repo.PreviewViajes(
                         Convert.ToInt32(cboClienteViaje.SelectedValue), Convert.ToInt32(cboClaseViaje.SelectedValue),
                         Convert.ToInt32(cboTvViaje.SelectedValue), ini, fin);
-                    foreach (FilaViaje f in filas) RecalcularViaje(f, pct);
+                    foreach (FilaViaje f in filas) RecalcularViaje(f, pct, rev);
                     _previaViajes = new BindingList<FilaViaje>(filas);
                     ConfigurarColumnasViaje();
                     dgvPrevia.DataSource = _previaViajes;
@@ -141,9 +152,9 @@ namespace ADIGGM.Mantenimiento
             catch (Exception ex) { Error(ex); }
         }
 
-        private static void AplicarPctTarifas(List<FilaTarifa> filas, decimal pct)
+        private static void AplicarPctTarifas(List<FilaTarifa> filas, decimal pct, bool reversible)
         {
-            foreach (FilaTarifa f in filas) f.TarifaNueva = NuevaTarifa(f.TarifaActual, pct);
+            foreach (FilaTarifa f in filas) f.TarifaNueva = NuevaTarifa(f.TarifaActual, pct, reversible);
         }
 
         private void FinalizarPrevia(int n)
@@ -160,18 +171,20 @@ namespace ADIGGM.Mantenimiento
             return Math.Round(v, 4, MidpointRounding.AwayFromZero);
         }
 
-        /// <summary>Aplica el % a una tarifa de forma REVERSIBLE: +P% multiplica por (1+P/100) y -P%
-        /// DIVIDE entre (1+P/100), de modo que aplicar +P% y luego -P% devuelve la tarifa original
-        /// (ej.: 100 +20% = 120; 120 -20% = 100). Redondea a 4 decimales.</summary>
-        private static decimal NuevaTarifa(decimal actual, decimal pct)
+        /// <summary>Aplica el % a una tarifa. En modo REVERSIBLE, -P% DIVIDE entre (1+P/100) para deshacer
+        /// un +P% (100 +20% = 120; 120 -20% = 100). En modo DIRECTO, -P% es la resta estándar
+        /// (100 -20% = 80). Redondea a 4 decimales.</summary>
+        private static decimal NuevaTarifa(decimal actual, decimal pct, bool reversible)
         {
-            decimal factor = pct >= 0m ? (1m + pct / 100m) : (1m / (1m + (-pct) / 100m));
+            decimal factor = (reversible && pct < 0m)
+                ? 1m / (1m + (-pct) / 100m)
+                : 1m + pct / 100m;
             return Redondear(actual * factor);
         }
 
-        private static void RecalcularViaje(FilaViaje f, decimal pct)
+        private static void RecalcularViaje(FilaViaje f, decimal pct, bool reversible)
         {
-            f.TarifaNueva = NuevaTarifa(f.TarifaActual, pct);
+            f.TarifaNueva = NuevaTarifa(f.TarifaActual, pct, reversible);
             RecalcularTotales(f);
         }
 
@@ -299,7 +312,8 @@ namespace ADIGGM.Mantenimiento
 
         private string ConstruirDetalle(Modo m)
         {
-            string s = "Proceso=" + m + "; %=" + nudPorcentaje.Value.ToString(CultureInfo.InvariantCulture);
+            string s = "Proceso=" + m + "; %=" + nudPorcentaje.Value.ToString(CultureInfo.InvariantCulture) +
+                       "; Modo=" + (EsReversible ? "Reversible" : "Directo");
             switch (m)
             {
                 case Modo.Base:
