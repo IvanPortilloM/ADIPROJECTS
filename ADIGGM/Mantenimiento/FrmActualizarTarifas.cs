@@ -87,7 +87,7 @@ namespace ADIGGM.Mantenimiento
             }
             else if (_previaTarifas != null)
             {
-                foreach (FilaTarifa f in _previaTarifas) f.TarifaNueva = Redondear(f.TarifaActual * (1 + pct / 100m));
+                foreach (FilaTarifa f in _previaTarifas) f.TarifaNueva = NuevaTarifa(f.TarifaActual, pct);
                 _previaTarifas.ResetBindings();
             }
         }
@@ -143,7 +143,7 @@ namespace ADIGGM.Mantenimiento
 
         private static void AplicarPctTarifas(List<FilaTarifa> filas, decimal pct)
         {
-            foreach (FilaTarifa f in filas) f.TarifaNueva = Redondear(f.TarifaActual * (1 + pct / 100m));
+            foreach (FilaTarifa f in filas) f.TarifaNueva = NuevaTarifa(f.TarifaActual, pct);
         }
 
         private void FinalizarPrevia(int n)
@@ -160,9 +160,18 @@ namespace ADIGGM.Mantenimiento
             return Math.Round(v, 4, MidpointRounding.AwayFromZero);
         }
 
+        /// <summary>Aplica el % a una tarifa de forma REVERSIBLE: +P% multiplica por (1+P/100) y -P%
+        /// DIVIDE entre (1+P/100), de modo que aplicar +P% y luego -P% devuelve la tarifa original
+        /// (ej.: 100 +20% = 120; 120 -20% = 100). Redondea a 4 decimales.</summary>
+        private static decimal NuevaTarifa(decimal actual, decimal pct)
+        {
+            decimal factor = pct >= 0m ? (1m + pct / 100m) : (1m / (1m + (-pct) / 100m));
+            return Redondear(actual * factor);
+        }
+
         private static void RecalcularViaje(FilaViaje f, decimal pct)
         {
-            f.TarifaNueva = Redondear(f.TarifaActual * (1 + pct / 100m));
+            f.TarifaNueva = NuevaTarifa(f.TarifaActual, pct);
             RecalcularTotales(f);
         }
 
