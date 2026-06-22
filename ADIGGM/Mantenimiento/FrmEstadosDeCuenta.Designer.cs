@@ -31,23 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEstadosDeCuenta));
             this.cODSlcASMaestrasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCodeasAdiggm = new ADIGGM.DataSets.DsCodeasAdiggm();
             this.cODSlcEstadoCuentaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dgvListaCorreos = new System.Windows.Forms.DataGridView();
-            this.identidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombres = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.correo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.activo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Marcar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.IdDivision = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idAsociadoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fKCODListaCorreosCODDivisionesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cODDivisionesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cODListaCorreosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cOD_SlcASMaestrasTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcASMaestrasTableAdapter();
-            this.cOD_SlcEstadoCuentaTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcEstadoCuentaTableAdapter();
-            this.cOD_ListaCorreosTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_ListaCorreosTableAdapter();
-            this.cOD_DivisionesTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_DivisionesTableAdapter();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnImprimir = new System.Windows.Forms.Button();
             this.btnStartAsyncOperation = new System.Windows.Forms.Button();
@@ -56,10 +44,8 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.chkMarcar = new System.Windows.Forms.CheckBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.cOD_SlcEstadoCuentaDetTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcEstadoCuentaDetTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cODSlcASMaestrasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cODSlcEstadoCuentaBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListaCorreos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fKCODListaCorreosCODDivisionesBindingSource)).BeginInit();
@@ -156,17 +142,10 @@
             // cODSlcASMaestrasBindingSource
             // 
             this.cODSlcASMaestrasBindingSource.DataMember = "COD_SlcASMaestras";
-            this.cODSlcASMaestrasBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // dsCodeasAdiggm
-            // 
-            this.dsCodeasAdiggm.DataSetName = "DsCodeasAdiggm";
-            this.dsCodeasAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // cODSlcEstadoCuentaBindingSource
             // 
             this.cODSlcEstadoCuentaBindingSource.DataMember = "COD_SlcEstadoCuenta";
-            this.cODSlcEstadoCuentaBindingSource.DataSource = this.dsCodeasAdiggm;
             // 
             // dgvListaCorreos
             // 
@@ -174,71 +153,11 @@
             this.dgvListaCorreos.AllowUserToDeleteRows = false;
             this.dgvListaCorreos.AutoGenerateColumns = false;
             this.dgvListaCorreos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvListaCorreos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.identidad,
-            this.nombres,
-            this.correo,
-            this.activo,
-            this.Marcar,
-            this.IdDivision,
-            this.idAsociadoDataGridViewTextBoxColumn});
-            this.dgvListaCorreos.DataSource = this.fKCODListaCorreosCODDivisionesBindingSource;
             this.dgvListaCorreos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvListaCorreos.Location = new System.Drawing.Point(0, 147);
             this.dgvListaCorreos.Name = "dgvListaCorreos";
             this.dgvListaCorreos.Size = new System.Drawing.Size(634, 388);
             this.dgvListaCorreos.TabIndex = 104;
-            // 
-            // identidad
-            // 
-            this.identidad.DataPropertyName = "Identidad";
-            this.identidad.HeaderText = "Identidad";
-            this.identidad.Name = "identidad";
-            // 
-            // nombres
-            // 
-            this.nombres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombres.DataPropertyName = "Nombres";
-            this.nombres.HeaderText = "Nombres";
-            this.nombres.Name = "nombres";
-            // 
-            // correo
-            // 
-            this.correo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.correo.DataPropertyName = "Correo";
-            this.correo.HeaderText = "Correo";
-            this.correo.Name = "correo";
-            // 
-            // activo
-            // 
-            this.activo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.activo.DataPropertyName = "Activo";
-            this.activo.HeaderText = "Activo";
-            this.activo.Name = "activo";
-            this.activo.Width = 48;
-            // 
-            // Marcar
-            // 
-            this.Marcar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Marcar.HeaderText = "Marcar";
-            this.Marcar.Name = "Marcar";
-            this.Marcar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Marcar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Marcar.Width = 72;
-            // 
-            // IdDivision
-            // 
-            this.IdDivision.DataPropertyName = "IdDivision";
-            this.IdDivision.HeaderText = "IdDivision";
-            this.IdDivision.Name = "IdDivision";
-            this.IdDivision.Visible = false;
-            // 
-            // idAsociadoDataGridViewTextBoxColumn
-            // 
-            this.idAsociadoDataGridViewTextBoxColumn.DataPropertyName = "IdAsociado";
-            this.idAsociadoDataGridViewTextBoxColumn.HeaderText = "IdAsociado";
-            this.idAsociadoDataGridViewTextBoxColumn.Name = "idAsociadoDataGridViewTextBoxColumn";
-            this.idAsociadoDataGridViewTextBoxColumn.Visible = false;
             // 
             // fKCODListaCorreosCODDivisionesBindingSource
             // 
@@ -248,28 +167,10 @@
             // cODDivisionesBindingSource
             // 
             this.cODDivisionesBindingSource.DataMember = "COD_Divisiones";
-            this.cODDivisionesBindingSource.DataSource = this.dsCodeasAdiggm;
             // 
             // cODListaCorreosBindingSource
             // 
             this.cODListaCorreosBindingSource.DataMember = "COD_ListaCorreos";
-            this.cODListaCorreosBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // cOD_SlcASMaestrasTableAdapter
-            // 
-            this.cOD_SlcASMaestrasTableAdapter.ClearBeforeFill = true;
-            // 
-            // cOD_SlcEstadoCuentaTableAdapter
-            // 
-            this.cOD_SlcEstadoCuentaTableAdapter.ClearBeforeFill = true;
-            // 
-            // cOD_ListaCorreosTableAdapter
-            // 
-            this.cOD_ListaCorreosTableAdapter.ClearBeforeFill = true;
-            // 
-            // cOD_DivisionesTableAdapter
-            // 
-            this.cOD_DivisionesTableAdapter.ClearBeforeFill = true;
             // 
             // panel3
             // 
@@ -377,10 +278,6 @@
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
-            // cOD_SlcEstadoCuentaDetTableAdapter
-            // 
-            this.cOD_SlcEstadoCuentaDetTableAdapter.ClearBeforeFill = true;
-            // 
             // FrmEstadosDeCuenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -396,7 +293,6 @@
             this.pnlFooter.ResumeLayout(false);
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cODSlcASMaestrasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cODSlcEstadoCuentaBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListaCorreos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fKCODListaCorreosCODDivisionesBindingSource)).EndInit();
@@ -410,15 +306,10 @@
 
         #endregion
         private System.Windows.Forms.BindingSource cODSlcASMaestrasBindingSource;
-        private DataSets.DsCodeasAdiggm dsCodeasAdiggm;
         private System.Windows.Forms.BindingSource cODSlcEstadoCuentaBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcASMaestrasTableAdapter cOD_SlcASMaestrasTableAdapter;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcEstadoCuentaTableAdapter cOD_SlcEstadoCuentaTableAdapter;
         private System.Windows.Forms.DataGridView dgvListaCorreos;
         private System.Windows.Forms.BindingSource cODListaCorreosBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_ListaCorreosTableAdapter cOD_ListaCorreosTableAdapter;
         private System.Windows.Forms.BindingSource cODDivisionesBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_DivisionesTableAdapter cOD_DivisionesTableAdapter;
         private System.Windows.Forms.BindingSource fKCODListaCorreosCODDivisionesBindingSource;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnStartAsyncOperation;
@@ -427,14 +318,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.CheckBox chkMarcar;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn identidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombres;
-        private System.Windows.Forms.DataGridViewTextBoxColumn correo;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn activo;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Marcar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdDivision;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idAsociadoDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button btnImprimir;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcEstadoCuentaDetTableAdapter cOD_SlcEstadoCuentaDetTableAdapter;
     }
 }

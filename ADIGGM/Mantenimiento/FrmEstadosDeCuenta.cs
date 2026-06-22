@@ -1,4 +1,5 @@
-﻿using ADIGGM.Clases;
+﻿using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
 using Formularios_Base;
 using Microsoft.Reporting.WinForms;
 using System;
@@ -36,12 +37,35 @@ namespace ADIGGM.Mantenimiento
         }
 
         int selectedIndex, IndexCorreo;
+        private readonly RepositorioCodeas _repoCodeas = new RepositorioCodeas();
+        private DataSet _ds;
+        private DataTable _correos;
         public FrmEstadosDeCuenta()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             HabilitarBtn();
             FuncionesGlobales DgvStyle = new FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvListaCorreos);
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para inmunizarlo al borrado del
+        /// diseñador de VS — gotcha §11. dgvListaCorreos es hijo del combo de divisiones (DataRelation);
+        /// "Marcar" es una columna CheckBox NO enlazada (selección para envío/impresión). El .cs accede a
+        /// las celdas por Name → Names exactos. Edición vía GridColumnas.Edicion (§14.10).</summary>
+        private void ConfigurarColumnas()
+        {
+            var CH = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            var Fill = DataGridViewAutoSizeColumnMode.Fill;
+            dgvListaCorreos.AutoGenerateColumns = false;
+            dgvListaCorreos.Columns.Clear();
+            dgvListaCorreos.Columns.Add(GridColumnas.Texto("identidad", "Identidad", "Identidad", readOnly: false));
+            dgvListaCorreos.Columns.Add(GridColumnas.Texto("nombres", "Nombres", "Nombres", autoSize: Fill, readOnly: false));
+            dgvListaCorreos.Columns.Add(GridColumnas.Texto("correo", "Correo", "Correo", autoSize: Fill, readOnly: false));
+            dgvListaCorreos.Columns.Add(GridColumnas.Check("activo", "Activo", "Activo", width: 48, autoSize: CH, readOnly: false));
+            dgvListaCorreos.Columns.Add(GridColumnas.Check("Marcar", "", "Marcar", width: 72, autoSize: CH, readOnly: false));
+            dgvListaCorreos.Columns.Add(GridColumnas.Texto("IdDivision", "IdDivision", "IdDivision", visible: false, readOnly: false));
+            dgvListaCorreos.Columns.Add(GridColumnas.Texto("idAsociadoDataGridViewTextBoxColumn", "IdAsociado", "IdAsociado", visible: false, readOnly: false));
         }
         public void HabilitarBtn()
         {
@@ -52,8 +76,48 @@ namespace ADIGGM.Mantenimiento
         }
         private void FrmEstadosDeCuenta_Load(object sender, EventArgs e)
         {
-            this.cOD_DivisionesTableAdapter.Fill(this.dsCodeasAdiggm.COD_Divisiones);
-            this.cOD_ListaCorreosTableAdapter.Fill(this.dsCodeasAdiggm.COD_ListaCorreos);
+            CargarDatos();
+        }
+
+        /// <summary>Arma el DataSet en memoria (divisiones=maestro, lista de correos=hijo) con la
+        /// relación por IdDivision y enlaza el combo y el grid (patrón maestro-combo + grid por
+        /// DataRelation, igual que frmSubMenu). El combo filtra el grid; las filas nuevas heredan el
+        /// IdDivision del combo. El grid queda editable por defecto (como el diseño original) para que
+        /// se puedan marcar correos.</summary>
+        private void CargarDatos()
+        {
+            _ds = new DataSet();
+            DataTable divisiones = _repoCodeas.ListarDivisiones();
+            divisiones.TableName = "COD_Divisiones";
+            _correos = _repoCodeas.ListarListaCorreos();
+            _correos.TableName = "COD_ListaCorreos";
+            _ds.Tables.Add(divisiones);
+            _ds.Tables.Add(_correos);
+            _ds.Relations.Add("FK_COD_ListaCorreos_COD_Divisiones",
+                divisiones.Columns["IdDivision"], _correos.Columns["IdDivision"], false);
+
+            cODDivisionesBindingSource.DataSource = _ds;
+            cODDivisionesBindingSource.DataMember = "COD_Divisiones";
+            fKCODListaCorreosCODDivisionesBindingSource.DataSource = cODDivisionesBindingSource;
+            fKCODListaCorreosCODDivisionesBindingSource.DataMember = "FK_COD_ListaCorreos_COD_Divisiones";
+            comboBox1.DataSource = cODDivisionesBindingSource;
+            comboBox1.DisplayMember = "NombreDiv";
+            comboBox1.ValueMember = "IdDivision";
+            dgvListaCorreos.DataSource = fKCODListaCorreosCODDivisionesBindingSource;
+
+            GridColumnas.Edicion(dgvListaCorreos, true);
+            dgvListaCorreos.AllowUserToAddRows = false;
+        }
+
+        /// <summary>Refresca solo las filas de la lista de correos (preserva DataSet/relación/combo y
+        /// la división seleccionada). Tras GuardarCambios el identity IdAsociado se obtiene al recargar.</summary>
+        private void RecargarCorreos()
+        {
+            _correos.Clear();
+            DataTable fresco = _repoCodeas.ListarListaCorreos();
+            foreach (DataRow r in fresco.Rows)
+                _correos.ImportRow(r);
+            _correos.AcceptChanges();
         }
         private void SendMail(LocalReport rdlc, string Identidad, string Correo, string Nombre)
         {
@@ -139,7 +203,7 @@ namespace ADIGGM.Mantenimiento
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvListaCorreos.AllowUserToAddRows = true;
-            dgvListaCorreos.ReadOnly = false;
+            GridColumnas.Edicion(dgvListaCorreos, true);
             dgvListaCorreos.FirstDisplayedScrollingRowIndex = dgvListaCorreos.RowCount - 1;
             var cantidadRow = dgvListaCorreos.RowCount - 1;
             dgvListaCorreos.CurrentCell = dgvListaCorreos.Rows[cantidadRow].Cells[1];
@@ -156,15 +220,17 @@ namespace ADIGGM.Mantenimiento
                 {
                     selectedIndex = dgvListaCorreos.CurrentRow.Index;
                     dgvListaCorreos.EndEdit();
-                    this.cOD_ListaCorreosTableAdapter.Update(this.dsCodeasAdiggm.COD_ListaCorreos);
-                    dgvListaCorreos.CurrentCell = dgvListaCorreos.Rows[selectedIndex].Cells[1];
+                    _repoCodeas.GuardarListaCorreos(_correos);
+                    RecargarCorreos();
+                    if (selectedIndex < dgvListaCorreos.RowCount)
+                        dgvListaCorreos.CurrentCell = dgvListaCorreos.Rows[selectedIndex].Cells[1];
                     dgvListaCorreos.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
                     btnNuevo.Enabled = true;
                     btnEditar.Enabled = true;
                     btnCancelar.Enabled = false;
-                    dgvListaCorreos.ReadOnly = true;
+                    GridColumnas.Edicion(dgvListaCorreos, false);
                 }
             }
             catch (Exception ex)
@@ -179,7 +245,7 @@ namespace ADIGGM.Mantenimiento
             if (dgvListaCorreos.Rows.Count > 0 && dgvListaCorreos.FirstDisplayedCell != null)
             {
                 saveRow = dgvListaCorreos.FirstDisplayedCell.RowIndex;
-                dgvListaCorreos.ReadOnly = false;
+                GridColumnas.Edicion(dgvListaCorreos, true);
                 dgvListaCorreos.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;
@@ -197,11 +263,12 @@ namespace ADIGGM.Mantenimiento
             {
                 selectedIndex = dgvListaCorreos.CurrentRow.Index;
 
-                this.cOD_ListaCorreosTableAdapter.Fill(this.dsCodeasAdiggm.COD_ListaCorreos);
-                dgvListaCorreos.CurrentCell = dgvListaCorreos.Rows[selectedIndex].Cells[1];
+                RecargarCorreos();
+                if (selectedIndex < dgvListaCorreos.RowCount)
+                    dgvListaCorreos.CurrentCell = dgvListaCorreos.Rows[selectedIndex].Cells[1];
                 dgvListaCorreos.AllowUserToAddRows = false;
 
-                dgvListaCorreos.ReadOnly = true;
+                GridColumnas.Edicion(dgvListaCorreos, false);
                 btnGuardar.Enabled = false;
                 btnNuevo.Enabled = true;
                 btnEditar.Enabled = true;
@@ -275,19 +342,7 @@ namespace ADIGGM.Mantenimiento
         {
             // Se crea una instancia de LocalReport y se le asignan las propiedades
             // como ser la ruta del reporte, asi como el origenes de datos.
-            LocalReport rdlc = new LocalReport();
-            rdlc.DataSources.Clear();
-            rdlc.ReportEmbeddedResource = "ADIGGM.Informes.rptASMaestra.rdlc";
-            DataTable COD_SlcASMaestra = dsCodeasAdiggm.COD_SlcASMaestras;
-            rdlc.DataSources.Add(new ReportDataSource("DsASMaestras", COD_SlcASMaestra));
-            DataTable COD_SlcEstadoCuenta = dsCodeasAdiggm.COD_SlcEstadoCuenta;
-            rdlc.DataSources.Add(new ReportDataSource("DsEstadoCuenta", COD_SlcEstadoCuenta));
-            DataTable COD_SlcEstadoCuentaDet = dsCodeasAdiggm.COD_SlcEstadoCuentaDet;
-            rdlc.DataSources.Add(new ReportDataSource("DsEstadoCuentaDet", COD_SlcEstadoCuentaDet));
-
-            ReportParameter[] reportParameters = new ReportParameter[1];
-            reportParameters[0] = new ReportParameter("Usuario", VarGlobales.Usuario, false);
-            rdlc.SetParameters(reportParameters);
+            LocalReport rdlc = CrearReporte();
 
             int totalselc = 0, i = 0;
 
@@ -307,12 +362,7 @@ namespace ADIGGM.Mantenimiento
                 if (bool.Parse(row.Cells["Marcar"].Value.ToString()) == true && bool.Parse(row.Cells["activo"].Value.ToString()) == true)
                 {
                     // Se llena el reporte instanciado con la informacion del usuario en cada recorrido.
-                    this.cOD_SlcASMaestrasTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcASMaestras, row.Cells["identidad"].Value.ToString());
-                    this.cOD_SlcEstadoCuentaTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcEstadoCuenta, row.Cells["identidad"].Value.ToString());
-                    this.cOD_SlcEstadoCuentaDetTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcEstadoCuentaDet, row.Cells["identidad"].Value.ToString());
-
-                    // Se refresca el reporte
-                    rdlc.Refresh();
+                    CargarDatosReporte(rdlc, row.Cells["identidad"].Value.ToString());
 
                     // Esperamos 100 milisegundos por cada iteración.
                     //Thread.Sleep(100);
@@ -400,6 +450,26 @@ namespace ADIGGM.Mantenimiento
             btnCancel.Enabled = false;
         }
 
+        /// <summary>Crea el LocalReport del estado de cuenta con su recurso embebido y el parámetro Usuario.
+        /// Los orígenes de datos se asignan por asociado con <see cref="CargarDatosReporte"/>.</summary>
+        private LocalReport CrearReporte()
+        {
+            LocalReport rdlc = new LocalReport();
+            rdlc.ReportEmbeddedResource = "ADIGGM.Informes.rptASMaestra.rdlc";
+            rdlc.SetParameters(new ReportParameter[] { new ReportParameter("Usuario", VarGlobales.Usuario, false) });
+            return rdlc;
+        }
+
+        /// <summary>Llena el reporte con los datos del asociado indicado (3 SP vía RepositorioCodeas).
+        /// Reemplaza los Fill de los TableAdapters + rdlc.Refresh() del DataSet tipado.</summary>
+        private void CargarDatosReporte(LocalReport rdlc, string identidad)
+        {
+            rdlc.DataSources.Clear();
+            rdlc.DataSources.Add(new ReportDataSource("DsASMaestras", _repoCodeas.CargarASMaestras(identidad)));
+            rdlc.DataSources.Add(new ReportDataSource("DsEstadoCuenta", _repoCodeas.CargarEstadoCuenta(identidad)));
+            rdlc.DataSources.Add(new ReportDataSource("DsEstadoCuentaDet", _repoCodeas.CargarEstadoCuentaDet(identidad)));
+        }
+
         // Export the given report as an EMF (Enhanced Metafile) file.
         private void Export(LocalReport report)
         {
@@ -473,19 +543,7 @@ namespace ADIGGM.Mantenimiento
             }
             // Se crea una instancia de LocalReport y se le asignan las propiedades
             // como ser la ruta del reporte, asi como el origenes de datos.
-            LocalReport rdlc = new LocalReport();
-            rdlc.DataSources.Clear();
-            rdlc.ReportEmbeddedResource = "ADIGGM.Informes.rptASMaestra.rdlc";
-            DataTable COD_SlcASMaestra = dsCodeasAdiggm.COD_SlcASMaestras;
-            rdlc.DataSources.Add(new ReportDataSource("DsASMaestras", COD_SlcASMaestra));
-            DataTable COD_SlcEstadoCuenta = dsCodeasAdiggm.COD_SlcEstadoCuenta;
-            rdlc.DataSources.Add(new ReportDataSource("DsEstadoCuenta", COD_SlcEstadoCuenta));
-            DataTable COD_SlcEstadoCuentaDet = dsCodeasAdiggm.COD_SlcEstadoCuentaDet;
-            rdlc.DataSources.Add(new ReportDataSource("DsEstadoCuentaDet", COD_SlcEstadoCuentaDet));
-
-            ReportParameter[] reportParameters = new ReportParameter[1];
-            reportParameters[0] = new ReportParameter("Usuario", VarGlobales.Usuario, false);
-            rdlc.SetParameters(reportParameters);
+            LocalReport rdlc = CrearReporte();
 
             // Se ejecuta la impresión de correos por cada asociado marcado
             foreach (DataGridViewRow row in dgvListaCorreos.Rows)
@@ -493,12 +551,7 @@ namespace ADIGGM.Mantenimiento
                 if (bool.Parse(row.Cells["Marcar"].Value.ToString()) == true && bool.Parse(row.Cells["activo"].Value.ToString()) == true)
                 {
                     // Se llena el reporte instanciado con la informacion del usuario en cada recorrido.
-                    this.cOD_SlcASMaestrasTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcASMaestras, row.Cells["identidad"].Value.ToString());
-                    this.cOD_SlcEstadoCuentaTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcEstadoCuenta, row.Cells["identidad"].Value.ToString());
-                    this.cOD_SlcEstadoCuentaDetTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcEstadoCuentaDet, row.Cells["identidad"].Value.ToString());
-
-                    // Se refresca el reporte
-                    rdlc.Refresh();
+                    CargarDatosReporte(rdlc, row.Cells["identidad"].Value.ToString());
 
                     // Se envían los datos a la función de enviar correo.
                     ImpEstadoCuenta(rdlc);

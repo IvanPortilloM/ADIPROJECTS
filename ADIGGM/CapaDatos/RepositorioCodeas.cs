@@ -60,6 +60,29 @@ namespace ADIGGM.CapaDatos
             return ConsultarTabla("dbo.COD_SlcEstadoCuentaDet", new { cidasociad }, CommandType.StoredProcedure);
         }
 
+        // ===== Envío de estados de cuenta (Mantenimiento\FrmEstadosDeCuenta) =====
+
+        /// <summary>Divisiones para el combo maestro (filtra la lista de correos por IdDivision).</summary>
+        public DataTable ListarDivisiones()
+        {
+            return ConsultarTabla("SELECT IdDivision, NombreDiv, Activo FROM dbo.COD_Divisiones");
+        }
+
+        /// <summary>Lista de correos de asociados (grid hijo del combo de divisiones).</summary>
+        public DataTable ListarListaCorreos()
+        {
+            return ConsultarTabla("SELECT IdAsociado, Identidad, Nombres, Correo, IdDivision, Activo FROM dbo.COD_ListaCorreos");
+        }
+
+        /// <summary>Persiste altas/cambios/bajas de la lista de correos (IdAsociado = identity, no va en INSERT).</summary>
+        public int GuardarListaCorreos(DataTable tabla)
+        {
+            return GuardarCambios(tabla,
+                "INSERT INTO dbo.COD_ListaCorreos (Identidad, Nombres, Correo, IdDivision, Activo) VALUES (@Identidad, @Nombres, @Correo, @IdDivision, @Activo)",
+                "UPDATE dbo.COD_ListaCorreos SET Identidad=@Identidad, Nombres=@Nombres, Correo=@Correo, IdDivision=@IdDivision, Activo=@Activo WHERE IdAsociado=@IdAsociado",
+                "DELETE FROM dbo.COD_ListaCorreos WHERE IdAsociado=@IdAsociado");
+        }
+
         // ===== Solicitudes de crédito (SAC\FrmSolCred) =====
 
         /// <summary>Aportes/productos del asociado en Codeas (SP COD_SlcAportes).</summary>
