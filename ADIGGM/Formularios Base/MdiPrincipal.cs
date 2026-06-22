@@ -1951,5 +1951,18 @@ namespace ADIGGM.Formularios_Base
                 seguridad.Show();
             }
         }
+
+        private void t11ActualizarTarifasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Application.OpenForms["FrmActualizarTarifas"] != null)
+            {
+                Application.OpenForms["FrmActualizarTarifas"].Activate();
+            }
+            else
+            {
+                FrmActualizarTarifas actualizarTarifas = new FrmActualizarTarifas { MdiParent = this };
+                actualizarTarifas.Show();
+            }
+        }
     }
 }

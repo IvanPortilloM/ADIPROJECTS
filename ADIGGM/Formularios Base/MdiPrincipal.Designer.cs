@@ -143,6 +143,8 @@
             this.activarTarjetaDeRegaloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestiónDeTarjetasYPuntosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportesAuditoríaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.anulacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.seguridadToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.herramientasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SincronizarCODEASToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EnvíoDeEstCtaMasivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -173,8 +175,7 @@
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.anulacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.seguridadToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.t11ActualizarTarifasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -363,6 +364,7 @@
             this.tAsignarRutasAClientesToolStripMenuItem,
             this.tAsigRutaTipoVehToolStripMenuItem,
             this.tTarifaPorRutasToolStripMenuItem,
+            this.t11ActualizarTarifasToolStripMenuItem,
             this.r00FincasToolStripMenuItem,
             this.r03ZonasToolStripMenuItem,
             this.r04BloquesToolStripMenuItem,
@@ -1114,6 +1116,20 @@
             this.reportesAuditoríaToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.reportesAuditoríaToolStripMenuItem.Text = "Reportes / Auditoría";
             // 
+            // anulacionesToolStripMenuItem
+            // 
+            this.anulacionesToolStripMenuItem.Name = "anulacionesToolStripMenuItem";
+            this.anulacionesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.anulacionesToolStripMenuItem.Text = "Anulaciones";
+            this.anulacionesToolStripMenuItem.Click += new System.EventHandler(this.anulacionesToolStripMenuItem_Click);
+            // 
+            // seguridadToolStripMenuItem1
+            // 
+            this.seguridadToolStripMenuItem1.Name = "seguridadToolStripMenuItem1";
+            this.seguridadToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.seguridadToolStripMenuItem1.Text = "Seguridad";
+            this.seguridadToolStripMenuItem1.Click += new System.EventHandler(this.seguridadToolStripMenuItem1_Click);
+            // 
             // herramientasToolStripMenuItem
             // 
             this.herramientasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1357,19 +1373,12 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // anulacionesToolStripMenuItem
+            // t11ActualizarTarifasToolStripMenuItem
             // 
-            this.anulacionesToolStripMenuItem.Name = "anulacionesToolStripMenuItem";
-            this.anulacionesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.anulacionesToolStripMenuItem.Text = "Anulaciones";
-            this.anulacionesToolStripMenuItem.Click += new System.EventHandler(this.anulacionesToolStripMenuItem_Click);
-            // 
-            // seguridadToolStripMenuItem1
-            // 
-            this.seguridadToolStripMenuItem1.Name = "seguridadToolStripMenuItem1";
-            this.seguridadToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.seguridadToolStripMenuItem1.Text = "Seguridad";
-            this.seguridadToolStripMenuItem1.Click += new System.EventHandler(this.seguridadToolStripMenuItem1_Click);
+            this.t11ActualizarTarifasToolStripMenuItem.Name = "t11ActualizarTarifasToolStripMenuItem";
+            this.t11ActualizarTarifasToolStripMenuItem.Size = new System.Drawing.Size(301, 22);
+            this.t11ActualizarTarifasToolStripMenuItem.Text = "T11 - Actualizar Tarifas";
+            this.t11ActualizarTarifasToolStripMenuItem.Click += new System.EventHandler(this.t11ActualizarTarifasToolStripMenuItem_Click);
             // 
             // MdiPrincipal
             // 
@@ -1551,5 +1560,6 @@
         private System.Windows.Forms.ToolStripMenuItem activarTarjetaDeRegaloToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem anulacionesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem seguridadToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem t11ActualizarTarifasToolStripMenuItem;
     }
 }
