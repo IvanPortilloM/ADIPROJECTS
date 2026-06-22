@@ -161,12 +161,8 @@
             // 
             // fKCODListaCorreosCODDivisionesBindingSource
             // 
-            this.fKCODListaCorreosCODDivisionesBindingSource.DataMember = "FK_COD_ListaCorreos_COD_Divisiones";
-            this.fKCODListaCorreosCODDivisionesBindingSource.DataSource = this.cODDivisionesBindingSource;
-            // 
-            // cODDivisionesBindingSource
-            // 
-            this.cODDivisionesBindingSource.DataMember = "COD_Divisiones";
+            // (DataMember/DataSource de la relación y del combo se asignan en código en CargarDatos:
+            //  el DataSet con la relación FK_COD_ListaCorreos_COD_Divisiones no existe en InitializeComponent)
             // 
             // cODListaCorreosBindingSource
             // 
