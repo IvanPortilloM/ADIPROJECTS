@@ -1,5 +1,6 @@
 using ADIGGM.CapaDatos;
 using ADIGGM.CapaModelo;
+using ADIGGM.Clases;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -24,6 +25,7 @@ namespace ADIGGM.HE
         public frmEditarAsistencia(int idMotorista, string nombreMotorista, DateTime fecha, DateTime limiteInicio, DateTime limiteFin)
         {
             InitializeComponent();
+            ConfigurarColumnas();
 
             // Guardamos los datos recibidos
             _idMotorista = idMotorista;
@@ -33,6 +35,19 @@ namespace ADIGGM.HE
 
             // Mostramos la info en la etiqueta
             lblInfo.Text = $"Motorista: {nombreMotorista}\nFecha: {_fecha.ToShortDateString()}";
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para inmunizarlo al borrado del
+        /// diseñador de VS — gotcha §11. Grid NO enlazado (Rows.Add posicional): colInicio/colFin son
+        /// TextBox sin DataPropertyName, formato hora corta ("t"); el .cs accede por Name → Names exactos.
+        /// Editables (el usuario digita las horas); el grid se bloquea entero con dgvTiempos.ReadOnly=true
+        /// si el período está cerrado (CargarDatosExistentes). AutoSizeColumnsMode=Fill queda en el grid.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvTiempos.AutoGenerateColumns = false;
+            dgvTiempos.Columns.Clear();
+            dgvTiempos.Columns.Add(GridColumnas.Texto("colInicio", "", "Hora de Inicio", format: "t", readOnly: false));
+            dgvTiempos.Columns.Add(GridColumnas.Texto("colFin", "", "Hora Final", format: "t", readOnly: false));
         }
 
         private void frmEditarAsistencia_Load(object sender, EventArgs e)

@@ -28,15 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEditarAsistencia));
             this.lblInfo = new System.Windows.Forms.Label();
             this.cboTipoAsistencia = new System.Windows.Forms.ComboBox();
             this.pnlTiempos = new System.Windows.Forms.Panel();
             this.dgvTiempos = new System.Windows.Forms.DataGridView();
-            this.colInicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.chkAplicarRango = new System.Windows.Forms.CheckBox();
@@ -113,30 +109,11 @@
             // 
             this.dgvTiempos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvTiempos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTiempos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colInicio,
-            this.colFin});
             this.dgvTiempos.Location = new System.Drawing.Point(20, 17);
             this.dgvTiempos.Name = "dgvTiempos";
             this.dgvTiempos.Size = new System.Drawing.Size(282, 140);
             this.dgvTiempos.TabIndex = 0;
-            // 
-            // colInicio
-            // 
-            dataGridViewCellStyle1.Format = "t";
-            dataGridViewCellStyle1.NullValue = null;
-            this.colInicio.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colInicio.HeaderText = "Hora de Inicio";
-            this.colInicio.Name = "colInicio";
-            // 
-            // colFin
-            // 
-            dataGridViewCellStyle2.Format = "t";
-            dataGridViewCellStyle2.NullValue = null;
-            this.colFin.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colFin.HeaderText = "Hora Final";
-            this.colFin.Name = "colFin";
-            // 
+            //
             // btnCancelar
             // 
             this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -263,8 +240,6 @@
         private System.Windows.Forms.DataGridView dgvTiempos;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnGuardar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colInicio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colFin;
         private System.Windows.Forms.CheckBox chkAplicarRango;
         private System.Windows.Forms.DateTimePicker dtpHasta;
         private System.Windows.Forms.Label label1;
