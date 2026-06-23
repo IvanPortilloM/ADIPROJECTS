@@ -60,6 +60,13 @@ namespace ADIGGM.CapaDatos
             return ConsultarTabla("dbo.COD_SlcEstadoCuentaDet", new { cidasociad }, CommandType.StoredProcedure);
         }
 
+        /// <summary>Búsqueda de asociados por nombre/identificación para el diálogo de selección
+        /// (SP COD_ASMaestras, @Asociado = texto de búsqueda; cadena vacía = todos). SAC\FrmAsocBuscar.</summary>
+        public DataTable BuscarAsociados(string asociado)
+        {
+            return ConsultarTabla("dbo.COD_ASMaestras", new { Asociado = asociado }, CommandType.StoredProcedure);
+        }
+
         // ===== Envío de estados de cuenta (Mantenimiento\FrmEstadosDeCuenta) =====
 
         /// <summary>Divisiones para el combo maestro (filtra la lista de correos por IdDivision).</summary>
