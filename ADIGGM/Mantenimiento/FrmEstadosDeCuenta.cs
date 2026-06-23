@@ -40,6 +40,10 @@ namespace ADIGGM.Mantenimiento
         private readonly RepositorioCodeas _repoCodeas = new RepositorioCodeas();
         private DataSet _ds;
         private DataTable _correos;
+        // Diagnóstico de envío: el catch de SendMail re-marca la fila fallida; aquí además acumulamos
+        // los errores y el conteo para informar UN resumen al final (antes el error se tragaba en silencio).
+        private readonly List<string> _erroresEnvio = new List<string>();
+        private int _enviados;
         public FrmEstadosDeCuenta()
         {
             InitializeComponent();
@@ -179,12 +183,13 @@ namespace ADIGGM.Mantenimiento
                 memoryStream.Close();
                 memoryStream.Dispose();
                 dgvListaCorreos.Rows[IndexCorreo].Cells["Marcar"].Value = false;
+                _enviados++;
             }
-            //catch (Exception ex)
-            catch (Exception)
+            catch (Exception ex)
             {
-                //MessageBox.Show("Ha ocurrido un error en el envío:\n" + ex.ToString(), "TransporteAdiggm", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                // La fila queda marcada (feedback visual) y se acumula el error para el resumen final.
                 dgvListaCorreos.Rows[IndexCorreo].Cells["Marcar"].Value = true;
+                _erroresEnvio.Add(Identidad + " (" + Correo + "): " + ex.Message);
             }
         }
 
@@ -314,6 +319,9 @@ namespace ADIGGM.Mantenimiento
                 }
             }
 
+            _erroresEnvio.Clear();
+            _enviados = 0;
+
             pgbProcesos.Visible = true;
             btnStartAsyncOperation.Enabled = false;
             btnCancel.Enabled = true;
@@ -437,6 +445,29 @@ namespace ADIGGM.Mantenimiento
             {
                 //Todo el proceso se completó con normalidad
                 lblFooter.Text = "Proceso Completado...";
+
+                // Resumen del envío (antes los fallos se tragaban en silencio).
+                if (_erroresEnvio.Count > 0)
+                {
+                    int mostrar = Math.Min(_erroresEnvio.Count, 10);
+                    string detalle = string.Join("\n", _erroresEnvio.GetRange(0, mostrar));
+                    if (_erroresEnvio.Count > mostrar) detalle += "\n...";
+                    MessageBox.Show(
+                        "Enviados: " + _enviados + "   Con error: " + _erroresEnvio.Count +
+                        "\n\nLos correos con error siguen marcados.\n\nDetalle:\n" + detalle,
+                        VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else if (_enviados == 0)
+                {
+                    MessageBox.Show("No se envió ningún correo. Verifique que marcó asociados ACTIVOS.",
+                        VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Se enviaron " + _enviados + " correo(s) correctamente.",
+                        VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
                 Timer timer1 = new Timer();
                 timer1.Interval = 5000;
                 timer1.Tick += (s, a) => {
