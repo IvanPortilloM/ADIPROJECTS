@@ -1,4 +1,5 @@
 ﻿using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 using MySqlX.XDevAPI.Relational;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace ADIGGM.SAC
     {
         bool PermitirMonto = true;
         private readonly string cadenaConexionSQL = ADIGGM.CapaDatos.Conexion.Cadena("TransporteAdiggm");
+        private readonly RepositorioCodeas _repoCodeas = new RepositorioCodeas();
         public frmOrdenes()
         {
             InitializeComponent();
@@ -56,9 +58,10 @@ namespace ADIGGM.SAC
         {
             string t = this.mskId.Text.Replace("-", "").Replace(" ", "");
 
-            this.coD_SlcASMaestrasTableAdapter.Fill(this.dsCodeasAdiggm.COD_SlcASMaestras, t);
-            txtNombreCompleto.DataBindings.Clear();
-            txtNombreCompleto.DataBindings.Add(new Binding("Text", this.cODSlcASMaestrasBindingSource, "cnombreaso", false));
+            // Nombre del asociado vía RepositorioCodeas (SP COD_SlcASMaestras), reemplaza el TableAdapter
+            // + binding del DataSet tipado. Sin filas => nombre vacío (la validación de "asociado no existe").
+            DataTable dt = _repoCodeas.CargarASMaestras(t);
+            txtNombreCompleto.Text = dt.Rows.Count > 0 ? dt.Rows[0]["cnombreaso"].ToString() : "";
         }
 
         private void mskId_KeyPress(object sender, KeyPressEventArgs e)

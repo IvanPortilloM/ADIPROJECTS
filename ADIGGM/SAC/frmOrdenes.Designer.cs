@@ -53,10 +53,7 @@
             this.txtValor = new System.Windows.Forms.TextBox();
             this.mskId = new System.Windows.Forms.MaskedTextBox();
             this.txtNombreCompleto = new System.Windows.Forms.TextBox();
-            this.cODSlcASMaestrasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCodeasAdiggm = new ADIGGM.DataSets.DsCodeasAdiggm();
             this.label5 = new System.Windows.Forms.Label();
-            this.coD_SlcASMaestrasTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.COD_SlcASMaestrasTableAdapter();
             this.mskNumOrden = new System.Windows.Forms.MaskedTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -66,8 +63,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrdenes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProveedoresBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cODSlcASMaestrasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -303,16 +298,6 @@
             this.txtNombreCompleto.Size = new System.Drawing.Size(460, 21);
             this.txtNombreCompleto.TabIndex = 125;
             // 
-            // cODSlcASMaestrasBindingSource
-            // 
-            this.cODSlcASMaestrasBindingSource.DataMember = "COD_SlcASMaestras";
-            this.cODSlcASMaestrasBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // dsCodeasAdiggm
-            // 
-            this.dsCodeasAdiggm.DataSetName = "DsCodeasAdiggm";
-            this.dsCodeasAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -321,10 +306,6 @@
             this.label5.Size = new System.Drawing.Size(21, 16);
             this.label5.TabIndex = 126;
             this.label5.Text = "ID:";
-            // 
-            // coD_SlcASMaestrasTableAdapter
-            // 
-            this.coD_SlcASMaestrasTableAdapter.ClearBeforeFill = true;
             // 
             // mskNumOrden
             // 
@@ -403,8 +384,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrdenes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProveedoresBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cODSlcASMaestrasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -425,9 +404,6 @@
         private System.Windows.Forms.MaskedTextBox mskId;
         private System.Windows.Forms.TextBox txtNombreCompleto;
         private System.Windows.Forms.Label label5;
-        private DataSets.DsCodeasAdiggmTableAdapters.COD_SlcASMaestrasTableAdapter coD_SlcASMaestrasTableAdapter;
-        private System.Windows.Forms.BindingSource cODSlcASMaestrasBindingSource;
-        private DataSets.DsCodeasAdiggm dsCodeasAdiggm;
         private System.Windows.Forms.MaskedTextBox mskNumOrden;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label2;
