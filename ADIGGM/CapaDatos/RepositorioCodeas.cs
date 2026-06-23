@@ -159,6 +159,45 @@ FROM SAC_EstadoFinanciero WHERE Des_Grupo = 'CREDITOS' AND IdSolicitud = @IdSoli
             return ConsultarTabla(sql, new { IdSolicitud = idSolicitud });
         }
 
+        // ===== Visor de préstamos (Visores\FrmVisorPrestamos) =====
+
+        /// <summary>Solicitudes filtradas del visor (SP SAC_SolicitudesVisor). Los flags Por* eligen el
+        /// criterio (código / rango de fechas / rango de N° solicitud) dentro del SP.</summary>
+        public DataTable BuscarSolicitudesVisor(string codigo, DateTime fechaDesde, DateTime fechaHasta,
+            int solicitudDesde, int solicitudHasta, bool porCodigo, bool porFecha, bool porNSol, string dependencia)
+        {
+            return ConsultarTabla("dbo.SAC_SolicitudesVisor", new
+            {
+                Codigo = codigo, FechaDesde = fechaDesde, FechaHasta = fechaHasta,
+                SolicitudDesde = solicitudDesde, solicitudHasta = solicitudHasta,
+                PorCodigo = porCodigo, PorFecha = porFecha, PorNSol = porNSol, Dependencia = dependencia
+            }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Reporte de solicitudes para exportar a Excel (SP PR_R_Solicitudes, mismos filtros).</summary>
+        public DataTable ReporteSolicitudes(string codigo, DateTime fechaDesde, DateTime fechaHasta,
+            int solicitudDesde, int solicitudHasta, bool porCodigo, bool porFecha, bool porNSol, string dependencia)
+        {
+            return ConsultarTabla("dbo.PR_R_Solicitudes", new
+            {
+                Codigo = codigo, FechaDesde = fechaDesde, FechaHasta = fechaHasta,
+                SolicitudDesde = solicitudDesde, solicitudHasta = solicitudHasta,
+                PorCodigo = porCodigo, PorFecha = porFecha, PorNSol = porNSol, Dependencia = dependencia
+            }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Aprueba (aprobar=1) o reversa (0) una solicitud (SP SAC_SolicitudesAprobar).</summary>
+        public int AprobarSolicitud(int idSolicitud, int aprobar)
+        {
+            return Ejecutar("dbo.SAC_SolicitudesAprobar", new { IdSolicitud = idSolicitud, Aprobar = aprobar }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Anula (anular=1) o reversa (0) una solicitud (SP SAC_SolicitudesAnular).</summary>
+        public int AnularSolicitud(int idSolicitud, int anular)
+        {
+            return Ejecutar("dbo.SAC_SolicitudesAnular", new { IdSolicitud = idSolicitud, Anular = anular }, CommandType.StoredProcedure);
+        }
+
         public DataTable ListarFechasCorteActivas()
         {
             const string sql = @"SELECT ncodfecort, dfechforma, dfecpripag, cperiodpag, bestaactiv

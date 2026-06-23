@@ -1,4 +1,5 @@
 ﻿using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 using ADIGGM.DataSets;
 using ClosedXML.Excel;
 using ClosedXML.Report;
@@ -27,6 +28,8 @@ namespace ADIGGM.Visores
     {
         private int m_currentPageIndex;
         private IList<Stream> m_streams;
+        private readonly RepositorioCodeas _repoCodeas = new RepositorioCodeas();
+        private DataTable _solicitudes;
 
         // Rutina para proporcionar al procesador de informes para guardar una imagen por cada página del informe.
         private Stream CreateStream(string name,
@@ -58,14 +61,56 @@ namespace ADIGGM.Visores
         public FrmVisorPrestamos()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvPrestamos);
             LimpiarContextMenuStrip();
         }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para inmunizarlo al borrado del
+        /// diseñador de VS — gotcha §11. Visor de solo lectura (dgvPrestamos.ReadOnly=true); el .cs accede
+        /// a muchas celdas por Name → Names exactos. "Marcar" es una columna no enlazada (vestigial).</summary>
+        private void ConfigurarColumnas()
+        {
+            var DC = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            var CH = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dgvPrestamos.AutoGenerateColumns = false;
+            dgvPrestamos.Columns.Clear();
+            dgvPrestamos.Columns.Add(GridColumnas.Check("Marcar", "", "X", width: 20, autoSize: CH));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("idAsociado", "IdAsociado", "IdAsociado", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("IdSolicitud", "IdSolicitud", "N°", width: 44, autoSize: CH));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("codigo", "CodigoAsociado", "Código", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("fecha", "FechaSolicitud", "Fecha", width: 66, autoSize: DC));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("identidad", "Identidad", "Identidad", width: 87, autoSize: DC));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("nombreCompleto", "NombreCompleto", "Nombre", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("areaTrabajo", "AreaTrabajo", "Área de Trabajo", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("domicilio", "Domicilio", "Domicilio", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("estadoCivil", "EstadoCivil", "Estado Civil", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("tipoEmpleado", "TipoEmpleado", "Tipo de Empleado", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("telefono", "Telefono", "Teléfono", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("cantSolicitada", "CantSolicitada", "Préstamo", format: "N2", width: 82, autoSize: DC));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("aporte", "Aporte", "Aporte", format: "N2", width: 68, autoSize: DC));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("credito", "Credito", "Crédito", format: "N2", width: 72, autoSize: DC));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("cantConsumo", "CantConsumo", "Cant. Consumo", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("cantAprobada", "CantAprobada", "Cant. Aprobada", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("cuota", "Cuota", "Cuota", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("periodo", "Periodo", "Período", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("periodoSug", "PeriodoSug", "Período Sug.", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("tasa", "Tasa", "Tasa", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("capitalizacion", "Capitalizacion", "Capitalización", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("motivo", "Motivo", "Motivo", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Check("aprobado", "Aprobado", "Aprobado", width: 69, autoSize: CH));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("fechaAprobacion", "FechaAprobacion", "Fecha Aprob.", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Check("Anulado", "Anulado", "Anulado", width: 59, autoSize: CH));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("TipoSolicitud", "TipoSolicitud", "TipoSolicitud", visible: false, width: 125));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("Dependencia", "Dependencia", "Dependencia", width: 108, autoSize: CH));
+            dgvPrestamos.Columns.Add(GridColumnas.Texto("Usuario", "Usuario", "Usuario", width: 71, autoSize: DC));
+            dgvPrestamos.DataSource = sACSolicitudesDgvBindingSource;
+        }
         private void FrmVisorPrestamos_Load(object sender, EventArgs e)
         {
             //this.Dock = DockStyle.Fill;
-            this.sAC_SolicitudesDgvTableAdapter.Fill(this.dsCodeasAdiggm.SAC_SolicitudesDgv);
+            // (la carga real del grid la hace LlenarDgv() más abajo, vía RepositorioCodeas)
 
             dtpFechaDesde.Value = DateTime.Now;
             dtpFechaHasta.Value = DateTime.Now;
@@ -126,14 +171,10 @@ namespace ADIGGM.Visores
 
             Codigo = Codigo.Replace("-", "");
 
-            if (Codigo.Length > 0 && RdbCodigo.Checked)
-            {
-                this.sAC_SolicitudesDgvTableAdapter.FillByVisor(this.dsCodeasAdiggm.SAC_SolicitudesDgv, Codigo, FechaDesde, FechaHasta, NSolDesde, NSolHasta, RdbCodigo.Checked, RdbRangoFecha.Checked, RdbRangoSolicitud.Checked, cboFDependencia.Text);
-            }
-            else if (Codigo.Length == 0 || !RdbCodigo.Checked)
-            {
-                this.sAC_SolicitudesDgvTableAdapter.FillByVisor(this.dsCodeasAdiggm.SAC_SolicitudesDgv, Codigo, FechaDesde, FechaHasta, NSolDesde, NSolHasta, RdbCodigo.Checked, RdbRangoFecha.Checked, RdbRangoSolicitud.Checked, cboFDependencia.Text);
-            }
+            // Ambas ramas del original llamaban al MISMO FillByVisor → una sola llamada al repo.
+            _solicitudes = _repoCodeas.BuscarSolicitudesVisor(Codigo, FechaDesde, FechaHasta, NSolDesde, NSolHasta,
+                RdbCodigo.Checked, RdbRangoFecha.Checked, RdbRangoSolicitud.Checked, cboFDependencia.Text);
+            sACSolicitudesDgvBindingSource.DataSource = _solicitudes;
 
             if (dgvPrestamos.SelectedRows.Count > 0)
             {
@@ -315,7 +356,7 @@ namespace ADIGGM.Visores
             rdlcNeteo.DataSources.Clear();
             rdlcNeteo.ReportEmbeddedResource = "ADIGGM.Informes.rptSacSolPresNeteo.rdlc";
 
-            DataTable SAC_Asociados = dsCodeasAdiggm.SAC_Asociados;
+            DataTable SAC_Asociados = _repoCodeas.CargarAsociadoPorId(IdAsociado);
             rdlc.DataSources.Add(new ReportDataSource("DsAsociados", SAC_Asociados));
             rdlcImpDir.DataSources.Add(new ReportDataSource("DsAsociados", SAC_Asociados));
             rdlcPagare.DataSources.Add(new ReportDataSource("DsAsociados", SAC_Asociados));
@@ -323,7 +364,7 @@ namespace ADIGGM.Visores
             rdlcNeteo.DataSources.Add(new ReportDataSource("DsAsociados", SAC_Asociados));
             rdlcReadecuacion.DataSources.Add(new ReportDataSource("DsAsociados", SAC_Asociados));
 
-            DataTable SAC_Solicitudes = dsCodeasAdiggm.SAC_Solicitudes;
+            DataTable SAC_Solicitudes = _repoCodeas.CargarSolicitud(IdSolicitud);
             rdlc.DataSources.Add(new ReportDataSource("DsSolicitudes", SAC_Solicitudes));
             rdlcImpDir.DataSources.Add(new ReportDataSource("DsSolicitudes", SAC_Solicitudes));
             rdlcPagare.DataSources.Add(new ReportDataSource("DsSolicitudes", SAC_Solicitudes));
@@ -331,11 +372,11 @@ namespace ADIGGM.Visores
             rdlcRetiroParcial.DataSources.Add(new ReportDataSource("DsSolicitudes", SAC_Solicitudes));
             rdlcNeteo.DataSources.Add(new ReportDataSource("DsSolicitudes", SAC_Solicitudes));
 
-            DataTable SAC_EstadoFinanciero = dsCodeasAdiggm.SAC_EstadoFinanciero;
+            DataTable SAC_EstadoFinanciero = _repoCodeas.CargarEstadoFinanciero(IdSolicitud);
             rdlc.DataSources.Add(new ReportDataSource("DsEstadoFinanciero", SAC_EstadoFinanciero));
             rdlcImpDir.DataSources.Add(new ReportDataSource("DsEstadoFinanciero", SAC_EstadoFinanciero));
 
-            DataTable SAC_Amortizaciones = dsCodeasAdiggm.SAC_Amortizaciones;
+            DataTable SAC_Amortizaciones = _repoCodeas.CargarAmortizaciones(IdSolicitud);
             rdlc.DataSources.Add(new ReportDataSource("DsAmortizaciones", SAC_Amortizaciones));
             rdlcImpDir.DataSources.Add(new ReportDataSource("DsAmortizaciones", SAC_Amortizaciones));
             //-----------------------------------------------------------------------------------
@@ -354,11 +395,6 @@ namespace ADIGGM.Visores
             ReportParameter[] ParametroNeteo = new ReportParameter[1];
             ParametroNeteo[0] = new ReportParameter("TipoNeteo", dgvPrestamos.CurrentRow.Cells["TipoSolicitud"].Value.ToString(), false);
             rdlcNeteo.SetParameters(ParametroNeteo);
-
-            this.sAC_AsociadosTableAdapter.FillByAsociado(this.dsCodeasAdiggm.SAC_Asociados, IdAsociado);
-            this.sAC_SolicitudesTableAdapter.FillBySolicitud(this.dsCodeasAdiggm.SAC_Solicitudes, IdSolicitud);
-            this.sAC_EstadoFinancieroTableAdapter.FillBySolicitud(this.dsCodeasAdiggm.SAC_EstadoFinanciero, IdSolicitud);
-            this.saC_AmortizacionesTableAdapter.FillBySolicitud(this.dsCodeasAdiggm.SAC_Amortizaciones, IdSolicitud);
 
             try
             {
@@ -750,13 +786,10 @@ private void btnExportar_Click(object sender, EventArgs e)
         int NSolDesde = Convert.ToInt32(txtNSolDesde.Text);
         int NSolHasta = Convert.ToInt32(txtNSolHasta.Text);
 
-        this.pR_R_SolicitudesTableAdapter.Fill(
-            this.dsCodeasAdiggm.PR_R_Solicitudes,
+        DataTable dt = _repoCodeas.ReporteSolicitudes(
             Codigo, FechaDesde, FechaHasta, NSolDesde, NSolHasta,
             RdbCodigo.Checked, RdbRangoFecha.Checked, RdbRangoSolicitud.Checked,
             cboFDependencia.Text);
-
-        DataTable dt = this.dsCodeasAdiggm.PR_R_Solicitudes;
 
         foreach (DataColumn column in dt.Columns)
         {
@@ -1031,14 +1064,14 @@ private void btnExportar_Click(object sender, EventArgs e)
         private void AprobarPrestamo()
         {
             int IdSolicitud = ObtenerIdSolicitudActual();
-            Clases.VarGlobales.consultas.SAC_SolicitudesAprobar(IdSolicitud, 1);
+            _repoCodeas.AprobarSolicitud(IdSolicitud, 1);
             LlenarDgv();
             LlenarDetalles(0);
         }
         private void ReversarAprobacion()
         {
             int IdSolicitud = ObtenerIdSolicitudActual();
-            Clases.VarGlobales.consultas.SAC_SolicitudesAprobar(IdSolicitud, 0);
+            _repoCodeas.AprobarSolicitud(IdSolicitud, 0);
             LlenarDgv();
             LlenarDetalles(0);
         }
@@ -1046,7 +1079,7 @@ private void btnExportar_Click(object sender, EventArgs e)
         private void AnularPrestamo()
         {
             int IdSolicitud = ObtenerIdSolicitudActual();
-            Clases.VarGlobales.consultas.SAC_SolicitudesAnular(IdSolicitud, 1);
+            _repoCodeas.AnularSolicitud(IdSolicitud, 1);
             LlenarDgv();
             LlenarDetalles(0);
         }
@@ -1054,7 +1087,7 @@ private void btnExportar_Click(object sender, EventArgs e)
         private void ReversarAnulacion()
         {
             int IdSolicitud = ObtenerIdSolicitudActual();
-            Clases.VarGlobales.consultas.SAC_SolicitudesAnular(IdSolicitud, 0);
+            _repoCodeas.AnularSolicitud(IdSolicitud, 0);
             LlenarDgv();
             LlenarDetalles(0);
         }

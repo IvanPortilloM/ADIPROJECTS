@@ -30,9 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmVisorPrestamos));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gboFiltro = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label20 = new System.Windows.Forms.Label();
@@ -59,35 +56,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.dgvPrestamos = new System.Windows.Forms.DataGridView();
-            this.Marcar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.idAsociado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdSolicitud = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.identidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreCompleto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.areaTrabajo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.domicilio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estadoCivil = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tipoEmpleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.telefono = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantSolicitada = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.aporte = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.credito = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantConsumo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantAprobada = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cuota = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.periodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.periodoSug = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tasa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.capitalizacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.motivo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.aprobado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.fechaAprobacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Anulado = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.TipoSolicitud = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Dependencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CmsOpciones = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aprobarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,7 +63,6 @@
             this.anularToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reversarAnulaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sACSolicitudesDgvBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCodeasAdiggm = new ADIGGM.DataSets.DsCodeasAdiggm();
             this.gboDetalles = new System.Windows.Forms.GroupBox();
             this.gboDatosPres = new System.Windows.Forms.GroupBox();
             this.lblTipoSol = new System.Windows.Forms.Label();
@@ -130,18 +97,11 @@
             this.txtEstadoCivil = new System.Windows.Forms.TextBox();
             this.txtTipoEmp = new System.Windows.Forms.TextBox();
             this.txtTelefono = new System.Windows.Forms.TextBox();
-            this.sAC_SolicitudesDgvTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_SolicitudesDgvTableAdapter();
-            this.sAC_AsociadosTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_AsociadosTableAdapter();
-            this.sAC_SolicitudesTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_SolicitudesTableAdapter();
-            this.sAC_EstadoFinancieroTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_EstadoFinancieroTableAdapter();
-            this.saC_AmortizacionesTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_AmortizacionesTableAdapter();
-            this.pR_R_SolicitudesTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.PR_R_SolicitudesTableAdapter();
             this.pnlFooter.SuspendLayout();
             this.gboFiltro.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrestamos)).BeginInit();
             this.CmsOpciones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sACSolicitudesDgvBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).BeginInit();
             this.gboDetalles.SuspendLayout();
             this.gboDatosPres.SuspendLayout();
             this.pnlDatosPres.SuspendLayout();
@@ -526,38 +486,7 @@
             this.dgvPrestamos.AllowUserToResizeRows = false;
             this.dgvPrestamos.AutoGenerateColumns = false;
             this.dgvPrestamos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPrestamos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Marcar,
-            this.idAsociado,
-            this.IdSolicitud,
-            this.codigo,
-            this.fecha,
-            this.identidad,
-            this.nombreCompleto,
-            this.areaTrabajo,
-            this.domicilio,
-            this.estadoCivil,
-            this.tipoEmpleado,
-            this.telefono,
-            this.cantSolicitada,
-            this.aporte,
-            this.credito,
-            this.cantConsumo,
-            this.cantAprobada,
-            this.cuota,
-            this.periodo,
-            this.periodoSug,
-            this.tasa,
-            this.capitalizacion,
-            this.motivo,
-            this.aprobado,
-            this.fechaAprobacion,
-            this.Anulado,
-            this.TipoSolicitud,
-            this.Dependencia,
-            this.Usuario});
             this.dgvPrestamos.ContextMenuStrip = this.CmsOpciones;
-            this.dgvPrestamos.DataSource = this.sACSolicitudesDgvBindingSource;
             this.dgvPrestamos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPrestamos.Location = new System.Drawing.Point(0, 165);
             this.dgvPrestamos.Name = "dgvPrestamos";
@@ -570,301 +499,6 @@
             this.dgvPrestamos.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvPrestamos_DataError);
             this.dgvPrestamos.SelectionChanged += new System.EventHandler(this.dgvPrestamos_SelectionChanged);
             this.dgvPrestamos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvPrestamos_MouseDown);
-            // 
-            // Marcar
-            // 
-            this.Marcar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Marcar.HeaderText = "X";
-            this.Marcar.Name = "Marcar";
-            this.Marcar.ReadOnly = true;
-            this.Marcar.Width = 20;
-            // 
-            // idAsociado
-            // 
-            this.idAsociado.DataPropertyName = "IdAsociado";
-            this.idAsociado.HeaderText = "IdAsociado";
-            this.idAsociado.MinimumWidth = 6;
-            this.idAsociado.Name = "idAsociado";
-            this.idAsociado.ReadOnly = true;
-            this.idAsociado.Visible = false;
-            this.idAsociado.Width = 125;
-            // 
-            // IdSolicitud
-            // 
-            this.IdSolicitud.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.IdSolicitud.DataPropertyName = "IdSolicitud";
-            this.IdSolicitud.HeaderText = "N°";
-            this.IdSolicitud.MinimumWidth = 6;
-            this.IdSolicitud.Name = "IdSolicitud";
-            this.IdSolicitud.ReadOnly = true;
-            this.IdSolicitud.Width = 44;
-            // 
-            // codigo
-            // 
-            this.codigo.DataPropertyName = "CodigoAsociado";
-            this.codigo.HeaderText = "Código";
-            this.codigo.MinimumWidth = 6;
-            this.codigo.Name = "codigo";
-            this.codigo.ReadOnly = true;
-            this.codigo.Visible = false;
-            this.codigo.Width = 125;
-            // 
-            // fecha
-            // 
-            this.fecha.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.fecha.DataPropertyName = "FechaSolicitud";
-            this.fecha.HeaderText = "Fecha";
-            this.fecha.MinimumWidth = 6;
-            this.fecha.Name = "fecha";
-            this.fecha.ReadOnly = true;
-            this.fecha.Width = 66;
-            // 
-            // identidad
-            // 
-            this.identidad.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.identidad.DataPropertyName = "Identidad";
-            this.identidad.HeaderText = "Identidad";
-            this.identidad.MinimumWidth = 6;
-            this.identidad.Name = "identidad";
-            this.identidad.ReadOnly = true;
-            this.identidad.Width = 87;
-            // 
-            // nombreCompleto
-            // 
-            this.nombreCompleto.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombreCompleto.DataPropertyName = "NombreCompleto";
-            this.nombreCompleto.HeaderText = "Nombre";
-            this.nombreCompleto.MinimumWidth = 6;
-            this.nombreCompleto.Name = "nombreCompleto";
-            this.nombreCompleto.ReadOnly = true;
-            // 
-            // areaTrabajo
-            // 
-            this.areaTrabajo.DataPropertyName = "AreaTrabajo";
-            this.areaTrabajo.HeaderText = "Área de Trabajo";
-            this.areaTrabajo.MinimumWidth = 6;
-            this.areaTrabajo.Name = "areaTrabajo";
-            this.areaTrabajo.ReadOnly = true;
-            this.areaTrabajo.Visible = false;
-            this.areaTrabajo.Width = 125;
-            // 
-            // domicilio
-            // 
-            this.domicilio.DataPropertyName = "Domicilio";
-            this.domicilio.HeaderText = "Domicilio";
-            this.domicilio.MinimumWidth = 6;
-            this.domicilio.Name = "domicilio";
-            this.domicilio.ReadOnly = true;
-            this.domicilio.Visible = false;
-            this.domicilio.Width = 125;
-            // 
-            // estadoCivil
-            // 
-            this.estadoCivil.DataPropertyName = "EstadoCivil";
-            this.estadoCivil.HeaderText = "Estado Civil";
-            this.estadoCivil.MinimumWidth = 6;
-            this.estadoCivil.Name = "estadoCivil";
-            this.estadoCivil.ReadOnly = true;
-            this.estadoCivil.Visible = false;
-            this.estadoCivil.Width = 125;
-            // 
-            // tipoEmpleado
-            // 
-            this.tipoEmpleado.DataPropertyName = "TipoEmpleado";
-            this.tipoEmpleado.HeaderText = "Tipo de Empleado";
-            this.tipoEmpleado.MinimumWidth = 6;
-            this.tipoEmpleado.Name = "tipoEmpleado";
-            this.tipoEmpleado.ReadOnly = true;
-            this.tipoEmpleado.Visible = false;
-            this.tipoEmpleado.Width = 125;
-            // 
-            // telefono
-            // 
-            this.telefono.DataPropertyName = "Telefono";
-            this.telefono.HeaderText = "Teléfono";
-            this.telefono.MinimumWidth = 6;
-            this.telefono.Name = "telefono";
-            this.telefono.ReadOnly = true;
-            this.telefono.Visible = false;
-            this.telefono.Width = 125;
-            // 
-            // cantSolicitada
-            // 
-            this.cantSolicitada.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.cantSolicitada.DataPropertyName = "CantSolicitada";
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = null;
-            this.cantSolicitada.DefaultCellStyle = dataGridViewCellStyle1;
-            this.cantSolicitada.HeaderText = "Préstamo";
-            this.cantSolicitada.MinimumWidth = 6;
-            this.cantSolicitada.Name = "cantSolicitada";
-            this.cantSolicitada.ReadOnly = true;
-            this.cantSolicitada.Width = 82;
-            // 
-            // aporte
-            // 
-            this.aporte.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.aporte.DataPropertyName = "Aporte";
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = null;
-            this.aporte.DefaultCellStyle = dataGridViewCellStyle2;
-            this.aporte.HeaderText = "Aporte";
-            this.aporte.MinimumWidth = 6;
-            this.aporte.Name = "aporte";
-            this.aporte.ReadOnly = true;
-            this.aporte.Width = 68;
-            // 
-            // credito
-            // 
-            this.credito.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.credito.DataPropertyName = "Credito";
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.credito.DefaultCellStyle = dataGridViewCellStyle3;
-            this.credito.HeaderText = "Crédito";
-            this.credito.MinimumWidth = 6;
-            this.credito.Name = "credito";
-            this.credito.ReadOnly = true;
-            this.credito.Width = 72;
-            // 
-            // cantConsumo
-            // 
-            this.cantConsumo.DataPropertyName = "CantConsumo";
-            this.cantConsumo.HeaderText = "Cant. Consumo";
-            this.cantConsumo.MinimumWidth = 6;
-            this.cantConsumo.Name = "cantConsumo";
-            this.cantConsumo.ReadOnly = true;
-            this.cantConsumo.Visible = false;
-            this.cantConsumo.Width = 125;
-            // 
-            // cantAprobada
-            // 
-            this.cantAprobada.DataPropertyName = "CantAprobada";
-            this.cantAprobada.HeaderText = "Cant. Aprobada";
-            this.cantAprobada.MinimumWidth = 6;
-            this.cantAprobada.Name = "cantAprobada";
-            this.cantAprobada.ReadOnly = true;
-            this.cantAprobada.Visible = false;
-            this.cantAprobada.Width = 125;
-            // 
-            // cuota
-            // 
-            this.cuota.DataPropertyName = "Cuota";
-            this.cuota.HeaderText = "Cuota";
-            this.cuota.MinimumWidth = 6;
-            this.cuota.Name = "cuota";
-            this.cuota.ReadOnly = true;
-            this.cuota.Visible = false;
-            this.cuota.Width = 125;
-            // 
-            // periodo
-            // 
-            this.periodo.DataPropertyName = "Periodo";
-            this.periodo.HeaderText = "Período";
-            this.periodo.MinimumWidth = 6;
-            this.periodo.Name = "periodo";
-            this.periodo.ReadOnly = true;
-            this.periodo.Visible = false;
-            this.periodo.Width = 125;
-            // 
-            // periodoSug
-            // 
-            this.periodoSug.DataPropertyName = "PeriodoSug";
-            this.periodoSug.HeaderText = "Período Sug.";
-            this.periodoSug.MinimumWidth = 6;
-            this.periodoSug.Name = "periodoSug";
-            this.periodoSug.ReadOnly = true;
-            this.periodoSug.Visible = false;
-            this.periodoSug.Width = 125;
-            // 
-            // tasa
-            // 
-            this.tasa.DataPropertyName = "Tasa";
-            this.tasa.HeaderText = "Tasa";
-            this.tasa.MinimumWidth = 6;
-            this.tasa.Name = "tasa";
-            this.tasa.ReadOnly = true;
-            this.tasa.Visible = false;
-            this.tasa.Width = 125;
-            // 
-            // capitalizacion
-            // 
-            this.capitalizacion.DataPropertyName = "Capitalizacion";
-            this.capitalizacion.HeaderText = "Capitalización";
-            this.capitalizacion.MinimumWidth = 6;
-            this.capitalizacion.Name = "capitalizacion";
-            this.capitalizacion.ReadOnly = true;
-            this.capitalizacion.Visible = false;
-            this.capitalizacion.Width = 125;
-            // 
-            // motivo
-            // 
-            this.motivo.DataPropertyName = "Motivo";
-            this.motivo.HeaderText = "Motivo";
-            this.motivo.MinimumWidth = 6;
-            this.motivo.Name = "motivo";
-            this.motivo.ReadOnly = true;
-            this.motivo.Visible = false;
-            this.motivo.Width = 125;
-            // 
-            // aprobado
-            // 
-            this.aprobado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.aprobado.DataPropertyName = "Aprobado";
-            this.aprobado.HeaderText = "Aprobado";
-            this.aprobado.MinimumWidth = 6;
-            this.aprobado.Name = "aprobado";
-            this.aprobado.ReadOnly = true;
-            this.aprobado.Width = 69;
-            // 
-            // fechaAprobacion
-            // 
-            this.fechaAprobacion.DataPropertyName = "FechaAprobacion";
-            this.fechaAprobacion.HeaderText = "Fecha Aprob.";
-            this.fechaAprobacion.MinimumWidth = 6;
-            this.fechaAprobacion.Name = "fechaAprobacion";
-            this.fechaAprobacion.ReadOnly = true;
-            this.fechaAprobacion.Visible = false;
-            this.fechaAprobacion.Width = 125;
-            // 
-            // Anulado
-            // 
-            this.Anulado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Anulado.DataPropertyName = "Anulado";
-            this.Anulado.HeaderText = "Anulado";
-            this.Anulado.MinimumWidth = 6;
-            this.Anulado.Name = "Anulado";
-            this.Anulado.ReadOnly = true;
-            this.Anulado.Width = 59;
-            // 
-            // TipoSolicitud
-            // 
-            this.TipoSolicitud.DataPropertyName = "TipoSolicitud";
-            this.TipoSolicitud.HeaderText = "TipoSolicitud";
-            this.TipoSolicitud.MinimumWidth = 6;
-            this.TipoSolicitud.Name = "TipoSolicitud";
-            this.TipoSolicitud.ReadOnly = true;
-            this.TipoSolicitud.Visible = false;
-            this.TipoSolicitud.Width = 125;
-            // 
-            // Dependencia
-            // 
-            this.Dependencia.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Dependencia.DataPropertyName = "Dependencia";
-            this.Dependencia.HeaderText = "Dependencia";
-            this.Dependencia.MinimumWidth = 6;
-            this.Dependencia.Name = "Dependencia";
-            this.Dependencia.ReadOnly = true;
-            this.Dependencia.Width = 108;
-            // 
-            // Usuario
-            // 
-            this.Usuario.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Usuario.DataPropertyName = "Usuario";
-            this.Usuario.HeaderText = "Usuario";
-            this.Usuario.Name = "Usuario";
-            this.Usuario.ReadOnly = true;
-            this.Usuario.Width = 71;
             // 
             // CmsOpciones
             // 
@@ -920,13 +554,6 @@
             // 
             // sACSolicitudesDgvBindingSource
             // 
-            this.sACSolicitudesDgvBindingSource.DataMember = "SAC_SolicitudesDgv";
-            this.sACSolicitudesDgvBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // dsCodeasAdiggm
-            // 
-            this.dsCodeasAdiggm.DataSetName = "DsCodeasAdiggm";
-            this.dsCodeasAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // gboDetalles
             // 
@@ -1270,30 +897,6 @@
             this.txtTelefono.TabIndex = 0;
             this.txtTelefono.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // sAC_SolicitudesDgvTableAdapter
-            // 
-            this.sAC_SolicitudesDgvTableAdapter.ClearBeforeFill = true;
-            // 
-            // sAC_AsociadosTableAdapter
-            // 
-            this.sAC_AsociadosTableAdapter.ClearBeforeFill = true;
-            // 
-            // sAC_SolicitudesTableAdapter
-            // 
-            this.sAC_SolicitudesTableAdapter.ClearBeforeFill = true;
-            // 
-            // sAC_EstadoFinancieroTableAdapter
-            // 
-            this.sAC_EstadoFinancieroTableAdapter.ClearBeforeFill = true;
-            // 
-            // saC_AmortizacionesTableAdapter
-            // 
-            this.saC_AmortizacionesTableAdapter.ClearBeforeFill = true;
-            // 
-            // pR_R_SolicitudesTableAdapter
-            // 
-            this.pR_R_SolicitudesTableAdapter.ClearBeforeFill = true;
-            // 
             // FrmVisorPrestamos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1317,7 +920,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrestamos)).EndInit();
             this.CmsOpciones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sACSolicitudesDgvBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).EndInit();
             this.gboDetalles.ResumeLayout(false);
             this.gboDatosPres.ResumeLayout(false);
             this.gboDatosPres.PerformLayout();
@@ -1343,9 +945,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView dgvPrestamos;
-        private DataSets.DsCodeasAdiggm dsCodeasAdiggm;
         private System.Windows.Forms.BindingSource sACSolicitudesDgvBindingSource;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_SolicitudesDgvTableAdapter sAC_SolicitudesDgvTableAdapter;
         private System.Windows.Forms.GroupBox gboDetalles;
         private System.Windows.Forms.ContextMenuStrip CmsOpciones;
         private System.Windows.Forms.ToolStripMenuItem editarToolStripMenuItem;
@@ -1388,12 +988,7 @@
         private System.Windows.Forms.TextBox txtPeriodo;
         private System.Windows.Forms.TextBox txtTasa;
         private System.Windows.Forms.TextBox txtCapitalizacion;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idAsociadoDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button btnGenerar;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_AsociadosTableAdapter sAC_AsociadosTableAdapter;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_SolicitudesTableAdapter sAC_SolicitudesTableAdapter;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_EstadoFinancieroTableAdapter sAC_EstadoFinancieroTableAdapter;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_AmortizacionesTableAdapter saC_AmortizacionesTableAdapter;
         private System.Windows.Forms.Button btnExportar;
         private System.Windows.Forms.Panel pnlDatosPres;
         private System.Windows.Forms.Label label19;
@@ -1406,36 +1001,6 @@
         private System.Windows.Forms.RadioButton RdbRangoSolicitud;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Marcar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idAsociado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdSolicitud;
-        private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fecha;
-        private System.Windows.Forms.DataGridViewTextBoxColumn identidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreCompleto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn areaTrabajo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn domicilio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn estadoCivil;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tipoEmpleado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn telefono;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantSolicitada;
-        private System.Windows.Forms.DataGridViewTextBoxColumn aporte;
-        private System.Windows.Forms.DataGridViewTextBoxColumn credito;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantConsumo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantAprobada;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cuota;
-        private System.Windows.Forms.DataGridViewTextBoxColumn periodo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn periodoSug;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tasa;
-        private System.Windows.Forms.DataGridViewTextBoxColumn capitalizacion;
-        private System.Windows.Forms.DataGridViewTextBoxColumn motivo;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn aprobado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fechaAprobacion;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Anulado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TipoSolicitud;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Dependencia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Usuario;
         private System.Windows.Forms.Button button1;
-        private DataSets.DsCodeasAdiggmTableAdapters.PR_R_SolicitudesTableAdapter pR_R_SolicitudesTableAdapter;
     }
 }
