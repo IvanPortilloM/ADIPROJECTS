@@ -356,9 +356,9 @@ namespace ADIGGM.Mantenimiento
             this.btnPrevia.Text = "Vista previa";
             this.btnPrevia.UseVisualStyleBackColor = true;
             this.btnPrevia.Click += new System.EventHandler(this.btnPrevia_Click);
-            //
+            // 
             // lblModo
-            //
+            // 
             this.lblModo.AutoSize = true;
             this.lblModo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
             this.lblModo.Location = new System.Drawing.Point(380, 160);
@@ -366,9 +366,9 @@ namespace ADIGGM.Mantenimiento
             this.lblModo.Size = new System.Drawing.Size(40, 13);
             this.lblModo.TabIndex = 8;
             this.lblModo.Text = "Modo:";
-            //
+            // 
             // cboModoCalculo
-            //
+            // 
             this.cboModoCalculo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboModoCalculo.FormattingEnabled = true;
             this.cboModoCalculo.Items.AddRange(new object[] {
@@ -379,9 +379,9 @@ namespace ADIGGM.Mantenimiento
             this.cboModoCalculo.Size = new System.Drawing.Size(120, 21);
             this.cboModoCalculo.TabIndex = 9;
             this.cboModoCalculo.SelectedIndexChanged += new System.EventHandler(this.cboModoCalculo_SelectedIndexChanged);
-            //
+            //             
             // dgvPrevia
-            //
+            // 
             this.dgvPrevia.AllowUserToAddRows = false;
             this.dgvPrevia.AllowUserToDeleteRows = false;
             this.dgvPrevia.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
