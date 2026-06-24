@@ -10,13 +10,14 @@ using System.Net.Mail;
 using System.Text;
 using System.Windows.Forms;
 using ADIGGM.Clases;
-using ADIGGM.DataSetsWeb.DsOCWebTableAdapters;
+using ADIGGM.CapaDatos;
 using MySqlX.XDevAPI.Relational;
 
 namespace ADIGGM.OC.Visores
 {
     public partial class VisOrdenesTrabajo : FrmPrincipal
     {
+        private readonly RepositorioOC _repoOC = new RepositorioOC();
         int selectedIndex;
         private DateTimePicker dtp = new DateTimePicker();
         DateTime selectedDate = DateTime.Now.Date;
@@ -428,9 +429,9 @@ namespace ADIGGM.OC.Visores
             }
             else
             {
-                var sp =  Convert.ToString(VarGlobales.consultasOCWeb.OCWeb_OrdenCompraInsert(Convert.ToInt32(IdOC),Correlativo,TipoOrden,Proveedor,Fecha,Accion,Motivo,Usuario));
+                var sp = _repoOC.InsertarOrdenCompraWeb(Convert.ToInt32(IdOC), Correlativo, TipoOrden, Proveedor, Fecha, Accion, Motivo, Usuario);
 
-                if (sp == "1")
+                if (sp == 1)
                 {
                     MessageBox.Show("La solicitud fue enviada satisfactoriamente, favor espere la confirmación", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

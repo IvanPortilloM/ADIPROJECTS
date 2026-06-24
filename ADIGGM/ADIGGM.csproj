@@ -427,6 +427,7 @@
     <Compile Include="CapaDatos\RepositorioUsuarios.cs" />
     <Compile Include="CapaDatos\RepositorioCA.cs" />
     <Compile Include="CapaDatos\RepositorioCodeas.cs" />
+    <Compile Include="CapaDatos\RepositorioOC.cs" />
     <Compile Include="CapaDatos\RepositorioTransporte.cs" />
     <Compile Include="CapaDatos\RepositorioFAC.cs" />
     <Compile Include="CapaModelo\FilasTarifa.cs" />
@@ -449,11 +450,6 @@
     <Compile Include="Clases\CustomReportCredentials.cs" />
     <Compile Include="Clases\IContract.cs" />
     <Compile Include="Clases\Numalet.cs" />
-    <Compile Include="DataSetsWeb\DsOCWeb.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DsOCWeb.xsd</DependentUpon>
-    </Compile>
     <Compile Include="DataSetsWeb\DsSACWeb.cs">
       <DependentUpon>DsSACWeb.xsd</DependentUpon>
     </Compile>
@@ -1900,17 +1896,6 @@
       <DependentUpon>FrmViajes.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ADIGGM_TemporaryKey.pfx" />
-    <None Include="DataSetsWeb\DsOCWeb.xsc">
-      <DependentUpon>DsOCWeb.xsd</DependentUpon>
-    </None>
-    <None Include="DataSetsWeb\DsOCWeb.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DsOCWeb.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="DataSetsWeb\DsOCWeb.xss">
-      <DependentUpon>DsOCWeb.xsd</DependentUpon>
-    </None>
     <None Include="DataSets\DsCodeasAdiggm.xsc">
       <DependentUpon>DsCodeasAdiggm.xsd</DependentUpon>
     </None>
