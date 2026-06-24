@@ -30,17 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgvTipoDocumentos = new System.Windows.Forms.DataGridView();
-            this.idCxpDocumentoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codigoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tipoDocumentoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.activoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cPTipoDocumentosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsOC = new ADIGGM.DataSets.DsOC();
-            this.cP_TipoDocumentosTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.CP_TipoDocumentosTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTipoDocumentos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cPTipoDocumentosBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSalir
@@ -117,12 +110,6 @@
             this.dgvTipoDocumentos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvTipoDocumentos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvTipoDocumentos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTipoDocumentos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idCxpDocumentoDataGridViewTextBoxColumn,
-            this.codigoDataGridViewTextBoxColumn,
-            this.tipoDocumentoDataGridViewTextBoxColumn,
-            this.activoDataGridViewCheckBoxColumn});
-            this.dgvTipoDocumentos.DataSource = this.cPTipoDocumentosBindingSource;
             this.dgvTipoDocumentos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTipoDocumentos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvTipoDocumentos.Location = new System.Drawing.Point(0, 98);
@@ -133,51 +120,12 @@
             this.dgvTipoDocumentos.TabIndex = 107;
             this.dgvTipoDocumentos.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvTipoDocumentos_RowsAdded);
             // 
-            // idCxpDocumentoDataGridViewTextBoxColumn
-            // 
-            this.idCxpDocumentoDataGridViewTextBoxColumn.DataPropertyName = "IdCxpDocumento";
-            this.idCxpDocumentoDataGridViewTextBoxColumn.HeaderText = "IdCxpDocumento";
-            this.idCxpDocumentoDataGridViewTextBoxColumn.Name = "idCxpDocumentoDataGridViewTextBoxColumn";
-            this.idCxpDocumentoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idCxpDocumentoDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // codigoDataGridViewTextBoxColumn
-            // 
-            this.codigoDataGridViewTextBoxColumn.DataPropertyName = "Codigo";
-            this.codigoDataGridViewTextBoxColumn.FillWeight = 69.23232F;
-            this.codigoDataGridViewTextBoxColumn.HeaderText = "Codigo";
-            this.codigoDataGridViewTextBoxColumn.Name = "codigoDataGridViewTextBoxColumn";
-            this.codigoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // tipoDocumentoDataGridViewTextBoxColumn
-            // 
-            this.tipoDocumentoDataGridViewTextBoxColumn.DataPropertyName = "TipoDocumento";
-            this.tipoDocumentoDataGridViewTextBoxColumn.FillWeight = 192.6966F;
-            this.tipoDocumentoDataGridViewTextBoxColumn.HeaderText = "TipoDocumento";
-            this.tipoDocumentoDataGridViewTextBoxColumn.Name = "tipoDocumentoDataGridViewTextBoxColumn";
-            this.tipoDocumentoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // activoDataGridViewCheckBoxColumn
-            // 
-            this.activoDataGridViewCheckBoxColumn.DataPropertyName = "Activo";
-            this.activoDataGridViewCheckBoxColumn.FillWeight = 38.07107F;
-            this.activoDataGridViewCheckBoxColumn.HeaderText = "Activo";
-            this.activoDataGridViewCheckBoxColumn.Name = "activoDataGridViewCheckBoxColumn";
-            this.activoDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
             // cPTipoDocumentosBindingSource
             // 
-            this.cPTipoDocumentosBindingSource.DataMember = "CP_TipoDocumentos";
-            this.cPTipoDocumentosBindingSource.DataSource = this.dsOC;
             // 
-            // dsOC
             // 
-            this.dsOC.DataSetName = "DsOC";
-            this.dsOC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // cP_TipoDocumentosTableAdapter
             // 
-            this.cP_TipoDocumentosTableAdapter.ClearBeforeFill = true;
             // 
             // ManTipoDocumento
             // 
@@ -193,7 +141,6 @@
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTipoDocumentos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cPTipoDocumentosBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -201,12 +148,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvTipoDocumentos;
-        private DataSets.DsOC dsOC;
         private System.Windows.Forms.BindingSource cPTipoDocumentosBindingSource;
-        private DataSets.DsOCTableAdapters.CP_TipoDocumentosTableAdapter cP_TipoDocumentosTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idCxpDocumentoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn codigoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tipoDocumentoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn activoDataGridViewCheckBoxColumn;
     }
 }

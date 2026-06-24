@@ -1,27 +1,50 @@
-﻿using Formularios_Base;
+﻿using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
+using Formularios_Base;
 using System;
+using System.Data;
 using System.Windows.Forms;
 
 namespace ADIGGM.OC.Mantenimiento
 {
     public partial class ManTipoDocumento : FrmMantenimiento
     {
+        private readonly RepositorioOC _repoOC = new RepositorioOC();
+        private DataTable _dt;
         public ManTipoDocumento()
         {
             InitializeComponent();
+            ConfigurarColumnas();
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para inmunizarlo al borrado del
+        /// diseñador de VS — gotcha §11. Mantenimiento editable (toggle con GridColumnas.Edicion §14.10).</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvTipoDocumentos.AutoGenerateColumns = false;
+            dgvTipoDocumentos.Columns.Clear();
+            dgvTipoDocumentos.Columns.Add(GridColumnas.Texto("idCxpDocumentoDataGridViewTextBoxColumn", "IdCxpDocumento", "IdCxpDocumento", visible: false));
+            dgvTipoDocumentos.Columns.Add(GridColumnas.Texto("codigoDataGridViewTextBoxColumn", "Codigo", "Codigo"));
+            dgvTipoDocumentos.Columns.Add(GridColumnas.Texto("tipoDocumentoDataGridViewTextBoxColumn", "TipoDocumento", "TipoDocumento"));
+            dgvTipoDocumentos.Columns.Add(GridColumnas.Check("activoDataGridViewCheckBoxColumn", "Activo", "Activo"));
+            dgvTipoDocumentos.DataSource = cPTipoDocumentosBindingSource;
+        }
+
+        private void Cargar()
+        {
+            _dt = _repoOC.ListarTiposDocumento();
+            cPTipoDocumentosBindingSource.DataSource = _dt;
         }
 
         private void ManTipoDocumento_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsOC.CP_TipoDocumentos' Puede moverla o quitarla según sea necesario.
-            this.cP_TipoDocumentosTableAdapter.Fill(this.dsOC.CP_TipoDocumentos);
-
+            Cargar();
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvTipoDocumentos.AllowUserToAddRows = true;
-            dgvTipoDocumentos.ReadOnly = false;
+            GridColumnas.Edicion(dgvTipoDocumentos, true);
             dgvTipoDocumentos.FirstDisplayedScrollingRowIndex = dgvTipoDocumentos.RowCount - 1;
             var cantidadRow = dgvTipoDocumentos.RowCount - 1;
             dgvTipoDocumentos.CurrentCell = dgvTipoDocumentos.Rows[cantidadRow].Cells[1];
@@ -37,16 +60,19 @@ namespace ADIGGM.OC.Mantenimiento
             {
                 if (dgvTipoDocumentos.Rows.Count > 0 && dgvTipoDocumentos.FirstDisplayedCell != null)
                 {
+                    int fila = dgvTipoDocumentos.CurrentRow.Index;
                     dgvTipoDocumentos.EndEdit();
-                    this.cP_TipoDocumentosTableAdapter.Update(this.dsOC.CP_TipoDocumentos);
-                    dgvTipoDocumentos.CurrentCell = dgvTipoDocumentos.Rows[dgvTipoDocumentos.CurrentRow.Index].Cells[1];
+                    _repoOC.GuardarTiposDocumento(_dt);
+                    Cargar();
+                    if (fila < dgvTipoDocumentos.RowCount)
+                        dgvTipoDocumentos.CurrentCell = dgvTipoDocumentos.Rows[fila].Cells[1];
                     dgvTipoDocumentos.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
                     btnNuevo.Enabled = true;
                     btnEditar.Enabled = true;
                     btnCancelar.Enabled = false;
-                    dgvTipoDocumentos.ReadOnly = true;
+                    GridColumnas.Edicion(dgvTipoDocumentos, false);
                     lblFooter.Text = "Tipos Documentos - #Registros: " + (dgvTipoDocumentos.RowCount);
                 }
             }
@@ -63,7 +89,7 @@ namespace ADIGGM.OC.Mantenimiento
             if (dgvTipoDocumentos.Rows.Count > 0 && dgvTipoDocumentos.FirstDisplayedCell != null)
             {
                 saveRow = dgvTipoDocumentos.FirstDisplayedCell.RowIndex;
-                dgvTipoDocumentos.ReadOnly = false;
+                GridColumnas.Edicion(dgvTipoDocumentos, true);
                 dgvTipoDocumentos.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;
@@ -80,11 +106,13 @@ namespace ADIGGM.OC.Mantenimiento
         {
             if (dgvTipoDocumentos.Rows.Count > 0 && dgvTipoDocumentos.FirstDisplayedCell != null)
             {
-                this.cP_TipoDocumentosTableAdapter.Fill(this.dsOC.CP_TipoDocumentos);
-                dgvTipoDocumentos.CurrentCell = dgvTipoDocumentos.Rows[dgvTipoDocumentos.CurrentRow.Index].Cells[1];
+                int fila = dgvTipoDocumentos.CurrentRow.Index;
+                Cargar();
+                if (fila < dgvTipoDocumentos.RowCount)
+                    dgvTipoDocumentos.CurrentCell = dgvTipoDocumentos.Rows[fila].Cells[1];
                 dgvTipoDocumentos.AllowUserToAddRows = false;
 
-                dgvTipoDocumentos.ReadOnly = true;
+                GridColumnas.Edicion(dgvTipoDocumentos, false);
                 btnGuardar.Enabled = false;
                 btnNuevo.Enabled = true;
                 btnEditar.Enabled = true;

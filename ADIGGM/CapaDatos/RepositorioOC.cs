@@ -29,5 +29,20 @@ namespace ADIGGM.CapaDatos
                 Usuario = usuario
             }, CommandType.StoredProcedure);
         }
+
+        // ===== Tipos de documento CxP (OC\Mantenimiento\ManTipoDocumento) =====
+
+        public DataTable ListarTiposDocumento()
+        {
+            return ConsultarTabla("SELECT IdCxpDocumento, Codigo, TipoDocumento, Activo FROM dbo.CP_TipoDocumentos");
+        }
+
+        public int GuardarTiposDocumento(DataTable tabla)
+        {
+            return GuardarCambios(tabla,
+                "INSERT INTO dbo.CP_TipoDocumentos (Codigo, TipoDocumento, Activo) VALUES (@Codigo, @TipoDocumento, @Activo)",
+                "UPDATE dbo.CP_TipoDocumentos SET Codigo=@Codigo, TipoDocumento=@TipoDocumento, Activo=@Activo WHERE IdCxpDocumento=@IdCxpDocumento",
+                "DELETE FROM dbo.CP_TipoDocumentos WHERE IdCxpDocumento=@IdCxpDocumento");
+        }
     }
 }
