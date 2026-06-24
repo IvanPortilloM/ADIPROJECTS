@@ -12,12 +12,14 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using Microsoft.Win32;
 using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.INV.Visores
 {
     public partial class frmVisorInventarioSync : FrmPrincipal
     {
         bool PermitirMonto = true;
+        private readonly RepositorioCodeas _repoCodeas = new RepositorioCodeas();
 
         string connectionString = ADIGGM.CapaDatos.Conexion.Cadena("Covipruebas");
         string connectionString2 = ADIGGM.CapaDatos.Conexion.Cadena("TransporteAdiggm");
@@ -253,7 +255,7 @@ namespace ADIGGM.INV.Visores
                 int NoExiste = 0;
                 foreach (DataGridViewRow row in dgvDetalle.Rows)
                 {
-                    if (Convert.ToInt32(VarGlobales.consultas.PR_VerificarCtaCont(row.Cells["cuentaContable"].Value.ToString())) == 0)
+                    if (_repoCodeas.VerificarCuentaContable(row.Cells["cuentaContable"].Value.ToString()) == 0)
                     {
                         MessageBox.Show("La siguiente Cuenta Contable no existe en el sistema de CODEAS: " + row.Cells["cuentaContable"].Value.ToString(), VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         btnSincronizar.Enabled = false;

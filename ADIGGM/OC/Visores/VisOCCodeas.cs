@@ -5,11 +5,13 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.OC.Visores
 {
     public partial class VisOCCodeas : FrmPrincipal
     {
+        private readonly RepositorioCodeas _repoCodeas = new RepositorioCodeas();
         public VisOCCodeas()
         {
             InitializeComponent();
@@ -235,7 +237,7 @@ namespace ADIGGM.OC.Visores
                     {
                         ctaContable += 1;
                     }
-                    if (Convert.ToInt32(VarGlobales.consultas.PR_VerificarCtaCont(Convert.ToString(row.Cells["ctaContable"].Value.ToString().Trim()))) == 0)
+                    if (_repoCodeas.VerificarCuentaContable(row.Cells["ctaContable"].Value.ToString().Trim()) == 0)
                     {
                         VerificarCta += 1;
                     }

@@ -31,18 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmVisorOrdenesSAC));
             this.dgvVisor = new System.Windows.Forms.DataGridView();
-            this.idOrdenFactDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numOrdenDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechaOrdenDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idProveedorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreProveedorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idAsociadoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreAsociadoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tipoOrdenDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.estadoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.sACBuscarAsocBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsCodeasAdiggm = new ADIGGM.DataSets.DsCodeasAdiggm();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -51,11 +40,9 @@
             this.cboOrdenBusqueda = new System.Windows.Forms.ComboBox();
             this.txtTexto = new System.Windows.Forms.TextBox();
             this.btnBuscar = new System.Windows.Forms.Button();
-            this.sAC_BuscarAsocTableAdapter = new ADIGGM.DataSets.DsCodeasAdiggmTableAdapters.SAC_BuscarAsocTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVisor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sACBuscarAsocBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,18 +85,6 @@
             this.dgvVisor.AllowUserToDeleteRows = false;
             this.dgvVisor.AutoGenerateColumns = false;
             this.dgvVisor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVisor.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idOrdenFactDataGridViewTextBoxColumn,
-            this.numOrdenDataGridViewTextBoxColumn,
-            this.fechaOrdenDataGridViewTextBoxColumn,
-            this.idProveedorDataGridViewTextBoxColumn,
-            this.nombreProveedorDataGridViewTextBoxColumn,
-            this.idAsociadoDataGridViewTextBoxColumn,
-            this.nombreAsociadoDataGridViewTextBoxColumn,
-            this.tipoOrdenDataGridViewTextBoxColumn,
-            this.valorDataGridViewTextBoxColumn,
-            this.estadoDataGridViewCheckBoxColumn});
-            this.dgvVisor.DataSource = this.sACBuscarAsocBindingSource;
             this.dgvVisor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvVisor.Location = new System.Drawing.Point(0, 139);
             this.dgvVisor.Name = "dgvVisor";
@@ -117,102 +92,8 @@
             this.dgvVisor.Size = new System.Drawing.Size(1178, 425);
             this.dgvVisor.TabIndex = 103;
             // 
-            // idOrdenFactDataGridViewTextBoxColumn
-            // 
-            this.idOrdenFactDataGridViewTextBoxColumn.DataPropertyName = "IdOrdenFact";
-            this.idOrdenFactDataGridViewTextBoxColumn.HeaderText = "IdOrdenFact";
-            this.idOrdenFactDataGridViewTextBoxColumn.Name = "idOrdenFactDataGridViewTextBoxColumn";
-            this.idOrdenFactDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idOrdenFactDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // numOrdenDataGridViewTextBoxColumn
-            // 
-            this.numOrdenDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.numOrdenDataGridViewTextBoxColumn.DataPropertyName = "NumOrden";
-            this.numOrdenDataGridViewTextBoxColumn.HeaderText = "# Orden";
-            this.numOrdenDataGridViewTextBoxColumn.Name = "numOrdenDataGridViewTextBoxColumn";
-            this.numOrdenDataGridViewTextBoxColumn.ReadOnly = true;
-            this.numOrdenDataGridViewTextBoxColumn.Width = 78;
-            // 
-            // fechaOrdenDataGridViewTextBoxColumn
-            // 
-            this.fechaOrdenDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.fechaOrdenDataGridViewTextBoxColumn.DataPropertyName = "FechaOrden";
-            this.fechaOrdenDataGridViewTextBoxColumn.HeaderText = "Fecha";
-            this.fechaOrdenDataGridViewTextBoxColumn.Name = "fechaOrdenDataGridViewTextBoxColumn";
-            this.fechaOrdenDataGridViewTextBoxColumn.ReadOnly = true;
-            this.fechaOrdenDataGridViewTextBoxColumn.Width = 66;
-            // 
-            // idProveedorDataGridViewTextBoxColumn
-            // 
-            this.idProveedorDataGridViewTextBoxColumn.DataPropertyName = "IdProveedor";
-            this.idProveedorDataGridViewTextBoxColumn.HeaderText = "IdProveedor";
-            this.idProveedorDataGridViewTextBoxColumn.Name = "idProveedorDataGridViewTextBoxColumn";
-            this.idProveedorDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idProveedorDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // nombreProveedorDataGridViewTextBoxColumn
-            // 
-            this.nombreProveedorDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.nombreProveedorDataGridViewTextBoxColumn.DataPropertyName = "NombreProveedor";
-            this.nombreProveedorDataGridViewTextBoxColumn.HeaderText = "Proveedor";
-            this.nombreProveedorDataGridViewTextBoxColumn.Name = "nombreProveedorDataGridViewTextBoxColumn";
-            this.nombreProveedorDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nombreProveedorDataGridViewTextBoxColumn.Width = 89;
-            // 
-            // idAsociadoDataGridViewTextBoxColumn
-            // 
-            this.idAsociadoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.idAsociadoDataGridViewTextBoxColumn.DataPropertyName = "IdAsociado";
-            this.idAsociadoDataGridViewTextBoxColumn.HeaderText = "Identidad";
-            this.idAsociadoDataGridViewTextBoxColumn.Name = "idAsociadoDataGridViewTextBoxColumn";
-            this.idAsociadoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idAsociadoDataGridViewTextBoxColumn.Width = 87;
-            // 
-            // nombreAsociadoDataGridViewTextBoxColumn
-            // 
-            this.nombreAsociadoDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nombreAsociadoDataGridViewTextBoxColumn.DataPropertyName = "NombreAsociado";
-            this.nombreAsociadoDataGridViewTextBoxColumn.HeaderText = "Nombre";
-            this.nombreAsociadoDataGridViewTextBoxColumn.Name = "nombreAsociadoDataGridViewTextBoxColumn";
-            this.nombreAsociadoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // tipoOrdenDataGridViewTextBoxColumn
-            // 
-            this.tipoOrdenDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.tipoOrdenDataGridViewTextBoxColumn.DataPropertyName = "TipoOrden";
-            this.tipoOrdenDataGridViewTextBoxColumn.HeaderText = "Tipo de Orden";
-            this.tipoOrdenDataGridViewTextBoxColumn.Name = "tipoOrdenDataGridViewTextBoxColumn";
-            this.tipoOrdenDataGridViewTextBoxColumn.ReadOnly = true;
-            this.tipoOrdenDataGridViewTextBoxColumn.Width = 101;
-            // 
-            // valorDataGridViewTextBoxColumn
-            // 
-            this.valorDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.valorDataGridViewTextBoxColumn.DataPropertyName = "Valor";
-            this.valorDataGridViewTextBoxColumn.HeaderText = "Valor";
-            this.valorDataGridViewTextBoxColumn.Name = "valorDataGridViewTextBoxColumn";
-            this.valorDataGridViewTextBoxColumn.ReadOnly = true;
-            this.valorDataGridViewTextBoxColumn.Width = 59;
-            // 
-            // estadoDataGridViewCheckBoxColumn
-            // 
-            this.estadoDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.estadoDataGridViewCheckBoxColumn.DataPropertyName = "Estado";
-            this.estadoDataGridViewCheckBoxColumn.HeaderText = "Estado";
-            this.estadoDataGridViewCheckBoxColumn.Name = "estadoDataGridViewCheckBoxColumn";
-            this.estadoDataGridViewCheckBoxColumn.ReadOnly = true;
-            this.estadoDataGridViewCheckBoxColumn.Width = 50;
-            // 
             // sACBuscarAsocBindingSource
             // 
-            this.sACBuscarAsocBindingSource.DataMember = "SAC_BuscarAsoc";
-            this.sACBuscarAsocBindingSource.DataSource = this.dsCodeasAdiggm;
-            // 
-            // dsCodeasAdiggm
-            // 
-            this.dsCodeasAdiggm.DataSetName = "DsCodeasAdiggm";
-            this.dsCodeasAdiggm.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // groupBox1
             // 
@@ -309,10 +190,6 @@
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
-            // sAC_BuscarAsocTableAdapter
-            // 
-            this.sAC_BuscarAsocTableAdapter.ClearBeforeFill = true;
-            // 
             // frmVisorOrdenesSAC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -328,7 +205,6 @@
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVisor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sACBuscarAsocBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsCodeasAdiggm)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -347,17 +223,5 @@
         private System.Windows.Forms.ComboBox cboOperador;
         private System.Windows.Forms.ComboBox cboOrdenBusqueda;
         private System.Windows.Forms.BindingSource sACBuscarAsocBindingSource;
-        private DataSets.DsCodeasAdiggm dsCodeasAdiggm;
-        private DataSets.DsCodeasAdiggmTableAdapters.SAC_BuscarAsocTableAdapter sAC_BuscarAsocTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idOrdenFactDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn numOrdenDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fechaOrdenDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idProveedorDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreProveedorDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idAsociadoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreAsociadoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tipoOrdenDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn valorDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn estadoDataGridViewCheckBoxColumn;
     }
 }

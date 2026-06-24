@@ -198,6 +198,17 @@ FROM SAC_EstadoFinanciero WHERE Des_Grupo = 'CREDITOS' AND IdSolicitud = @IdSoli
             return Ejecutar("dbo.SAC_SolicitudesAnular", new { IdSolicitud = idSolicitud, Anular = anular }, CommandType.StoredProcedure);
         }
 
+        // ===== Visor de órdenes SAC (SAC\Visores\frmVisorOrdenesSAC) =====
+
+        /// <summary>Órdenes SAC del visor, filtradas por texto (el SP SAC_BuscarAsoc decide el campo de
+        /// búsqueda con @ordenBusq y la comparación con @operador).</summary>
+        public DataTable BuscarOrdenesSac(string texto, string ordenBusqueda, string operador)
+        {
+            return ConsultarTabla("dbo.SAC_BuscarAsoc",
+                new { texto, ordenBusq = ordenBusqueda, operador },
+                CommandType.StoredProcedure);
+        }
+
         public DataTable ListarFechasCorteActivas()
         {
             const string sql = @"SELECT ncodfecort, dfechforma, dfecpripag, cperiodpag, bestaactiv
