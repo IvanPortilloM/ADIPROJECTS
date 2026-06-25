@@ -30,10 +30,20 @@ foreach ($c in $cols) {
   $csN = [regex]::Match($text, [regex]::Escape("this.$c.DefaultCellStyle = ") + '(\w+);').Groups[1].Value
   $fmt = ''
   if ($csN) { $fmt = [regex]::Match($text, [regex]::Escape("$csN.Format = ") + '"([^"]*)";').Groups[1].Value }
-  $isCheck = $decls[$c] -like '*CheckBox*'
-  $head = if ($isCheck) { 'GridColumnas.Check(' } else { 'GridColumnas.Texto(' }
+  $tipo = $decls[$c]
   $args = "`"$c`", `"$dp`", `"$h`""
-  if (-not $isCheck -and $fmt) { $args += ", format: `"$fmt`"" }
+  if ($tipo -like '*CheckBox*') {
+    $head = 'GridColumnas.Check('
+  }
+  elseif ($tipo -like '*Image*') {
+    $head = 'GridColumnas.Imagen('
+    $il = [regex]::Match($text, [regex]::Escape("this.$c.ImageLayout = ") + 'System\.Windows\.Forms\.DataGridViewImageCellLayout\.(\w+);')
+    if ($il.Success) { $args += ", DataGridViewImageCellLayout." + $il.Groups[1].Value }
+  }
+  else {
+    $head = 'GridColumnas.Texto('
+    if ($fmt) { $args += ", format: `"$fmt`"" }
+  }
   if (-not $vis) { $args += ", visible: false" }
   if ($w.Success) { $args += ", width: " + $w.Groups[1].Value }
   if ($asM.Success) { $args += ", autoSize: DataGridViewAutoSizeColumnMode." + $asM.Groups[1].Value }

@@ -69,6 +69,14 @@ dgv.Columns.Add(GridColumnas.Combo("colId","IdReferencia","Encabezado",
 // En el Load, tras poblar su BindingSource: ((DataGridViewComboBoxColumn)dgv.Columns["colId"]).DataSource = _repo.ListarRef();
 ```
 
+## 4b. Columna de imagen (firmas/logos/fotos)
+Si una columna es `DataGridViewImageColumn` (p.ej. una firma byte[]), usa `GridColumnas.Imagen`:
+```csharp
+dgv.Columns.Add(GridColumnas.Imagen("Firma","Firma","Firma", DataGridViewImageCellLayout.Stretch));
+```
+El alta/cambio de imagen suele ir por un `CellDoubleClick` gateado con `dgv.ReadOnly==false`
+(que `GridColumnas.Edicion` maneja). `volcar_columnas_grid.ps1` ya emite `Imagen` para estas columnas.
+
 ## 5. SP escalar / con parámetros OUTPUT
 ```csharp
 // escalar (ej. verificar/insertar que devuelve 1/0): replica el ExecuteScalar del TableAdapter
