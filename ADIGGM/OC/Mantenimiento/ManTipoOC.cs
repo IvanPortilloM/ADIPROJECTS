@@ -1,17 +1,42 @@
-﻿using Formularios_Base;
+﻿using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
+using Formularios_Base;
 using System;
+using System.Data;
 using System.Windows.Forms;
 
 namespace ADIGGM.OC.Mantenimiento
 {
     public partial class ManTipoOC : FrmMantenimiento
     {
+        private readonly RepositorioOC _repoOC = new RepositorioOC();
+        private DataTable _dt;
         public ManTipoOC()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             HabilitarBtn();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvTiposOC);
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) para inmunizarlo al borrado del
+        /// diseñador de VS — gotcha §11. Mantenimiento editable (toggle con GridColumnas.Edicion §14.10).
+        /// "Usuario"/"NombreEquipo" se setean por código (Cells[...]) → Names exactos.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvTiposOC.AutoGenerateColumns = false;
+            dgvTiposOC.Columns.Clear();
+            dgvTiposOC.Columns.Add(GridColumnas.Texto("idTipoOCDataGridViewTextBoxColumn", "IdTipoOC", "IdTipoOC", visible: false));
+            dgvTiposOC.Columns.Add(GridColumnas.Texto("codigoDataGridViewTextBoxColumn", "Codigo", "Codigo"));
+            dgvTiposOC.Columns.Add(GridColumnas.Texto("tipoOCDataGridViewTextBoxColumn", "TipoOC", "Tipo"));
+            dgvTiposOC.Columns.Add(GridColumnas.Check("activoDataGridViewCheckBoxColumn", "Activo", "Activo"));
+            dgvTiposOC.Columns.Add(GridColumnas.Check("combustibleDataGridViewCheckBoxColumn", "Combustible", "Combustible"));
+            dgvTiposOC.Columns.Add(GridColumnas.Check("materialesDataGridViewCheckBoxColumn", "Materiales", "Materiales"));
+            dgvTiposOC.Columns.Add(GridColumnas.Check("serviciosDataGridViewCheckBoxColumn", "Servicios", "Servicios"));
+            dgvTiposOC.Columns.Add(GridColumnas.Texto("Usuario", "Usuario", "Usuario", visible: false));
+            dgvTiposOC.Columns.Add(GridColumnas.Texto("NombreEquipo", "NombreEquipo", "NombreEquipo", visible: false));
+            dgvTiposOC.DataSource = oCTipoOCBindingSource;
         }
 
         public void HabilitarBtn()
@@ -22,17 +47,22 @@ namespace ADIGGM.OC.Mantenimiento
             btnCancelar.Enabled = false;
         }
 
+        private void Cargar()
+        {
+            _dt = _repoOC.ListarTiposOC();
+            oCTipoOCBindingSource.DataSource = _dt;
+            lblFooter.Text = "Tipos Ordenes de Compra - #Registros: " + (dgvTiposOC.RowCount);
+        }
+
         private void ManTipoOC_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsOC.OC_TipoOC' Puede moverla o quitarla según sea necesario.
-            this.oC_TipoOCTableAdapter.Fill(this.dsOC.OC_TipoOC);
-            lblFooter.Text = "Tipos Ordenes de Compra - #Registros: " + (dgvTiposOC.RowCount);
+            Cargar();
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvTiposOC.AllowUserToAddRows = true;
-            dgvTiposOC.ReadOnly = false;
+            GridColumnas.Edicion(dgvTiposOC, true);
             dgvTiposOC.FirstDisplayedScrollingRowIndex = dgvTiposOC.RowCount - 1;
             var cantidadRow = dgvTiposOC.RowCount - 1;
             dgvTiposOC.CurrentCell = dgvTiposOC.Rows[cantidadRow].Cells[1];
@@ -48,16 +78,19 @@ namespace ADIGGM.OC.Mantenimiento
             {
                 if (dgvTiposOC.Rows.Count > 0 && dgvTiposOC.FirstDisplayedCell != null)
                 {
+                    int fila = dgvTiposOC.CurrentRow.Index;
                     dgvTiposOC.EndEdit();
-                    this.oC_TipoOCTableAdapter.Update(this.dsOC.OC_TipoOC);
-                    dgvTiposOC.CurrentCell = dgvTiposOC.Rows[dgvTiposOC.CurrentRow.Index].Cells[1];
+                    _repoOC.GuardarTiposOC(_dt);
+                    Cargar();
+                    if (fila < dgvTiposOC.RowCount)
+                        dgvTiposOC.CurrentCell = dgvTiposOC.Rows[fila].Cells[1];
                     dgvTiposOC.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
                     btnNuevo.Enabled = true;
                     btnEditar.Enabled = true;
                     btnCancelar.Enabled = false;
-                    dgvTiposOC.ReadOnly = true;
+                    GridColumnas.Edicion(dgvTiposOC, false);
                     lblFooter.Text = "Tipos Ordenes de Compra - #Registros: " + (dgvTiposOC.RowCount);
                 }
             }
@@ -74,7 +107,7 @@ namespace ADIGGM.OC.Mantenimiento
             if (dgvTiposOC.Rows.Count > 0 && dgvTiposOC.FirstDisplayedCell != null)
             {
                 saveRow = dgvTiposOC.FirstDisplayedCell.RowIndex;
-                dgvTiposOC.ReadOnly = false;
+                GridColumnas.Edicion(dgvTiposOC, true);
                 dgvTiposOC.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;
@@ -91,11 +124,13 @@ namespace ADIGGM.OC.Mantenimiento
         {
             if (dgvTiposOC.Rows.Count > 0 && dgvTiposOC.FirstDisplayedCell != null)
             {
-                this.oC_TipoOCTableAdapter.Fill(this.dsOC.OC_TipoOC);
-                dgvTiposOC.CurrentCell = dgvTiposOC.Rows[dgvTiposOC.CurrentRow.Index].Cells[1];
+                int fila = dgvTiposOC.CurrentRow.Index;
+                Cargar();
+                if (fila < dgvTiposOC.RowCount)
+                    dgvTiposOC.CurrentCell = dgvTiposOC.Rows[fila].Cells[1];
                 dgvTiposOC.AllowUserToAddRows = false;
 
-                dgvTiposOC.ReadOnly = true;
+                GridColumnas.Edicion(dgvTiposOC, false);
                 btnGuardar.Enabled = false;
                 btnNuevo.Enabled = true;
                 btnEditar.Enabled = true;

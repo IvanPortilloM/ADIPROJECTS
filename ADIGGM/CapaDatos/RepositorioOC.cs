@@ -44,5 +44,20 @@ namespace ADIGGM.CapaDatos
                 "UPDATE dbo.CP_TipoDocumentos SET Codigo=@Codigo, TipoDocumento=@TipoDocumento, Activo=@Activo WHERE IdCxpDocumento=@IdCxpDocumento",
                 "DELETE FROM dbo.CP_TipoDocumentos WHERE IdCxpDocumento=@IdCxpDocumento");
         }
+
+        // ===== Tipos de orden de compra (OC\Mantenimiento\ManTipoOC) =====
+
+        public DataTable ListarTiposOC()
+        {
+            return ConsultarTabla("SELECT IdTipoOC, Codigo, TipoOC, Activo, Combustible, Materiales, Servicios, Usuario, NombreEquipo FROM dbo.OC_TipoOC");
+        }
+
+        public int GuardarTiposOC(DataTable tabla)
+        {
+            return GuardarCambios(tabla,
+                "INSERT INTO dbo.OC_TipoOC (Codigo, TipoOC, Activo, Combustible, Materiales, Servicios, Usuario, NombreEquipo) VALUES (@Codigo, @TipoOC, @Activo, @Combustible, @Materiales, @Servicios, @Usuario, @NombreEquipo)",
+                "UPDATE dbo.OC_TipoOC SET Codigo=@Codigo, TipoOC=@TipoOC, Activo=@Activo, Combustible=@Combustible, Materiales=@Materiales, Servicios=@Servicios, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdTipoOC=@IdTipoOC",
+                "DELETE FROM dbo.OC_TipoOC WHERE IdTipoOC=@IdTipoOC");
+        }
     }
 }
