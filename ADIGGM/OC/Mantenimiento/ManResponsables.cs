@@ -1,20 +1,42 @@
 ﻿using System;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 using Formularios_Base;
 
 namespace ADIGGM.OC.Mantenimiento
 {
     public partial class ManResponsables : FrmMantenimiento
     {
+        private readonly RepositorioOC _repoOC = new RepositorioOC();
+        private DataTable _dt;
         public ManResponsables()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             HabilitarBtn();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvResponsables);
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) — gotcha §11. "Firma" es columna de
+        /// imagen (la edita el doble-clic). ORDEN preservado: el .cs usa Cells[2]=UsuarioFirma y
+        /// Cells[3]=Firma. "Usuario"/"NombreEquipo" se setean por código. Edición con GridColumnas.Edicion.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvResponsables.AutoGenerateColumns = false;
+            dgvResponsables.Columns.Clear();
+            dgvResponsables.Columns.Add(GridColumnas.Texto("idResponsableDataGridViewTextBoxColumn", "IdResponsable", "IdResponsable", visible: false));
+            dgvResponsables.Columns.Add(GridColumnas.Texto("nombreDataGridViewTextBoxColumn", "Nombre", "Nombre"));
+            dgvResponsables.Columns.Add(GridColumnas.Texto("usuarioFirmaDataGridViewTextBoxColumn", "UsuarioFirma", "Usuario"));
+            dgvResponsables.Columns.Add(GridColumnas.Imagen("Firma", "Firma", "Firma", DataGridViewImageCellLayout.Stretch));
+            dgvResponsables.Columns.Add(GridColumnas.Check("activoDataGridViewCheckBoxColumn", "Activo", "Activo"));
+            dgvResponsables.Columns.Add(GridColumnas.Texto("Usuario", "Usuario", "Usuario", visible: false));
+            dgvResponsables.Columns.Add(GridColumnas.Texto("NombreEquipo", "NombreEquipo", "NombreEquipo", visible: false));
+            dgvResponsables.DataSource = oCResponsablesBindingSource;
         }
 
         public void HabilitarBtn()
@@ -25,11 +47,16 @@ namespace ADIGGM.OC.Mantenimiento
             btnCancelar.Enabled = false;
         }
 
+        private void Cargar()
+        {
+            _dt = _repoOC.ListarResponsables();
+            oCResponsablesBindingSource.DataSource = _dt;
+            lblFooter.Text = "Responsables - #Registros: " + dgvResponsables.RowCount;
+        }
+
         private void ManResponsables_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsOC.OC_Responsables' Puede moverla o quitarla según sea necesario.
-            this.oC_ResponsablesTableAdapter.Fill(this.dsOC.OC_Responsables);
-            lblFooter.Text = "Responsables - #Registros: " + dgvResponsables.RowCount;
+            Cargar();
             dgvResponsables.RowTemplate.Height = 40;
         }
 
@@ -45,7 +72,7 @@ namespace ADIGGM.OC.Mantenimiento
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvResponsables.AllowUserToAddRows = true;
-            dgvResponsables.ReadOnly = false;
+            GridColumnas.Edicion(dgvResponsables, true);
             dgvResponsables.FirstDisplayedScrollingRowIndex = dgvResponsables.RowCount - 1;
             var cantidadRow = dgvResponsables.RowCount - 1;
             dgvResponsables.CurrentCell = dgvResponsables.Rows[cantidadRow].Cells[2];
@@ -61,16 +88,19 @@ namespace ADIGGM.OC.Mantenimiento
             {
                 if (dgvResponsables.Rows.Count > 0 && dgvResponsables.FirstDisplayedCell != null)
                 {
+                    int fila = dgvResponsables.CurrentRow.Index;
                     dgvResponsables.EndEdit();
-                    this.oC_ResponsablesTableAdapter.Update(this.dsOC.OC_Responsables);
-                    dgvResponsables.CurrentCell = dgvResponsables.Rows[dgvResponsables.CurrentRow.Index].Cells[2];
+                    _repoOC.GuardarResponsables(_dt);
+                    Cargar();
+                    if (fila < dgvResponsables.RowCount)
+                        dgvResponsables.CurrentCell = dgvResponsables.Rows[fila].Cells[2];
                     dgvResponsables.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
                     btnNuevo.Enabled = true;
                     btnEditar.Enabled = true;
                     btnCancelar.Enabled = false;
-                    dgvResponsables.ReadOnly = true;
+                    GridColumnas.Edicion(dgvResponsables, false);
                     lblFooter.Text = "Responsables - #Registros: " + (dgvResponsables.RowCount);
                 }
             }
@@ -87,7 +117,7 @@ namespace ADIGGM.OC.Mantenimiento
             if (dgvResponsables.Rows.Count > 0 && dgvResponsables.FirstDisplayedCell != null)
             {
                 saveRow = dgvResponsables.FirstDisplayedCell.RowIndex;
-                dgvResponsables.ReadOnly = false;
+                GridColumnas.Edicion(dgvResponsables, true);
                 dgvResponsables.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;
@@ -104,11 +134,13 @@ namespace ADIGGM.OC.Mantenimiento
         {
             if (dgvResponsables.Rows.Count > 0 && dgvResponsables.FirstDisplayedCell != null)
             {
-                this.oC_ResponsablesTableAdapter.Fill(this.dsOC.OC_Responsables);
-                dgvResponsables.CurrentCell = dgvResponsables.Rows[dgvResponsables.CurrentRow.Index].Cells[2];
+                int fila = dgvResponsables.CurrentRow.Index;
+                Cargar();
+                if (fila < dgvResponsables.RowCount)
+                    dgvResponsables.CurrentCell = dgvResponsables.Rows[fila].Cells[2];
                 dgvResponsables.AllowUserToAddRows = false;
 
-                dgvResponsables.ReadOnly = true;
+                GridColumnas.Edicion(dgvResponsables, false);
                 btnGuardar.Enabled = false;
                 btnNuevo.Enabled = true;
                 btnEditar.Enabled = true;
@@ -150,9 +182,6 @@ namespace ADIGGM.OC.Mantenimiento
                                 else
                                 {
                                     dgvResponsables.CurrentRow.Cells[3].Value = Image.FromFile(openFileDialog.FileName);
-                                    //dgvResponsables.EndEdit();
-                                    //this.oC_ResponsablesTableAdapter.Update(this.dsOC.OC_Responsables);
-                                    //this.oC_ResponsablesTableAdapter.Fill(this.dsOC.OC_Responsables);
                                 }
                             }
                         }

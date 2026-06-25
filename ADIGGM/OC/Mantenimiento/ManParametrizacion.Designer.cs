@@ -29,18 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvParametrizacion = new System.Windows.Forms.DataGridView();
-            this.idParametrizacionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iSVDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.oCParametrizacionBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsOC = new ADIGGM.DataSets.DsOC();
-            this.oC_ParametrizacionTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ParametrizacionTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvParametrizacion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCParametrizacionBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSalir
@@ -117,10 +110,6 @@
             this.dgvParametrizacion.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvParametrizacion.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvParametrizacion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvParametrizacion.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idParametrizacionDataGridViewTextBoxColumn,
-            this.iSVDataGridViewTextBoxColumn});
-            this.dgvParametrizacion.DataSource = this.oCParametrizacionBindingSource;
             this.dgvParametrizacion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvParametrizacion.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvParametrizacion.Location = new System.Drawing.Point(0, 98);
@@ -130,38 +119,8 @@
             this.dgvParametrizacion.Size = new System.Drawing.Size(430, 216);
             this.dgvParametrizacion.TabIndex = 107;
             // 
-            // idParametrizacionDataGridViewTextBoxColumn
-            // 
-            this.idParametrizacionDataGridViewTextBoxColumn.DataPropertyName = "IdParametrizacion";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.idParametrizacionDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.idParametrizacionDataGridViewTextBoxColumn.HeaderText = "IdParametrizacion";
-            this.idParametrizacionDataGridViewTextBoxColumn.Name = "idParametrizacionDataGridViewTextBoxColumn";
-            this.idParametrizacionDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idParametrizacionDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // iSVDataGridViewTextBoxColumn
-            // 
-            this.iSVDataGridViewTextBoxColumn.DataPropertyName = "ISV";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.iSVDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.iSVDataGridViewTextBoxColumn.HeaderText = "ISV";
-            this.iSVDataGridViewTextBoxColumn.Name = "iSVDataGridViewTextBoxColumn";
-            this.iSVDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
             // oCParametrizacionBindingSource
             // 
-            this.oCParametrizacionBindingSource.DataMember = "OC_Parametrizacion";
-            this.oCParametrizacionBindingSource.DataSource = this.dsOC;
-            // 
-            // dsOC
-            // 
-            this.dsOC.DataSetName = "DsOC";
-            this.dsOC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // oC_ParametrizacionTableAdapter
-            // 
-            this.oC_ParametrizacionTableAdapter.ClearBeforeFill = true;
             // 
             // ManParametrizacion
             // 
@@ -177,7 +136,6 @@
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvParametrizacion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCParametrizacionBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -185,10 +143,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvParametrizacion;
-        private DataSets.DsOC dsOC;
         private System.Windows.Forms.BindingSource oCParametrizacionBindingSource;
-        private DataSets.DsOCTableAdapters.OC_ParametrizacionTableAdapter oC_ParametrizacionTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idParametrizacionDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iSVDataGridViewTextBoxColumn;
     }
 }

@@ -110,5 +110,26 @@ namespace ADIGGM.Clases
             if (autoSize != DataGridViewAutoSizeColumnMode.NotSet) c.AutoSizeMode = autoSize;
             return c;
         }
+
+        /// <summary>Columna de imagen (firmas, logos, fotos almacenadas como byte[] en DataPropertyName).
+        /// Display-only por naturaleza; ImageLayout controla el encuadre (Stretch/Zoom/Normal).</summary>
+        public static DataGridViewImageColumn Imagen(string name, string prop, string header,
+            DataGridViewImageCellLayout imageLayout = DataGridViewImageCellLayout.Normal,
+            bool visible = true, int width = 0,
+            DataGridViewAutoSizeColumnMode autoSize = DataGridViewAutoSizeColumnMode.NotSet, bool readOnly = true)
+        {
+            var c = new DataGridViewImageColumn
+            {
+                Name = name,
+                DataPropertyName = prop,
+                HeaderText = header,
+                ImageLayout = imageLayout,
+                Visible = visible,
+                ReadOnly = readOnly
+            };
+            if (width > 0) c.Width = width;
+            if (autoSize != DataGridViewAutoSizeColumnMode.NotSet) c.AutoSizeMode = autoSize;
+            return c;
+        }
     }
 }

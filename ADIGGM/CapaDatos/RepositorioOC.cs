@@ -89,5 +89,35 @@ namespace ADIGGM.CapaDatos
                 "UPDATE dbo.OC_ProductosCategorias SET Codigo=@Codigo, Categoria=@Categoria, Activo=@Activo, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdCatProducto=@IdCatProducto",
                 "DELETE FROM dbo.OC_ProductosCategorias WHERE IdCatProducto=@IdCatProducto");
         }
+
+        // ===== Parametrización OC / ISV (OC\Mantenimiento\ManParametrizacion) =====
+
+        public DataTable ListarParametrizacion()
+        {
+            return ConsultarTabla("SELECT IdParametrizacion, ISV FROM dbo.OC_Parametrizacion");
+        }
+
+        public int GuardarParametrizacion(DataTable tabla)
+        {
+            return GuardarCambios(tabla,
+                "INSERT INTO dbo.OC_Parametrizacion (ISV) VALUES (@ISV)",
+                "UPDATE dbo.OC_Parametrizacion SET ISV=@ISV WHERE IdParametrizacion=@IdParametrizacion",
+                "DELETE FROM dbo.OC_Parametrizacion WHERE IdParametrizacion=@IdParametrizacion");
+        }
+
+        // ===== Responsables / firmas (OC\Mantenimiento\ManResponsables) =====
+
+        public DataTable ListarResponsables()
+        {
+            return ConsultarTabla("SELECT IdResponsable, Nombre, UsuarioFirma, Firma, Activo, Usuario, NombreEquipo FROM dbo.OC_Responsables");
+        }
+
+        public int GuardarResponsables(DataTable tabla)
+        {
+            return GuardarCambios(tabla,
+                "INSERT INTO dbo.OC_Responsables (Nombre, UsuarioFirma, Firma, Activo, Usuario, NombreEquipo) VALUES (@Nombre, @UsuarioFirma, @Firma, @Activo, @Usuario, @NombreEquipo)",
+                "UPDATE dbo.OC_Responsables SET Nombre=@Nombre, UsuarioFirma=@UsuarioFirma, Firma=@Firma, Activo=@Activo, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdResponsable=@IdResponsable",
+                "DELETE FROM dbo.OC_Responsables WHERE IdResponsable=@IdResponsable");
+        }
     }
 }

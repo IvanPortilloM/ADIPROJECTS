@@ -30,20 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgvResponsables = new System.Windows.Forms.DataGridView();
-            this.idResponsableDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.usuarioFirmaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Firma = new System.Windows.Forms.DataGridViewImageColumn();
-            this.activoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NombreEquipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.oCResponsablesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsOC = new ADIGGM.DataSets.DsOC();
-            this.oC_ResponsablesTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ResponsablesTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResponsables)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCResponsablesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSalir
@@ -131,15 +121,6 @@
             this.dgvResponsables.AutoGenerateColumns = false;
             this.dgvResponsables.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvResponsables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvResponsables.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idResponsableDataGridViewTextBoxColumn,
-            this.nombreDataGridViewTextBoxColumn,
-            this.usuarioFirmaDataGridViewTextBoxColumn,
-            this.Firma,
-            this.activoDataGridViewCheckBoxColumn,
-            this.Usuario,
-            this.NombreEquipo});
-            this.dgvResponsables.DataSource = this.oCResponsablesBindingSource;
             this.dgvResponsables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvResponsables.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvResponsables.Location = new System.Drawing.Point(0, 98);
@@ -153,76 +134,8 @@
             this.dgvResponsables.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResponsables_CellContentDoubleClick);
             this.dgvResponsables.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResponsables_CellDoubleClick);
             // 
-            // idResponsableDataGridViewTextBoxColumn
-            // 
-            this.idResponsableDataGridViewTextBoxColumn.DataPropertyName = "IdResponsable";
-            this.idResponsableDataGridViewTextBoxColumn.HeaderText = "IdResponsable";
-            this.idResponsableDataGridViewTextBoxColumn.Name = "idResponsableDataGridViewTextBoxColumn";
-            this.idResponsableDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idResponsableDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // nombreDataGridViewTextBoxColumn
-            // 
-            this.nombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre";
-            this.nombreDataGridViewTextBoxColumn.FillWeight = 113.0288F;
-            this.nombreDataGridViewTextBoxColumn.HeaderText = "Nombre";
-            this.nombreDataGridViewTextBoxColumn.Name = "nombreDataGridViewTextBoxColumn";
-            this.nombreDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // usuarioFirmaDataGridViewTextBoxColumn
-            // 
-            this.usuarioFirmaDataGridViewTextBoxColumn.DataPropertyName = "UsuarioFirma";
-            this.usuarioFirmaDataGridViewTextBoxColumn.FillWeight = 113.0288F;
-            this.usuarioFirmaDataGridViewTextBoxColumn.HeaderText = "Usuario";
-            this.usuarioFirmaDataGridViewTextBoxColumn.Name = "usuarioFirmaDataGridViewTextBoxColumn";
-            this.usuarioFirmaDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // Firma
-            // 
-            this.Firma.DataPropertyName = "Firma";
-            this.Firma.FillWeight = 113.0288F;
-            this.Firma.HeaderText = "Firma";
-            this.Firma.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.Firma.Name = "Firma";
-            this.Firma.ReadOnly = true;
-            // 
-            // activoDataGridViewCheckBoxColumn
-            // 
-            this.activoDataGridViewCheckBoxColumn.DataPropertyName = "Activo";
-            this.activoDataGridViewCheckBoxColumn.FillWeight = 60.9137F;
-            this.activoDataGridViewCheckBoxColumn.HeaderText = "Activo";
-            this.activoDataGridViewCheckBoxColumn.Name = "activoDataGridViewCheckBoxColumn";
-            this.activoDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // Usuario
-            // 
-            this.Usuario.DataPropertyName = "Usuario";
-            this.Usuario.HeaderText = "Usuario";
-            this.Usuario.Name = "Usuario";
-            this.Usuario.ReadOnly = true;
-            this.Usuario.Visible = false;
-            // 
-            // NombreEquipo
-            // 
-            this.NombreEquipo.DataPropertyName = "NombreEquipo";
-            this.NombreEquipo.HeaderText = "NombreEquipo";
-            this.NombreEquipo.Name = "NombreEquipo";
-            this.NombreEquipo.ReadOnly = true;
-            this.NombreEquipo.Visible = false;
-            // 
             // oCResponsablesBindingSource
             // 
-            this.oCResponsablesBindingSource.DataMember = "OC_Responsables";
-            this.oCResponsablesBindingSource.DataSource = this.dsOC;
-            // 
-            // dsOC
-            // 
-            this.dsOC.DataSetName = "DsOC";
-            this.dsOC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // oC_ResponsablesTableAdapter
-            // 
-            this.oC_ResponsablesTableAdapter.ClearBeforeFill = true;
             // 
             // ManResponsables
             // 
@@ -238,7 +151,6 @@
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResponsables)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCResponsablesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -246,15 +158,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvResponsables;
-        private DataSets.DsOC dsOC;
         private System.Windows.Forms.BindingSource oCResponsablesBindingSource;
-        private DataSets.DsOCTableAdapters.OC_ResponsablesTableAdapter oC_ResponsablesTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idResponsableDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn usuarioFirmaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewImageColumn Firma;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn activoDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Usuario;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NombreEquipo;
     }
 }
