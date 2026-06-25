@@ -1,18 +1,38 @@
 ﻿using System;
+using System.Data;
 using System.Windows.Forms;
 using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 using Formularios_Base;
 
 namespace ADIGGM.OC
 {
     public partial class ManCatProductos : FrmMantenimiento
     {
+        private readonly RepositorioOC _repoOC = new RepositorioOC();
+        private DataTable _dt;
         public ManCatProductos()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             HabilitarBtn();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvCatProductos);
+        }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) — gotcha §11. Mantenimiento editable
+        /// (toggle con GridColumnas.Edicion §14.10). "Usuario"/"NombreEquipo" se setean por código.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvCatProductos.AutoGenerateColumns = false;
+            dgvCatProductos.Columns.Clear();
+            dgvCatProductos.Columns.Add(GridColumnas.Texto("idCatProductoDataGridViewTextBoxColumn", "IdCatProducto", "IdCatProducto", visible: false));
+            dgvCatProductos.Columns.Add(GridColumnas.Texto("codigoDataGridViewTextBoxColumn", "Codigo", "Codigo"));
+            dgvCatProductos.Columns.Add(GridColumnas.Texto("categoriaDataGridViewTextBoxColumn", "Categoria", "Categoria"));
+            dgvCatProductos.Columns.Add(GridColumnas.Check("activoDataGridViewCheckBoxColumn", "Activo", "Activo"));
+            dgvCatProductos.Columns.Add(GridColumnas.Texto("Usuario", "Usuario", "Usuario", visible: false));
+            dgvCatProductos.Columns.Add(GridColumnas.Texto("NombreEquipo", "NombreEquipo", "NombreEquipo", visible: false));
+            dgvCatProductos.DataSource = oCProductosCategoriasBindingSource;
         }
 
         public void HabilitarBtn()
@@ -23,11 +43,16 @@ namespace ADIGGM.OC
             btnCancelar.Enabled = false;
         }
 
+        private void Cargar()
+        {
+            _dt = _repoOC.ListarCategoriasProductosOC();
+            oCProductosCategoriasBindingSource.DataSource = _dt;
+            lblFooter.Text = "Categorias Productos - #Registros: " + dgvCatProductos.RowCount;
+        }
+
         private void ManCatProductos_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsOC.OC_ProductosCategorias' Puede moverla o quitarla según sea necesario.
-            this.oC_ProductosCategoriasTableAdapter.Fill(this.dsOC.OC_ProductosCategorias);
-            lblFooter.Text = "Categorias Productos - #Registros: " + dgvCatProductos.RowCount;
+            Cargar();
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -36,16 +61,19 @@ namespace ADIGGM.OC
             {
                 if (dgvCatProductos.Rows.Count > 0 && dgvCatProductos.FirstDisplayedCell != null)
                 {
+                    int fila = dgvCatProductos.CurrentRow.Index;
                     dgvCatProductos.EndEdit();
-                    this.oC_ProductosCategoriasTableAdapter.Update(this.dsOC.OC_ProductosCategorias);
-                    dgvCatProductos.CurrentCell = dgvCatProductos.Rows[dgvCatProductos.CurrentRow.Index].Cells[1];
+                    _repoOC.GuardarCategoriasProductosOC(_dt);
+                    Cargar();
+                    if (fila < dgvCatProductos.RowCount)
+                        dgvCatProductos.CurrentCell = dgvCatProductos.Rows[fila].Cells[1];
                     dgvCatProductos.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
                     btnNuevo.Enabled = true;
                     btnEditar.Enabled = true;
                     btnCancelar.Enabled = false;
-                    dgvCatProductos.ReadOnly = true;
+                    GridColumnas.Edicion(dgvCatProductos, false);
                     lblFooter.Text = "Categorias Productos - #Registros: " + dgvCatProductos.RowCount;
                 }
             }
@@ -58,7 +86,7 @@ namespace ADIGGM.OC
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvCatProductos.AllowUserToAddRows = true;
-            dgvCatProductos.ReadOnly = false;
+            GridColumnas.Edicion(dgvCatProductos, true);
             dgvCatProductos.FirstDisplayedScrollingRowIndex = dgvCatProductos.RowCount - 1;
             var cantidadRow = dgvCatProductos.RowCount - 1;
             dgvCatProductos.CurrentCell = dgvCatProductos.Rows[cantidadRow].Cells[1];
@@ -75,7 +103,7 @@ namespace ADIGGM.OC
             if (dgvCatProductos.Rows.Count > 0 && dgvCatProductos.FirstDisplayedCell != null)
             {
                 saveRow = dgvCatProductos.FirstDisplayedCell.RowIndex;
-                dgvCatProductos.ReadOnly = false;
+                GridColumnas.Edicion(dgvCatProductos, true);
                 dgvCatProductos.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;
@@ -92,11 +120,13 @@ namespace ADIGGM.OC
         {
             if (dgvCatProductos.Rows.Count > 0 && dgvCatProductos.FirstDisplayedCell != null)
             {
-                this.oC_ProductosCategoriasTableAdapter.Fill(this.dsOC.OC_ProductosCategorias);
-                dgvCatProductos.CurrentCell = dgvCatProductos.Rows[dgvCatProductos.CurrentRow.Index].Cells[1];
+                int fila = dgvCatProductos.CurrentRow.Index;
+                Cargar();
+                if (fila < dgvCatProductos.RowCount)
+                    dgvCatProductos.CurrentCell = dgvCatProductos.Rows[fila].Cells[1];
                 dgvCatProductos.AllowUserToAddRows = false;
 
-                dgvCatProductos.ReadOnly = true;
+                GridColumnas.Edicion(dgvCatProductos, false);
                 btnGuardar.Enabled = false;
                 btnNuevo.Enabled = true;
                 btnEditar.Enabled = true;

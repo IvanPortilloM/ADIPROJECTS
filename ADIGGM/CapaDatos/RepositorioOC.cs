@@ -59,5 +59,35 @@ namespace ADIGGM.CapaDatos
                 "UPDATE dbo.OC_TipoOC SET Codigo=@Codigo, TipoOC=@TipoOC, Activo=@Activo, Combustible=@Combustible, Materiales=@Materiales, Servicios=@Servicios, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdTipoOC=@IdTipoOC",
                 "DELETE FROM dbo.OC_TipoOC WHERE IdTipoOC=@IdTipoOC");
         }
+
+        // ===== Departamentos (OC\Mantenimiento\ManDepartamentos) =====
+
+        public DataTable ListarDepartamentos()
+        {
+            return ConsultarTabla("SELECT IdDepartamento, CodDepartamento, Departamento, Activo, Usuario, NombreEquipo FROM dbo.OC_Departamentos");
+        }
+
+        public int GuardarDepartamentos(DataTable tabla)
+        {
+            return GuardarCambios(tabla,
+                "INSERT INTO dbo.OC_Departamentos (CodDepartamento, Departamento, Activo, Usuario, NombreEquipo) VALUES (@CodDepartamento, @Departamento, @Activo, @Usuario, @NombreEquipo)",
+                "UPDATE dbo.OC_Departamentos SET CodDepartamento=@CodDepartamento, Departamento=@Departamento, Activo=@Activo, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdDepartamento=@IdDepartamento",
+                "DELETE FROM dbo.OC_Departamentos WHERE IdDepartamento=@IdDepartamento");
+        }
+
+        // ===== Categorías de productos OC (OC\Mantenimiento\ManCatProductos) =====
+
+        public DataTable ListarCategoriasProductosOC()
+        {
+            return ConsultarTabla("SELECT IdCatProducto, Codigo, Categoria, Activo, Usuario, NombreEquipo FROM dbo.OC_ProductosCategorias");
+        }
+
+        public int GuardarCategoriasProductosOC(DataTable tabla)
+        {
+            return GuardarCambios(tabla,
+                "INSERT INTO dbo.OC_ProductosCategorias (Codigo, Categoria, Activo, Usuario, NombreEquipo) VALUES (@Codigo, @Categoria, @Activo, @Usuario, @NombreEquipo)",
+                "UPDATE dbo.OC_ProductosCategorias SET Codigo=@Codigo, Categoria=@Categoria, Activo=@Activo, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdCatProducto=@IdCatProducto",
+                "DELETE FROM dbo.OC_ProductosCategorias WHERE IdCatProducto=@IdCatProducto");
+        }
     }
 }

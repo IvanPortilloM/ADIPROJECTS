@@ -30,19 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgvCatProductos = new System.Windows.Forms.DataGridView();
-            this.idCatProductoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codigoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.categoriaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.activoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NombreEquipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.oCProductosCategoriasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsOC = new ADIGGM.DataSets.DsOC();
-            this.oC_ProductosCategoriasTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ProductosCategoriasTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCatProductos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosCategoriasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSalir
@@ -131,14 +122,6 @@
             this.dgvCatProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCatProductos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvCatProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCatProductos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idCatProductoDataGridViewTextBoxColumn,
-            this.codigoDataGridViewTextBoxColumn,
-            this.categoriaDataGridViewTextBoxColumn,
-            this.activoDataGridViewCheckBoxColumn,
-            this.Usuario,
-            this.NombreEquipo});
-            this.dgvCatProductos.DataSource = this.oCProductosCategoriasBindingSource;
             this.dgvCatProductos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCatProductos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvCatProductos.Location = new System.Drawing.Point(0, 98);
@@ -151,67 +134,8 @@
             this.dgvCatProductos.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.dgvCatProductos_CellValueNeeded);
             this.dgvCatProductos.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvCatProductos_RowsAdded);
             // 
-            // idCatProductoDataGridViewTextBoxColumn
-            // 
-            this.idCatProductoDataGridViewTextBoxColumn.DataPropertyName = "IdCatProducto";
-            this.idCatProductoDataGridViewTextBoxColumn.HeaderText = "IdCatProducto";
-            this.idCatProductoDataGridViewTextBoxColumn.Name = "idCatProductoDataGridViewTextBoxColumn";
-            this.idCatProductoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idCatProductoDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // codigoDataGridViewTextBoxColumn
-            // 
-            this.codigoDataGridViewTextBoxColumn.DataPropertyName = "Codigo";
-            this.codigoDataGridViewTextBoxColumn.FillWeight = 67.21975F;
-            this.codigoDataGridViewTextBoxColumn.HeaderText = "Codigo";
-            this.codigoDataGridViewTextBoxColumn.Name = "codigoDataGridViewTextBoxColumn";
-            this.codigoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // categoriaDataGridViewTextBoxColumn
-            // 
-            this.categoriaDataGridViewTextBoxColumn.DataPropertyName = "Categoria";
-            this.categoriaDataGridViewTextBoxColumn.FillWeight = 187.095F;
-            this.categoriaDataGridViewTextBoxColumn.HeaderText = "Categoria";
-            this.categoriaDataGridViewTextBoxColumn.Name = "categoriaDataGridViewTextBoxColumn";
-            this.categoriaDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // activoDataGridViewCheckBoxColumn
-            // 
-            this.activoDataGridViewCheckBoxColumn.DataPropertyName = "Activo";
-            this.activoDataGridViewCheckBoxColumn.FillWeight = 45.68528F;
-            this.activoDataGridViewCheckBoxColumn.HeaderText = "Activo";
-            this.activoDataGridViewCheckBoxColumn.Name = "activoDataGridViewCheckBoxColumn";
-            this.activoDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // Usuario
-            // 
-            this.Usuario.DataPropertyName = "Usuario";
-            this.Usuario.HeaderText = "Usuario";
-            this.Usuario.Name = "Usuario";
-            this.Usuario.ReadOnly = true;
-            this.Usuario.Visible = false;
-            // 
-            // NombreEquipo
-            // 
-            this.NombreEquipo.DataPropertyName = "NombreEquipo";
-            this.NombreEquipo.HeaderText = "NombreEquipo";
-            this.NombreEquipo.Name = "NombreEquipo";
-            this.NombreEquipo.ReadOnly = true;
-            this.NombreEquipo.Visible = false;
-            // 
             // oCProductosCategoriasBindingSource
             // 
-            this.oCProductosCategoriasBindingSource.DataMember = "OC_ProductosCategorias";
-            this.oCProductosCategoriasBindingSource.DataSource = this.dsOC;
-            // 
-            // dsOC
-            // 
-            this.dsOC.DataSetName = "DsOC";
-            this.dsOC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // oC_ProductosCategoriasTableAdapter
-            // 
-            this.oC_ProductosCategoriasTableAdapter.ClearBeforeFill = true;
             // 
             // ManCatProductos
             // 
@@ -227,7 +151,6 @@
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCatProductos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosCategoriasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -235,14 +158,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvCatProductos;
-        private DataSets.DsOC dsOC;
         private System.Windows.Forms.BindingSource oCProductosCategoriasBindingSource;
-        private DataSets.DsOCTableAdapters.OC_ProductosCategoriasTableAdapter oC_ProductosCategoriasTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idCatProductoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn codigoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn categoriaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn activoDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Usuario;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NombreEquipo;
     }
 }

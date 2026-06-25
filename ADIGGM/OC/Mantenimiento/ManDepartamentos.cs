@@ -1,18 +1,40 @@
-﻿using Formularios_Base;
+﻿using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
+using Formularios_Base;
 using System;
+using System.Data;
 using System.Windows.Forms;
 
 namespace ADIGGM.OC.Mantenimiento
 {
     public partial class ManDepartamentos : FrmMantenimiento
     {
+        private readonly RepositorioOC _repoOC = new RepositorioOC();
+        private DataTable _dt;
         public ManDepartamentos()
         {
             InitializeComponent();
+            ConfigurarColumnas();
             HabilitarBtn();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
             DgvStyle.EstiloDgv(dgvDepartamentos);
         }
+
+        /// <summary>Columnas del grid EN CÓDIGO (no en el Designer) — gotcha §11. Mantenimiento editable
+        /// (toggle con GridColumnas.Edicion §14.10). "Usuario"/"NombreEquipo" se setean por código.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvDepartamentos.AutoGenerateColumns = false;
+            dgvDepartamentos.Columns.Clear();
+            dgvDepartamentos.Columns.Add(GridColumnas.Texto("idDepartamentoDataGridViewTextBoxColumn", "IdDepartamento", "IdDepartamento", visible: false));
+            dgvDepartamentos.Columns.Add(GridColumnas.Texto("CodDepartamento", "CodDepartamento", "Codigo"));
+            dgvDepartamentos.Columns.Add(GridColumnas.Texto("departamentoDataGridViewTextBoxColumn", "Departamento", "Departamento"));
+            dgvDepartamentos.Columns.Add(GridColumnas.Check("activoDataGridViewCheckBoxColumn", "Activo", "Activo"));
+            dgvDepartamentos.Columns.Add(GridColumnas.Texto("Usuario", "Usuario", "Usuario", visible: false));
+            dgvDepartamentos.Columns.Add(GridColumnas.Texto("NombreEquipo", "NombreEquipo", "NombreEquipo", visible: false));
+            dgvDepartamentos.DataSource = oCDepartamentosBindingSource;
+        }
+
         public void HabilitarBtn()
         {
             btnNuevo.Enabled = true;
@@ -20,17 +42,23 @@ namespace ADIGGM.OC.Mantenimiento
             btnEditar.Enabled = true;
             btnCancelar.Enabled = false;
         }
+
+        private void Cargar()
+        {
+            _dt = _repoOC.ListarDepartamentos();
+            oCDepartamentosBindingSource.DataSource = _dt;
+            lblFooter.Text = "Departamentos - #Registros: " + (dgvDepartamentos.RowCount);
+        }
+
         private void ManDepartamentos_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsOC.OC_Departamentos' Puede moverla o quitarla según sea necesario.
-            this.oC_DepartamentosTableAdapter.Fill(this.dsOC.OC_Departamentos);
-            lblFooter.Text = "Departamentos - #Registros: " + (dgvDepartamentos.RowCount);
+            Cargar();
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvDepartamentos.AllowUserToAddRows = true;
-            dgvDepartamentos.ReadOnly = false;
+            GridColumnas.Edicion(dgvDepartamentos, true);
             dgvDepartamentos.FirstDisplayedScrollingRowIndex = dgvDepartamentos.RowCount - 1;
             var cantidadRow = dgvDepartamentos.RowCount - 1;
             dgvDepartamentos.CurrentCell = dgvDepartamentos.Rows[cantidadRow].Cells[1];
@@ -45,16 +73,19 @@ namespace ADIGGM.OC.Mantenimiento
             {
                 if (dgvDepartamentos.Rows.Count > 0 && dgvDepartamentos.FirstDisplayedCell != null)
                 {
+                    int fila = dgvDepartamentos.CurrentRow.Index;
                     dgvDepartamentos.EndEdit();
-                    this.oC_DepartamentosTableAdapter.Update(this.dsOC.OC_Departamentos);
-                    dgvDepartamentos.CurrentCell = dgvDepartamentos.Rows[dgvDepartamentos.CurrentRow.Index].Cells[1];
+                    _repoOC.GuardarDepartamentos(_dt);
+                    Cargar();
+                    if (fila < dgvDepartamentos.RowCount)
+                        dgvDepartamentos.CurrentCell = dgvDepartamentos.Rows[fila].Cells[1];
                     dgvDepartamentos.AllowUserToAddRows = false;
 
                     btnGuardar.Enabled = false;
                     btnNuevo.Enabled = true;
                     btnEditar.Enabled = true;
                     btnCancelar.Enabled = false;
-                    dgvDepartamentos.ReadOnly = true;
+                    GridColumnas.Edicion(dgvDepartamentos, false);
                     lblFooter.Text = "Departamentos - #Registros: " + (dgvDepartamentos.RowCount);
                 }
             }
@@ -71,7 +102,7 @@ namespace ADIGGM.OC.Mantenimiento
             if (dgvDepartamentos.Rows.Count > 0 && dgvDepartamentos.FirstDisplayedCell != null)
             {
                 saveRow = dgvDepartamentos.FirstDisplayedCell.RowIndex;
-                dgvDepartamentos.ReadOnly = false;
+                GridColumnas.Edicion(dgvDepartamentos, true);
                 dgvDepartamentos.AllowUserToAddRows = false;
 
                 btnGuardar.Enabled = true;
@@ -88,11 +119,13 @@ namespace ADIGGM.OC.Mantenimiento
         {
             if (dgvDepartamentos.Rows.Count > 0 && dgvDepartamentos.FirstDisplayedCell != null)
             {
-                this.oC_DepartamentosTableAdapter.Fill(this.dsOC.OC_Departamentos);
-                dgvDepartamentos.CurrentCell = dgvDepartamentos.Rows[dgvDepartamentos.CurrentRow.Index].Cells[1];
+                int fila = dgvDepartamentos.CurrentRow.Index;
+                Cargar();
+                if (fila < dgvDepartamentos.RowCount)
+                    dgvDepartamentos.CurrentCell = dgvDepartamentos.Rows[fila].Cells[1];
                 dgvDepartamentos.AllowUserToAddRows = false;
 
-                dgvDepartamentos.ReadOnly = true;
+                GridColumnas.Edicion(dgvDepartamentos, false);
                 btnGuardar.Enabled = false;
                 btnNuevo.Enabled = true;
                 btnEditar.Enabled = true;

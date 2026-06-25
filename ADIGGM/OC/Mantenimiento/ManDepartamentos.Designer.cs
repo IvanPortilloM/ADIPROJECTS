@@ -30,19 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgvDepartamentos = new System.Windows.Forms.DataGridView();
-            this.idDepartamentoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CodDepartamento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.departamentoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.activoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NombreEquipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.oCDepartamentosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsOC = new ADIGGM.DataSets.DsOC();
-            this.oC_DepartamentosTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_DepartamentosTableAdapter();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDepartamentos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCDepartamentosBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSalir
@@ -114,14 +105,6 @@
             this.dgvDepartamentos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvDepartamentos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvDepartamentos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDepartamentos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idDepartamentoDataGridViewTextBoxColumn,
-            this.CodDepartamento,
-            this.departamentoDataGridViewTextBoxColumn,
-            this.activoDataGridViewCheckBoxColumn,
-            this.Usuario,
-            this.NombreEquipo});
-            this.dgvDepartamentos.DataSource = this.oCDepartamentosBindingSource;
             this.dgvDepartamentos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDepartamentos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvDepartamentos.Location = new System.Drawing.Point(0, 98);
@@ -133,67 +116,8 @@
             this.dgvDepartamentos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDepartamentos_CellContentClick);
             this.dgvDepartamentos.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvDepartamentos_RowsAdded);
             // 
-            // idDepartamentoDataGridViewTextBoxColumn
-            // 
-            this.idDepartamentoDataGridViewTextBoxColumn.DataPropertyName = "IdDepartamento";
-            this.idDepartamentoDataGridViewTextBoxColumn.HeaderText = "IdDepartamento";
-            this.idDepartamentoDataGridViewTextBoxColumn.Name = "idDepartamentoDataGridViewTextBoxColumn";
-            this.idDepartamentoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idDepartamentoDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // CodDepartamento
-            // 
-            this.CodDepartamento.DataPropertyName = "CodDepartamento";
-            this.CodDepartamento.FillWeight = 60.91371F;
-            this.CodDepartamento.HeaderText = "Codigo";
-            this.CodDepartamento.Name = "CodDepartamento";
-            this.CodDepartamento.ReadOnly = true;
-            // 
-            // departamentoDataGridViewTextBoxColumn
-            // 
-            this.departamentoDataGridViewTextBoxColumn.DataPropertyName = "Departamento";
-            this.departamentoDataGridViewTextBoxColumn.FillWeight = 195.0151F;
-            this.departamentoDataGridViewTextBoxColumn.HeaderText = "Departamento";
-            this.departamentoDataGridViewTextBoxColumn.Name = "departamentoDataGridViewTextBoxColumn";
-            this.departamentoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // activoDataGridViewCheckBoxColumn
-            // 
-            this.activoDataGridViewCheckBoxColumn.DataPropertyName = "Activo";
-            this.activoDataGridViewCheckBoxColumn.FillWeight = 44.07121F;
-            this.activoDataGridViewCheckBoxColumn.HeaderText = "Activo";
-            this.activoDataGridViewCheckBoxColumn.Name = "activoDataGridViewCheckBoxColumn";
-            this.activoDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // Usuario
-            // 
-            this.Usuario.DataPropertyName = "Usuario";
-            this.Usuario.HeaderText = "Usuario";
-            this.Usuario.Name = "Usuario";
-            this.Usuario.ReadOnly = true;
-            this.Usuario.Visible = false;
-            // 
-            // NombreEquipo
-            // 
-            this.NombreEquipo.DataPropertyName = "NombreEquipo";
-            this.NombreEquipo.HeaderText = "NombreEquipo";
-            this.NombreEquipo.Name = "NombreEquipo";
-            this.NombreEquipo.ReadOnly = true;
-            this.NombreEquipo.Visible = false;
-            // 
             // oCDepartamentosBindingSource
             // 
-            this.oCDepartamentosBindingSource.DataMember = "OC_Departamentos";
-            this.oCDepartamentosBindingSource.DataSource = this.dsOC;
-            // 
-            // dsOC
-            // 
-            this.dsOC.DataSetName = "DsOC";
-            this.dsOC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // oC_DepartamentosTableAdapter
-            // 
-            this.oC_DepartamentosTableAdapter.ClearBeforeFill = true;
             // 
             // ManDepartamentos
             // 
@@ -209,7 +133,6 @@
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDepartamentos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCDepartamentosBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -217,14 +140,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvDepartamentos;
-        private DataSets.DsOC dsOC;
         private System.Windows.Forms.BindingSource oCDepartamentosBindingSource;
-        private DataSets.DsOCTableAdapters.OC_DepartamentosTableAdapter oC_DepartamentosTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDepartamentoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CodDepartamento;
-        private System.Windows.Forms.DataGridViewTextBoxColumn departamentoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn activoDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Usuario;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NombreEquipo;
     }
 }
