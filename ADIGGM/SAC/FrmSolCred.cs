@@ -716,9 +716,21 @@
                 {
                     txtNCuotaSug.Text = $"{168:n0}";
                 }
-                else
+                else if (MontoPres <= 700000)
                 {
                     txtNCuotaSug.Text = $"{192:n0}";
+                }
+                else if (MontoPres <= 1000000)
+                {
+                    txtNCuotaSug.Text = $"{240:n0}";
+                }
+                else if (MontoPres <= 1500000)
+                {
+                    txtNCuotaSug.Text = $"{360:n0}";
+                }
+                else
+                {
+                    txtNCuotaSug.Text = $"{480:n0}";
                 }
 
                 if (CtrlTxt == "txtMontoPrestamo")
