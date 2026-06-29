@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManProveedores));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
@@ -58,21 +57,13 @@
             this.label10 = new System.Windows.Forms.Label();
             this.chkCxC = new System.Windows.Forms.CheckBox();
             this.dgvCAI = new System.Windows.Forms.DataGridView();
-            this.idProveedorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CAI = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechaLimite = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.activoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.fKOCProveedoresCAIOCProveedoresBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.oCProveedoresBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsOC = new ADIGGM.DataSets.DsOC();
-            this.oC_ProveedoresTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ProveedoresTableAdapter();
-            this.oC_Proveedores_CAITableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_Proveedores_CAITableAdapter();
             this.pnlFooter.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCAI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fKOCProveedoresCAIOCProveedoresBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProveedoresBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
             this.SuspendLayout();
             // 
             // lblFooter
@@ -413,71 +404,17 @@
             this.dgvCAI.AllowUserToDeleteRows = false;
             this.dgvCAI.AutoGenerateColumns = false;
             this.dgvCAI.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCAI.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idProveedorDataGridViewTextBoxColumn,
-            this.CAI,
-            this.fechaLimite,
-            this.activoDataGridViewCheckBoxColumn});
-            this.dgvCAI.DataSource = this.fKOCProveedoresCAIOCProveedoresBindingSource;
             this.dgvCAI.Location = new System.Drawing.Point(260, 47);
             this.dgvCAI.Name = "dgvCAI";
             this.dgvCAI.Size = new System.Drawing.Size(436, 195);
             this.dgvCAI.TabIndex = 118;
             // 
-            // idProveedorDataGridViewTextBoxColumn
-            // 
-            this.idProveedorDataGridViewTextBoxColumn.DataPropertyName = "IdProveedor";
-            this.idProveedorDataGridViewTextBoxColumn.HeaderText = "IdProveedor";
-            this.idProveedorDataGridViewTextBoxColumn.Name = "idProveedorDataGridViewTextBoxColumn";
-            this.idProveedorDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idProveedorDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // CAI
-            // 
-            this.CAI.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.CAI.DataPropertyName = "CAI";
-            this.CAI.HeaderText = "CAI";
-            this.CAI.Name = "CAI";
-            // 
-            // fechaLimite
-            // 
-            this.fechaLimite.DataPropertyName = "FechaLimite";
-            dataGridViewCellStyle1.Format = "d";
-            dataGridViewCellStyle1.NullValue = null;
-            this.fechaLimite.DefaultCellStyle = dataGridViewCellStyle1;
-            this.fechaLimite.HeaderText = "Fecha Limite";
-            this.fechaLimite.Name = "fechaLimite";
-            // 
-            // activoDataGridViewCheckBoxColumn
-            // 
-            this.activoDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.activoDataGridViewCheckBoxColumn.DataPropertyName = "Activo";
-            this.activoDataGridViewCheckBoxColumn.HeaderText = "Activo";
-            this.activoDataGridViewCheckBoxColumn.Name = "activoDataGridViewCheckBoxColumn";
-            this.activoDataGridViewCheckBoxColumn.Width = 48;
-            // 
             // fKOCProveedoresCAIOCProveedoresBindingSource
             // 
-            this.fKOCProveedoresCAIOCProveedoresBindingSource.DataMember = "FK_OC_Proveedores_CAI_OC_Proveedores";
             this.fKOCProveedoresCAIOCProveedoresBindingSource.DataSource = this.oCProveedoresBindingSource;
             // 
             // oCProveedoresBindingSource
             // 
-            this.oCProveedoresBindingSource.DataMember = "OC_Proveedores";
-            this.oCProveedoresBindingSource.DataSource = this.dsOC;
-            // 
-            // dsOC
-            // 
-            this.dsOC.DataSetName = "DsOC";
-            this.dsOC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // oC_ProveedoresTableAdapter
-            // 
-            this.oC_ProveedoresTableAdapter.ClearBeforeFill = true;
-            // 
-            // oC_Proveedores_CAITableAdapter
-            // 
-            this.oC_Proveedores_CAITableAdapter.ClearBeforeFill = true;
             // 
             // ManProveedores
             // 
@@ -538,7 +475,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvCAI)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fKOCProveedoresCAIOCProveedoresBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProveedoresBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -570,17 +506,10 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.CheckBox chkCxC;
         private System.Windows.Forms.DataGridView dgvCAI;
-        private DataSets.DsOC dsOC;
         private System.Windows.Forms.BindingSource oCProveedoresBindingSource;
-        private DataSets.DsOCTableAdapters.OC_ProveedoresTableAdapter oC_ProveedoresTableAdapter;
         private System.Windows.Forms.BindingSource fKOCProveedoresCAIOCProveedoresBindingSource;
-        private DataSets.DsOCTableAdapters.OC_Proveedores_CAITableAdapter oC_Proveedores_CAITableAdapter;
         private System.Windows.Forms.Button btnNuevo;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnEditar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idProveedorDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CAI;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fechaLimite;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn activoDataGridViewCheckBoxColumn;
     }
 }

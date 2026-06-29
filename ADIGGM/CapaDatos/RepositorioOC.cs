@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using Dapper;
 
 namespace ADIGGM.CapaDatos
 {
@@ -142,6 +143,66 @@ namespace ADIGGM.CapaDatos
                 "INSERT INTO dbo.OC_Productos (IdCatProducto, CodProducto, Producto, Activo, Usuario, NombreEquipo) VALUES (@IdCatProducto, @CodProducto, @Producto, @Activo, @Usuario, @NombreEquipo)",
                 "UPDATE dbo.OC_Productos SET IdCatProducto=@IdCatProducto, CodProducto=@CodProducto, Producto=@Producto, Activo=@Activo, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdProducto=@IdProducto",
                 "DELETE FROM dbo.OC_Productos WHERE IdProducto=@IdProducto");
+        }
+
+        // ===== Proveedores (OC\Mantenimiento\ManProveedores) =====
+
+        /// <summary>Carga los campos de un proveedor (SP OC_ProveedorObtener con parámetros OUTPUT).</summary>
+        public void ObtenerProveedor(int idProveedor, out string rtn, out string nombre, out string direccion,
+            out string tel, out string movil, out string representante, out bool activo, out int maxItems,
+            out string cuentaCxC, out bool cxc)
+        {
+            var p = new DynamicParameters();
+            p.Add("@IdProveedor", idProveedor);
+            p.Add("@RTN", dbType: DbType.String, direction: ParameterDirection.InputOutput, size: 4000);
+            p.Add("@Nombre", dbType: DbType.String, direction: ParameterDirection.InputOutput, size: 4000);
+            p.Add("@Direccion", dbType: DbType.String, direction: ParameterDirection.InputOutput, size: 4000);
+            p.Add("@Tel", dbType: DbType.String, direction: ParameterDirection.InputOutput, size: 4000);
+            p.Add("@Movil", dbType: DbType.String, direction: ParameterDirection.InputOutput, size: 4000);
+            p.Add("@Representante", dbType: DbType.String, direction: ParameterDirection.InputOutput, size: 4000);
+            p.Add("@Activo", dbType: DbType.Boolean, direction: ParameterDirection.InputOutput);
+            p.Add("@MaxItems", dbType: DbType.Int32, direction: ParameterDirection.InputOutput);
+            p.Add("@CuentaCxC", dbType: DbType.String, direction: ParameterDirection.InputOutput, size: 4000);
+            p.Add("@CxC", dbType: DbType.Boolean, direction: ParameterDirection.InputOutput);
+            Ejecutar("dbo.OC_ProveedorObtener", p, CommandType.StoredProcedure);
+            rtn = p.Get<string>("@RTN");
+            nombre = p.Get<string>("@Nombre");
+            direccion = p.Get<string>("@Direccion");
+            tel = p.Get<string>("@Tel");
+            movil = p.Get<string>("@Movil");
+            representante = p.Get<string>("@Representante");
+            activo = p.Get<bool?>("@Activo") ?? false;
+            maxItems = p.Get<int?>("@MaxItems") ?? 0;
+            cuentaCxC = p.Get<string>("@CuentaCxC");
+            cxc = p.Get<bool?>("@CxC") ?? false;
+        }
+
+        /// <summary>Inserta o actualiza un proveedor (SP OC_ProveedorInsertUpdate). IdProveedor=0 inserta.</summary>
+        public void GuardarProveedor(int idProveedor, string rtn, string nombre, string direccion, string tel,
+            string movil, string representante, bool activo, string usuario, string nombreEquipo, int cantItems,
+            string cuentaCxC, bool cxc)
+        {
+            Ejecutar("dbo.OC_ProveedorInsertUpdate", new
+            {
+                IdProveedor = idProveedor, RTN = rtn, Nombre = nombre, Direccion = direccion, Tel = tel,
+                Movil = movil, Representante = representante, Activo = activo, Usuario = usuario,
+                NombreEquipo = nombreEquipo, CantItems = cantItems, CuentaCxC = cuentaCxC, CxC = cxc
+            }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>CAIs asignados a un proveedor (grid editable del editor de proveedor).</summary>
+        public DataTable ListarProveedorCAI(int idProveedor)
+        {
+            return ConsultarTabla("SELECT IdAsigCAIProv, IdProveedor, CAI, FechaLimite, Activo FROM dbo.OC_Proveedores_CAI WHERE IdProveedor = @IdProveedor",
+                new { IdProveedor = idProveedor });
+        }
+
+        public int GuardarProveedorCAI(DataTable tabla)
+        {
+            return GuardarCambios(tabla,
+                "INSERT INTO dbo.OC_Proveedores_CAI (IdProveedor, CAI, FechaLimite, Activo) VALUES (@IdProveedor, @CAI, @FechaLimite, @Activo)",
+                "UPDATE dbo.OC_Proveedores_CAI SET IdProveedor=@IdProveedor, CAI=@CAI, FechaLimite=@FechaLimite, Activo=@Activo WHERE IdAsigCAIProv=@IdAsigCAIProv",
+                "DELETE FROM dbo.OC_Proveedores_CAI WHERE IdAsigCAIProv=@IdAsigCAIProv");
         }
     }
 }

@@ -1,19 +1,46 @@
 ﻿using System;
+using System.Data;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
 
 namespace ADIGGM.OC.Mantenimiento
 {
     public partial class ManProveedores : FrmPrincipal
     {
+        private readonly RepositorioOC _repoOC = new RepositorioOC();
+        private DataTable _dtCAI;
         int IdProveedor = 0;
         Boolean permitir = true;
         public ManProveedores(int IdProveedor)
         {
             InitializeComponent();
+            ConfigurarColumnas();
             this.IdProveedor = IdProveedor;
             HabilitarBtn();
             Clases.FuncionesGlobales DgvStyle = new Clases.FuncionesGlobales();
-            DgvStyle.EstiloDgv(dgvCAI);            
+            DgvStyle.EstiloDgv(dgvCAI);
+        }
+
+        /// <summary>Columnas del grid de CAIs EN CÓDIGO (no en el Designer) — gotcha §11. IdProveedor es
+        /// columna oculta; las filas nuevas heredan el IdProveedor actual vía DataColumn.DefaultValue
+        /// (en CargarCAI). Edición con GridColumnas.Edicion (§14.10).</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvCAI.AutoGenerateColumns = false;
+            dgvCAI.Columns.Clear();
+            dgvCAI.Columns.Add(GridColumnas.Texto("idProveedorDataGridViewTextBoxColumn", "IdProveedor", "IdProveedor", visible: false));
+            dgvCAI.Columns.Add(GridColumnas.Texto("CAI", "CAI", "CAI", autoSize: DataGridViewAutoSizeColumnMode.Fill));
+            dgvCAI.Columns.Add(GridColumnas.Texto("fechaLimite", "FechaLimite", "Fecha Limite", format: "d"));
+            dgvCAI.Columns.Add(GridColumnas.Check("activoDataGridViewCheckBoxColumn", "Activo", "Activo", width: 48, autoSize: DataGridViewAutoSizeColumnMode.ColumnHeader));
+        }
+
+        /// <summary>Carga los CAIs del proveedor en el grid; las filas nuevas heredan el IdProveedor.</summary>
+        private void CargarCAI()
+        {
+            _dtCAI = _repoOC.ListarProveedorCAI(IdProveedor);
+            _dtCAI.Columns["IdProveedor"].DefaultValue = IdProveedor;
+            dgvCAI.DataSource = _dtCAI;
         }
         public void HabilitarBtn()
         {
@@ -60,20 +87,12 @@ namespace ADIGGM.OC.Mantenimiento
                     {
                         if (MessageBox.Show("Seguro deseas actualizar este proveedor: " + txtNombre.Text + "?", Clases.VarGlobales.nombreSistema, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            Clases.VarGlobales.consultasOC.OC_ProveedorInsertUpdate(IdProveedor, txtRTN.Text, txtNombre.Text, txtDireccion.Text, txtTel.Text, txtMovil.Text, txtRepresentante.Text, chkActivo.Checked, Clases.VarGlobales.Usuario, Environment.MachineName, int.Parse(txtMaxItems.Text), txtCuentaCxC.Text, chkCxC.Checked);
+                            _repoOC.GuardarProveedor(IdProveedor, txtRTN.Text, txtNombre.Text, txtDireccion.Text, txtTel.Text, txtMovil.Text, txtRepresentante.Text, chkActivo.Checked, Clases.VarGlobales.Usuario, Environment.MachineName, int.Parse(txtMaxItems.Text), txtCuentaCxC.Text, chkCxC.Checked);
 
                             if (dgvCAI.Rows.Count > 0 && dgvCAI.FirstDisplayedCell != null)
                             {
                                 dgvCAI.EndEdit();
-                                this.oC_Proveedores_CAITableAdapter.Update(this.dsOC.OC_Proveedores_CAI);
-                                dgvCAI.CurrentCell = dgvCAI.Rows[dgvCAI.CurrentRow.Index].Cells[1];
-                                dgvCAI.AllowUserToAddRows = false;
-
-                                //btnGuardar.Enabled = false;
-                                btnNuevo.Enabled = true;
-                                btnEditar.Enabled = true;
-                                btnCancelar.Enabled = false;
-                                dgvCAI.ReadOnly = true;
+                                _repoOC.GuardarProveedorCAI(_dtCAI);
                             }
 
                             MessageBox.Show("Datos de Proveedor Actualizados exitosamente", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -84,7 +103,7 @@ namespace ADIGGM.OC.Mantenimiento
                     {
                         if (MessageBox.Show("Seguro deseas agregar este proveedor: " + txtNombre.Text + "?", Clases.VarGlobales.nombreSistema, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            Clases.VarGlobales.consultasOC.OC_ProveedorInsertUpdate(IdProveedor, txtRTN.Text, txtNombre.Text, txtDireccion.Text, txtTel.Text, txtMovil.Text, txtRepresentante.Text, chkActivo.Checked, Clases.VarGlobales.Usuario, Environment.MachineName, int.Parse(txtMaxItems.Text), txtCuentaCxC.Text, chkCxC.Checked);
+                            _repoOC.GuardarProveedor(IdProveedor, txtRTN.Text, txtNombre.Text, txtDireccion.Text, txtTel.Text, txtMovil.Text, txtRepresentante.Text, chkActivo.Checked, Clases.VarGlobales.Usuario, Environment.MachineName, int.Parse(txtMaxItems.Text), txtCuentaCxC.Text, chkCxC.Checked);
                             MessageBox.Show("Proveedor Agregado exitosamente", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                             limpiarDatos();
                         }
@@ -112,16 +131,10 @@ namespace ADIGGM.OC.Mantenimiento
         }
         private void ManProveedores_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsOC.OC_Proveedores_CAI' Puede moverla o quitarla según sea necesario.
-            this.oC_Proveedores_CAITableAdapter.Fill(this.dsOC.OC_Proveedores_CAI);
-            // TODO: esta línea de código carga datos en la tabla 'dsOC.OC_Proveedores' Puede moverla o quitarla según sea necesario.
-            this.oC_ProveedoresTableAdapter.FillByIdProv(this.dsOC.OC_Proveedores, IdProveedor);
-            // TODO: esta línea de código carga datos en la tabla 'dsOC.OC_Proveedores_CAI' Puede moverla o quitarla según sea necesario.
-            this.oC_Proveedores_CAITableAdapter.Fill(this.dsOC.OC_Proveedores_CAI);
-
             if (IdProveedor > 0)
             {
-                CargarDatos();                
+                CargarCAI();
+                CargarDatos();
             }
             else
             {
@@ -136,11 +149,9 @@ namespace ADIGGM.OC.Mantenimiento
         }
         void CargarDatos()
         {
-            string rtn = "", nombre = "", direccion = "", tel = "", movil = "", representante = "", cuentaCxC = "";
-            bool? activo = false, cxc = false;
-            int? cant = 0;
-
-            Clases.VarGlobales.consultasOC.OC_ProveedorObtener(IdProveedor, ref rtn, ref nombre, ref direccion, ref tel, ref movil, ref representante, ref activo, ref cant, ref cuentaCxC, ref cxc);
+            _repoOC.ObtenerProveedor(IdProveedor, out string rtn, out string nombre, out string direccion,
+                out string tel, out string movil, out string representante, out bool activo, out int cant,
+                out string cuentaCxC, out bool cxc);
 
             txtRTN.Text = rtn;
             txtNombre.Text = nombre;
@@ -148,10 +159,10 @@ namespace ADIGGM.OC.Mantenimiento
             txtTel.Text = tel;
             txtMovil.Text = movil;
             txtRepresentante.Text = representante;
-            chkActivo.Checked = (bool)activo;
+            chkActivo.Checked = activo;
             txtMaxItems.Text = cant.ToString();
             txtCuentaCxC.Text = cuentaCxC;
-            chkCxC.Checked = (bool)cxc;
+            chkCxC.Checked = cxc;
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -192,7 +203,7 @@ namespace ADIGGM.OC.Mantenimiento
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             dgvCAI.AllowUserToAddRows = true;
-            dgvCAI.ReadOnly = false;
+            GridColumnas.Edicion(dgvCAI, true);
             dgvCAI.FirstDisplayedScrollingRowIndex = dgvCAI.RowCount - 1;
             var cantidadRow = dgvCAI.RowCount - 1;
             dgvCAI.CurrentCell = dgvCAI.Rows[cantidadRow].Cells[1];
@@ -209,7 +220,7 @@ namespace ADIGGM.OC.Mantenimiento
             if (dgvCAI.Rows.Count > 0 && dgvCAI.FirstDisplayedCell != null)
             {
                 saveRow = dgvCAI.FirstDisplayedCell.RowIndex;
-                dgvCAI.ReadOnly = false;
+                GridColumnas.Edicion(dgvCAI, true);
                 dgvCAI.AllowUserToAddRows = false;
 
                 //btnGuardar.Enabled = true;
@@ -226,11 +237,13 @@ namespace ADIGGM.OC.Mantenimiento
         {
             if (dgvCAI.Rows.Count > 0 && dgvCAI.FirstDisplayedCell != null)
             {
-                this.oC_Proveedores_CAITableAdapter.Fill(this.dsOC.OC_Proveedores_CAI);
-                dgvCAI.CurrentCell = dgvCAI.Rows[dgvCAI.CurrentRow.Index].Cells[1];
+                int fila = dgvCAI.CurrentRow.Index;
+                CargarCAI();
+                if (fila < dgvCAI.RowCount)
+                    dgvCAI.CurrentCell = dgvCAI.Rows[fila].Cells[1];
                 dgvCAI.AllowUserToAddRows = false;
 
-                dgvCAI.ReadOnly = true;
+                GridColumnas.Edicion(dgvCAI, false);
                 //btnGuardar.Enabled = false;
                 btnNuevo.Enabled = true;
                 btnEditar.Enabled = true;
