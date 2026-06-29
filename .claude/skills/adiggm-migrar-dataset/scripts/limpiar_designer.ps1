@@ -34,7 +34,10 @@ $reCmt    = '^\s*//\s*(\S.*?)\s*$'
 $reBare   = '^\s*//\s*$'
 $reAddRange = "this\.$([regex]::Escape($Grid))\.Columns\.AddRange\(new"
 $reGridDS = "^\s*this\.$([regex]::Escape($Grid))\.DataSource\s*="
-$reBsDm = if ($BindingSource) { "^\s*this\.$([regex]::Escape($BindingSource))\.DataMember\s*=" } else { $null }
+# -BindingSource admite varios separados por coma (forms con combo + grid). Se les quita su
+# DataMember de diseño (el DataSource a dsXxx ya cae por la palabra clave del DataSet); el campo
+# del BindingSource se CONSERVA y se reasigna en código.
+$bsList = @($BindingSource -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 
 # --- Pasada 1: columnas, DataSet, TableAdapters, grid.DataSource, comentarios ---
 $inAdd = $false
@@ -44,7 +47,9 @@ for ($i = 0; $i -lt $lines.Count; $i++) {
   if ($ln -match $reAddRange) { [void]$del.Add($i); if ($ln -notmatch '\}\);') { $inAdd = $true }; continue }
   if ($ln -match [regex]::Escape($DataSet) -or $ln -match 'TableAdapter') { [void]$del.Add($i); continue }
   if ($ln -match $reGridDS) { [void]$del.Add($i); continue }
-  if ($reBsDm -and $ln -match $reBsDm) { [void]$del.Add($i); continue }
+  $bsHit = $false
+  foreach ($bs in $bsList) { if ($ln -match "^\s*this\.$([regex]::Escape($bs))\.DataMember\s*=") { $bsHit = $true; break } }
+  if ($bsHit) { [void]$del.Add($i); continue }
   $mm = [regex]::Match($ln, $reConfig); if ($mm.Success -and $colSet.ContainsKey($mm.Groups[1].Value)) { [void]$del.Add($i); continue }
   $mm = [regex]::Match($ln, $reCreate); if ($mm.Success -and $colSet.ContainsKey($mm.Groups[1].Value)) { [void]$del.Add($i); continue }
   $mm = [regex]::Match($ln, $reField); if ($mm.Success -and $colSet.ContainsKey($mm.Groups[1].Value)) { [void]$del.Add($i); continue }
@@ -84,7 +89,7 @@ $open = ([regex]::Matches($t, '\{')).Count; $close = ([regex]::Matches($t, '\}')
 Write-Output ("borradas=$($del.Count)  antes=$($lines.Count)  despues=$($kept.Count)")
 Write-Output ("llaves: abre=$open cierra=$close  " + $(if ($open -eq $close) { 'OK' } else { '*** DESBALANCE ***' }))
 Write-Output ("residual ${DataSet}=" + ([regex]::Matches($t, [regex]::Escape($DataSet))).Count + "  TableAdapter=" + ([regex]::Matches($t, 'TableAdapter')).Count + "  AddRange=" + ([regex]::Matches($t, 'Columns\.AddRange')).Count + "  colFieldDecls=" + ([regex]::Matches($t, 'private System\.Windows\.Forms\.DataGridView\w+Column ')).Count)
-if ($BindingSource) { Write-Output ("BindingSource '$BindingSource' conservado: " + ([regex]::Matches($t, [regex]::Escape($BindingSource))).Count + " refs") }
+foreach ($bs in $bsList) { Write-Output ("BindingSource '$bs' conservado: " + ([regex]::Matches($t, [regex]::Escape($bs))).Count + " refs") }
 
 if ($WhatIf) { Write-Output "(-WhatIf: no se escribió nada)"; exit 0 }
 if ($open -ne $close) { Write-Output "*** NO se escribió: llaves desbalanceadas. Revisa -Cols (case-sensitive) y corre con -WhatIf. ***"; exit 1 }

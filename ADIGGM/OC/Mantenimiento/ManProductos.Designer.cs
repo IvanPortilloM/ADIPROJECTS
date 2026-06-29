@@ -34,23 +34,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cboCategoria = new System.Windows.Forms.ComboBox();
             this.oCProductosCategoriasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsOC = new ADIGGM.DataSets.DsOC();
             this.label1 = new System.Windows.Forms.Label();
-            this.oC_ProductosCategoriasTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ProductosCategoriasTableAdapter();
             this.dgvProductos = new System.Windows.Forms.DataGridView();
-            this.IdProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdCatProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CodProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.activoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NombreEquipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.oCProductosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.oC_ProductosTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ProductosTableAdapter();
             this.pnlFooter.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosCategoriasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -173,13 +162,6 @@
             // 
             // oCProductosCategoriasBindingSource
             // 
-            this.oCProductosCategoriasBindingSource.DataMember = "OC_ProductosCategorias";
-            this.oCProductosCategoriasBindingSource.DataSource = this.dsOC;
-            // 
-            // dsOC
-            // 
-            this.dsOC.DataSetName = "DsOC";
-            this.dsOC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // label1
             // 
@@ -190,10 +172,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Categoria:";
             // 
-            // oC_ProductosCategoriasTableAdapter
-            // 
-            this.oC_ProductosCategoriasTableAdapter.ClearBeforeFill = true;
-            // 
             // dgvProductos
             // 
             this.dgvProductos.AllowUserToAddRows = false;
@@ -202,15 +180,6 @@
             this.dgvProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvProductos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProductos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.IdProducto,
-            this.IdCatProducto,
-            this.CodProducto,
-            this.Producto,
-            this.activoDataGridViewCheckBoxColumn,
-            this.Usuario,
-            this.NombreEquipo});
-            this.dgvProductos.DataSource = this.oCProductosBindingSource;
             this.dgvProductos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProductos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvProductos.Location = new System.Drawing.Point(0, 134);
@@ -224,70 +193,8 @@
             this.dgvProductos.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.dgvProductos_CellValueNeeded);
             this.dgvProductos.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvProductos_RowsAdded);
             // 
-            // IdProducto
-            // 
-            this.IdProducto.DataPropertyName = "IdProducto";
-            this.IdProducto.HeaderText = "IdProducto";
-            this.IdProducto.Name = "IdProducto";
-            this.IdProducto.ReadOnly = true;
-            this.IdProducto.Visible = false;
-            // 
-            // IdCatProducto
-            // 
-            this.IdCatProducto.DataPropertyName = "IdCatProducto";
-            this.IdCatProducto.HeaderText = "IdCatProducto";
-            this.IdCatProducto.Name = "IdCatProducto";
-            this.IdCatProducto.ReadOnly = true;
-            this.IdCatProducto.Visible = false;
-            // 
-            // CodProducto
-            // 
-            this.CodProducto.DataPropertyName = "CodProducto";
-            this.CodProducto.FillWeight = 62.35667F;
-            this.CodProducto.HeaderText = "Codigo";
-            this.CodProducto.Name = "CodProducto";
-            this.CodProducto.ReadOnly = true;
-            // 
-            // Producto
-            // 
-            this.Producto.DataPropertyName = "Producto";
-            this.Producto.FillWeight = 134.8717F;
-            this.Producto.HeaderText = "Producto";
-            this.Producto.Name = "Producto";
-            this.Producto.ReadOnly = true;
-            // 
-            // activoDataGridViewCheckBoxColumn
-            // 
-            this.activoDataGridViewCheckBoxColumn.DataPropertyName = "Activo";
-            this.activoDataGridViewCheckBoxColumn.FillWeight = 48.4569F;
-            this.activoDataGridViewCheckBoxColumn.HeaderText = "Activo";
-            this.activoDataGridViewCheckBoxColumn.Name = "activoDataGridViewCheckBoxColumn";
-            this.activoDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // Usuario
-            // 
-            this.Usuario.DataPropertyName = "Usuario";
-            this.Usuario.HeaderText = "Usuario";
-            this.Usuario.Name = "Usuario";
-            this.Usuario.ReadOnly = true;
-            this.Usuario.Visible = false;
-            // 
-            // NombreEquipo
-            // 
-            this.NombreEquipo.DataPropertyName = "NombreEquipo";
-            this.NombreEquipo.HeaderText = "NombreEquipo";
-            this.NombreEquipo.Name = "NombreEquipo";
-            this.NombreEquipo.ReadOnly = true;
-            this.NombreEquipo.Visible = false;
-            // 
             // oCProductosBindingSource
             // 
-            this.oCProductosBindingSource.DataMember = "OC_Productos";
-            this.oCProductosBindingSource.DataSource = this.dsOC;
-            // 
-            // oC_ProductosTableAdapter
-            // 
-            this.oC_ProductosTableAdapter.ClearBeforeFill = true;
             // 
             // ManProductos
             // 
@@ -306,7 +213,6 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosCategoriasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -318,19 +224,9 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox cboCategoria;
         private System.Windows.Forms.Label label1;
-        private DataSets.DsOC dsOC;
         private System.Windows.Forms.BindingSource oCProductosCategoriasBindingSource;
-        private DataSets.DsOCTableAdapters.OC_ProductosCategoriasTableAdapter oC_ProductosCategoriasTableAdapter;
         private System.Windows.Forms.DataGridView dgvProductos;
         private System.Windows.Forms.BindingSource oCProductosBindingSource;
-        private DataSets.DsOCTableAdapters.OC_ProductosTableAdapter oC_ProductosTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdCatProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CodProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Producto;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn activoDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Usuario;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NombreEquipo;
         private System.Windows.Forms.TextBox txtProducto;
         private System.Windows.Forms.Label label2;
     }

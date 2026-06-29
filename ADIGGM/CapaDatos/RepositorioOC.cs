@@ -119,5 +119,29 @@ namespace ADIGGM.CapaDatos
                 "UPDATE dbo.OC_Responsables SET Nombre=@Nombre, UsuarioFirma=@UsuarioFirma, Firma=@Firma, Activo=@Activo, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdResponsable=@IdResponsable",
                 "DELETE FROM dbo.OC_Responsables WHERE IdResponsable=@IdResponsable");
         }
+
+        // ===== Productos (OC\Mantenimiento\ManProductos) =====
+
+        /// <summary>Categorías activas para el combo filtro (FillByActivos del DataSet).</summary>
+        public DataTable ListarCategoriasProductosOCActivas()
+        {
+            return ConsultarTabla("SELECT IdCatProducto, Codigo, Categoria, Activo, Usuario, NombreEquipo FROM dbo.OC_ProductosCategorias WHERE Activo = 1");
+        }
+
+        /// <summary>Productos de una categoría filtrados por texto (LIKE). Alimenta el grid editable.</summary>
+        public DataTable ListarProductos(int idCategoria, string filtro)
+        {
+            return ConsultarTabla(
+                "SELECT IdProducto, IdCatProducto, CodProducto, Producto, Activo, Usuario, NombreEquipo FROM dbo.OC_Productos WHERE IdCatProducto = @IdCategoria AND Producto LIKE '%' + @Filtro + '%'",
+                new { IdCategoria = idCategoria, Filtro = filtro });
+        }
+
+        public int GuardarProductos(DataTable tabla)
+        {
+            return GuardarCambios(tabla,
+                "INSERT INTO dbo.OC_Productos (IdCatProducto, CodProducto, Producto, Activo, Usuario, NombreEquipo) VALUES (@IdCatProducto, @CodProducto, @Producto, @Activo, @Usuario, @NombreEquipo)",
+                "UPDATE dbo.OC_Productos SET IdCatProducto=@IdCatProducto, CodProducto=@CodProducto, Producto=@Producto, Activo=@Activo, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdProducto=@IdProducto",
+                "DELETE FROM dbo.OC_Productos WHERE IdProducto=@IdProducto");
+        }
     }
 }
