@@ -34,42 +34,23 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cboCategoria = new System.Windows.Forms.ComboBox();
             this.oCProductosCategoriasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsOC = new ADIGGM.DataSets.DsOC();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvNoAsig = new System.Windows.Forms.DataGridView();
-            this.idVehiculoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CodVehiculo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contratistaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.placaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.motoristaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cuentaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Selección = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.vehiculosNoAsigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel5 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.txtBusqueda1 = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dgvAsig = new System.Windows.Forms.DataGridView();
-            this.idVehiculoDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Selección2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contratistaDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.placaDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.motoristaDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cuentaDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vehiculosAsigBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel4 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBusqueda2 = new System.Windows.Forms.TextBox();
-            this.vehiculosNoAsigTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.VehiculosNoAsigTableAdapter();
-            this.vehiculosAsigTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.VehiculosAsigTableAdapter();
-            this.oC_ProductosCategoriasTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ProductosCategoriasTableAdapter();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.pnlFooter.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosCategoriasBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNoAsig)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vehiculosNoAsigBindingSource)).BeginInit();
@@ -154,13 +135,6 @@
             // 
             // oCProductosCategoriasBindingSource
             // 
-            this.oCProductosCategoriasBindingSource.DataMember = "OC_ProductosCategorias";
-            this.oCProductosCategoriasBindingSource.DataSource = this.dsOC;
-            // 
-            // dsOC
-            // 
-            this.dsOC.DataSetName = "DsOC";
-            this.dsOC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // panel2
             // 
@@ -180,15 +154,6 @@
             this.dgvNoAsig.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvNoAsig.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvNoAsig.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvNoAsig.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idVehiculoDataGridViewTextBoxColumn,
-            this.CodVehiculo,
-            this.contratistaDataGridViewTextBoxColumn,
-            this.placaDataGridViewTextBoxColumn,
-            this.motoristaDataGridViewTextBoxColumn,
-            this.cuentaDataGridViewTextBoxColumn,
-            this.Selección});
-            this.dgvNoAsig.DataSource = this.vehiculosNoAsigBindingSource;
             this.dgvNoAsig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvNoAsig.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvNoAsig.Location = new System.Drawing.Point(0, 40);
@@ -197,65 +162,9 @@
             this.dgvNoAsig.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvNoAsig.Size = new System.Drawing.Size(406, 297);
             this.dgvNoAsig.TabIndex = 106;
-            // 
-            // idVehiculoDataGridViewTextBoxColumn
-            // 
-            this.idVehiculoDataGridViewTextBoxColumn.DataPropertyName = "IdVehiculo";
-            this.idVehiculoDataGridViewTextBoxColumn.HeaderText = "IdVehiculo";
-            this.idVehiculoDataGridViewTextBoxColumn.Name = "idVehiculoDataGridViewTextBoxColumn";
-            this.idVehiculoDataGridViewTextBoxColumn.ReadOnly = true;
-            this.idVehiculoDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // CodVehiculo
-            // 
-            this.CodVehiculo.DataPropertyName = "CodVehiculo";
-            this.CodVehiculo.FillWeight = 61.18918F;
-            this.CodVehiculo.HeaderText = "Codigo";
-            this.CodVehiculo.Name = "CodVehiculo";
-            this.CodVehiculo.ReadOnly = true;
-            // 
-            // contratistaDataGridViewTextBoxColumn
-            // 
-            this.contratistaDataGridViewTextBoxColumn.DataPropertyName = "Contratista";
-            this.contratistaDataGridViewTextBoxColumn.FillWeight = 161.8989F;
-            this.contratistaDataGridViewTextBoxColumn.HeaderText = "Contratista";
-            this.contratistaDataGridViewTextBoxColumn.Name = "contratistaDataGridViewTextBoxColumn";
-            this.contratistaDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // placaDataGridViewTextBoxColumn
-            // 
-            this.placaDataGridViewTextBoxColumn.DataPropertyName = "Placa";
-            this.placaDataGridViewTextBoxColumn.FillWeight = 89.58385F;
-            this.placaDataGridViewTextBoxColumn.HeaderText = "Placa";
-            this.placaDataGridViewTextBoxColumn.Name = "placaDataGridViewTextBoxColumn";
-            this.placaDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // motoristaDataGridViewTextBoxColumn
-            // 
-            this.motoristaDataGridViewTextBoxColumn.DataPropertyName = "Motorista";
-            this.motoristaDataGridViewTextBoxColumn.FillWeight = 113.0288F;
-            this.motoristaDataGridViewTextBoxColumn.HeaderText = "Motorista";
-            this.motoristaDataGridViewTextBoxColumn.Name = "motoristaDataGridViewTextBoxColumn";
-            this.motoristaDataGridViewTextBoxColumn.ReadOnly = true;
-            this.motoristaDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // cuentaDataGridViewTextBoxColumn
-            // 
-            this.cuentaDataGridViewTextBoxColumn.DataPropertyName = "Cuenta";
-            this.cuentaDataGridViewTextBoxColumn.FillWeight = 135.9565F;
-            this.cuentaDataGridViewTextBoxColumn.HeaderText = "Cuenta";
-            this.cuentaDataGridViewTextBoxColumn.Name = "cuentaDataGridViewTextBoxColumn";
-            // 
-            // Selección
-            // 
-            this.Selección.FillWeight = 38.34297F;
-            this.Selección.HeaderText = "";
-            this.Selección.Name = "Selección";
-            // 
+            //
             // vehiculosNoAsigBindingSource
             // 
-            this.vehiculosNoAsigBindingSource.DataMember = "VehiculosNoAsig";
-            this.vehiculosNoAsigBindingSource.DataSource = this.dsOC;
             // 
             // panel5
             // 
@@ -303,15 +212,6 @@
             this.dgvAsig.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvAsig.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvAsig.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAsig.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idVehiculoDataGridViewTextBoxColumn1,
-            this.Selección2,
-            this.dataGridViewTextBoxColumn1,
-            this.contratistaDataGridViewTextBoxColumn1,
-            this.placaDataGridViewTextBoxColumn1,
-            this.motoristaDataGridViewTextBoxColumn1,
-            this.cuentaDataGridViewTextBoxColumn1});
-            this.dgvAsig.DataSource = this.vehiculosAsigBindingSource;
             this.dgvAsig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAsig.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvAsig.Location = new System.Drawing.Point(0, 40);
@@ -321,64 +221,9 @@
             this.dgvAsig.Size = new System.Drawing.Size(395, 297);
             this.dgvAsig.TabIndex = 106;
             this.dgvAsig.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAsig_CellValueChanged);
-            // 
-            // idVehiculoDataGridViewTextBoxColumn1
-            // 
-            this.idVehiculoDataGridViewTextBoxColumn1.DataPropertyName = "IdVehiculo";
-            this.idVehiculoDataGridViewTextBoxColumn1.HeaderText = "IdVehiculo";
-            this.idVehiculoDataGridViewTextBoxColumn1.Name = "idVehiculoDataGridViewTextBoxColumn1";
-            this.idVehiculoDataGridViewTextBoxColumn1.Visible = false;
-            // 
-            // Selección2
-            // 
-            this.Selección2.FillWeight = 36.47503F;
-            this.Selección2.HeaderText = "";
-            this.Selección2.Name = "Selección2";
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "CodVehiculo";
-            this.dataGridViewTextBoxColumn1.FillWeight = 64.54115F;
-            this.dataGridViewTextBoxColumn1.HeaderText = "Codigo";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // contratistaDataGridViewTextBoxColumn1
-            // 
-            this.contratistaDataGridViewTextBoxColumn1.DataPropertyName = "Contratista";
-            this.contratistaDataGridViewTextBoxColumn1.FillWeight = 157.8051F;
-            this.contratistaDataGridViewTextBoxColumn1.HeaderText = "Contratista";
-            this.contratistaDataGridViewTextBoxColumn1.Name = "contratistaDataGridViewTextBoxColumn1";
-            this.contratistaDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // placaDataGridViewTextBoxColumn1
-            // 
-            this.placaDataGridViewTextBoxColumn1.DataPropertyName = "Placa";
-            this.placaDataGridViewTextBoxColumn1.FillWeight = 86.31226F;
-            this.placaDataGridViewTextBoxColumn1.HeaderText = "Placa";
-            this.placaDataGridViewTextBoxColumn1.Name = "placaDataGridViewTextBoxColumn1";
-            this.placaDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // motoristaDataGridViewTextBoxColumn1
-            // 
-            this.motoristaDataGridViewTextBoxColumn1.DataPropertyName = "Motorista";
-            this.motoristaDataGridViewTextBoxColumn1.FillWeight = 121.1881F;
-            this.motoristaDataGridViewTextBoxColumn1.HeaderText = "Motorista";
-            this.motoristaDataGridViewTextBoxColumn1.Name = "motoristaDataGridViewTextBoxColumn1";
-            this.motoristaDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.motoristaDataGridViewTextBoxColumn1.Visible = false;
-            // 
-            // cuentaDataGridViewTextBoxColumn1
-            // 
-            this.cuentaDataGridViewTextBoxColumn1.DataPropertyName = "Cuenta";
-            this.cuentaDataGridViewTextBoxColumn1.FillWeight = 133.6785F;
-            this.cuentaDataGridViewTextBoxColumn1.HeaderText = "Cuenta";
-            this.cuentaDataGridViewTextBoxColumn1.Name = "cuentaDataGridViewTextBoxColumn1";
-            // 
+            //
             // vehiculosAsigBindingSource
             // 
-            this.vehiculosAsigBindingSource.DataMember = "VehiculosAsig";
-            this.vehiculosAsigBindingSource.DataSource = this.dsOC;
             // 
             // panel4
             // 
@@ -407,18 +252,6 @@
             this.txtBusqueda2.Size = new System.Drawing.Size(232, 21);
             this.txtBusqueda2.TabIndex = 1;
             this.txtBusqueda2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBusqueda2_KeyPress);
-            // 
-            // vehiculosNoAsigTableAdapter
-            // 
-            this.vehiculosNoAsigTableAdapter.ClearBeforeFill = true;
-            // 
-            // vehiculosAsigTableAdapter
-            // 
-            this.vehiculosAsigTableAdapter.ClearBeforeFill = true;
-            // 
-            // oC_ProductosCategoriasTableAdapter
-            // 
-            this.oC_ProductosCategoriasTableAdapter.ClearBeforeFill = true;
             // 
             // btnAgregar
             // 
@@ -468,7 +301,6 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosCategoriasBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvNoAsig)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.vehiculosNoAsigBindingSource)).EndInit();
@@ -498,28 +330,10 @@
         private System.Windows.Forms.TextBox txtBusqueda2;
         private System.Windows.Forms.DataGridView dgvNoAsig;
         private System.Windows.Forms.BindingSource vehiculosNoAsigBindingSource;
-        private DataSets.DsOC dsOC;
         private System.Windows.Forms.DataGridView dgvAsig;
-        private DataSets.DsOCTableAdapters.VehiculosNoAsigTableAdapter vehiculosNoAsigTableAdapter;
         private System.Windows.Forms.BindingSource vehiculosAsigBindingSource;
-        private DataSets.DsOCTableAdapters.VehiculosAsigTableAdapter vehiculosAsigTableAdapter;
         private System.Windows.Forms.BindingSource oCProductosCategoriasBindingSource;
-        private DataSets.DsOCTableAdapters.OC_ProductosCategoriasTableAdapter oC_ProductosCategoriasTableAdapter;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnEliminar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idVehiculoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CodVehiculo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn contratistaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn placaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn motoristaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cuentaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Selección;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idVehiculoDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Selección2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn contratistaDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn placaDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn motoristaDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cuentaDataGridViewTextBoxColumn1;
     }
 }

@@ -204,5 +204,53 @@ namespace ADIGGM.CapaDatos
                 "UPDATE dbo.OC_Proveedores_CAI SET IdProveedor=@IdProveedor, CAI=@CAI, FechaLimite=@FechaLimite, Activo=@Activo WHERE IdAsigCAIProv=@IdAsigCAIProv",
                 "DELETE FROM dbo.OC_Proveedores_CAI WHERE IdAsigCAIProv=@IdAsigCAIProv");
         }
+
+        // ===== Asignación de cuentas de gasto a vehículos por categoría (OC\Mantenimiento\ManAsigCuentas) =====
+        // Cruza TR_Vehiculos/TR_Contratistas/TR_Motoristas (datos del vehículo) con OC_AsigCuentas (la
+        // asignación en sí, dominio OC); ambas tablas viven en TransporteAdiggm, no hay cruce de conexión.
+
+        /// <summary>Vehículos activos YA asignados a la categoría, con su cuenta de gasto; filtro por código.</summary>
+        public DataTable ListarVehiculosAsignados(int idCategoria, string filtro)
+        {
+            DataTable tabla = ConsultarTabla(@"
+SELECT TR_Vehiculos.IdVehiculo, TR_Contratistas.Contratista, TR_Vehiculos.Placa, TR_Motoristas.Motorista,
+       OC_AsigCuentas.CuentaGasto AS Cuenta, TR_Vehiculos.CodVehiculo
+FROM dbo.TR_Vehiculos
+INNER JOIN dbo.TR_Contratistas ON TR_Vehiculos.IdContratista = TR_Contratistas.IdContratista
+INNER JOIN dbo.TR_Motoristas ON TR_Vehiculos.IdMotorista = TR_Motoristas.IdMotorista
+INNER JOIN dbo.OC_AsigCuentas ON TR_Vehiculos.IdVehiculo = OC_AsigCuentas.IdVehiculo
+WHERE TR_Vehiculos.Activo = 1 AND OC_AsigCuentas.IdCatProducto = @IdCategoria AND TR_Vehiculos.CodVehiculo LIKE '%' + @Filtro + '%'
+ORDER BY TR_Contratistas.Contratista",
+                new { IdCategoria = idCategoria, Filtro = filtro });
+            tabla.Columns["Cuenta"].ReadOnly = false; // gotcha §11: DataTable.Load marca ReadOnly columnas de GROUP BY
+            return tabla;
+        }
+
+        /// <summary>Vehículos activos NO asignados aún a la categoría; el filtro busca en Contratista, Placa o Código.</summary>
+        public DataTable ListarVehiculosNoAsignados(string filtro, int idCategoria)
+        {
+            DataTable tabla = ConsultarTabla(@"
+SELECT TR_Vehiculos.IdVehiculo, TR_Contratistas.Contratista, TR_Vehiculos.Placa, TR_Motoristas.Motorista,
+       '' AS Cuenta, TR_Vehiculos.CodVehiculo
+FROM dbo.TR_Vehiculos
+INNER JOIN dbo.TR_Contratistas ON TR_Vehiculos.IdContratista = TR_Contratistas.IdContratista
+INNER JOIN dbo.TR_Motoristas ON TR_Vehiculos.IdMotorista = TR_Motoristas.IdMotorista
+WHERE TR_Vehiculos.Activo = 1
+  AND TR_Vehiculos.IdVehiculo NOT IN (SELECT IdVehiculo FROM dbo.OC_AsigCuentas WHERE IdCatProducto = @IdCategoria)
+  AND (TR_Contratistas.Contratista LIKE '%' + @Filtro + '%' OR TR_Vehiculos.Placa LIKE '%' + @Filtro + '%' OR TR_Vehiculos.CodVehiculo LIKE '%' + @Filtro + '%')
+ORDER BY TR_Contratistas.Contratista",
+                new { Filtro = filtro, IdCategoria = idCategoria });
+            tabla.Columns["Cuenta"].ReadOnly = false; // gotcha §11: '' AS Cuenta es columna literal/calculada
+            return tabla;
+        }
+
+        /// <summary>Inserta (1), actualiza (2) o elimina (3) la cuenta de gasto de un vehículo en una categoría
+        /// (SP OC_AsigCuentasOpciones; reemplaza VarGlobales.consultasOC — gotcha §8). Devuelve el escalar del SP sin usar.</summary>
+        public int GuardarAsigCuentaOpcion(int idCategoria, int idVehiculo, string cuenta, string usuario, string nombreEquipo, int opcion)
+        {
+            return Ejecutar("dbo.OC_AsigCuentasOpciones",
+                new { IdCatProducto = idCategoria, IdVehiculo = idVehiculo, Cuenta = cuenta, Usuario = usuario, NombreEquipo = nombreEquipo, Opcion = opcion },
+                CommandType.StoredProcedure);
+        }
     }
 }
