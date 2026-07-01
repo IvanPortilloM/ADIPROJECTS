@@ -30,17 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TranAbonar));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cPTipoDocumentosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsOC = new ADIGGM.DataSets.DsOC();
             this.oCProveedoresBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
-            this.cP_TipoDocumentosTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.CP_TipoDocumentosTableAdapter();
-            this.oC_ProveedoresTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ProveedoresTableAdapter();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnVerFacturas = new System.Windows.Forms.Button();
             this.cboProveedor = new System.Windows.Forms.ComboBox();
@@ -56,18 +50,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cPFacturasEncontradasBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cP_FacturasEncontradasTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.CP_FacturasEncontradasTableAdapter();
             this.lblTotal = new System.Windows.Forms.Label();
             this.dgvFacturas = new System.Windows.Forms.DataGridView();
-            this.correlativoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numFacturaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.proveedorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.totalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Abonar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Deuda = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlFooter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cPTipoDocumentosBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProveedoresBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -115,18 +101,9 @@
             // 
             // cPTipoDocumentosBindingSource
             // 
-            this.cPTipoDocumentosBindingSource.DataMember = "CP_TipoDocumentos";
-            this.cPTipoDocumentosBindingSource.DataSource = this.dsOC;
-            // 
-            // dsOC
-            // 
-            this.dsOC.DataSetName = "DsOC";
-            this.dsOC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // oCProveedoresBindingSource
             // 
-            this.oCProveedoresBindingSource.DataMember = "OC_Proveedores";
-            this.oCProveedoresBindingSource.DataSource = this.dsOC;
             // 
             // panel1
             // 
@@ -176,14 +153,6 @@
             this.btnGuardar.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnGuardar.UseVisualStyleBackColor = false;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
-            // 
-            // cP_TipoDocumentosTableAdapter
-            // 
-            this.cP_TipoDocumentosTableAdapter.ClearBeforeFill = true;
-            // 
-            // oC_ProveedoresTableAdapter
-            // 
-            this.oC_ProveedoresTableAdapter.ClearBeforeFill = true;
             // 
             // panel2
             // 
@@ -328,12 +297,6 @@
             // 
             // cPFacturasEncontradasBindingSource
             // 
-            this.cPFacturasEncontradasBindingSource.DataMember = "CP_FacturasEncontradas";
-            this.cPFacturasEncontradasBindingSource.DataSource = this.dsOC;
-            // 
-            // cP_FacturasEncontradasTableAdapter
-            // 
-            this.cP_FacturasEncontradasTableAdapter.ClearBeforeFill = true;
             // 
             // lblTotal
             // 
@@ -355,15 +318,6 @@
             this.dgvFacturas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvFacturas.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvFacturas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvFacturas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.correlativoDataGridViewTextBoxColumn,
-            this.numFacturaDataGridViewTextBoxColumn,
-            this.proveedorDataGridViewTextBoxColumn,
-            this.totalDataGridViewTextBoxColumn,
-            this.Abonar,
-            this.Deuda});
-            this.dgvFacturas.DataBindings.Add(new System.Windows.Forms.Binding("Tag", this.cPFacturasEncontradasBindingSource, "TotalGral", true));
-            this.dgvFacturas.DataSource = this.cPFacturasEncontradasBindingSource;
             this.dgvFacturas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFacturas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvFacturas.Location = new System.Drawing.Point(0, 173);
@@ -373,60 +327,6 @@
             this.dgvFacturas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvFacturas.Size = new System.Drawing.Size(602, 181);
             this.dgvFacturas.TabIndex = 120;
-            // 
-            // correlativoDataGridViewTextBoxColumn
-            // 
-            this.correlativoDataGridViewTextBoxColumn.DataPropertyName = "Correlativo";
-            this.correlativoDataGridViewTextBoxColumn.FillWeight = 87.26025F;
-            this.correlativoDataGridViewTextBoxColumn.HeaderText = "Correlativo";
-            this.correlativoDataGridViewTextBoxColumn.Name = "correlativoDataGridViewTextBoxColumn";
-            this.correlativoDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // numFacturaDataGridViewTextBoxColumn
-            // 
-            this.numFacturaDataGridViewTextBoxColumn.DataPropertyName = "NumFactura";
-            this.numFacturaDataGridViewTextBoxColumn.FillWeight = 104.737F;
-            this.numFacturaDataGridViewTextBoxColumn.HeaderText = "# Factura";
-            this.numFacturaDataGridViewTextBoxColumn.Name = "numFacturaDataGridViewTextBoxColumn";
-            this.numFacturaDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // proveedorDataGridViewTextBoxColumn
-            // 
-            this.proveedorDataGridViewTextBoxColumn.DataPropertyName = "Proveedor";
-            this.proveedorDataGridViewTextBoxColumn.FillWeight = 161.9163F;
-            this.proveedorDataGridViewTextBoxColumn.HeaderText = "Proveedor";
-            this.proveedorDataGridViewTextBoxColumn.Name = "proveedorDataGridViewTextBoxColumn";
-            this.proveedorDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // totalDataGridViewTextBoxColumn
-            // 
-            this.totalDataGridViewTextBoxColumn.DataPropertyName = "Total";
-            dataGridViewCellStyle1.Format = "N2";
-            this.totalDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.totalDataGridViewTextBoxColumn.FillWeight = 90.16906F;
-            this.totalDataGridViewTextBoxColumn.HeaderText = "Total";
-            this.totalDataGridViewTextBoxColumn.Name = "totalDataGridViewTextBoxColumn";
-            this.totalDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // Abonar
-            // 
-            this.Abonar.DataPropertyName = "Abonar";
-            dataGridViewCellStyle2.Format = "N2";
-            this.Abonar.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Abonar.FillWeight = 79.77531F;
-            this.Abonar.HeaderText = "Abonar";
-            this.Abonar.Name = "Abonar";
-            this.Abonar.ReadOnly = true;
-            // 
-            // Deuda
-            // 
-            this.Deuda.DataPropertyName = "Deuda";
-            dataGridViewCellStyle3.Format = "N2";
-            this.Deuda.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Deuda.FillWeight = 76.14214F;
-            this.Deuda.HeaderText = "Deuda";
-            this.Deuda.Name = "Deuda";
-            this.Deuda.ReadOnly = true;
             // 
             // TranAbonar
             // 
@@ -447,7 +347,6 @@
             this.pnlFooter.ResumeLayout(false);
             this.pnlFooter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cPTipoDocumentosBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProveedoresBindingSource)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -462,11 +361,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.Button btnGuardar;
-        private DataSets.DsOC dsOC;
         private System.Windows.Forms.BindingSource cPTipoDocumentosBindingSource;
-        private DataSets.DsOCTableAdapters.CP_TipoDocumentosTableAdapter cP_TipoDocumentosTableAdapter;
         private System.Windows.Forms.BindingSource oCProveedoresBindingSource;
-        private DataSets.DsOCTableAdapters.OC_ProveedoresTableAdapter oC_ProveedoresTableAdapter;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnVerFacturas;
         private System.Windows.Forms.ComboBox cboProveedor;
@@ -482,14 +378,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.BindingSource cPFacturasEncontradasBindingSource;
-        private DataSets.DsOCTableAdapters.CP_FacturasEncontradasTableAdapter cP_FacturasEncontradasTableAdapter;
         private System.Windows.Forms.Label lblTotal;
         private System.Windows.Forms.DataGridView dgvFacturas;
-        private System.Windows.Forms.DataGridViewTextBoxColumn correlativoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn numFacturaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn proveedorDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn totalDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Abonar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Deuda;
     }
 }

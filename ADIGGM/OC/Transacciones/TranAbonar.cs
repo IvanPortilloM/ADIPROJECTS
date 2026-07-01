@@ -1,14 +1,35 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
+using ADIGGM.Clases;
+using ADIGGM.CapaDatos;
 
 namespace ADIGGM.OC.Transacciones
 {
     public partial class TranAbonar : ADIGGM.FrmPrincipal
     {
+        private readonly RepositorioOC _repo = new RepositorioOC();
+        private decimal _totalFacturas = 0m;
         Boolean permitir = false;
+
         public TranAbonar()
         {
             InitializeComponent();
+            ConfigurarColumnas();
+        }
+
+        /// <summary>Columnas del grid de facturas EN CÓDIGO (gotcha §11); visor de solo lectura. Se quitó el
+        /// binding de diseño Tag→"TotalGral" (nada en el .cs lo leía; habría quedado huérfano al migrar).</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvFacturas.AutoGenerateColumns = false;
+            dgvFacturas.Columns.Clear();
+            dgvFacturas.Columns.Add(GridColumnas.Texto("Correlativo", "Correlativo", "Correlativo"));
+            dgvFacturas.Columns.Add(GridColumnas.Texto("NumFactura", "NumFactura", "# Factura"));
+            dgvFacturas.Columns.Add(GridColumnas.Texto("Proveedor", "Proveedor", "Proveedor"));
+            dgvFacturas.Columns.Add(GridColumnas.Texto("Total", "Total", "Total", format: "N2"));
+            dgvFacturas.Columns.Add(GridColumnas.Texto("Abonar", "Abonar", "Abonar", format: "N2"));
+            dgvFacturas.Columns.Add(GridColumnas.Texto("Deuda", "Deuda", "Deuda", format: "N2"));
+            dgvFacturas.DataSource = cPFacturasEncontradasBindingSource;
         }
 
         public bool solonumeros(int code, TextBox txt)
@@ -48,11 +69,10 @@ namespace ADIGGM.OC.Transacciones
 
         private void TranAbonar_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsOC.OC_Proveedores' Puede moverla o quitarla según sea necesario.
-            this.oC_ProveedoresTableAdapter.FillByActivos(this.dsOC.OC_Proveedores);
-            // TODO: esta línea de código carga datos en la tabla 'dsOC.CP_TipoDocumentos' Puede moverla o quitarla según sea necesario.
-            this.cP_TipoDocumentosTableAdapter.FillByActivos(this.dsOC.CP_TipoDocumentos);
+            oCProveedoresBindingSource.DataSource = _repo.ListarProveedoresActivos();
+            cPTipoDocumentosBindingSource.DataSource = _repo.ListarTiposDocumentoActivos();
 
+            _totalFacturas = 0m;
             lblTotal.Text = "Total: " + 0.00 + " Abonar: " + 0.00 + " Deuda: " + 0.00;
         }
 
@@ -62,37 +82,37 @@ namespace ADIGGM.OC.Transacciones
             {
                 if (cboTipoDocumento.SelectedValue is null || int.Parse(cboTipoDocumento.SelectedValue.ToString()) < 0)
                 {
-                    MessageBox.Show("Seleccione un Tipo Documento", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Seleccione un Tipo Documento", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (cboProveedor.SelectedValue is null || int.Parse(cboProveedor.SelectedValue.ToString()) < 0)
                 {
-                    MessageBox.Show("Seleccione un Proveedor", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Seleccione un Proveedor", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (string.IsNullOrEmpty(txtDocumento.Text))
                 {
-                    MessageBox.Show("Ingrese un numero de documento", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Ingrese un numero de documento", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (string.IsNullOrEmpty(txtMonto.Text))
                 {
-                    MessageBox.Show("Ingrese un Monto", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Ingrese un Monto", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else if (decimal.Parse(txtMonto.Text) > decimal.Parse(lblTotal.Text))
+                else if (decimal.Parse(txtMonto.Text) > _totalFacturas)
                 {
-                    MessageBox.Show("No puede abonar mas del total actual que es: " + lblTotal.Text, Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("No puede abonar mas del total actual que es: " + _totalFacturas.ToString("N2"), VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    if (MessageBox.Show("Seguro deseas generar este abono?", Clases.VarGlobales.nombreSistema, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (MessageBox.Show("Seguro deseas generar este abono?", VarGlobales.nombreSistema, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        Clases.VarGlobales.consultasOC.CP_AbonosInsert(int.Parse(cboTipoDocumento.SelectedValue.ToString()), int.Parse(cboProveedor.SelectedValue.ToString()), txtDocumento.Text, dtpFecha.Value.Date, decimal.Parse(txtMonto.Text), txtObservacion.Text, Clases.VarGlobales.Usuario, Environment.MachineName);
-                        MessageBox.Show("Abono generado exitosamente!", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        _repo.GuardarAbono(int.Parse(cboTipoDocumento.SelectedValue.ToString()), int.Parse(cboProveedor.SelectedValue.ToString()), txtDocumento.Text, dtpFecha.Value.Date, decimal.Parse(txtMonto.Text), txtObservacion.Text, VarGlobales.Usuario, Environment.MachineName);
+                        MessageBox.Show("Abono generado exitosamente!", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         limpiarDatos();
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -104,7 +124,8 @@ namespace ADIGGM.OC.Transacciones
             cboTipoDocumento.SelectedIndex = -1;
             txtObservacion.Text = string.Empty;
             dtpFecha.Value = DateTime.Now.Date;
-            this.cP_FacturasEncontradasTableAdapter.Fill(dsOC.CP_FacturasEncontradas, 0, 0);
+            cPFacturasEncontradasBindingSource.DataSource = null;
+            _totalFacturas = 0m;
             lblTotal.Text = "0.00";
         }
 
@@ -114,26 +135,26 @@ namespace ADIGGM.OC.Transacciones
             {
                 if (cboProveedor.SelectedValue is null || int.Parse(cboProveedor.SelectedValue.ToString()) < 0)
                 {
-                    MessageBox.Show("Seleccione un Proveedor", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Seleccione un Proveedor", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (string.IsNullOrEmpty(txtMonto.Text))
                 {
-                    MessageBox.Show("Ingrese un Monto", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Ingrese un Monto", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    this.cP_FacturasEncontradasTableAdapter.Fill(dsOC.CP_FacturasEncontradas, int.Parse(cboProveedor.SelectedValue.ToString()), decimal.Parse(txtMonto.Text));
+                    cPFacturasEncontradasBindingSource.DataSource = _repo.ListarFacturasPorAbonar(int.Parse(cboProveedor.SelectedValue.ToString()), decimal.Parse(txtMonto.Text));
                     mostrarTotales();
 
                     if (dgvFacturas.Rows.Count <= 0)
                     {
-                        MessageBox.Show("Si no muestra información pueden pasar 2 cosas: \n 1. El monto ingresado no puede pagar ninguna factura \n 2. No existen facturas por pagar", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Si no muestra información pueden pasar 2 cosas: \n 1. El monto ingresado no puede pagar ninguna factura \n 2. No existen facturas por pagar", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -146,6 +167,7 @@ namespace ADIGGM.OC.Transacciones
                 abonar += decimal.Parse(row.Cells[4].Value.ToString());
                 deuda += decimal.Parse(row.Cells[5].Value.ToString());
             }
+            _totalFacturas = total;
 
             if (total > 0)
             {

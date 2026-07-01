@@ -46,6 +46,12 @@ namespace ADIGGM.CapaDatos
                 "DELETE FROM dbo.CP_TipoDocumentos WHERE IdCxpDocumento=@IdCxpDocumento");
         }
 
+        /// <summary>Tipos de documento CxP activos, para el combo de OC\Transacciones\TranAbonar.</summary>
+        public DataTable ListarTiposDocumentoActivos()
+        {
+            return ConsultarTabla("SELECT IdCxpDocumento, Codigo, TipoDocumento, Activo FROM dbo.CP_TipoDocumentos WHERE Activo = 1");
+        }
+
         // ===== Tipos de orden de compra (OC\Mantenimiento\ManTipoOC) =====
 
         public DataTable ListarTiposOC()
@@ -146,6 +152,14 @@ namespace ADIGGM.CapaDatos
         }
 
         // ===== Proveedores (OC\Mantenimiento\ManProveedores) =====
+
+        /// <summary>Proveedores activos, para combos (p.ej. OC\Transacciones\TranAbonar).</summary>
+        public DataTable ListarProveedoresActivos()
+        {
+            return ConsultarTabla(
+                "SELECT IdProveedor, RTN, NombreProveedor, Direccion, Tel, Movil, Representante, Activo, Usuario, NombreEquipo " +
+                "FROM dbo.OC_Proveedores WHERE Activo = 1");
+        }
 
         /// <summary>Carga los campos de un proveedor (SP OC_ProveedorObtener con parámetros OUTPUT).</summary>
         public void ObtenerProveedor(int idProveedor, out string rtn, out string nombre, out string direccion,
@@ -250,6 +264,28 @@ ORDER BY TR_Contratistas.Contratista",
         {
             return Ejecutar("dbo.OC_AsigCuentasOpciones",
                 new { IdCatProducto = idCategoria, IdVehiculo = idVehiculo, Cuenta = cuenta, Usuario = usuario, NombreEquipo = nombreEquipo, Opcion = opcion },
+                CommandType.StoredProcedure);
+        }
+
+        // ===== Abonos a proveedores (OC\Transacciones\TranAbonar) =====
+
+        /// <summary>Facturas pendientes de un proveedor que el monto alcanza a cubrir, con lo ya abonado y la
+        /// deuda restante (SP CP_FacturasEncontradas).</summary>
+        public DataTable ListarFacturasPorAbonar(int idProveedor, decimal monto)
+        {
+            return ConsultarTabla("dbo.CP_FacturasEncontradas",
+                new { IdProveedor = idProveedor, Monto = monto },
+                CommandType.StoredProcedure);
+        }
+
+        /// <summary>Genera un abono contra las facturas de un proveedor (SP CP_AbonosInsert; reemplaza
+        /// VarGlobales.consultasOC — gotcha §8). Devuelve el escalar del SP sin usar.</summary>
+        public int GuardarAbono(int idTipoDocumento, int idProveedor, string numDocumento, DateTime fecha,
+            decimal monto, string observacion, string usuario, string nombreEquipo)
+        {
+            return Ejecutar("dbo.CP_AbonosInsert",
+                new { IdTipoDocumento = idTipoDocumento, IdProveedor = idProveedor, NumDocumento = numDocumento,
+                      Fecha = fecha, Monto = monto, Observacion = observacion, Usuario = usuario, NombreEquipo = nombreEquipo },
                 CommandType.StoredProcedure);
         }
     }
