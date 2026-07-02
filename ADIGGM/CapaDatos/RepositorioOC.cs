@@ -43,7 +43,8 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla,
                 "INSERT INTO dbo.CP_TipoDocumentos (Codigo, TipoDocumento, Activo) VALUES (@Codigo, @TipoDocumento, @Activo)",
                 "UPDATE dbo.CP_TipoDocumentos SET Codigo=@Codigo, TipoDocumento=@TipoDocumento, Activo=@Activo WHERE IdCxpDocumento=@IdCxpDocumento",
-                "DELETE FROM dbo.CP_TipoDocumentos WHERE IdCxpDocumento=@IdCxpDocumento");
+                "DELETE FROM dbo.CP_TipoDocumentos WHERE IdCxpDocumento=@IdCxpDocumento",
+                "dbo.CP_TipoDocumentos", "IdCxpDocumento");
         }
 
         /// <summary>Tipos de documento CxP activos, para el combo de OC\Transacciones\TranAbonar.</summary>
@@ -64,7 +65,8 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla,
                 "INSERT INTO dbo.OC_TipoOC (Codigo, TipoOC, Activo, Combustible, Materiales, Servicios, Usuario, NombreEquipo) VALUES (@Codigo, @TipoOC, @Activo, @Combustible, @Materiales, @Servicios, @Usuario, @NombreEquipo)",
                 "UPDATE dbo.OC_TipoOC SET Codigo=@Codigo, TipoOC=@TipoOC, Activo=@Activo, Combustible=@Combustible, Materiales=@Materiales, Servicios=@Servicios, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdTipoOC=@IdTipoOC",
-                "DELETE FROM dbo.OC_TipoOC WHERE IdTipoOC=@IdTipoOC");
+                "DELETE FROM dbo.OC_TipoOC WHERE IdTipoOC=@IdTipoOC",
+                "dbo.OC_TipoOC", "IdTipoOC");
         }
 
         // ===== Departamentos (OC\Mantenimiento\ManDepartamentos) =====
@@ -79,7 +81,8 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla,
                 "INSERT INTO dbo.OC_Departamentos (CodDepartamento, Departamento, Activo, Usuario, NombreEquipo) VALUES (@CodDepartamento, @Departamento, @Activo, @Usuario, @NombreEquipo)",
                 "UPDATE dbo.OC_Departamentos SET CodDepartamento=@CodDepartamento, Departamento=@Departamento, Activo=@Activo, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdDepartamento=@IdDepartamento",
-                "DELETE FROM dbo.OC_Departamentos WHERE IdDepartamento=@IdDepartamento");
+                "DELETE FROM dbo.OC_Departamentos WHERE IdDepartamento=@IdDepartamento",
+                "dbo.OC_Departamentos", "IdDepartamento");
         }
 
         // ===== Categorías de productos OC (OC\Mantenimiento\ManCatProductos) =====
@@ -94,7 +97,8 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla,
                 "INSERT INTO dbo.OC_ProductosCategorias (Codigo, Categoria, Activo, Usuario, NombreEquipo) VALUES (@Codigo, @Categoria, @Activo, @Usuario, @NombreEquipo)",
                 "UPDATE dbo.OC_ProductosCategorias SET Codigo=@Codigo, Categoria=@Categoria, Activo=@Activo, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdCatProducto=@IdCatProducto",
-                "DELETE FROM dbo.OC_ProductosCategorias WHERE IdCatProducto=@IdCatProducto");
+                "DELETE FROM dbo.OC_ProductosCategorias WHERE IdCatProducto=@IdCatProducto",
+                "dbo.OC_ProductosCategorias", "IdCatProducto");
         }
 
         // ===== Parametrización OC / ISV (OC\Mantenimiento\ManParametrizacion) =====
@@ -109,7 +113,8 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla,
                 "INSERT INTO dbo.OC_Parametrizacion (ISV) VALUES (@ISV)",
                 "UPDATE dbo.OC_Parametrizacion SET ISV=@ISV WHERE IdParametrizacion=@IdParametrizacion",
-                "DELETE FROM dbo.OC_Parametrizacion WHERE IdParametrizacion=@IdParametrizacion");
+                "DELETE FROM dbo.OC_Parametrizacion WHERE IdParametrizacion=@IdParametrizacion",
+                "dbo.OC_Parametrizacion", "IdParametrizacion");
         }
 
         // ===== Responsables / firmas (OC\Mantenimiento\ManResponsables) =====
@@ -124,7 +129,8 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla,
                 "INSERT INTO dbo.OC_Responsables (Nombre, UsuarioFirma, Firma, Activo, Usuario, NombreEquipo) VALUES (@Nombre, @UsuarioFirma, @Firma, @Activo, @Usuario, @NombreEquipo)",
                 "UPDATE dbo.OC_Responsables SET Nombre=@Nombre, UsuarioFirma=@UsuarioFirma, Firma=@Firma, Activo=@Activo, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdResponsable=@IdResponsable",
-                "DELETE FROM dbo.OC_Responsables WHERE IdResponsable=@IdResponsable");
+                "DELETE FROM dbo.OC_Responsables WHERE IdResponsable=@IdResponsable",
+                "dbo.OC_Responsables", "IdResponsable");
         }
 
         // ===== Productos (OC\Mantenimiento\ManProductos) =====
@@ -148,7 +154,8 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla,
                 "INSERT INTO dbo.OC_Productos (IdCatProducto, CodProducto, Producto, Activo, Usuario, NombreEquipo) VALUES (@IdCatProducto, @CodProducto, @Producto, @Activo, @Usuario, @NombreEquipo)",
                 "UPDATE dbo.OC_Productos SET IdCatProducto=@IdCatProducto, CodProducto=@CodProducto, Producto=@Producto, Activo=@Activo, Usuario=@Usuario, NombreEquipo=@NombreEquipo WHERE IdProducto=@IdProducto",
-                "DELETE FROM dbo.OC_Productos WHERE IdProducto=@IdProducto");
+                "DELETE FROM dbo.OC_Productos WHERE IdProducto=@IdProducto",
+                "dbo.OC_Productos", "IdProducto");
         }
 
         // ===== Proveedores (OC\Mantenimiento\ManProveedores) =====
@@ -216,7 +223,8 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla,
                 "INSERT INTO dbo.OC_Proveedores_CAI (IdProveedor, CAI, FechaLimite, Activo) VALUES (@IdProveedor, @CAI, @FechaLimite, @Activo)",
                 "UPDATE dbo.OC_Proveedores_CAI SET IdProveedor=@IdProveedor, CAI=@CAI, FechaLimite=@FechaLimite, Activo=@Activo WHERE IdAsigCAIProv=@IdAsigCAIProv",
-                "DELETE FROM dbo.OC_Proveedores_CAI WHERE IdAsigCAIProv=@IdAsigCAIProv");
+                "DELETE FROM dbo.OC_Proveedores_CAI WHERE IdAsigCAIProv=@IdAsigCAIProv",
+                "dbo.OC_Proveedores_CAI", "IdAsigCAIProv");
         }
 
         // ===== Asignación de cuentas de gasto a vehículos por categoría (OC\Mantenimiento\ManAsigCuentas) =====

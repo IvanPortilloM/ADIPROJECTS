@@ -25,7 +25,7 @@ namespace ADIGGM.CapaDatos
             const string insert = "INSERT INTO dbo.IN_TipoOperaciones (NombreOperacion) VALUES (@NombreOperacion)";
             const string update = "UPDATE dbo.IN_TipoOperaciones SET NombreOperacion = @NombreOperacion WHERE IdTipoOperacion = @IdTipoOperacion";
             const string delete = "DELETE FROM dbo.IN_TipoOperaciones WHERE IdTipoOperacion = @IdTipoOperacion";
-            return GuardarCambios(tabla, insert, update, delete);
+            return GuardarCambios(tabla, insert, update, delete, "dbo.IN_TipoOperaciones", "IdTipoOperacion");
         }
 
         // ===== IN_Bodegas (mantenimiento de bodegas) =====
@@ -42,7 +42,7 @@ namespace ADIGGM.CapaDatos
             const string insert = "INSERT INTO dbo.IN_Bodegas (NombreBodega, Activo) VALUES (@NombreBodega, @Activo)";
             const string update = "UPDATE dbo.IN_Bodegas SET NombreBodega = @NombreBodega, Activo = @Activo WHERE IdBodega = @IdBodega";
             const string delete = "DELETE FROM dbo.IN_Bodegas WHERE IdBodega = @IdBodega";
-            return GuardarCambios(tabla, insert, update, delete);
+            return GuardarCambios(tabla, insert, update, delete, "dbo.IN_Bodegas", "IdBodega");
         }
 
         // ===== Visor de existencias (combos de filtro + reportes RDLC) =====

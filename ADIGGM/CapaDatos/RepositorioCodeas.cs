@@ -87,7 +87,8 @@ namespace ADIGGM.CapaDatos
             return GuardarCambios(tabla,
                 "INSERT INTO dbo.COD_ListaCorreos (Identidad, Nombres, Correo, IdDivision, Activo) VALUES (@Identidad, @Nombres, @Correo, @IdDivision, @Activo)",
                 "UPDATE dbo.COD_ListaCorreos SET Identidad=@Identidad, Nombres=@Nombres, Correo=@Correo, IdDivision=@IdDivision, Activo=@Activo WHERE IdAsociado=@IdAsociado",
-                "DELETE FROM dbo.COD_ListaCorreos WHERE IdAsociado=@IdAsociado");
+                "DELETE FROM dbo.COD_ListaCorreos WHERE IdAsociado=@IdAsociado",
+                "dbo.COD_ListaCorreos", "IdAsociado");
         }
 
         // ===== Solicitudes de crédito (SAC\FrmSolCred) =====

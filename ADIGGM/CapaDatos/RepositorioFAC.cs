@@ -29,7 +29,7 @@ namespace ADIGGM.CapaDatos
                                   "NumeroDesde = @NumeroDesde, NumeroHasta = @NumeroHasta, Activo = @Activo, Anulado = @Anulado, Usuario = @Usuario, " +
                                   "NombreEquipo = @NombreEquipo, IdSucursal = @IdSucursal WHERE IdCai = @IdCai";
             const string delete = "DELETE FROM dbo.FAC_CAI WHERE IdCai = @IdCai";
-            return GuardarCambios(tabla, insert, update, delete);
+            return GuardarCambios(tabla, insert, update, delete, "dbo.FAC_CAI", "IdCai");
         }
 
         // ===== FAC_Productos (mantenimiento de productos de facturación) =====
@@ -48,7 +48,7 @@ namespace ADIGGM.CapaDatos
             const string update = "UPDATE dbo.FAC_Productos SET CodProducto = @CodProducto, NombreProducto = @NombreProducto, Activo = @Activo, Descripcion = @Descripcion, " +
                                   "EsCamion = @EsCamion, EsRetro = @EsRetro, EsBus = @EsBus, PagaISV = @PagaISV, IdTipoEx = @IdTipoEx, AplicaImporte = @AplicaImporte, IdTipoFactura = @IdTipoFactura WHERE IdProducto = @IdProducto";
             const string delete = "DELETE FROM dbo.FAC_Productos WHERE IdProducto = @IdProducto";
-            return GuardarCambios(tabla, insert, update, delete);
+            return GuardarCambios(tabla, insert, update, delete, "dbo.FAC_Productos", "IdProducto");
         }
 
         /// <summary>Combo de tipos de exoneración (FAC_TipoEx) para la columna IdTipoEx del grid de productos.</summary>
@@ -79,7 +79,7 @@ namespace ADIGGM.CapaDatos
             const string insert = "INSERT INTO dbo.FAC_TipoFacturas (CodTipoFactura, TipoFactura, Activo, EsTransporte) VALUES (@CodTipoFactura, @TipoFactura, @Activo, @EsTransporte)";
             const string update = "UPDATE dbo.FAC_TipoFacturas SET CodTipoFactura = @CodTipoFactura, TipoFactura = @TipoFactura, Activo = @Activo, EsTransporte = @EsTransporte WHERE IdTipoFactura = @IdTipoFactura";
             const string delete = "DELETE FROM dbo.FAC_TipoFacturas WHERE IdTipoFactura = @IdTipoFactura";
-            return GuardarCambios(tabla, insert, update, delete);
+            return GuardarCambios(tabla, insert, update, delete, "dbo.FAC_TipoFacturas", "IdTipoFactura");
         }
 
         // ===== FAC_Factura (alta de facturas — combos + SPs) =====
@@ -312,7 +312,7 @@ namespace ADIGGM.CapaDatos
             const string insert = "INSERT INTO dbo.FAC_RTN (RTN, Empresa, Direccion, Contacto, Telefono) VALUES (@RTN, @Empresa, @Direccion, @Contacto, @Telefono)";
             const string update = "UPDATE dbo.FAC_RTN SET Empresa = @Empresa, Direccion = @Direccion, Contacto = @Contacto, Telefono = @Telefono WHERE RTN = @RTN";
             const string delete = "DELETE FROM dbo.FAC_RTN WHERE RTN = @RTN";
-            return GuardarCambios(tabla, insert, update, delete);
+            return GuardarCambios(tabla, insert, update, delete, "dbo.FAC_RTN", "RTN");
         }
 
         // ===== FAC_ReporteCierres (combo de fincas/clientes del reporte de cierres) =====
@@ -360,7 +360,7 @@ namespace ADIGGM.CapaDatos
             const string insert = "INSERT INTO dbo.FAC_TipoMoneda (TipoMoneda, Simbolo, ValorLempiras) VALUES (@TipoMoneda, @Simbolo, @ValorLempiras)";
             const string update = "UPDATE dbo.FAC_TipoMoneda SET TipoMoneda = @TipoMoneda, Simbolo = @Simbolo, ValorLempiras = @ValorLempiras WHERE IdTipoMoneda = @IdTipoMoneda";
             const string delete = "DELETE FROM dbo.FAC_TipoMoneda WHERE IdTipoMoneda = @IdTipoMoneda";
-            return GuardarCambios(tabla, insert, update, delete);
+            return GuardarCambios(tabla, insert, update, delete, "dbo.FAC_TipoMoneda", "IdTipoMoneda");
         }
     }
 }

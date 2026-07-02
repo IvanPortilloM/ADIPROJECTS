@@ -30,7 +30,7 @@ namespace ADIGGM.CapaDatos
             const string insert = "INSERT INTO dbo.TR_TipoFacturas (TipoFactura, Activo) VALUES (@TipoFactura, @Activo)";
             const string update = "UPDATE dbo.TR_TipoFacturas SET TipoFactura = @TipoFactura, Activo = @Activo WHERE IdTipoFactura = @IdTipoFactura";
             const string delete = "DELETE FROM dbo.TR_TipoFacturas WHERE IdTipoFactura = @IdTipoFactura";
-            return GuardarCambios(tabla, insert, update, delete);
+            return GuardarCambios(tabla, insert, update, delete, "dbo.TR_TipoFacturas", "IdTipoFactura");
         }
 
         // ===== TR_TipoVehiculos =====
@@ -138,7 +138,7 @@ namespace ADIGGM.CapaDatos
             const string insert = "INSERT INTO dbo.TR_AsigFacTipoVeh (IdTipoFactura, IdTipoVehiculo) VALUES (@IdTipoFactura, @IdTipoVehiculo)";
             const string update = "UPDATE dbo.TR_AsigFacTipoVeh SET IdTipoFactura = @IdTipoFactura, IdTipoVehiculo = @IdTipoVehiculo WHERE IdAsigFacTipoVeh = @IdAsigFacTipoVeh";
             const string delete = "DELETE FROM dbo.TR_AsigFacTipoVeh WHERE IdAsigFacTipoVeh = @IdAsigFacTipoVeh";
-            return GuardarCambios(tabla, insert, update, delete);
+            return GuardarCambios(tabla, insert, update, delete, "dbo.TR_AsigFacTipoVeh", "IdAsigFacTipoVeh");
         }
 
         // ===== TR_ClaseTrabajos =====

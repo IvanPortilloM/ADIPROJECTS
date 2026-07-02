@@ -100,9 +100,18 @@ namespace ADIGGM.CapaDatos
         /// para los formularios de mantenimiento con grilla editable. Reutilizable.
         /// Los nombres de parámetros en el SQL deben coincidir con los nombres de columna
         /// (p. ej. @IdTipoOperacion, @NombreOperacion).
+        ///
+        /// Concurrencia optimista (paridad con los TableAdapters originales): si se pasan
+        /// <paramref name="tablaSql"/> y <paramref name="pkColumna"/>, antes de cada UPDATE/DELETE
+        /// se relee la fila (WITH UPDLOCK, HOLDLOCK, dentro de la transacción) y se compara con la
+        /// versión ORIGINAL del DataTable; si otro usuario la modificó o eliminó se lanza
+        /// <see cref="DBConcurrencyException"/> y se revierte TODO. Aun sin tabla/pk, un
+        /// UPDATE/DELETE que afecte 0 filas también lanza (la fila ya no existe).
         /// </summary>
-        protected int GuardarCambios(DataTable tabla, string sqlInsert, string sqlUpdate, string sqlDelete)
+        protected int GuardarCambios(DataTable tabla, string sqlInsert, string sqlUpdate, string sqlDelete,
+            string tablaSql = null, string pkColumna = null)
         {
+            bool verificar = !string.IsNullOrEmpty(tablaSql) && !string.IsNullOrEmpty(pkColumna);
             using (DbConnection con = CrearConexion())
             {
                 con.Open();
@@ -117,7 +126,10 @@ namespace ADIGGM.CapaDatos
                             {
                                 case DataRowState.Deleted:
                                     if (!string.IsNullOrEmpty(sqlDelete))
-                                        afectadas += con.Execute(sqlDelete, ParametrosDeFila(tabla, fila, DataRowVersion.Original), trans);
+                                    {
+                                        if (verificar) VerificarConcurrencia(con, trans, tabla, fila, tablaSql, pkColumna);
+                                        afectadas += EjecutarFila(con, trans, sqlDelete, ParametrosDeFila(tabla, fila, DataRowVersion.Original));
+                                    }
                                     break;
                                 case DataRowState.Added:
                                     if (!string.IsNullOrEmpty(sqlInsert))
@@ -125,7 +137,10 @@ namespace ADIGGM.CapaDatos
                                     break;
                                 case DataRowState.Modified:
                                     if (!string.IsNullOrEmpty(sqlUpdate))
-                                        afectadas += con.Execute(sqlUpdate, ParametrosDeFila(tabla, fila, DataRowVersion.Current), trans);
+                                    {
+                                        if (verificar) VerificarConcurrencia(con, trans, tabla, fila, tablaSql, pkColumna);
+                                        afectadas += EjecutarFila(con, trans, sqlUpdate, ParametrosDeFila(tabla, fila, DataRowVersion.Current));
+                                    }
                                     break;
                             }
                         }
@@ -140,6 +155,65 @@ namespace ADIGGM.CapaDatos
                     }
                 }
             }
+        }
+
+        /// <summary>UPDATE/DELETE de una fila; 0 filas afectadas = la fila ya no existe en la BD.</summary>
+        private static int EjecutarFila(DbConnection con, IDbTransaction trans, string sql, DynamicParameters parametros)
+        {
+            int n = con.Execute(sql, parametros, trans);
+            if (n == 0)
+                throw new DBConcurrencyException("El registro fue eliminado por otro usuario. Recargue e intente de nuevo.");
+            return n;
+        }
+
+        /// <summary>
+        /// Relee la fila por PK (UPDLOCK+HOLDLOCK: queda bloqueada hasta el commit) y compara cada
+        /// columna del DataTable contra su versión ORIGINAL. Si la fila no existe o cambió, lanza
+        /// DBConcurrencyException (mismo tipo que lanzaban los TableAdapters).
+        /// </summary>
+        private static void VerificarConcurrencia(DbConnection con, IDbTransaction trans, DataTable tabla,
+            DataRow fila, string tablaSql, string pkColumna)
+        {
+            // La versión Original de la PK: para filas Modified la PK no cambia, pero se usa
+            // Original por consistencia (y es la única versión accesible en filas Deleted).
+            object pk = fila[pkColumna, DataRowVersion.Original];
+            var p = new DynamicParameters();
+            p.Add("pk", pk);
+            IDictionary<string, object> actual;
+            using (IDataReader reader = con.ExecuteReader(
+                "SELECT * FROM " + tablaSql + " WITH (UPDLOCK, HOLDLOCK) WHERE " + pkColumna + " = @pk", p, trans))
+            {
+                if (!reader.Read())
+                    throw new DBConcurrencyException("El registro fue eliminado por otro usuario. Recargue e intente de nuevo.");
+                actual = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+                for (int i = 0; i < reader.FieldCount; i++)
+                    actual[reader.GetName(i)] = reader.GetValue(i);
+            }
+
+            foreach (DataColumn col in tabla.Columns)
+            {
+                // Solo se comparan columnas que existen en la tabla real (el DataTable puede traer
+                // columnas calculadas del SELECT original que no están en la tabla física).
+                if (!actual.TryGetValue(col.ColumnName, out object valorBd)) continue;
+                if (!ValoresIguales(fila[col, DataRowVersion.Original], valorBd))
+                    throw new DBConcurrencyException("El registro fue modificado por otro usuario. Recargue e intente de nuevo.");
+            }
+        }
+
+        /// <summary>Igualdad tolerante para la comparación de concurrencia: DBNull==DBNull,
+        /// byte[] por contenido, el resto con Equals (los tipos coinciden porque la fila
+        /// Original salió del mismo SELECT de la tabla).</summary>
+        private static bool ValoresIguales(object a, object b)
+        {
+            bool aNull = a == null || a == DBNull.Value, bNull = b == null || b == DBNull.Value;
+            if (aNull || bNull) return aNull && bNull;
+            if (a is byte[] ba && b is byte[] bb)
+            {
+                if (ba.Length != bb.Length) return false;
+                for (int i = 0; i < ba.Length; i++) if (ba[i] != bb[i]) return false;
+                return true;
+            }
+            return a.Equals(b);
         }
 
         /// <summary>Construye los parámetros Dapper a partir de las columnas de una fila (versión indicada).</summary>

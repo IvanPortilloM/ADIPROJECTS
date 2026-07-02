@@ -27,7 +27,7 @@ namespace ADIGGM.CapaDatos
             const string insert = "INSERT INTO dbo.Menu (Nombre, NombreFormulario, NombreMenu, Icono) VALUES (@Nombre, @NombreFormulario, @NombreMenu, @Icono)";
             const string update = "UPDATE dbo.Menu SET Nombre = @Nombre, NombreFormulario = @NombreFormulario, NombreMenu = @NombreMenu, Icono = @Icono WHERE IdMenu = @IdMenu";
             const string delete = "DELETE FROM dbo.Menu WHERE IdMenu = @IdMenu";
-            return GuardarCambios(tabla, insert, update, delete);
+            return GuardarCambios(tabla, insert, update, delete, "dbo.Menu", "IdMenu");
         }
 
         // ===== SubMenu (mantenimiento de menús hijos; FK IdMenu) =====
@@ -44,7 +44,7 @@ namespace ADIGGM.CapaDatos
             const string insert = "INSERT INTO dbo.SubMenu (IdMenu, Nombre, NombreFormulario, NombreMenu) VALUES (@IdMenu, @Nombre, @NombreFormulario, @NombreMenu)";
             const string update = "UPDATE dbo.SubMenu SET IdMenu = @IdMenu, Nombre = @Nombre, NombreFormulario = @NombreFormulario, NombreMenu = @NombreMenu WHERE IdSubMenu = @IdSubMenu";
             const string delete = "DELETE FROM dbo.SubMenu WHERE IdSubMenu = @IdSubMenu";
-            return GuardarCambios(tabla, insert, update, delete);
+            return GuardarCambios(tabla, insert, update, delete, "dbo.SubMenu", "IdSubMenu");
         }
 
         // ===== DetSubMenu (mantenimiento de menús nietos; FK IdSubMenu) =====
@@ -61,7 +61,7 @@ namespace ADIGGM.CapaDatos
             const string insert = "INSERT INTO dbo.DetSubMenu (IdSubMenu, Nombre, NombreFormulario, NombreMenu) VALUES (@IdSubMenu, @Nombre, @NombreFormulario, @NombreMenu)";
             const string update = "UPDATE dbo.DetSubMenu SET IdSubMenu = @IdSubMenu, Nombre = @Nombre, NombreFormulario = @NombreFormulario, NombreMenu = @NombreMenu WHERE IdDetSubMenu = @IdDetSubMenu";
             const string delete = "DELETE FROM dbo.DetSubMenu WHERE IdDetSubMenu = @IdDetSubMenu";
-            return GuardarCambios(tabla, insert, update, delete);
+            return GuardarCambios(tabla, insert, update, delete, "dbo.DetSubMenu", "IdDetSubMenu");
         }
 
         // ===== Asignación de permisos por usuario =====
