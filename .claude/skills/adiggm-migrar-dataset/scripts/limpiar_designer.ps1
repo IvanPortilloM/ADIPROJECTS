@@ -1,4 +1,4 @@
-# Limpia un .Designer.cs tras migrar el form a Dapper: borra el DataSet tipado, los
+﻿# Limpia un .Designer.cs tras migrar el form a Dapper: borra el DataSet tipado, los
 # TableAdapters, las columnas del grid (creación/config/AddRange/campos/comentarios), el
 # dgv.DataSource de diseño y los cellStyle que queden HUÉRFANOS (sin asignación). CONSERVA
 # el BindingSource (sólo le quita su DataMember de diseño si pasas -BindingSource) y los
@@ -90,6 +90,21 @@ Write-Output ("borradas=$($del.Count)  antes=$($lines.Count)  despues=$($kept.Co
 Write-Output ("llaves: abre=$open cierra=$close  " + $(if ($open -eq $close) { 'OK' } else { '*** DESBALANCE ***' }))
 Write-Output ("residual ${DataSet}=" + ([regex]::Matches($t, [regex]::Escape($DataSet))).Count + "  TableAdapter=" + ([regex]::Matches($t, 'TableAdapter')).Count + "  AddRange=" + ([regex]::Matches($t, 'Columns\.AddRange')).Count + "  colFieldDecls=" + ([regex]::Matches($t, 'private System\.Windows\.Forms\.DataGridView\w+Column ')).Count)
 foreach ($bs in $bsList) { Write-Output ("BindingSource '$bs' conservado: " + ([regex]::Matches($t, [regex]::Escape($bs))).Count + " refs") }
+# DataBindings de diseño contra los BindingSource migrados: quedan HUÉRFANOS (gotcha §11 — el
+# BindingSource ya no tiene esquema de diseño; lanzan ArgumentException al abrir el form, o son
+# bindings muertos tipo Tag). El script NO los borra: decidir a mano (quitar, o recrear en runtime).
+$dbLines = @()
+foreach ($k in $kept) {
+  if ($k -match '\.DataBindings\.Add\(') {
+    $hit = $false
+    foreach ($bs in $bsList) { if ($k -match [regex]::Escape($bs)) { $hit = $true; break } }
+    if ($hit -or $bsList.Count -eq 0) { $dbLines += $k.Trim() }
+  }
+}
+if ($dbLines.Count -gt 0) {
+  Write-Output ("*** AVISO: " + $dbLines.Count + " DataBindings.Add residual(es) contra BindingSource migrado; revisar/quitar a mano (gotcha 11): ***")
+  $dbLines | ForEach-Object { Write-Output ("    " + $_) }
+}
 
 if ($WhatIf) { Write-Output "(-WhatIf: no se escribió nada)"; exit 0 }
 if ($open -ne $close) { Write-Output "*** NO se escribió: llaves desbalanceadas. Revisa -Cols (case-sensitive) y corre con -WhatIf. ***"; exit 1 }

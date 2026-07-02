@@ -42,6 +42,20 @@ y borra después:
 ```
 csproj NO-SDK: cada `.cs` NUEVO (un repo nuevo) DEBE agregarse a `<Compile Include="...">`.
 
+## Ejecutar los scripts de la skill
+La política de ejecución del equipo BLOQUEA los `.ps1` ("la ejecución de scripts está deshabilitada").
+Invócalos SIEMPRE así (falla el primer intento si lo omites):
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File ".claude\skills\adiggm-migrar-dataset\scripts\<script>.ps1" -Param ...
+```
+
+## Columnas con nombres acentuados/Unicode (ej. `Selección`, `Selección2`)
+NO las pases por argumentos de shell a `limpiar_designer.ps1` (riesgo de encoding/case al cruzar
+bash→powershell). Pásale al script solo las columnas ASCII y quita las acentuadas A MANO con Edit
+(3 lugares: la línea `this.Selección = new ...`, el bloque de config `// Selección` + propiedades,
+y el campo `private ... Selección;`; su entrada en el `AddRange` ya la borra el script al barrer el
+bloque completo). Verifica al final: `grep -c "{" == grep -c "}"` y 0 restos del nombre.
+
 ## Encoding y edición de Designers con PowerShell
 Lee/escribe UTF-8 y **preserva el BOM** (no corromper ñ/á). Los scripts de esta skill detectan el BOM
 del archivo original y lo conservan. Tras borrar columnas, verifica el balance de llaves (`{` vs `}`)

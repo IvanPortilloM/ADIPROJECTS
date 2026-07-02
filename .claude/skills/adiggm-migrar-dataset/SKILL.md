@@ -24,7 +24,9 @@ validado en decenas de forms para que sea rápido, consistente y barato en token
 - App **WinForms .NET Framework 4.6.2**, NO-SDK (cada `.cs` nuevo va al `<Compile Include>` del csproj).
 - Fuente única de conexión: `ADIGGM\CapaDatos\Conexion.cs` (`Conexion.TRANSPORTE`, etc.).
 - Base de repos: `ADIGGM\CapaDatos\RepositorioBase.cs` — `Consultar<T>`, `PrimeroODefault<T>`,
-  `Escalar<T>`, `Ejecutar`, `ConsultarTabla(sql,param[,CommandType])`, `GuardarCambios(dt,ins,upd,del)`.
+  `Escalar<T>`, `Ejecutar`, `ConsultarTabla(sql,param[,CommandType])`,
+  `GuardarCambios(dt,ins,upd,del[,tablaSql,pkColumna])` — pasa SIEMPRE `tablaSql`+`pkColumna`
+  (concurrencia optimista: DBConcurrencyException si otro usuario modificó/eliminó la fila).
 - Helper de columnas: `ADIGGM\Clases\GridColumnas.cs` — `Texto/Check/Combo` (readOnly por defecto) + `Edicion(dgv,bool)`.
 - **REGLA de repo (usuario): el repositorio se elige por la BD/dominio REAL del dato, NO por el
   DataSet de origen** (`TR_*`→RepositorioTransporte, `COD_/SAC/covibase`→RepositorioCodeas,
@@ -47,12 +49,15 @@ validado en decenas de forms para que sea rápido, consistente y barato en token
 
 ### 2. Extraer el SQL del XSD (no leer el .xsd entero)
 ```powershell
-& ".claude\skills\adiggm-migrar-dataset\scripts\extraer_sql_xsd.ps1" -Xsd "ADIGGM\DataSets\Ds<Nombre>.xsd" -Tabla "<NombreTabla>"
+# ⚠️ SIEMPRE con -ExecutionPolicy Bypass (la política del equipo bloquea .ps1; ver gotchas.md)
+powershell -NoProfile -ExecutionPolicy Bypass -File ".claude\skills\adiggm-migrar-dataset\scripts\extraer_sql_xsd.ps1" -Xsd "ADIGGM\DataSets\Ds<Nombre>.xsd" -Tabla "<NombreTabla>"
 ```
 Devuelve, por TableAdapter: el SELECT principal, cada `FillBy*` (con tipo Text/SP y params), y los
 INSERT/UPDATE/DELETE. La PK identity NO va en el INSERT; los `@parámetros` de `GuardarCambios`
 deben llamarse IGUAL que las columnas. Confirma la conexión del XSD (`<Connection ...>`) para elegir
 `Conexion.XXX`.
+**Form grande (Tran*/Vis*, varios adapters/SPs): primero SIN `-Tabla`** → inventaría todos los
+TableAdapters (con sus FillMethods) y las consultas/SP sueltas del XSD para dimensionar la migración.
 
 ### 3. Agregar métodos al repositorio correcto
 Sigue los esqueletos de `references/patrones.md`. **Reutiliza** métodos existentes si el SELECT/SP
@@ -65,10 +70,12 @@ agrégalo al `<Compile Include>` del csproj.
 - Reemplazar `Fill`/`Update`/`consultasXxx.SP(...)` por los métodos del repo.
 - Mantenimientos: **recargar tras guardar** (el identity se obtiene al recargar) y togglear edición
   con `GridColumnas.Edicion(dgv,bool)` — NUNCA `dgv.ReadOnly=false` directo (ver §14.10).
+- **Celdas por Name, no por índice**: cambia `row.Cells[N]` → `row.Cells["Nombre"]` (con columnas en
+  código, un reorden de `ConfigurarColumnas()` rompería en silencio los índices ordinales).
 
 ### 5. Columnas del grid EN CÓDIGO (§11 / §13.b — obligatorio en TODO grid migrado)
 ```powershell
-& ".claude\skills\adiggm-migrar-dataset\scripts\volcar_columnas_grid.ps1" -Designer "<ruta>.Designer.cs" -Grid "<dgvNombre>"
+powershell -NoProfile -ExecutionPolicy Bypass -File ".claude\skills\adiggm-migrar-dataset\scripts\volcar_columnas_grid.ps1" -Designer "<ruta>.Designer.cs" -Grid "<dgvNombre>"
 ```
 Emite las líneas `GridColumnas.Texto/Check(...)` listas para pegar en `ConfigurarColumnas()`
 (preserva Name/DataPropertyName/HeaderText/Visible/Format/Width/AutoSizeMode). Asigna
@@ -76,12 +83,14 @@ Emite las líneas `GridColumnas.Texto/Check(...)` listas para pegar en `Configur
 
 ### 6. Limpiar el `.Designer.cs`
 ```powershell
-& ".claude\skills\adiggm-migrar-dataset\scripts\limpiar_designer.ps1" -Designer "<ruta>.Designer.cs" -Grid "<dgvNombre>" -DataSet "ds<Nombre>" -Cols "col1,col2,..." [-BindingSource "xBindingSource"]
+powershell -NoProfile -ExecutionPolicy Bypass -File ".claude\skills\adiggm-migrar-dataset\scripts\limpiar_designer.ps1" -Designer "<ruta>.Designer.cs" -Grid "<dgvNombre>" -DataSet "ds<Nombre>" -Cols "col1,col2,..." [-BindingSource "xBindingSource"]
 ```
 Borra el DataSet tipado + TableAdapters + creación/config/AddRange/campos de columnas + cellStyles
 huérfanos + el `dgv.DataSource` de diseño. CONSERVA el/los BindingSource (sólo le quita su DataMember
 de diseño si pasas `-BindingSource`) y los cellStyle a nivel de GRID. **Verifica el balance de llaves
-al final y avisa de residuos.** Revisa la salida antes de continuar.
+al final y avisa de residuos** (incl. `DataBindings.Add` huérfanos contra los BindingSource migrados —
+revisarlos a mano, gotcha §11). Columnas con nombre acentuado (`Selección`): NO van en `-Cols`,
+quítalas con Edit (ver gotchas.md). Corre primero con `-WhatIf`; borra el `.bak` antes de commitear.
 
 ### 7. Build → commit → doc
 - Build (ver `references/gotchas.md` para el comando MSBuild + workaround `app.publish`). Exit 0.
@@ -97,5 +106,8 @@ Léelos en `references/gotchas.md` antes de tocar un Designer: **§8** (VarGloba
 UTF-8+BOM, y el comando de build.
 
 ## Referencias
-- `references/patrones.md` — esqueletos de código de los 5 patrones + reporte RDLC.
-- `references/gotchas.md` — §8/§11/§14.10, build, encoding, limpieza de copias-conflicto.
+- `references/patrones.md` — esqueletos de los patrones (Opción A con concurrencia, visor,
+  maestro-combo, columna combo/imagen, SP escalar/OUTPUT, RDLC) + **patrón 8: retirar un DataSet
+  por completo** (checklist de cierre).
+- `references/gotchas.md` — §8/§11/§14.10, build, ExecutionPolicy de los scripts, columnas
+  acentuadas, encoding, limpieza de copias-conflicto.

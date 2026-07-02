@@ -12,7 +12,9 @@ public DataTable ListarX() => ConsultarTabla("SELECT Id, Campo1, Campo2, Activo 
 public int GuardarX(DataTable t) => GuardarCambios(t,
     "INSERT INTO dbo.TABLA (Campo1, Campo2, Activo) VALUES (@Campo1, @Campo2, @Activo)",
     "UPDATE dbo.TABLA SET Campo1=@Campo1, Campo2=@Campo2, Activo=@Activo WHERE Id=@Id",
-    "DELETE FROM dbo.TABLA WHERE Id=@Id");
+    "DELETE FROM dbo.TABLA WHERE Id=@Id",
+    "dbo.TABLA", "Id");   // tabla física + PK => concurrencia optimista (DBConcurrencyException
+                          // si otro usuario modificó/eliminó la fila; paridad con TableAdapter)
 
 // Form:
 private readonly RepositorioX _repo = new RepositorioX();
@@ -28,7 +30,13 @@ private void Cargar() { _dt = _repo.ListarX(); xBindingSource.DataSource = _dt; 
 //             GridColumnas.Edicion(dgv,false);
 // btnCancelar: Cargar(); GridColumnas.Edicion(dgv,false);
 ```
-Mejora sobre el original: `GuardarCambios` es TRANSACCIONAL (vs `TableAdapter.Update` fila-a-fila).
+Mejoras sobre el original: `GuardarCambios` es TRANSACCIONAL (vs `TableAdapter.Update` fila-a-fila)
+y con `tablaSql`+`pkColumna` restaura la CONCURRENCIA OPTIMISTA de los TableAdapters — pásalos
+SIEMPRE en migraciones nuevas.
+
+**Regla de celdas**: al migrar, cambia `row.Cells[N]` (índice ordinal) por `row.Cells["Nombre"]` —
+con las columnas en código un reorden de `ConfigurarColumnas()` rompería en silencio; el `Name`
+lo controlamos nosotros.
 
 ## 2. Visor / búsqueda — grilla de solo lectura
 Grid `ReadOnly=true`. Sin edición → columnas con readOnly por defecto (true). El SELECT/SP puede
@@ -103,3 +111,18 @@ Quita los `TableAdapter.FillBy*(...)` posteriores (ya no hacen falta).
 Por la BD/dominio REAL del dato, no por el DataSet: `TR_*`→Transporte, `COD_/SAC/covibase`→Codeas,
 `FAC_*`→FAC, `IN_*`→Inventario, `OC_/CP_/OCWeb`→OC. Si un form cruza dominios, reparte los métodos
 entre repos. Reutiliza métodos existentes si el SELECT/SP coincide.
+
+## 8. Retirar un DataSet por completo (endgame; ejecutado ya en DsInventario/DsPermisos/DsCA/DsFAC/DsOCWeb)
+Cuando el ÚLTIMO form del DataSet migró, ciérralo en este orden (checklist):
+1. Verificar que nadie lo usa: `grep -rl "new ADIGGM.DataSets.Ds<X>()" ADIGGM --include=*.cs` y
+   `grep -rn "VarGlobales.consultas<X>" ADIGGM --include=*.cs` → ambos deben dar SOLO
+   `VarGlobales.cs` (o nada).
+2. Retirar de `ADIGGM\Clases\VarGlobales.cs` el campo `consultas<X>` (y su `using`/instanciación).
+3. Borrar los archivos del DataSet: `DataSets\Ds<X>.xsd`, `.Designer.cs`, `.xsc`, `.xss`
+   (+ cualquier "Copia en conflicto" de los mismos).
+4. Quitar del csproj las 4 entradas (`<Compile Include="DataSets\Ds<X>.Designer.cs">` con su
+   `DependentUpon`, `<None Include="DataSets\Ds<X>.xsd">` con generador, `.xsc`, `.xss`).
+5. Evaluar la connectionString legacy `ADIGGM.Properties.Settings.<X>ConnectionString` en
+   App.config/Settings: si ya ningún DataSet la usa, es candidata a borrarse (revisar
+   `Settings.Designer.cs` y `AjustarCadenasLegacy`).
+6. Build verde + commit "Ds<X> ELIMINADO".

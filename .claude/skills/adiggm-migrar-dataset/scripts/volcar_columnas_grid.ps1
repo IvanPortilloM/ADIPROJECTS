@@ -1,4 +1,4 @@
-# Vuelca las columnas de un DataGridView del .Designer.cs como llamadas GridColumnas.*
+﻿# Vuelca las columnas de un DataGridView del .Designer.cs como llamadas GridColumnas.*
 # listas para pegar en ConfigurarColumnas(). Preserva orden, Name, DataPropertyName,
 # HeaderText, Visible, Format (de su cellStyle), Width y AutoSizeMode.
 # Uso: volcar_columnas_grid.ps1 -Designer "ADIGGM\OC\Mantenimiento\ManTipoDocumento.Designer.cs" -Grid "dgvTipoDocumentos"
