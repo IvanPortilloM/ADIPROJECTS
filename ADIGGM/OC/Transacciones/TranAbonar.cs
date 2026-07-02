@@ -163,9 +163,9 @@ namespace ADIGGM.OC.Transacciones
             decimal total = 0, deuda = 0, abonar = 0;
             foreach (DataGridViewRow row in dgvFacturas.Rows)
             {
-                total += decimal.Parse(row.Cells[3].Value.ToString());
-                abonar += decimal.Parse(row.Cells[4].Value.ToString());
-                deuda += decimal.Parse(row.Cells[5].Value.ToString());
+                total += decimal.Parse(row.Cells["Total"].Value.ToString());
+                abonar += decimal.Parse(row.Cells["Abonar"].Value.ToString());
+                deuda += decimal.Parse(row.Cells["Deuda"].Value.ToString());
             }
             _totalFacturas = total;
 

@@ -83,7 +83,7 @@ namespace ADIGGM.OC.Mantenimiento
                 int contador = 0;
                 foreach (DataGridViewRow row in dgvNoAsig.Rows)
                 {
-                    if (Convert.ToBoolean(row.Cells[6].Value) == true && String.IsNullOrEmpty(row.Cells[5].Value.ToString()))
+                    if (Convert.ToBoolean(row.Cells["Seleccion"].Value) == true && String.IsNullOrEmpty(row.Cells["Cuenta"].Value.ToString()))
                     {
                         contador += 1;
                     }
@@ -94,9 +94,9 @@ namespace ADIGGM.OC.Mantenimiento
                     int idCategoria = int.Parse(cboCategoria.SelectedValue.ToString());
                     foreach (DataGridViewRow row in dgvNoAsig.Rows)
                     {
-                        if (Convert.ToBoolean(row.Cells[6].Value) == true)
+                        if (Convert.ToBoolean(row.Cells["Seleccion"].Value) == true)
                         {
-                            _repo.GuardarAsigCuentaOpcion(idCategoria, int.Parse(row.Cells[0].Value.ToString()), row.Cells[5].Value.ToString(), VarGlobales.Usuario, Environment.MachineName, 1);
+                            _repo.GuardarAsigCuentaOpcion(idCategoria, int.Parse(row.Cells["IdVehiculo"].Value.ToString()), row.Cells["Cuenta"].Value.ToString(), VarGlobales.Usuario, Environment.MachineName, 1);
                         }
                     }
                     CargarGrids();
@@ -120,9 +120,9 @@ namespace ADIGGM.OC.Mantenimiento
                 int idCategoria = int.Parse(cboCategoria.SelectedValue.ToString());
                 foreach (DataGridViewRow row in dgvAsig.Rows)
                 {
-                    if (Convert.ToBoolean(row.Cells[1].Value) == true)
+                    if (Convert.ToBoolean(row.Cells["Seleccion"].Value) == true)
                     {
-                        _repo.GuardarAsigCuentaOpcion(idCategoria, int.Parse(row.Cells[0].Value.ToString()), row.Cells[6].Value.ToString(), VarGlobales.Usuario, Environment.MachineName, 3);
+                        _repo.GuardarAsigCuentaOpcion(idCategoria, int.Parse(row.Cells["IdVehiculo"].Value.ToString()), row.Cells["Cuenta"].Value.ToString(), VarGlobales.Usuario, Environment.MachineName, 3);
                     }
                 }
                 CargarGrids();
@@ -141,7 +141,7 @@ namespace ADIGGM.OC.Mantenimiento
                 if (dgvAsig.CurrentRow != null)
                 {
                     int idCategoria = int.Parse(cboCategoria.SelectedValue.ToString());
-                    _repo.GuardarAsigCuentaOpcion(idCategoria, int.Parse(dgvAsig.CurrentRow.Cells[0].Value.ToString()), dgvAsig.CurrentRow.Cells[6].Value.ToString(), VarGlobales.Usuario, Environment.MachineName, 2);
+                    _repo.GuardarAsigCuentaOpcion(idCategoria, int.Parse(dgvAsig.CurrentRow.Cells["IdVehiculo"].Value.ToString()), dgvAsig.CurrentRow.Cells["Cuenta"].Value.ToString(), VarGlobales.Usuario, Environment.MachineName, 2);
                 }
             }
             catch (Exception ex)
