@@ -18,9 +18,57 @@ namespace ADIGGM.INV.Transacciones
         private readonly RepositorioInventario _repo = new RepositorioInventario();
         bool permitir = true;
         decimal ISVP = 0;
+        // Señal visual anti-error ENTRADA/SALIDA (banner creado en código; no toca el Designer)
+        private readonly Label _lblTipoBanner = new Label();
+        private Color _colorPanelOriginal;
+        private int _idxTipoAnterior = -1;
+
         public frmInventario()
         {
             InitializeComponent();
+            _colorPanelOriginal = panel1.BackColor;
+            _lblTipoBanner.Name = "lblTipoBanner";
+            _lblTipoBanner.Location = new Point(12, 97);
+            _lblTipoBanner.Size = new Size(115, 88);
+            _lblTipoBanner.TextAlign = ContentAlignment.MiddleCenter;
+            _lblTipoBanner.Font = new Font(this.Font.FontFamily, 10F, FontStyle.Bold);
+            _lblTipoBanner.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(_lblTipoBanner);
+            ActualizarSenalTipoOperacion();
+        }
+
+        /// <summary>true SOLO si la operación seleccionada resta del inventario (la lógica de signo
+        /// del form depende del texto exacto "SALIDA" — ver ActualizarKardex/btnAgregar).</summary>
+        private bool EsSalida()
+        {
+            return cboTipoOperacion.Text == "SALIDA";
+        }
+
+        /// <summary>Colorea el panel de captura y el banner según el tipo de operación elegido,
+        /// para que una ENTRADA no se confunda con una SALIDA (mejora anti-error 2026-07-07).</summary>
+        private void ActualizarSenalTipoOperacion()
+        {
+            if (cboTipoOperacion.SelectedIndex == -1)
+            {
+                panel1.BackColor = _colorPanelOriginal;
+                _lblTipoBanner.BackColor = SystemColors.ControlLight;
+                _lblTipoBanner.ForeColor = Color.Black;
+                _lblTipoBanner.Text = "ELIJA EL\nTIPO DE\nOPERACIÓN";
+            }
+            else if (EsSalida())
+            {
+                panel1.BackColor = Color.FromArgb(248, 215, 218);   // rojo suave
+                _lblTipoBanner.BackColor = Color.Firebrick;
+                _lblTipoBanner.ForeColor = Color.White;
+                _lblTipoBanner.Text = cboTipoOperacion.Text + "\n(resta del\ninventario)";
+            }
+            else
+            {
+                panel1.BackColor = Color.FromArgb(215, 236, 218);   // verde suave
+                _lblTipoBanner.BackColor = Color.DarkGreen;
+                _lblTipoBanner.ForeColor = Color.White;
+                _lblTipoBanner.Text = cboTipoOperacion.Text + "\n(suma al\ninventario)";
+            }
         }
         private void frmInventario_Load(object sender, EventArgs e)
         {
@@ -36,6 +84,11 @@ namespace ADIGGM.INV.Transacciones
             iNTipoOperacionesBindingSource.DataSource = _repo.ListarTiposOperacion();
             oCProductosBindingSource.DataMember = "";
             oCProductosBindingSource.DataSource = _repo.ListarProductosActivosPorCategoria(int.Parse(cboCategoria.SelectedValue.ToString()));
+
+            // Anti-error ENTRADA/SALIDA: el combo NO queda pre-seleccionado (antes el binding
+            // dejaba elegida la primera operación y el usuario podía guardar sin darse cuenta).
+            cboTipoOperacion.SelectedIndex = -1;
+            ActualizarSenalTipoOperacion();
 
             if (chkVehiculo.Checked == true)
                 cboVehiculo.Enabled = true;
@@ -66,6 +119,12 @@ namespace ADIGGM.INV.Transacciones
         }
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+            if (cboTipoOperacion.SelectedIndex == -1)
+            {
+                MessageBox.Show("Seleccione el TIPO DE OPERACIÓN (entrada o salida) antes de agregar productos", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             int idvehiculo = 0;
             string vehiculo = "";
             decimal cant;
@@ -105,6 +164,37 @@ namespace ADIGGM.INV.Transacciones
         }
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            if (cboTipoOperacion.SelectedIndex == -1)
+            {
+                MessageBox.Show("Seleccione el TIPO DE OPERACIÓN (entrada o salida)", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (dgvInventario.Rows.Count == 0)
+            {
+                // Antes se guardaba un encabezado de kardex VACÍO si la grilla no tenía productos
+                MessageBox.Show("Agregue al menos un producto al detalle antes de guardar", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Confirmación anti-error ENTRADA/SALIDA: resumen de lo que se va a guardar,
+            // con "No" como botón por defecto para exigir un clic consciente.
+            decimal totalTransaccion = 0;
+            foreach (DataGridViewRow row in dgvInventario.Rows)
+                totalTransaccion += decimal.Parse(row.Cells["total"].Value.ToString());
+
+            string efecto = EsSalida() ? "RESTA del inventario" : "SUMA al inventario";
+            string resumen = "Está a punto de guardar una operación de tipo:\n\n" +
+                "        " + cboTipoOperacion.Text + "  (" + efecto + ")\n\n" +
+                "Bodega: " + cboBodega.Text + "\n" +
+                "Productos: " + dgvInventario.Rows.Count + "\n" +
+                "Total: L " + Math.Abs(totalTransaccion).ToString("N2") + "\n\n" +
+                "¿Confirma que el TIPO DE OPERACIÓN es el correcto?";
+            if (MessageBox.Show(resumen, VarGlobales.nombreSistema, MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+            {
+                return;
+            }
+
             if (dtpFecha.Value.Date <= DateTime.Now)
             {
                 int IdKardexHeader;
@@ -145,6 +235,9 @@ namespace ADIGGM.INV.Transacciones
                 reporte.ShowDialog();
                 dgvInventario.Rows.Clear();
                 dgvInventario.Refresh();
+                // La siguiente transacción vuelve a exigir elegir el tipo de operación
+                cboTipoOperacion.SelectedIndex = -1;
+                ActualizarSenalTipoOperacion();
 
                 MessageBox.Show("Los registros fueron salvados exitosamente", VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -264,6 +357,27 @@ namespace ADIGGM.INV.Transacciones
         }
         private void cboTipoOperacion_SelectedValueChanged(object sender, EventArgs e)
         {
+            // Cambiar el tipo con detalle ya capturado: confirmar. ANTES, si el usuario respondía
+            // "No", el combo QUEDABA en el tipo nuevo con las líneas firmadas por el tipo viejo
+            // (mezcla entrada/salida al guardar). Ahora "No" REVIERTE el combo al tipo anterior.
+            if (cboTipoOperacion.SelectedIndex != _idxTipoAnterior && dgvInventario.Rows.Count > 0)
+            {
+                if (MessageBox.Show("Si cambia el Tipo de Operación se eliminará el detalle, Desea continuar?", VarGlobales.nombreSistema, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    dgvInventario.DataSource = null;
+                    dgvInventario.Rows.Clear();
+                    txtCantidad.Text = string.Format("{0:#,##0.0000}", 1);
+                }
+                else
+                {
+                    cboTipoOperacion.SelectedIndex = _idxTipoAnterior;  // re-dispara este handler, ya sin cambio
+                    return;
+                }
+            }
+            _idxTipoAnterior = cboTipoOperacion.SelectedIndex;
+
+            ActualizarSenalTipoOperacion();
+
             decimal precio = 1;
             if (cboProducto.SelectedIndex > -1 && cboBodega.SelectedIndex > -1)
             {
@@ -291,16 +405,6 @@ namespace ADIGGM.INV.Transacciones
                 txtPrecio.Text = string.Format("{0:#,##0.0000}", precio);
                 chkAplicaISV.Enabled = false;
             }
-
-            if (dgvInventario.Rows.Count > 0)
-            {
-                if (MessageBox.Show("Si cambia el Tipo de Operación se eliminará el detalle, Desea continuar?", VarGlobales.nombreSistema, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    dgvInventario.DataSource = null;
-                    dgvInventario.Rows.Clear();
-                    txtCantidad.Text = string.Format("{0:#,##0.0000}", 1);
-                }
-            }
         }
         private void cboBodega_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -310,12 +414,6 @@ namespace ADIGGM.INV.Transacciones
 
                 chkAplicaISV.Checked = AplicaISV;
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            VisualizarReporte reporte = new VisualizarReporte(-3, "", "", 0, 0, "", "", "", 5000, 0, "", true);
-            reporte.ShowDialog();
         }
     }
 }
