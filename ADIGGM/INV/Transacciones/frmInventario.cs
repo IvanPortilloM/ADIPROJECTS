@@ -81,7 +81,9 @@ namespace ADIGGM.INV.Transacciones
             iNBodegasBindingSource.DataSource = _repo.ListarBodegas();
             ISVP = _repo.ObtenerIsvPorcentaje();
             iNTipoOperacionesBindingSource.DataMember = "";
-            iNTipoOperacionesBindingSource.DataSource = _repo.ListarTiposOperacion();
+            // Solo ENTRADA/SALIDA: IN_KardexUpdate no tiene rama para otros tipos (TRASLADO guardaba
+            // un encabezado sin líneas y decía "éxito" — §14.12.d)
+            iNTipoOperacionesBindingSource.DataSource = _repo.ListarTiposOperacionKardex();
             oCProductosBindingSource.DataMember = "";
             oCProductosBindingSource.DataSource = _repo.ListarProductosActivosPorCategoria(int.Parse(cboCategoria.SelectedValue.ToString()));
 

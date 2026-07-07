@@ -23,6 +23,15 @@ namespace ADIGGM.CapaDatos
             return ConsultarTabla(sql);
         }
 
+        /// <summary>Solo ENTRADA/SALIDA, para el combo de frmInventario: el SP IN_KardexUpdate no tiene
+        /// rama para otros tipos (p.ej. TRASLADO, Id 3) — al elegirlos guardaba un encabezado SIN líneas
+        /// y el form decía "éxito" (bug latente §14.12.d). El mantenimiento frmTipoOp sigue usando
+        /// ListarTiposOperacion (lista completa).</summary>
+        public DataTable ListarTiposOperacionKardex()
+        {
+            return ConsultarTabla("SELECT IdTipoOperacion, NombreOperacion FROM dbo.IN_TipoOperaciones WHERE NombreOperacion IN ('ENTRADA', 'SALIDA')");
+        }
+
         /// <summary>Persiste altas/cambios hechos en la grilla (IdTipoOperacion es identity).</summary>
         public int GuardarTiposOperacion(DataTable tabla)
         {
@@ -267,6 +276,30 @@ ORDER BY k.IdKardex";
                         if (detalle.Count == 0)
                             throw new InvalidOperationException("La transacción #" + idKardexHeaderOriginal + " no tiene líneas de detalle.");
 
+                        // Re-verificación de existencias DENTRO de la transacción (la del form es solo
+                        // UX): reversar líneas de ENTRADA (Cantidad>0) consume capas FIFO de
+                        // IN_Existencias vía el SP, y si no alcanzan el SP consume PARCIAL sin error
+                        // (el resto se perdería en silencio). Se agrupa por bodega+producto.
+                        var porProducto = new Dictionary<string, decimal>();
+                        foreach (LineaKardex l in detalle)
+                        {
+                            if (l.Cantidad <= 0) continue;
+                            string clave = l.IdBodega + "|" + l.IdProducto;
+                            porProducto[clave] = (porProducto.TryGetValue(clave, out decimal acumulado) ? acumulado : 0m) + l.Cantidad;
+                        }
+                        foreach (KeyValuePair<string, decimal> kv in porProducto)
+                        {
+                            string[] partes = kv.Key.Split('|');
+                            decimal disponible = con.ExecuteScalar<decimal?>(
+                                "SELECT SUM(Existencia) FROM dbo.IN_Existencias WHERE IdBodega = @B AND IdProducto = @P",
+                                new { B = int.Parse(partes[0]), P = int.Parse(partes[1]) }, trans) ?? 0m;
+                            if (disponible < kv.Value)
+                                throw new InvalidOperationException(
+                                    "Existencia insuficiente para reversar: el producto Id " + partes[1] + " en la bodega Id " + partes[0] +
+                                    " tiene " + disponible.ToString("N4") + " y la reversión necesita " + kv.Value.ToString("N4") +
+                                    ". Probablemente ya se consumió parte de esa entrada.");
+                        }
+
                         // Todas las líneas de una transacción comparten el mismo tipo (frmInventario
                         // usa UN combo Tipo de Operación para toda la grilla); basta resolver una vez.
                         int? idTipoOpuesto = con.ExecuteScalar<int?>(
@@ -278,9 +311,11 @@ ORDER BY k.IdKardex";
                             throw new InvalidOperationException("No se encontró en IN_TipoOperaciones el tipo opuesto (ENTRADA/SALIDA); revise el catálogo antes de reversar.");
 
                         DateTime ahora = DateTime.Now;
+                        string observacion = "REVERSA de #" + idKardexHeaderOriginal + " — " + motivo;
+                        if (observacion.Length > 450) observacion = observacion.Substring(0, 450); // IN_KardexHeader.Observacion = NVARCHAR(450)
                         int idKardexHeaderReversa = Convert.ToInt32(con.ExecuteScalar<object>(
                             "dbo.IN_KardexHeaderInsert",
-                            new { Fecha = ahora, Observacion = "REVERSA de #" + idKardexHeaderOriginal + " — " + motivo, Usuario = usuario },
+                            new { Fecha = ahora, Observacion = observacion, Usuario = usuario },
                             trans, commandType: CommandType.StoredProcedure));
                         con.Execute("UPDATE dbo.IN_KardexHeader SET IdKardexHeaderOriginal = @Original WHERE IdKardexHeader = @Reversa",
                             new { Original = idKardexHeaderOriginal, Reversa = idKardexHeaderReversa }, trans);
@@ -296,7 +331,12 @@ ORDER BY k.IdKardex";
                                 IdKardexHeader = idKardexHeaderReversa,
                                 IdTipoOperacion = idTipoOpuesto.Value,
                                 Fecha = ahora,
-                                PrecioEntrada = linea.PrecioEntrada ?? linea.PrecioSalida ?? 0m,
+                                // El SP usa @PrecioEntrada SOLO en su rama ENTRADA (crea/actualiza la
+                                // capa de costo en IN_Existencias); la rama SALIDA lo ignora (toma el
+                                // precio de las capas FIFO). Al reversar una SALIDA (línea negativa) se
+                                // re-ingresa al PrecioSalida ORIGINAL de esa línea — OJO: el SP guarda 0,
+                                // no NULL, en el precio de la rama contraria, por eso NO sirve coalescer.
+                                PrecioEntrada = linea.Cantidad < 0 ? linea.PrecioSalida.GetValueOrDefault() : linea.PrecioEntrada.GetValueOrDefault(),
                                 // AplicaISV no se guarda como tal en IN_Kardex (solo el monto ISV ya
                                 // calculado); se infiere de si la línea original tenía ISV > 0.
                                 AplicaISV = linea.ISV.GetValueOrDefault() != 0m
