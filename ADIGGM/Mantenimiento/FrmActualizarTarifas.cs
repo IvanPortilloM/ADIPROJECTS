@@ -40,13 +40,15 @@ namespace ADIGGM.Mantenimiento
             // Cada combo con su propio DataTable (evita que combos del mismo DataSource compartan selección).
             CargarCombo(cboTvBase, _repo.ListarTipoVehiculosActivos(), "TipoVehiculo", "IdTipoVehiculo");
 
+            // Clase de trabajo con "(TODAS)" (Id=0): permite el cambio en lote sobre todas las clases
+            // del cliente+tipo de vehículo, además del modo individual de siempre.
             CargarCombo(cboClienteAsig, _repo.ListarClientesActivos(), "Cliente", "IdCliente");
             CargarCombo(cboTvAsig, _repo.ListarTipoVehiculosActivos(), "TipoVehiculo", "IdTipoVehiculo");
-            CargarCombo(cboClaseAsig, _repo.ListarClaseTrabajosActivos(), "ClaseTrabajo", "IdClaseTrabajo");
+            CargarCombo(cboClaseAsig, _repo.ListarClaseTrabajosActivosConTodas(), "ClaseTrabajo", "IdClaseTrabajo");
 
             CargarCombo(cboClienteViaje, _repo.ListarClientesActivos(), "Cliente", "IdCliente");
             CargarCombo(cboTvViaje, _repo.ListarTipoVehiculosActivos(), "TipoVehiculo", "IdTipoVehiculo");
-            CargarCombo(cboClaseViaje, _repo.ListarClaseTrabajosActivos(), "ClaseTrabajo", "IdClaseTrabajo");
+            CargarCombo(cboClaseViaje, _repo.ListarClaseTrabajosActivosConTodas(), "ClaseTrabajo", "IdClaseTrabajo");
 
             dtpDesde.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             dtpHasta.Value = DateTime.Today;
@@ -226,6 +228,7 @@ namespace ADIGGM.Mantenimiento
             dgvPrevia.Columns.Add(GridColumnas.Texto("Fecha", "Fecha", "Fecha", format: "d", width: 80, autoSize: dc));
             dgvPrevia.Columns.Add(GridColumnas.Texto("NumBoleta", "NumBoleta", "Boleta", width: 80, autoSize: dc));
             dgvPrevia.Columns.Add(GridColumnas.Texto("Cliente", "Cliente", "Cliente", autoSize: dc));
+            dgvPrevia.Columns.Add(GridColumnas.Texto("ClaseTrabajo", "ClaseTrabajo", "Clase Trabajo", autoSize: dc));
             dgvPrevia.Columns.Add(GridColumnas.Texto("TipoVehiculo", "TipoVehiculo", "Tipo Veh.", autoSize: dc));
             dgvPrevia.Columns.Add(GridColumnas.Texto("Ruta", "Ruta", "Ruta", autoSize: DataGridViewAutoSizeColumnMode.Fill));
             dgvPrevia.Columns.Add(GridColumnas.Texto("Cantidad", "Cantidad", "Cantidad", format: "N2", width: 70));
@@ -287,10 +290,15 @@ namespace ADIGGM.Mantenimiento
 
                 string nombreProc = m == Modo.Base ? "tarifas BASE"
                                    : (m == Modo.Asignada ? "tarifas ASIGNADAS" : "boletas (TR_Viajes)");
+                // Lote por clase: con "(TODAS)" (Id=0) la confirmación lo destaca (anti-error).
+                bool todasLasClases = (m == Modo.Asignada && EsTodasLasClases(cboClaseAsig))
+                                   || (m == Modo.Viajes && EsTodasLasClases(cboClaseViaje));
                 DialogResult r = MessageBox.Show(
                     "Se actualizarán " + cambios + " registro(s) de " + nombreProc +
+                    (todasLasClases ? " en TODAS LAS CLASES DE TRABAJO" : "") +
                     " con un " + nudPorcentaje.Value.ToString("0.##") + "%." + Environment.NewLine + "¿Desea continuar?",
-                    VarGlobales.nombreSistema, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    VarGlobales.nombreSistema, MessageBoxButtons.YesNo,
+                    todasLasClases ? MessageBoxIcon.Warning : MessageBoxIcon.Question);
                 if (r != DialogResult.Yes) return;
 
                 string usuario = VarGlobales.Usuario ?? "";
@@ -328,6 +336,12 @@ namespace ADIGGM.Mantenimiento
                     break;
             }
             return s;
+        }
+
+        /// <summary>true si el combo de clase de trabajo tiene elegida la fila sintética "(TODAS)" (Id=0).</summary>
+        private static bool EsTodasLasClases(ComboBox cboClase)
+        {
+            return cboClase.SelectedValue != null && Convert.ToInt32(cboClase.SelectedValue) == 0;
         }
 
         private void btnSalir_Click(object sender, EventArgs e)

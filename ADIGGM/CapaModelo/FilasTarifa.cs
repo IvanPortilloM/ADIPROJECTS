@@ -31,6 +31,7 @@ namespace ADIGGM.CapaModelo
         public DateTime Fecha { get; set; }
         public string NumBoleta { get; set; }
         public string Cliente { get; set; }
+        public string ClaseTrabajo { get; set; }
         public string TipoVehiculo { get; set; }
         public string Ruta { get; set; }
         public decimal Cantidad { get; set; }

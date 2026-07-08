@@ -150,6 +150,18 @@ namespace ADIGGM.CapaDatos
             return ConsultarTabla(sql);
         }
 
+        /// <summary>Clases de trabajo activas con la fila sintética "(TODAS)" (Id = 0) al inicio, para
+        /// los combos de FrmActualizarTarifas que permiten el cambio de tarifa en lote por clase.</summary>
+        public DataTable ListarClaseTrabajosActivosConTodas()
+        {
+            const string sql = @"SELECT IdClaseTrabajo, ClaseTrabajo FROM (
+SELECT 0 AS IdClaseTrabajo, '(TODAS)' AS ClaseTrabajo, 0 AS Orden
+UNION ALL
+SELECT IdClaseTrabajo, ClaseTrabajo, 1 FROM dbo.TR_ClaseTrabajos WHERE Activo = 1
+) t ORDER BY Orden, ClaseTrabajo";
+            return ConsultarTabla(sql);
+        }
+
         // ===== Actualización masiva de tarifas por porcentaje (Mant\FrmActualizarTarifas) =====
         // Tres procesos INDEPENDIENTES: tarifas base (TR_AsigRutaTipoVeh), tarifas asignadas
         // (TR_TarifaRutas) y precio en boletas ya digitadas (TR_Viajes). Cada "Aplicar" persiste
@@ -170,7 +182,9 @@ namespace ADIGGM.CapaDatos
         }
 
         /// <summary>Vista previa de tarifas ASIGNADAS (TR_TarifaRutas) filtradas por cliente, clase de
-        /// trabajo y tipo de vehículo. La ruta se compone Origen + Destino.</summary>
+        /// trabajo y tipo de vehículo. idClaseTrabajo = 0 significa "(TODAS)" las clases (cambio en
+        /// lote); la previa sale agrupada por clase para que el lote sea revisable. La ruta se
+        /// compone Origen + Destino.</summary>
         public List<FilaTarifa> PreviewTarifasAsignadas(int idCliente, int idClaseTrabajo, int idTipoVehiculo)
         {
             const string sql =
@@ -180,28 +194,30 @@ namespace ADIGGM.CapaDatos
                 "INNER JOIN dbo.TR_ClaseTrabajos ct ON ct.IdClaseTrabajo = t.IdClaseTrabajo " +
                 "INNER JOIN dbo.TR_TipoVehiculos tv ON tv.IdTipoVehiculo = t.IdTipoVehiculo " +
                 "INNER JOIN dbo.TR_Rutas r ON r.IdRuta = t.IdRuta " +
-                "WHERE t.IdCliente = @IdCliente AND t.IdClaseTrabajo = @IdClaseTrabajo AND t.IdTipoVehiculo = @IdTipoVehiculo " +
-                "ORDER BY r.Origen, r.Destino";
+                "WHERE t.IdCliente = @IdCliente AND (@IdClaseTrabajo = 0 OR t.IdClaseTrabajo = @IdClaseTrabajo) AND t.IdTipoVehiculo = @IdTipoVehiculo " +
+                "ORDER BY ct.ClaseTrabajo, r.Origen, r.Destino";
             return Consultar<FilaTarifa>(sql, new { IdCliente = idCliente, IdClaseTrabajo = idClaseTrabajo, IdTipoVehiculo = idTipoVehiculo });
         }
 
         /// <summary>Vista previa de boletas (TR_Viajes) en el rango de fechas que coinciden con los filtros,
-        /// EXCLUYENDO las anuladas y las que pertenecen a un cierre ya cerrado (TR_CierreClientes.Cerrado).</summary>
+        /// EXCLUYENDO las anuladas y las que pertenecen a un cierre ya cerrado (TR_CierreClientes.Cerrado).
+        /// idClaseTrabajo = 0 significa "(TODAS)" las clases (cambio en lote), agrupado por clase.</summary>
         public List<FilaViaje> PreviewViajes(int idCliente, int idClaseTrabajo, int idTipoVehiculo, System.DateTime fechaInicio, System.DateTime fechaFin)
         {
             const string sql =
-                "SELECT v.IdViaje, v.Fecha, v.NumBoleta, c.Cliente, tv.TipoVehiculo, (r.Origen + ' - ' + r.Destino) AS Ruta, v.Cantidad, " +
+                "SELECT v.IdViaje, v.Fecha, v.NumBoleta, c.Cliente, ct.ClaseTrabajo, tv.TipoVehiculo, (r.Origen + ' - ' + r.Destino) AS Ruta, v.Cantidad, " +
                 "v.Tarifa AS TarifaActual, v.Subtotal AS SubtotalActual, v.ISV AS IsvActual, v.Total AS TotalActual " +
                 "FROM dbo.TR_Viajes v " +
                 "INNER JOIN dbo.TR_Clientes c ON c.IdCliente = v.IdCliente " +
+                "INNER JOIN dbo.TR_ClaseTrabajos ct ON ct.IdClaseTrabajo = v.IdClaseTrabajo " +
                 "INNER JOIN dbo.TR_TipoVehiculos tv ON tv.IdTipoVehiculo = v.IdTipoVeh " +
                 "INNER JOIN dbo.TR_Rutas r ON r.IdRuta = v.IdRuta " +
-                "WHERE v.IdCliente = @IdCliente AND v.IdClaseTrabajo = @IdClaseTrabajo AND v.IdTipoVeh = @IdTipoVehiculo " +
+                "WHERE v.IdCliente = @IdCliente AND (@IdClaseTrabajo = 0 OR v.IdClaseTrabajo = @IdClaseTrabajo) AND v.IdTipoVeh = @IdTipoVehiculo " +
                 "AND v.Fecha >= @FechaInicio AND v.Fecha <= @FechaFin AND v.Anulado = 0 " +
                 "AND NOT EXISTS (SELECT 1 FROM dbo.TR_CierreClientes cc " +
                 "                WHERE cc.IdCierre = v.IdCierre AND cc.IdCliente = v.IdCliente " +
                 "                AND cc.IdTipoVehiculo = v.IdTipoVeh AND cc.Cerrado = 1 AND cc.Anulado = 0) " +
-                "ORDER BY v.Fecha, v.NumBoleta";
+                "ORDER BY ct.ClaseTrabajo, v.Fecha, v.NumBoleta";
             return Consultar<FilaViaje>(sql, new { IdCliente = idCliente, IdClaseTrabajo = idClaseTrabajo, IdTipoVehiculo = idTipoVehiculo, FechaInicio = fechaInicio, FechaFin = fechaFin });
         }
 
