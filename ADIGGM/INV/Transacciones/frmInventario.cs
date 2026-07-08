@@ -29,7 +29,7 @@ namespace ADIGGM.INV.Transacciones
             _colorPanelOriginal = panel1.BackColor;
             _lblTipoBanner.Name = "lblTipoBanner";
             _lblTipoBanner.Location = new Point(12, 97);
-            _lblTipoBanner.Size = new Size(115, 88);
+            _lblTipoBanner.Size = new Size(99, 88);
             _lblTipoBanner.TextAlign = ContentAlignment.MiddleCenter;
             _lblTipoBanner.Font = new Font(this.Font.FontFamily, 10F, FontStyle.Bold);
             _lblTipoBanner.BorderStyle = BorderStyle.FixedSingle;

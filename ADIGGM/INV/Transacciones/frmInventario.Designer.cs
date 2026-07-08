@@ -30,10 +30,10 @@ namespace ADIGGM.INV.Transacciones
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInventario));
             this.dgvInventario = new System.Windows.Forms.DataGridView();
             this.idProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -168,24 +168,24 @@ namespace ADIGGM.INV.Transacciones
             // 
             // precio
             // 
-            dataGridViewCellStyle1.Format = "N4";
-            dataGridViewCellStyle1.NullValue = null;
-            this.precio.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Format = "N4";
+            dataGridViewCellStyle5.NullValue = null;
+            this.precio.DefaultCellStyle = dataGridViewCellStyle5;
             this.precio.HeaderText = "Precio";
             this.precio.Name = "precio";
             // 
             // cantidad
             // 
-            dataGridViewCellStyle2.Format = "N4";
-            this.cantidad.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Format = "N4";
+            this.cantidad.DefaultCellStyle = dataGridViewCellStyle6;
             this.cantidad.HeaderText = "Cantidad";
             this.cantidad.Name = "cantidad";
             // 
             // isv
             // 
             this.isv.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewCellStyle3.Format = "N4";
-            this.isv.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Format = "N4";
+            this.isv.DefaultCellStyle = dataGridViewCellStyle7;
             this.isv.HeaderText = "ISV";
             this.isv.Name = "isv";
             this.isv.Width = 48;
@@ -193,8 +193,8 @@ namespace ADIGGM.INV.Transacciones
             // total
             // 
             this.total.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewCellStyle4.Format = "N4";
-            this.total.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Format = "N4";
+            this.total.DefaultCellStyle = dataGridViewCellStyle8;
             this.total.HeaderText = "Total";
             this.total.Name = "total";
             this.total.Width = 58;
@@ -246,7 +246,7 @@ namespace ADIGGM.INV.Transacciones
             this.cboTipoOperacion.TabIndex = 107;
             this.cboTipoOperacion.ValueMember = "IdTipoOperacion";
             this.cboTipoOperacion.SelectedValueChanged += new System.EventHandler(this.cboTipoOperacion_SelectedValueChanged);
-            //
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.label8);
@@ -368,7 +368,7 @@ namespace ADIGGM.INV.Transacciones
             this.cboCategoria.TabIndex = 118;
             this.cboCategoria.ValueMember = "IdCatProducto";
             this.cboCategoria.SelectedValueChanged += new System.EventHandler(this.cboCategoria_SelectedValueChanged);
-            //
+            // 
             // btnGuardar
             // 
             this.btnGuardar.Image = ((System.Drawing.Image)(resources.GetObject("btnGuardar.Image")));
@@ -402,7 +402,7 @@ namespace ADIGGM.INV.Transacciones
             this.cboBodega.TabIndex = 115;
             this.cboBodega.ValueMember = "IdBodega";
             this.cboBodega.SelectedValueChanged += new System.EventHandler(this.cboBodega_SelectedValueChanged);
-            //
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -455,7 +455,7 @@ namespace ADIGGM.INV.Transacciones
             this.cboProducto.TabIndex = 110;
             this.cboProducto.ValueMember = "IdProducto";
             this.cboProducto.SelectedValueChanged += new System.EventHandler(this.cboProducto_SelectedValueChanged);
-            //
+            // 
             // cboVehiculo
             // 
             this.cboVehiculo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -468,7 +468,7 @@ namespace ADIGGM.INV.Transacciones
             this.cboVehiculo.Size = new System.Drawing.Size(170, 24);
             this.cboVehiculo.TabIndex = 109;
             this.cboVehiculo.ValueMember = "IdVehiculo";
-            //
+            // 
             // btnAgregar
             // 
             this.btnAgregar.Image = ((System.Drawing.Image)(resources.GetObject("btnAgregar.Image")));
@@ -480,7 +480,7 @@ namespace ADIGGM.INV.Transacciones
             this.btnAgregar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnAgregar.UseVisualStyleBackColor = true;
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
-            //
+            // 
             // frmInventario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);

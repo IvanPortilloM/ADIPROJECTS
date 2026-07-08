@@ -347,23 +347,13 @@ namespace ADIGGM.Mantenimiento
             this.nudPorcentaje.ThousandsSeparator = true;
             this.nudPorcentaje.ValueChanged += new System.EventHandler(this.nudPorcentaje_ValueChanged);
             // 
-            // btnPrevia
-            // 
-            this.btnPrevia.Location = new System.Drawing.Point(230, 153);
-            this.btnPrevia.Name = "btnPrevia";
-            this.btnPrevia.Size = new System.Drawing.Size(120, 28);
-            this.btnPrevia.TabIndex = 3;
-            this.btnPrevia.Text = "Vista previa";
-            this.btnPrevia.UseVisualStyleBackColor = true;
-            this.btnPrevia.Click += new System.EventHandler(this.btnPrevia_Click);
-            // 
             // lblModo
             // 
             this.lblModo.AutoSize = true;
             this.lblModo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
             this.lblModo.Location = new System.Drawing.Point(380, 160);
             this.lblModo.Name = "lblModo";
-            this.lblModo.Size = new System.Drawing.Size(40, 13);
+            this.lblModo.Size = new System.Drawing.Size(42, 13);
             this.lblModo.TabIndex = 8;
             this.lblModo.Text = "Modo:";
             // 
@@ -376,10 +366,20 @@ namespace ADIGGM.Mantenimiento
             "Directo"});
             this.cboModoCalculo.Location = new System.Drawing.Point(425, 157);
             this.cboModoCalculo.Name = "cboModoCalculo";
-            this.cboModoCalculo.Size = new System.Drawing.Size(120, 21);
+            this.cboModoCalculo.Size = new System.Drawing.Size(120, 24);
             this.cboModoCalculo.TabIndex = 9;
             this.cboModoCalculo.SelectedIndexChanged += new System.EventHandler(this.cboModoCalculo_SelectedIndexChanged);
-            //             
+            // 
+            // btnPrevia
+            // 
+            this.btnPrevia.Location = new System.Drawing.Point(230, 153);
+            this.btnPrevia.Name = "btnPrevia";
+            this.btnPrevia.Size = new System.Drawing.Size(120, 28);
+            this.btnPrevia.TabIndex = 3;
+            this.btnPrevia.Text = "Vista previa";
+            this.btnPrevia.UseVisualStyleBackColor = true;
+            this.btnPrevia.Click += new System.EventHandler(this.btnPrevia_Click);
+            // 
             // dgvPrevia
             // 
             this.dgvPrevia.AllowUserToAddRows = false;
@@ -432,16 +432,18 @@ namespace ADIGGM.Mantenimiento
             this.Controls.Add(this.tabsProceso);
             this.Controls.Add(this.lblPorcentaje);
             this.Controls.Add(this.nudPorcentaje);
-            this.Controls.Add(this.lblModo);
-            this.Controls.Add(this.cboModoCalculo);
             this.Controls.Add(this.btnPrevia);
             this.Controls.Add(this.dgvPrevia);
             this.Controls.Add(this.lblRegistros);
             this.Controls.Add(this.btnAplicar);
             this.Controls.Add(this.btnSalir);
+            this.Controls.Add(this.lblModo);
+            this.Controls.Add(this.cboModoCalculo);
             this.Name = "FrmActualizarTarifas";
             this.Text = "Actualizar Tarifas";
             this.Load += new System.EventHandler(this.FrmActualizarTarifas_Load);
+            this.Controls.SetChildIndex(this.cboModoCalculo, 0);
+            this.Controls.SetChildIndex(this.lblModo, 0);
             this.Controls.SetChildIndex(this.pnlFooter, 0);
             this.Controls.SetChildIndex(this.btnSalir, 0);
             this.Controls.SetChildIndex(this.btnAplicar, 0);

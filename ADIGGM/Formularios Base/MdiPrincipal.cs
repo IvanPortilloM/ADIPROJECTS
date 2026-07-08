@@ -1964,5 +1964,18 @@ namespace ADIGGM.Formularios_Base
                 actualizarTarifas.Show();
             }
         }
+
+        private void iNReversarInventarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {            
+                if (Application.OpenForms["frmReversarInventario"] != null)
+            {
+                Application.OpenForms["frmReversarInventario"].Activate();
+            }
+            else
+            {
+                frmReversarInventario reversarInventario = new frmReversarInventario { MdiParent = this };
+                reversarInventario.Show();
+            }
+        }
     }
 }

@@ -60,6 +60,7 @@
             this.tAsignarRutasAClientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tAsigRutaTipoVehToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tTarifaPorRutasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.t11ActualizarTarifasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.r00FincasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.r03ZonasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.r04BloquesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -175,7 +176,7 @@
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.t11ActualizarTarifasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.iNReversarInventarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -455,6 +456,13 @@
             this.tTarifaPorRutasToolStripMenuItem.Size = new System.Drawing.Size(301, 22);
             this.tTarifaPorRutasToolStripMenuItem.Text = "T10 - Asig. Ruta a Clase de Trabajo";
             this.tTarifaPorRutasToolStripMenuItem.Click += new System.EventHandler(this.tTarifaPorRutasToolStripMenuItem_Click);
+            // 
+            // t11ActualizarTarifasToolStripMenuItem
+            // 
+            this.t11ActualizarTarifasToolStripMenuItem.Name = "t11ActualizarTarifasToolStripMenuItem";
+            this.t11ActualizarTarifasToolStripMenuItem.Size = new System.Drawing.Size(301, 22);
+            this.t11ActualizarTarifasToolStripMenuItem.Text = "T11 - Actualizar Tarifas";
+            this.t11ActualizarTarifasToolStripMenuItem.Click += new System.EventHandler(this.t11ActualizarTarifasToolStripMenuItem_Click);
             // 
             // r00FincasToolStripMenuItem
             // 
@@ -801,7 +809,8 @@
             // 
             this.inventarioToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.iNBodegasToolStripMenuItem,
-            this.iNTipoDeOperaciónToolStripMenuItem});
+            this.iNTipoDeOperaciónToolStripMenuItem,
+            this.iNReversarInventarioToolStripMenuItem});
             this.inventarioToolStripMenuItem1.Name = "inventarioToolStripMenuItem1";
             this.inventarioToolStripMenuItem1.Size = new System.Drawing.Size(202, 22);
             this.inventarioToolStripMenuItem1.Text = "Inventario";
@@ -1373,12 +1382,12 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // t11ActualizarTarifasToolStripMenuItem
+            // iNReversarInventarioToolStripMenuItem
             // 
-            this.t11ActualizarTarifasToolStripMenuItem.Name = "t11ActualizarTarifasToolStripMenuItem";
-            this.t11ActualizarTarifasToolStripMenuItem.Size = new System.Drawing.Size(301, 22);
-            this.t11ActualizarTarifasToolStripMenuItem.Text = "T11 - Actualizar Tarifas";
-            this.t11ActualizarTarifasToolStripMenuItem.Click += new System.EventHandler(this.t11ActualizarTarifasToolStripMenuItem_Click);
+            this.iNReversarInventarioToolStripMenuItem.Name = "iNReversarInventarioToolStripMenuItem";
+            this.iNReversarInventarioToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.iNReversarInventarioToolStripMenuItem.Text = "IN - Reversar Inventario";
+            this.iNReversarInventarioToolStripMenuItem.Click += new System.EventHandler(this.iNReversarInventarioToolStripMenuItem_Click);
             // 
             // MdiPrincipal
             // 
@@ -1561,5 +1570,6 @@
         private System.Windows.Forms.ToolStripMenuItem anulacionesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem seguridadToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem t11ActualizarTarifasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem iNReversarInventarioToolStripMenuItem;
     }
 }

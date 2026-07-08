@@ -117,7 +117,6 @@
             // 
             this.dgvTiposOC.AllowUserToAddRows = false;
             this.dgvTiposOC.AllowUserToDeleteRows = false;
-            this.dgvTiposOC.AutoGenerateColumns = false;
             this.dgvTiposOC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvTiposOC.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvTiposOC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -132,9 +131,6 @@
             this.dgvTiposOC.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTiposOC_CellContentClick);
             this.dgvTiposOC.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.dgvTiposOC_CellValueNeeded);
             this.dgvTiposOC.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvTiposOC_RowsAdded);
-            // 
-            // oCTipoOCBindingSource
-            // 
             // 
             // ManTipoOC
             // 

@@ -30,7 +30,7 @@
     <MinimumRequiredVersion>1.0.0.3</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>69</ApplicationRevision>
+    <ApplicationRevision>72</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -1555,6 +1555,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="INV\Mantenimiento\frmTipoOp.resx">
       <DependentUpon>frmTipoOp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="INV\Transacciones\frmReversarInventario.resx">
+      <DependentUpon>frmReversarInventario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="INV\Visores\frmVisorExistencias.resx">
       <DependentUpon>frmVisorExistencias.cs</DependentUpon>

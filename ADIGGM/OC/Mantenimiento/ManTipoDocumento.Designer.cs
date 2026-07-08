@@ -106,7 +106,6 @@
             // 
             this.dgvTipoDocumentos.AllowUserToAddRows = false;
             this.dgvTipoDocumentos.AllowUserToDeleteRows = false;
-            this.dgvTipoDocumentos.AutoGenerateColumns = false;
             this.dgvTipoDocumentos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvTipoDocumentos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvTipoDocumentos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -119,13 +118,6 @@
             this.dgvTipoDocumentos.Size = new System.Drawing.Size(430, 216);
             this.dgvTipoDocumentos.TabIndex = 107;
             this.dgvTipoDocumentos.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvTipoDocumentos_RowsAdded);
-            // 
-            // cPTipoDocumentosBindingSource
-            // 
-            // 
-            // 
-            // 
-            // 
             // 
             // ManTipoDocumento
             // 
