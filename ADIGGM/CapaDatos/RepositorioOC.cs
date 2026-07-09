@@ -296,5 +296,145 @@ ORDER BY TR_Contratistas.Contratista",
                       Fecha = fecha, Monto = monto, Observacion = observacion, Usuario = usuario, NombreEquipo = nombreEquipo },
                 CommandType.StoredProcedure);
         }
+
+        // ===== Confirmación de órdenes de compra (OC\Transacciones\TranConfirmarOrden) =====
+
+        /// <summary>CAIs ACTIVOS del proveedor de la orden (combo CAI + fecha límite del form).</summary>
+        public DataTable ListarCaiProveedorPorOrden(int idOC)
+        {
+            return ConsultarTabla(
+                "SELECT A.Activo, A.CAI, A.FechaLimite, A.IdAsigCAIProv, A.IdProveedor " +
+                "FROM dbo.OC_Proveedores_CAI A INNER JOIN dbo.OC_OrdenCompra B ON A.IdProveedor = B.IdProveedor " +
+                "WHERE B.IdOC = @IdOC AND A.Activo = 1",
+                new { IdOC = idOC });
+        }
+
+        /// <summary>Unidades de longitud/recorrido para el odómetro (OC_UnidadCombustible con EsRecorrido).</summary>
+        public DataTable ListarUnidadesRecorrido()
+        {
+            return ConsultarTabla("SELECT IdUnidad, Unidad, Nomenclatura, EsRecorrido FROM dbo.OC_UnidadCombustible WHERE EsRecorrido = 1");
+        }
+
+        /// <summary>Vehículos presentes en el detalle de la orden (combo del form y columnas combo de los grids).</summary>
+        public DataTable ListarVehiculosDeOrden(int idOC)
+        {
+            return ConsultarTabla(
+                "SELECT IdVehiculo, RTRIM(CodVehiculo + ' - ' + Placa) AS Vehiculo FROM dbo.TR_Vehiculos " +
+                "WHERE IdVehiculo IN (SELECT IdVehiculo FROM dbo.OC_OrdenCompraDet WHERE IdOC = @IdOC)",
+                new { IdOC = idOC });
+        }
+
+        /// <summary>Detalle de la orden (SP OC_OrdenDetObtener; alimenta los DOS grids del form, cada uno
+        /// con su propia tabla). El SP devuelve columnas CALCULADAS (CONVERT/CASE: Precio, Aplica, ISV,
+        /// Total) que DataTable.Load marca ReadOnly y el form las edita — se liberan todas (gotcha §11).</summary>
+        public DataTable ObtenerDetalleOrden(int idOC)
+        {
+            DataTable tabla = ConsultarTabla("dbo.OC_OrdenDetObtener", new { IdOC = idOC }, CommandType.StoredProcedure);
+            foreach (DataColumn col in tabla.Columns) col.ReadOnly = false;
+            return tabla;
+        }
+
+        /// <summary>Encabezado de la orden (SP OC_OrdenHeaderObtener, 8 parámetros OUTPUT varchar).</summary>
+        public void ObtenerEncabezadoOrden(int idOC, out string fecha, out string tipoOC, out string proveedor,
+            out string observaciones, out string solicitante, out string odometro, out string proxCambio,
+            out string aplicaCambioAceite)
+        {
+            var p = new DynamicParameters();
+            p.Add("@IdOC", idOC);
+            p.Add("@Fecha", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 10);
+            p.Add("@TipoOC", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 30);
+            p.Add("@Proveedor", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 50);
+            p.Add("@Observaciones", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 100);
+            p.Add("@Solicitante", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 50);
+            p.Add("@Odometro", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 50);
+            p.Add("@ProxCambio", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 50);
+            p.Add("@AplicaCambioAceite", dbType: DbType.AnsiString, direction: ParameterDirection.InputOutput, size: 1);
+            Ejecutar("dbo.OC_OrdenHeaderObtener", p, CommandType.StoredProcedure);
+            fecha = p.Get<string>("@Fecha");
+            tipoOC = p.Get<string>("@TipoOC");
+            proveedor = p.Get<string>("@Proveedor");
+            observaciones = p.Get<string>("@Observaciones");
+            solicitante = p.Get<string>("@Solicitante");
+            odometro = p.Get<string>("@Odometro");
+            proxCambio = p.Get<string>("@ProxCambio");
+            aplicaCambioAceite = p.Get<string>("@AplicaCambioAceite");
+        }
+
+        /// <summary>Tipo de la orden (SP OC_TipoOrdenObtener2): 1 = combustible.</summary>
+        public int ObtenerTipoOrden(int idOC)
+        {
+            return Convert.ToInt32(Escalar<object>("dbo.OC_TipoOrdenObtener2", new { IdOC = idOC }, CommandType.StoredProcedure));
+        }
+
+        /// <summary>1 si la cantidad confirmada EXCEDE la solicitada; 0 si está bien (SP OC_ValidarCantidad).</summary>
+        public int ValidarCantidadConfirmada(int idOC, int idVehiculo, int idProducto, decimal cantidadConf)
+        {
+            return Convert.ToInt32(Escalar<object>("dbo.OC_ValidarCantidad",
+                new { IdOC = idOC, IdVehiculo = idVehiculo, IdProducto = idProducto, CantidadConf = cantidadConf },
+                CommandType.StoredProcedure));
+        }
+
+        /// <summary>Confirma UNA línea de la orden (SP OC_OrdenCompraUpdate; reemplaza consultasOC — §8).
+        /// @IdProducto = producto ORIGINAL de la línea (el WHERE del SP); @IdProductoConf = producto
+        /// confirmado (el grid permite sustituirlo).</summary>
+        public int ConfirmarLineaOrden(int idOC, string numFactura, string cai, int idVehiculo, int idProductoOriginal,
+            decimal cantidad, decimal precio, decimal isv, decimal total, string usuario, string nombreEquipo,
+            int idProductoConf, DateTime fechaConfirmacion, decimal odometro, int idUnidad, bool aplicaDesc, decimal descuento)
+        {
+            return Ejecutar("dbo.OC_OrdenCompraUpdate", new
+            {
+                IdOC = idOC,
+                NumFactura = numFactura,
+                CAI = cai,
+                IdVehiculo = idVehiculo,
+                IdProducto = idProductoOriginal,
+                Cantidad = cantidad,
+                Precio = precio,
+                ISV = isv,
+                Total = total,
+                Usuario = usuario,
+                NombreEquipo = nombreEquipo,
+                IdProductoConf = idProductoConf,
+                FechaConfirmacion = fechaConfirmacion,
+                Odometro = odometro,
+                IdUnidad = idUnidad,
+                AplicaDesc = aplicaDesc,
+                Descuento = descuento
+            }, CommandType.StoredProcedure);
+        }
+
+        /// <summary>Id del registro de cambio de aceite del vehículo (SP OC_CambioAceiteObtener; 0 = no hay).</summary>
+        public int ObtenerCambioAceite(int idVehiculo)
+        {
+            return Convert.ToInt32(Escalar<object>("dbo.OC_CambioAceiteObtener", new { IdVehiculo = idVehiculo }, CommandType.StoredProcedure));
+        }
+
+        /// <summary>Registra fecha/odómetro contra el cambio de aceite programado (SP OC_CambioAceiteDetInsert;
+        /// devuelve &gt;0 si hay que programar un cambio nuevo — semántica del SP).</summary>
+        public int InsertarCambioAceiteDet(int idCambioAceite, int idOC, DateTime fecha, decimal odometro)
+        {
+            return Convert.ToInt32(Escalar<object>("dbo.OC_CambioAceiteDetInsert",
+                new { IdCambioAceite = idCambioAceite, IdOC = idOC, Fecha = fecha, Odometro = odometro },
+                CommandType.StoredProcedure));
+        }
+
+        /// <summary>Crea/actualiza el registro de cambio de aceite del vehículo (SP OC_CambioAceiteInsert;
+        /// 0 = ya existía uno [reintentar con completar=true], 2 = actualizó el de esta orden).</summary>
+        public int InsertarCambioAceite(int idVehiculo, int idOC, DateTime fechaInicio, decimal odometroInicial,
+            decimal odometroProxCambio, int idUnidad, string usuario, bool completar, bool verificar)
+        {
+            return Convert.ToInt32(Escalar<object>("dbo.OC_CambioAceiteInsert", new
+            {
+                IdVehiculo = idVehiculo,
+                IdOC = idOC,
+                FechaInicio = fechaInicio,
+                OdometroInicial = odometroInicial,
+                OdometroProxCambio = odometroProxCambio,
+                IdUnidad = idUnidad,
+                Usuario = usuario,
+                Completar = completar,
+                Verificar = verificar
+            }, CommandType.StoredProcedure));
+        }
     }
 }

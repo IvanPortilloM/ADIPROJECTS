@@ -30,19 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TranConfirmarOrden));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblFLimite = new System.Windows.Forms.Label();
             this.oCProveedoresCAIBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dsOC = new ADIGGM.DataSets.DsOC();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.cboCAI = new System.Windows.Forms.ComboBox();
@@ -73,17 +63,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.iNBodegasBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.chkISV = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvOCDet1 = new System.Windows.Forms.DataGridView();
-            this.idVehiculoDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.idProductoDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.oCProductosBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cantidadDGV = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precioDGV = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iSVDGV = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.totalDGV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.oCOrdenDetObtenerBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel6 = new System.Windows.Forms.Panel();
             this.lblTotal1 = new System.Windows.Forms.Label();
@@ -91,16 +74,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.dgvOCDet2 = new System.Windows.Forms.DataGridView();
-            this.idVehiculo = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.idProducto = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Aplica = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ISV = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdProductoOriginal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Conf = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Descuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.oCOrdenDetObtener1BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel7 = new System.Windows.Forms.Panel();
             this.lblTotal2 = new System.Windows.Forms.Label();
@@ -108,19 +81,11 @@
             this.txtDescuento = new System.Windows.Forms.TextBox();
             this.chkDesc = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.oC_ProductosTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_ProductosTableAdapter();
-            this.oC_UnidadKilometrajeTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_UnidadKilometrajeTableAdapter();
-            this.tR_VehiculosTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.TR_VehiculosTableAdapter();
-            this.oC_OrdenDetObtenerTableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_OrdenDetObtenerTableAdapter();
-            this.oC_OrdenDetObtener1TableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_OrdenDetObtener1TableAdapter();
-            this.oC_Proveedores_CAITableAdapter = new ADIGGM.DataSets.DsOCTableAdapters.OC_Proveedores_CAITableAdapter();
             this.pnlFooter.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.oCProveedoresCAIBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRVehiculosBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCUnidadKilometrajeBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iNBodegasBindingSource)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOCDet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosBindingSource)).BeginInit();
@@ -215,7 +180,6 @@
             // lblFLimite
             // 
             this.lblFLimite.AutoSize = true;
-            this.lblFLimite.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.oCProveedoresCAIBindingSource, "FechaLimite", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "d"));
             this.lblFLimite.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFLimite.Location = new System.Drawing.Point(101, 250);
             this.lblFLimite.Name = "lblFLimite";
@@ -225,13 +189,6 @@
             // 
             // oCProveedoresCAIBindingSource
             // 
-            this.oCProveedoresCAIBindingSource.DataMember = "OC_Proveedores_CAI";
-            this.oCProveedoresCAIBindingSource.DataSource = this.dsOC;
-            // 
-            // dsOC
-            // 
-            this.dsOC.DataSetName = "DsOC";
-            this.dsOC.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // label11
             // 
@@ -301,8 +258,6 @@
             // 
             // tRVehiculosBindingSource
             // 
-            this.tRVehiculosBindingSource.DataMember = "TR_Vehiculos";
-            this.tRVehiculosBindingSource.DataSource = this.dsOC;
             // 
             // txtProxCambio
             // 
@@ -347,8 +302,6 @@
             // 
             // oCUnidadKilometrajeBindingSource
             // 
-            this.oCUnidadKilometrajeBindingSource.DataMember = "OC_UnidadKilometraje";
-            this.oCUnidadKilometrajeBindingSource.DataSource = this.dsOC;
             // 
             // txtOdometro
             // 
@@ -571,14 +524,6 @@
             this.dgvOCDet1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvOCDet1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvOCDet1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvOCDet1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idVehiculoDataGridViewTextBoxColumn1,
-            this.idProductoDataGridViewTextBoxColumn1,
-            this.cantidadDGV,
-            this.precioDGV,
-            this.iSVDGV,
-            this.totalDGV});
-            this.dgvOCDet1.DataSource = this.oCOrdenDetObtenerBindingSource;
             this.dgvOCDet1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOCDet1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvOCDet1.Location = new System.Drawing.Point(0, 22);
@@ -590,95 +535,11 @@
             this.dgvOCDet1.Size = new System.Drawing.Size(693, 180);
             this.dgvOCDet1.TabIndex = 109;
             // 
-            // idVehiculoDataGridViewTextBoxColumn1
-            // 
-            this.idVehiculoDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.idVehiculoDataGridViewTextBoxColumn1.DataPropertyName = "IdVehiculo";
-            this.idVehiculoDataGridViewTextBoxColumn1.DataSource = this.tRVehiculosBindingSource;
-            this.idVehiculoDataGridViewTextBoxColumn1.DisplayMember = "Vehiculo";
-            this.idVehiculoDataGridViewTextBoxColumn1.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.idVehiculoDataGridViewTextBoxColumn1.FillWeight = 173.164F;
-            this.idVehiculoDataGridViewTextBoxColumn1.HeaderText = "Vehiculo";
-            this.idVehiculoDataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.idVehiculoDataGridViewTextBoxColumn1.Name = "idVehiculoDataGridViewTextBoxColumn1";
-            this.idVehiculoDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.idVehiculoDataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.idVehiculoDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.idVehiculoDataGridViewTextBoxColumn1.ValueMember = "IdVehiculo";
-            this.idVehiculoDataGridViewTextBoxColumn1.Width = 78;
-            // 
-            // idProductoDataGridViewTextBoxColumn1
-            // 
-            this.idProductoDataGridViewTextBoxColumn1.DataPropertyName = "IdProducto";
-            this.idProductoDataGridViewTextBoxColumn1.DataSource = this.oCProductosBindingSource;
-            this.idProductoDataGridViewTextBoxColumn1.DisplayMember = "Producto";
-            this.idProductoDataGridViewTextBoxColumn1.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.idProductoDataGridViewTextBoxColumn1.FillWeight = 173.164F;
-            this.idProductoDataGridViewTextBoxColumn1.HeaderText = "Producto";
-            this.idProductoDataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.idProductoDataGridViewTextBoxColumn1.Name = "idProductoDataGridViewTextBoxColumn1";
-            this.idProductoDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.idProductoDataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.idProductoDataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.idProductoDataGridViewTextBoxColumn1.ValueMember = "IdProducto";
-            // 
             // oCProductosBindingSource
             // 
-            this.oCProductosBindingSource.DataMember = "OC_Productos";
-            this.oCProductosBindingSource.DataSource = this.dsOC;
-            // 
-            // cantidadDGV
-            // 
-            this.cantidadDGV.DataPropertyName = "Cantidad";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Format = "N2";
-            this.cantidadDGV.DefaultCellStyle = dataGridViewCellStyle1;
-            this.cantidadDGV.FillWeight = 69.72511F;
-            this.cantidadDGV.HeaderText = "Cantidad";
-            this.cantidadDGV.MinimumWidth = 6;
-            this.cantidadDGV.Name = "cantidadDGV";
-            this.cantidadDGV.ReadOnly = true;
-            // 
-            // precioDGV
-            // 
-            this.precioDGV.DataPropertyName = "Precio";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Format = "N4";
-            this.precioDGV.DefaultCellStyle = dataGridViewCellStyle2;
-            this.precioDGV.FillWeight = 67.26166F;
-            this.precioDGV.HeaderText = "Precio";
-            this.precioDGV.MinimumWidth = 6;
-            this.precioDGV.Name = "precioDGV";
-            this.precioDGV.ReadOnly = true;
-            // 
-            // iSVDGV
-            // 
-            this.iSVDGV.DataPropertyName = "ISV";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Format = "N4";
-            this.iSVDGV.DefaultCellStyle = dataGridViewCellStyle3;
-            this.iSVDGV.FillWeight = 49.68002F;
-            this.iSVDGV.HeaderText = "ISV";
-            this.iSVDGV.MinimumWidth = 6;
-            this.iSVDGV.Name = "iSVDGV";
-            this.iSVDGV.ReadOnly = true;
-            // 
-            // totalDGV
-            // 
-            this.totalDGV.DataPropertyName = "Total";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Format = "N4";
-            this.totalDGV.DefaultCellStyle = dataGridViewCellStyle4;
-            this.totalDGV.FillWeight = 67.00507F;
-            this.totalDGV.HeaderText = "Total";
-            this.totalDGV.MinimumWidth = 6;
-            this.totalDGV.Name = "totalDGV";
-            this.totalDGV.ReadOnly = true;
             // 
             // oCOrdenDetObtenerBindingSource
             // 
-            this.oCOrdenDetObtenerBindingSource.DataMember = "OC_OrdenDetObtener";
-            this.oCOrdenDetObtenerBindingSource.DataSource = this.dsOC;
             // 
             // panel6
             // 
@@ -740,18 +601,6 @@
             this.dgvOCDet2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvOCDet2.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvOCDet2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvOCDet2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idVehiculo,
-            this.idProducto,
-            this.Cantidad,
-            this.Precio,
-            this.Aplica,
-            this.ISV,
-            this.Total,
-            this.IdProductoOriginal,
-            this.Conf,
-            this.Descuento});
-            this.dgvOCDet2.DataSource = this.oCOrdenDetObtener1BindingSource;
             this.dgvOCDet2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOCDet2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvOCDet2.Location = new System.Drawing.Point(0, 22);
@@ -765,130 +614,8 @@
             this.dgvOCDet2.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOCDet2_CellValueChanged);
             this.dgvOCDet2.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvOCDet2_EditingControlShowing);
             // 
-            // idVehiculo
-            // 
-            this.idVehiculo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.idVehiculo.DataPropertyName = "IdVehiculo";
-            this.idVehiculo.DataSource = this.tRVehiculosBindingSource;
-            this.idVehiculo.DisplayMember = "Vehiculo";
-            this.idVehiculo.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.idVehiculo.FillWeight = 205.7688F;
-            this.idVehiculo.HeaderText = "Vehiculo";
-            this.idVehiculo.MinimumWidth = 6;
-            this.idVehiculo.Name = "idVehiculo";
-            this.idVehiculo.ReadOnly = true;
-            this.idVehiculo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.idVehiculo.ValueMember = "IdVehiculo";
-            this.idVehiculo.Width = 59;
-            // 
-            // idProducto
-            // 
-            this.idProducto.DataPropertyName = "IdProducto";
-            this.idProducto.DataSource = this.oCProductosBindingSource;
-            this.idProducto.DisplayMember = "Producto";
-            this.idProducto.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.idProducto.FillWeight = 205.7688F;
-            this.idProducto.HeaderText = "Producto";
-            this.idProducto.MinimumWidth = 6;
-            this.idProducto.Name = "idProducto";
-            this.idProducto.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.idProducto.ValueMember = "IdProducto";
-            // 
-            // Cantidad
-            // 
-            this.Cantidad.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Cantidad.DataPropertyName = "Cantidad";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Format = "N2";
-            this.Cantidad.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Cantidad.FillWeight = 84.05188F;
-            this.Cantidad.HeaderText = "Cantidad";
-            this.Cantidad.MinimumWidth = 6;
-            this.Cantidad.Name = "Cantidad";
-            this.Cantidad.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Cantidad.Width = 67;
-            // 
-            // Precio
-            // 
-            this.Precio.DataPropertyName = "Precio";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Format = "N2";
-            this.Precio.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Precio.FillWeight = 71.97139F;
-            this.Precio.HeaderText = "Precio";
-            this.Precio.MinimumWidth = 6;
-            this.Precio.Name = "Precio";
-            this.Precio.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Aplica
-            // 
-            this.Aplica.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Aplica.DataPropertyName = "Aplica";
-            this.Aplica.FillWeight = 40.60914F;
-            this.Aplica.HeaderText = "ISV";
-            this.Aplica.MinimumWidth = 6;
-            this.Aplica.Name = "Aplica";
-            this.Aplica.Width = 29;
-            // 
-            // ISV
-            // 
-            this.ISV.DataPropertyName = "ISV";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.Format = "N2";
-            dataGridViewCellStyle7.NullValue = null;
-            this.ISV.DefaultCellStyle = dataGridViewCellStyle7;
-            this.ISV.FillWeight = 57.81056F;
-            this.ISV.HeaderText = "ISV";
-            this.ISV.MinimumWidth = 6;
-            this.ISV.Name = "ISV";
-            this.ISV.ReadOnly = true;
-            this.ISV.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Total
-            // 
-            this.Total.DataPropertyName = "Total";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.Format = "N4";
-            dataGridViewCellStyle8.NullValue = null;
-            this.Total.DefaultCellStyle = dataGridViewCellStyle8;
-            this.Total.FillWeight = 83.90747F;
-            this.Total.HeaderText = "Total";
-            this.Total.MinimumWidth = 6;
-            this.Total.Name = "Total";
-            this.Total.ReadOnly = true;
-            this.Total.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // IdProductoOriginal
-            // 
-            this.IdProductoOriginal.DataPropertyName = "IdProductoOriginal";
-            this.IdProductoOriginal.HeaderText = "IdProductoOriginal";
-            this.IdProductoOriginal.MinimumWidth = 6;
-            this.IdProductoOriginal.Name = "IdProductoOriginal";
-            this.IdProductoOriginal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.IdProductoOriginal.Visible = false;
-            // 
-            // Conf
-            // 
-            this.Conf.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Conf.FillWeight = 50.11209F;
-            this.Conf.HeaderText = "Conf";
-            this.Conf.MinimumWidth = 6;
-            this.Conf.Name = "Conf";
-            this.Conf.Width = 39;
-            // 
-            // Descuento
-            // 
-            dataGridViewCellStyle9.Format = "N2";
-            dataGridViewCellStyle9.NullValue = null;
-            this.Descuento.DefaultCellStyle = dataGridViewCellStyle9;
-            this.Descuento.HeaderText = "Descuento";
-            this.Descuento.MinimumWidth = 6;
-            this.Descuento.Name = "Descuento";
-            // 
             // oCOrdenDetObtener1BindingSource
             // 
-            this.oCOrdenDetObtener1BindingSource.DataMember = "OC_OrdenDetObtener1";
-            this.oCOrdenDetObtener1BindingSource.DataSource = this.dsOC;
             // 
             // panel7
             // 
@@ -960,30 +687,6 @@
             this.label7.Text = "Orden Compra Detalle Confirmación";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // oC_ProductosTableAdapter
-            // 
-            this.oC_ProductosTableAdapter.ClearBeforeFill = true;
-            // 
-            // oC_UnidadKilometrajeTableAdapter
-            // 
-            this.oC_UnidadKilometrajeTableAdapter.ClearBeforeFill = true;
-            // 
-            // tR_VehiculosTableAdapter
-            // 
-            this.tR_VehiculosTableAdapter.ClearBeforeFill = true;
-            // 
-            // oC_OrdenDetObtenerTableAdapter
-            // 
-            this.oC_OrdenDetObtenerTableAdapter.ClearBeforeFill = true;
-            // 
-            // oC_OrdenDetObtener1TableAdapter
-            // 
-            this.oC_OrdenDetObtener1TableAdapter.ClearBeforeFill = true;
-            //
-            // oC_Proveedores_CAITableAdapter
-            // 
-            this.oC_Proveedores_CAITableAdapter.ClearBeforeFill = true;
-            // 
             // TranConfirmarOrden
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1004,10 +707,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.oCProveedoresCAIBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dsOC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tRVehiculosBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCUnidadKilometrajeBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iNBodegasBindingSource)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOCDet1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.oCProductosBindingSource)).EndInit();
@@ -1051,9 +752,7 @@
         private System.Windows.Forms.DataGridView dgvOCDet2;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label lblTotal2;
-        private DataSets.DsOC dsOC;
         private System.Windows.Forms.BindingSource oCProductosBindingSource;
-        private DataSets.DsOCTableAdapters.OC_ProductosTableAdapter oC_ProductosTableAdapter;
         private System.Windows.Forms.Label lblSolicitante;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dtpConfirmacion;
@@ -1063,7 +762,6 @@
         private System.Windows.Forms.Label lblKilometraje;
         private System.Windows.Forms.ComboBox cboUnidad;
         private System.Windows.Forms.BindingSource oCUnidadKilometrajeBindingSource;
-        private DataSets.DsOCTableAdapters.OC_UnidadKilometrajeTableAdapter oC_UnidadKilometrajeTableAdapter;
         private System.Windows.Forms.CheckBox chkISV;
         private System.Windows.Forms.CheckBox chkDesc;
         private System.Windows.Forms.TextBox txtDescuento;
@@ -1073,32 +771,11 @@
         private System.Windows.Forms.ComboBox cboVeh;
         private System.Windows.Forms.CheckBox ckbCambioAceite;
         private System.Windows.Forms.BindingSource tRVehiculosBindingSource;
-        private DataSets.DsOCTableAdapters.TR_VehiculosTableAdapter tR_VehiculosTableAdapter;
-        private System.Windows.Forms.DataGridViewComboBoxColumn idVehiculoDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewComboBoxColumn idProductoDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantidadDGV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn precioDGV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iSVDGV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn totalDGV;
         private System.Windows.Forms.BindingSource oCOrdenDetObtenerBindingSource;
-        private DataSets.DsOCTableAdapters.OC_OrdenDetObtenerTableAdapter oC_OrdenDetObtenerTableAdapter;
         private System.Windows.Forms.BindingSource oCOrdenDetObtener1BindingSource;
-        private DataSets.DsOCTableAdapters.OC_OrdenDetObtener1TableAdapter oC_OrdenDetObtener1TableAdapter;
-        private System.Windows.Forms.DataGridViewComboBoxColumn idVehiculo;
-        private System.Windows.Forms.DataGridViewComboBoxColumn idProducto;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Aplica;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ISV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Total;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdProductoOriginal;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Conf;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Descuento;
-        private System.Windows.Forms.BindingSource iNBodegasBindingSource;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cboCAI;
         private System.Windows.Forms.BindingSource oCProveedoresCAIBindingSource;
-        private DataSets.DsOCTableAdapters.OC_Proveedores_CAITableAdapter oC_Proveedores_CAITableAdapter;
         private System.Windows.Forms.Label lblFLimite;
         private System.Windows.Forms.Label label11;
     }

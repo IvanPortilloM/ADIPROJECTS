@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Windows.Forms;
+using ADIGGM.CapaDatos;
+using ADIGGM.Clases;
 
 namespace ADIGGM.OC.Transacciones
 {
     public partial class TranConfirmarOrden : FrmPrincipal
     {
+        private readonly RepositorioOC _repoOC = new RepositorioOC();
+        // ListarProductosConTodos/ObtenerIsvPorcentaje viven en RepositorioInventario (SPs OC_* que ese
+        // módulo también usa); se reubicarán a RepositorioOC al cerrar DsOC (nota en el propio repo).
+        private readonly RepositorioInventario _repoInv = new RepositorioInventario();
+
         int IdOC = 0, TipoOC = 0;
         public decimal ISVP = 0;
         bool PermitirCant = true;
@@ -12,27 +19,81 @@ namespace ADIGGM.OC.Transacciones
         {
             InitializeComponent();
             this.IdOC = IdOC;
+            ConfigurarColumnas();
         }
+
+        /// <summary>Columnas de los DOS grids EN CÓDIGO (gotcha §11), con los Names EXACTOS que el resto
+        /// del .cs referencia por Cells["..."]. dgvOCDet1 = detalle solicitado (grid ReadOnly de diseño);
+        /// dgvOCDet2 = detalle a confirmar (editable; ISV/Total se bloquean en Load y los libera chkISV;
+        /// idProducto es combo EDITABLE — permite sustituir el producto al confirmar). Los DataSource de
+        /// las 4 columnas combo se asignan en el Load tras poblar sus BindingSource.</summary>
+        private void ConfigurarColumnas()
+        {
+            dgvOCDet1.AutoGenerateColumns = false;
+            dgvOCDet1.Columns.Clear();
+            dgvOCDet1.Columns.Add(GridColumnas.Combo("idVehiculoDataGridViewTextBoxColumn1", "IdVehiculo", "Vehiculo", "Vehiculo", "IdVehiculo", width: 78, autoSize: DataGridViewAutoSizeColumnMode.DisplayedCells));
+            dgvOCDet1.Columns.Add(GridColumnas.Combo("idProductoDataGridViewTextBoxColumn1", "IdProducto", "Producto", "Producto", "IdProducto"));
+            dgvOCDet1.Columns.Add(GridColumnas.Texto("cantidadDGV", "Cantidad", "Cantidad", format: "N2"));
+            dgvOCDet1.Columns.Add(GridColumnas.Texto("precioDGV", "Precio", "Precio", format: "N4"));
+            dgvOCDet1.Columns.Add(GridColumnas.Texto("iSVDGV", "ISV", "ISV", format: "N4"));
+            dgvOCDet1.Columns.Add(GridColumnas.Texto("totalDGV", "Total", "Total", format: "N4"));
+
+            dgvOCDet2.AutoGenerateColumns = false;
+            dgvOCDet2.Columns.Clear();
+            dgvOCDet2.Columns.Add(GridColumnas.Combo("idVehiculo", "IdVehiculo", "Vehiculo", "Vehiculo", "IdVehiculo", width: 59, autoSize: DataGridViewAutoSizeColumnMode.ColumnHeader));
+            dgvOCDet2.Columns.Add(GridColumnas.Combo("idProducto", "IdProducto", "Producto", "Producto", "IdProducto", readOnly: false));
+            ((DataGridViewComboBoxColumn)dgvOCDet2.Columns["idProducto"]).DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox;
+            dgvOCDet2.Columns.Add(GridColumnas.Texto("Cantidad", "Cantidad", "Cantidad", format: "N2", width: 67, autoSize: DataGridViewAutoSizeColumnMode.ColumnHeader, readOnly: false));
+            dgvOCDet2.Columns.Add(GridColumnas.Texto("Precio", "Precio", "Precio", format: "N2", readOnly: false));
+            dgvOCDet2.Columns.Add(GridColumnas.Check("Aplica", "Aplica", "ISV", width: 29, autoSize: DataGridViewAutoSizeColumnMode.ColumnHeader, readOnly: false));
+            dgvOCDet2.Columns.Add(GridColumnas.Texto("ISV", "ISV", "ISV", format: "N2", readOnly: false));
+            dgvOCDet2.Columns.Add(GridColumnas.Texto("Total", "Total", "Total", format: "N4", readOnly: false));
+            dgvOCDet2.Columns.Add(GridColumnas.Texto("IdProductoOriginal", "IdProductoOriginal", "IdProductoOriginal", visible: false));
+            dgvOCDet2.Columns.Add(GridColumnas.Check("Conf", "", "Conf", width: 39, autoSize: DataGridViewAutoSizeColumnMode.ColumnHeader, readOnly: false));
+            dgvOCDet2.Columns.Add(GridColumnas.Texto("Descuento", "", "Descuento", format: "N2", readOnly: false));
+        }
+
         private void TranConfirmarOrden_Load(object sender, EventArgs e)
         {
-            // TODO: esta línea de código carga datos en la tabla 'dsOC.OC_Proveedores_CAI' Puede moverla o quitarla según sea necesario.
-            this.oC_Proveedores_CAITableAdapter.FillByIdOC(this.dsOC.OC_Proveedores_CAI, IdOC);
-            // Bodegas vía repositorio (DsInventarioAdiggm eliminado); el resto sigue en DsOC hasta esa fase
-            iNBodegasBindingSource.DataMember = "";
-            iNBodegasBindingSource.DataSource = new ADIGGM.CapaDatos.RepositorioInventario().ListarBodegas();
-            this.oC_UnidadKilometrajeTableAdapter.Fill(this.dsOC.OC_UnidadKilometraje);
+            // Tipo de orden e ISV PRIMERO: los cálculos que disparan los bindings de abajo los usan.
+            // (El flujo original los cargaba al final, por lo que los primeros recálculos corrían con
+            // TipoOC=0; ahora todos los recálculos usan los valores correctos desde el inicio.)
+            TipoOC = _repoOC.ObtenerTipoOrden(IdOC);
+            ISVP = _repoInv.ObtenerIsvPorcentaje();
+
+            oCProveedoresCAIBindingSource.DataMember = "";
+            oCProveedoresCAIBindingSource.DataSource = _repoOC.ListarCaiProveedorPorOrden(IdOC);
+            // Binding de lblFLimite recreado en código (el de diseño quedaría huérfano — gotcha §11)
+            lblFLimite.DataBindings.Clear();
+            lblFLimite.DataBindings.Add(new Binding("Text", oCProveedoresCAIBindingSource, "FechaLimite", true, DataSourceUpdateMode.OnValidation, null, "d"));
+
+            oCUnidadKilometrajeBindingSource.DataMember = "";
+            oCUnidadKilometrajeBindingSource.DataSource = _repoOC.ListarUnidadesRecorrido();
             cboUnidad.SelectedIndex = -1;
-            this.tR_VehiculosTableAdapter.FillByIdOC(this.dsOC.TR_Vehiculos,IdOC);
+            tRVehiculosBindingSource.DataMember = "";
+            tRVehiculosBindingSource.DataSource = _repoOC.ListarVehiculosDeOrden(IdOC);
             cboVeh.SelectedIndex = 0;
-            this.oC_ProductosTableAdapter.FillByTodos(this.dsOC.OC_Productos);
-            this.oC_OrdenDetObtenerTableAdapter.Fill(this.dsOC.OC_OrdenDetObtener, IdOC);
-            this.oC_OrdenDetObtener1TableAdapter.Fill(this.dsOC.OC_OrdenDetObtener1, IdOC);
+            oCProductosBindingSource.DataMember = "";
+            oCProductosBindingSource.DataSource = _repoInv.ListarProductosConTodos();
+
+            // Los DataSource de las columnas combo van ANTES de enlazar los grids (si no, los valores
+            // no encontrados en la lista disparan DataError).
+            ((DataGridViewComboBoxColumn)dgvOCDet1.Columns["idVehiculoDataGridViewTextBoxColumn1"]).DataSource = tRVehiculosBindingSource;
+            ((DataGridViewComboBoxColumn)dgvOCDet1.Columns["idProductoDataGridViewTextBoxColumn1"]).DataSource = oCProductosBindingSource;
+            ((DataGridViewComboBoxColumn)dgvOCDet2.Columns["idVehiculo"]).DataSource = tRVehiculosBindingSource;
+            ((DataGridViewComboBoxColumn)dgvOCDet2.Columns["idProducto"]).DataSource = oCProductosBindingSource;
+
+            oCOrdenDetObtenerBindingSource.DataMember = "";
+            oCOrdenDetObtenerBindingSource.DataSource = _repoOC.ObtenerDetalleOrden(IdOC);
+            dgvOCDet1.DataSource = oCOrdenDetObtenerBindingSource;
+            oCOrdenDetObtener1BindingSource.DataMember = "";
+            oCOrdenDetObtener1BindingSource.DataSource = _repoOC.ObtenerDetalleOrden(IdOC);
+            dgvOCDet2.DataSource = oCOrdenDetObtener1BindingSource;
             CalcularTotal();
 
-            string fecha = "", tipooc = "", proveedor = "", observaciones = "", solicitante = "", odometro="", proximoCambio="", aplicaCambio="";
-            
-            Clases.VarGlobales.consultasOC.OC_OrdenHeaderObtener(IdOC, ref fecha, ref tipooc, ref proveedor, ref observaciones, ref solicitante, ref odometro, ref proximoCambio, ref aplicaCambio);
-            
+            string fecha, tipooc, proveedor, observaciones, solicitante, odometro, proximoCambio, aplicaCambio;
+            _repoOC.ObtenerEncabezadoOrden(IdOC, out fecha, out tipooc, out proveedor, out observaciones, out solicitante, out odometro, out proximoCambio, out aplicaCambio);
+
             lblFecha.Text = fecha;
             lblTipoOC.Text = tipooc;
             lblProveedor.Text = proveedor;
@@ -50,19 +111,18 @@ namespace ADIGGM.OC.Transacciones
                 row.Cells["Conf"].Value = true;
                 dgvOCDet2.Rows[row.Index].Cells["Descuento"].Value = 0;
             }
-            
+
             if (chkDesc.Checked == false)
             {
                 txtDescuento.Text = "0.00";
             }
-            TipoOC = int.Parse(Clases.VarGlobales.consultasOC.OC_TipoOrdenObtener2(IdOC).ToString());
             obtenerTipoOC();
-            ISVP = decimal.Parse(Clases.VarGlobales.consultasOC.OC_ISVObtener().ToString());
         }
 
         void CalcularTotal()
         {
-            decimal isv = TipoOC == 1 ? 0 : decimal.Parse(Clases.VarGlobales.consultasOC.OC_ISVObtener().ToString());
+            // (El original consultaba aquí el SP OC_ISVObtener en una variable que nunca se usaba:
+            // un viaje a la BD por cada recálculo, eliminado. ISVP se carga UNA vez en el Load.)
             decimal total1 = 0, isv1 = 0, subtotal1 = 0, total2 = 0, isv2 = 0, subtotal2 = 0, descuento;
 
             foreach (DataGridViewRow row in dgvOCDet1.Rows)
@@ -98,8 +158,7 @@ namespace ADIGGM.OC.Transacciones
                     decimal isv;
                     if (bool.Parse(dgvOCDet2.Rows[e.RowIndex].Cells["Aplica"].Value.ToString()) == true)
                     {
-                        decimal isv2 = TipoOC == 1 ? 0 : decimal.Parse(Clases.VarGlobales.consultasOC.OC_ISVObtener().ToString());
-                        isv = isv2;
+                        isv = TipoOC == 1 ? 0 : ISVP;   // ISVP cacheado en el Load (antes: SP por celda editada)
                     }
                     else
                     {
@@ -138,9 +197,9 @@ namespace ADIGGM.OC.Transacciones
                 {
                     if (bool.Parse(row.Cells["Conf"].Value.ToString()) == true)
                     {
-                        contador2 += int.Parse(Clases.VarGlobales.consultasOC.OC_ValidarCantidad(IdOC, int.Parse(row.Cells["idVehiculo"].Value.ToString()),
-                                                                                                   int.Parse(row.Cells["idProducto"].Value.ToString()),
-                                                                                                   decimal.Parse(row.Cells["Cantidad"].Value.ToString())).ToString());
+                        contador2 += _repoOC.ValidarCantidadConfirmada(IdOC, int.Parse(row.Cells["idVehiculo"].Value.ToString()),
+                                                                              int.Parse(row.Cells["idProducto"].Value.ToString()),
+                                                                              decimal.Parse(row.Cells["Cantidad"].Value.ToString()));
                     }
                 }
                 foreach (DataGridViewRow row in dgvOCDet2.Rows)
@@ -209,29 +268,29 @@ namespace ADIGGM.OC.Transacciones
                         {
                             if (bool.Parse(row.Cells["Conf"].Value.ToString()) == true)
                             {
-                                Clases.VarGlobales.consultasOC.OC_OrdenCompraUpdate(IdOC, txtFactura.Text, cboCAI.Text == "" ? "" : cboCAI.Text,
-                                                                                                           int.Parse(row.Cells["idVehiculo"].Value.ToString()),
-                                                                                                           int.Parse(row.Cells["IdProductoOriginal"].Value.ToString()),
-                                                                                                           decimal.Parse(row.Cells["Cantidad"].Value.ToString()),
-                                                                                                           decimal.Parse(row.Cells["Precio"].Value.ToString()),
-                                                                                                           decimal.Parse(row.Cells["ISV"].Value.ToString()),
-                                                                                                           decimal.Parse(row.Cells["Total"].Value.ToString()),
-                                                                                                           Clases.VarGlobales.Usuario,
-                                                                                                           Environment.MachineName,
-                                                                                                           int.Parse(row.Cells["IdProducto"].Value.ToString()),
-                                                                                                           dtpConfirmacion.Value.Date,
-                                                                                                           decimal.Parse(txtOdometro.Text.ToString()),
-                                                                                                           TipoOC == 1 ? int.Parse(cboUnidad.SelectedValue.ToString()) : 0,
-                                                                                                           chkDesc.Checked,
-                                                                                                           decimal.Parse(txtDescuento.Text.ToString()));
+                                _repoOC.ConfirmarLineaOrden(IdOC, txtFactura.Text, cboCAI.Text == "" ? "" : cboCAI.Text,
+                                                            int.Parse(row.Cells["idVehiculo"].Value.ToString()),
+                                                            int.Parse(row.Cells["IdProductoOriginal"].Value.ToString()),
+                                                            decimal.Parse(row.Cells["Cantidad"].Value.ToString()),
+                                                            decimal.Parse(row.Cells["Precio"].Value.ToString()),
+                                                            decimal.Parse(row.Cells["ISV"].Value.ToString()),
+                                                            decimal.Parse(row.Cells["Total"].Value.ToString()),
+                                                            Clases.VarGlobales.Usuario,
+                                                            Environment.MachineName,
+                                                            int.Parse(row.Cells["idProducto"].Value.ToString()),
+                                                            dtpConfirmacion.Value.Date,
+                                                            decimal.Parse(txtOdometro.Text.ToString()),
+                                                            TipoOC == 1 ? int.Parse(cboUnidad.SelectedValue.ToString()) : 0,
+                                                            chkDesc.Checked,
+                                                            decimal.Parse(txtDescuento.Text.ToString()));
                             }
                         }
 
-                        int idCambioAceite = Convert.ToInt32(Clases.VarGlobales.consultasOC.OC_CambioAceiteObtener(Convert.ToInt32(cboVeh.SelectedValue)));
+                        int idCambioAceite = _repoOC.ObtenerCambioAceite(Convert.ToInt32(cboVeh.SelectedValue));
 
                         if (TipoOC == 1 && idCambioAceite > 0)
                         {
-                            int cambioAceite = Convert.ToInt32(Clases.VarGlobales.consultasOC.OC_CambioAceiteDetInsert(idCambioAceite, IdOC, dtpConfirmacion.Value.Date, decimal.Parse(txtOdometro.Text)));
+                            int cambioAceite = _repoOC.InsertarCambioAceiteDet(idCambioAceite, IdOC, dtpConfirmacion.Value.Date, decimal.Parse(txtOdometro.Text));
                             if (cambioAceite > 0)
                             {
                                 MessageBox.Show("¡Es necesario programar un nuevo cambio de aceite para esta unidad!", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -240,11 +299,11 @@ namespace ADIGGM.OC.Transacciones
 
                         if (ckbCambioAceite.Checked == true && TipoOC != 1)
                         {
-                            int resp = Convert.ToInt32(Clases.VarGlobales.consultasOC.OC_CambioAceiteInsert(Convert.ToInt32(cboVeh.SelectedValue), IdOC, dtpConfirmacion.Value.Date, Convert.ToDecimal(txtOdometro.Text), Convert.ToDecimal(txtProxCambio.Text), Convert.ToInt32(cboUnidad.SelectedValue), Clases.VarGlobales.Usuario, false, true));
+                            int resp = _repoOC.InsertarCambioAceite(Convert.ToInt32(cboVeh.SelectedValue), IdOC, dtpConfirmacion.Value.Date, Convert.ToDecimal(txtOdometro.Text), Convert.ToDecimal(txtProxCambio.Text), Convert.ToInt32(cboUnidad.SelectedValue), Clases.VarGlobales.Usuario, false, true);
                             if (resp == 0)
                             {
                                 MessageBox.Show("Ya existe un registro de cambio de aceite para este vehículo, se completará para ingresar uno nuevo", Clases.VarGlobales.nombreSistema, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                Clases.VarGlobales.consultasOC.OC_CambioAceiteInsert(Convert.ToInt32(cboVeh.SelectedValue), IdOC, dtpConfirmacion.Value.Date, Convert.ToDecimal(txtOdometro.Text), Convert.ToDecimal(txtProxCambio.Text), Convert.ToInt32(cboUnidad.SelectedValue), Clases.VarGlobales.Usuario, true, false);
+                                _repoOC.InsertarCambioAceite(Convert.ToInt32(cboVeh.SelectedValue), IdOC, dtpConfirmacion.Value.Date, Convert.ToDecimal(txtOdometro.Text), Convert.ToDecimal(txtProxCambio.Text), Convert.ToInt32(cboUnidad.SelectedValue), Clases.VarGlobales.Usuario, true, false);
                             }
                             if (resp == 2)
                             {
@@ -268,7 +327,8 @@ namespace ADIGGM.OC.Transacciones
         private void dgvOCDet2_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             e.Control.KeyPress -= new KeyPressEventHandler(Column1_KeyPress);
-            if (dgvOCDet2.CurrentCell.ColumnIndex == 2 || dgvOCDet2.CurrentCell.ColumnIndex == 3 || dgvOCDet2.CurrentCell.ColumnIndex == 6) //Desired Column
+            string columna = dgvOCDet2.CurrentCell.OwningColumn.Name;   // por Name, no por índice (§13.b)
+            if (columna == "Cantidad" || columna == "Precio" || columna == "Total")
             {
                 TextBox tb = e.Control as TextBox;
                 if (tb != null)
@@ -353,13 +413,12 @@ namespace ADIGGM.OC.Transacciones
                             decimal isv;
                             if (bool.Parse(dgvOCDet2.Rows[rows.Index].Cells["Aplica"].Value.ToString()) == true)
                             {
-                                decimal isv2 = TipoOC == 1 ? 0 : decimal.Parse(Clases.VarGlobales.consultasOC.OC_ISVObtener().ToString());
-                                isv = isv2;
+                                isv = TipoOC == 1 ? 0 : ISVP;   // ISVP cacheado en el Load (antes: SP por fila)
                             }
                             else
                             {
                                 isv = 0;
-                            }                            
+                            }
                             decimal cantidad = dgvOCDet2.Rows[rows.Index].Cells["Cantidad"].Value.ToString() == string.Empty ? 0 : decimal.Parse(dgvOCDet2.Rows[rows.Index].Cells["Cantidad"].Value.ToString());
                             decimal precio = dgvOCDet2.Rows[rows.Index].Cells["Precio"].Value.ToString() == string.Empty ? 0 : decimal.Parse(dgvOCDet2.Rows[rows.Index].Cells["Precio"].Value.ToString());
 
@@ -485,13 +544,13 @@ namespace ADIGGM.OC.Transacciones
         {
             if (TipoOC == 1)
             {
-                dgvOCDet2.Columns[3].Visible = false;
-                dgvOCDet2.Columns[4].Visible = false;
-                dgvOCDet2.Columns[5].Visible = false;
-                dgvOCDet1.Columns[3].Visible = false;
-                dgvOCDet1.Columns[4].Visible = false;
-                dgvOCDet1.Columns[5].Visible = false;
-                dgvOCDet2.Columns[6].ReadOnly = false;
+                dgvOCDet2.Columns["Precio"].Visible = false;
+                dgvOCDet2.Columns["Aplica"].Visible = false;
+                dgvOCDet2.Columns["ISV"].Visible = false;
+                dgvOCDet1.Columns["precioDGV"].Visible = false;
+                dgvOCDet1.Columns["iSVDGV"].Visible = false;
+                dgvOCDet1.Columns["totalDGV"].Visible = false;
+                dgvOCDet2.Columns["Total"].ReadOnly = false;
                 txtOdometro.Visible = true;
                 lblOdometro.Visible = true;
                 cboUnidad.Visible = true;
@@ -502,13 +561,13 @@ namespace ADIGGM.OC.Transacciones
             }
             else
             {
-                dgvOCDet2.Columns[3].Visible = true;
-                dgvOCDet2.Columns[4].Visible = true;
-                dgvOCDet2.Columns[5].Visible = true;
-                dgvOCDet1.Columns[3].Visible = true;
-                dgvOCDet1.Columns[4].Visible = true;
-                dgvOCDet1.Columns[5].Visible = true;
-                dgvOCDet2.Columns[6].ReadOnly = true;
+                dgvOCDet2.Columns["Precio"].Visible = true;
+                dgvOCDet2.Columns["Aplica"].Visible = true;
+                dgvOCDet2.Columns["ISV"].Visible = true;
+                dgvOCDet1.Columns["precioDGV"].Visible = true;
+                dgvOCDet1.Columns["iSVDGV"].Visible = true;
+                dgvOCDet1.Columns["totalDGV"].Visible = true;
+                dgvOCDet2.Columns["Total"].ReadOnly = true;
 
                 if (ckbCambioAceite.Checked == true)
                 {
