@@ -22,6 +22,14 @@ form instancia el DataSet tipado (`grep -rl "new ADIGGM.DataSets.DsXxx()"`).
 - `DataTable.Load` marca `ReadOnly=true` en columnas calculadas (CASE/expresiones de SPs) y en el PK
   identity. Si una de esas se edita en grid, falla el binding → en el repo, tras `ConsultarTabla`,
   `tabla.Columns["X"].ReadOnly = false`.
+- **§11b (hallado 2026-07-10, ManAsigCuentas) — MaxLength inferido de columnas literales/calculadas**:
+  si un SELECT trae una columna string LITERAL (p.ej. `'' AS Cuenta` para "aún sin valor") o
+  calculada, `DataTable.Load` infiere su `MaxLength` de esa expresión concreta (con `''` sale ~0) y
+  lo aplica al DataTable. Si esa columna es EDITABLE en el grid, escribir CUALQUIER texto más largo
+  lanza `ArgumentException: ... infringe el límite de MaxLength` al hacer `EndEdit()` (se ve como un
+  cuadro de error del DataGridView, no una excepción .NET normal). Mismo arreglo que el ReadOnly:
+  tras `ConsultarTabla`, `tabla.Columns["X"].MaxLength = -1;` (ilimitado). Revisar TODA columna
+  string editable que venga de un literal o expresión, no solo las de GROUP BY del gotcha anterior.
 
 ## §14.10 — toggle de edición en grids con columnas-en-código
 Con las columnas creadas en código con `ReadOnly=true`, el cascade de `dgv.ReadOnly=false` NO reactiva
