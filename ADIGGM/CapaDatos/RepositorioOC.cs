@@ -245,6 +245,7 @@ WHERE TR_Vehiculos.Activo = 1 AND OC_AsigCuentas.IdCatProducto = @IdCategoria AN
 ORDER BY TR_Contratistas.Contratista",
                 new { IdCategoria = idCategoria, Filtro = filtro });
             tabla.Columns["Cuenta"].ReadOnly = false; // gotcha §11: DataTable.Load marca ReadOnly columnas de GROUP BY
+            tabla.Columns["Cuenta"].MaxLength = -1;   // gotcha §11b: hereda el MaxLength real de CuentaGasto; la BD ya valida el largo al guardar
             return tabla;
         }
 
@@ -263,6 +264,10 @@ WHERE TR_Vehiculos.Activo = 1
 ORDER BY TR_Contratistas.Contratista",
                 new { Filtro = filtro, IdCategoria = idCategoria });
             tabla.Columns["Cuenta"].ReadOnly = false; // gotcha §11: '' AS Cuenta es columna literal/calculada
+            // gotcha §11b (hallado 2026-07-10, usuario validando): DataTable.Load infiere el MaxLength
+            // del literal '' (longitud 0) -> ArgumentException al escribir CUALQUIER texto en la celda
+            // ("El valor infringe el límite de MaxLength"). Se libera igual que el ReadOnly de arriba.
+            tabla.Columns["Cuenta"].MaxLength = -1;
             return tabla;
         }
 
