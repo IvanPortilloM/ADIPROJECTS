@@ -48,7 +48,10 @@
     <WarningLevel>1</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
+    <!-- 32-bit: el SDK de ZKTeco (zkemkeeper) es COM de 32 bits y un proceso de 64 no puede
+         cargarlo. AnyCPU + Prefer32Bit=true hace que el .exe arranque como 32-bit en Windows de
+         64 bits (módulo biométrico BIO, §13.e). Sin dependencias de 64-bit only en la app. -->
+    <Prefer32Bit>true</Prefer32Bit>
     <DocumentationFile>
     </DocumentationFile>
   </PropertyGroup>
@@ -60,6 +63,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <!-- Ver nota de 32-bit en la config Debug (SDK ZKTeco COM de 32 bits). Release = la que
+         publica el ClickOnce, así que TAMBIÉN debe ser 32-bit. -->
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>ADIGGM.Program</StartupObject>
