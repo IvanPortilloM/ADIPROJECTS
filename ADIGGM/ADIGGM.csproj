@@ -700,6 +700,21 @@
     <Compile Include="INV\Transacciones\frmReversarInventario.Designer.cs">
       <DependentUpon>frmReversarInventario.cs</DependentUpon>
     </Compile>
+    <Compile Include="BIO\frmBioEmpleados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BIO\frmBioEmpleados.Designer.cs">
+      <DependentUpon>frmBioEmpleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BIO\frmBioAsistencia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BIO\frmBioAsistencia.Designer.cs">
+      <DependentUpon>frmBioAsistencia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CapaDatos\RepositorioBiometrico.cs" />
+    <Compile Include="CapaModelo\MarcaBiometrico.cs" />
+    <Compile Include="Clases\ZKTecoLector.cs" />
     <Compile Include="INV\Mantenimiento\frmBodegas.cs">
       <SubType>Form</SubType>
     </Compile>
