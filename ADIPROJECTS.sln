@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADIGGM", "ADIGGM\ADIGGM.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSCorreos", "WSCorreos\WSCorreos.csproj", "{C005D3F5-E255-4FDF-8F05-ACBF8185A99F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSBiometrico", "WSBiometrico\WSBiometrico.csproj", "{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,18 @@ Global
 		{C005D3F5-E255-4FDF-8F05-ACBF8185A99F}.Release|iPhone.Build.0 = Release|Any CPU
 		{C005D3F5-E255-4FDF-8F05-ACBF8185A99F}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{C005D3F5-E255-4FDF-8F05-ACBF8185A99F}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}.Release|iPhone.Build.0 = Release|Any CPU
+		{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{8F4A2B31-6D9C-4E17-9B5A-3C7D1E0F2A46}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
