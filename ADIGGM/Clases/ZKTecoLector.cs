@@ -37,7 +37,9 @@ namespace ADIGGM.Clases
                     throw new InvalidOperationException(
                         "No se pudo conectar al reloj en " + ip + ":" + puerto +
                         ".\n\nVerifique que el equipo esté encendido, conectado a la red y con esa IP " +
-                        "(Menú > Comunicación en el reloj).");
+                        "(Menú > Comunicación en el reloj).\n\nSi la red está bien y aun así no conecta, " +
+                        "REINICIE EL RELOJ: estos equipos solo aceptan una conexión a la vez y una sesión " +
+                        "colgada de un intento anterior bloquea las nuevas (comprobado 2026-07-20).");
 
                 var marcas = new List<MarcaBiometrico>();
                 const int maquina = 1;
